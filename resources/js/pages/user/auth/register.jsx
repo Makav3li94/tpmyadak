@@ -35,12 +35,12 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
-
+            <Head title="ثبت نام" />
+            <h2 className='text-2xl font-semibold mb-2 text-center'>ثبت نام</h2>
             <form onSubmit={submit}>
                 <div>
                     <TextInput
-                        label="Name"
+                        label="نام"
                         type="text"
                         name="name"
                         value={data.name}
@@ -51,7 +51,7 @@ export default function Register() {
 
                 <div>
                     <TextInput
-                        label="Email"
+                        label="ایمیل"
                         type="email"
                         name="email"
                         value={data.email}
@@ -62,7 +62,7 @@ export default function Register() {
 
                 <div>
                     <TextInput
-                        label="Password"
+                        label="رمزعبور"
                         type="password"
                         name="password"
                         value={data.password}
@@ -73,7 +73,7 @@ export default function Register() {
 
                 <div>
                     <TextInput
-                        label="Confirm Password"
+                        label="تایید رمز"
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
@@ -82,19 +82,22 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="flex items-center justify-end mt-4 gap-1">
-                    <Link href={route('login')} className="link">
-                        Already registered?
-                    </Link>
 
                     <Button
-                        className="ml-4"
-                        processing={processing}
                         onClick={submit}
-                        type="primary"
+                        processing={processing}
+                        type={'primary'}
+                        className={"btn mt-2 w-full btn-primary"}
                     >
-                        Register
+                        ثبت نام
                     </Button>
+                    <div className='text-center mt-4'>قبلا ثبت نام کردید ؟
+                        <Link href={route('login')}>
+                    <span
+                        className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">وارد</span>
+                        </Link> شوید.
+
+
                 </div>
             </form>
         </GuestLayout>

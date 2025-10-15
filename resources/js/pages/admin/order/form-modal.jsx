@@ -16,7 +16,8 @@ export default function FormModal(props) {
             amount: '',
             unit: '',
             total_price: '',
-            tax: '',
+            discount: 0,
+            tax: 0,
             attribute: '',
         })
 
@@ -71,7 +72,9 @@ export default function FormModal(props) {
             })
         }
     }, [modalState])
-
+    useEffect(() => {
+        setData('total_price',(data.amount * data.unit))
+    }, [data.unit])
     return (
         <Modal isOpen={modalState.isOpen} onClose={handleClose} title={'ایتم صفارش'}>
             <form className="form-control space-y-2.5" onSubmit={handleSubmit}>
@@ -83,7 +86,8 @@ export default function FormModal(props) {
                                           amount: item.price,
                                           title: item.title,
                                           unit: item.minimum,
-                                          discount: item.discount,
+                                          discount: (item.discount !== null && item.discount !==0) ? item.discount : 0,
+                                          total_price: item.minimum * item.price,
                                           product_id: item ? item.id : null,
                                       })
                                   }
@@ -120,13 +124,13 @@ export default function FormModal(props) {
                             onChange={handleOnChange}
                             label="تعداد"
                             type='number'
-                            min={data.unit}
+                            min={1}
                             error={errors.unit}
                         />
                     </>
                 }
                 <TextInput
-                    name="unit"
+                    name="total_price"
                     value={data.total_price}
                     onChange={handleOnChange}
                     label="قبمت کل"

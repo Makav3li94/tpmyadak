@@ -9,7 +9,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-
 class TransactionController extends Controller
 {
     #[Permission('view-transaction')]
@@ -26,14 +25,12 @@ class TransactionController extends Controller
         $query->orderBy('created_at', 'desc');
 
         return inertia('admin/transaction/index', [
-            'data' => $query->with(['user:id,name','order:id'])->paginate(10)
+            'data' => $query->with(['user:id,name', 'order:id'])->paginate(10),
         ]);
     }
 
-
-
     #[Permission('create-transaction')]
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
         Transaction::create($validatedData);
@@ -43,7 +40,7 @@ class TransactionController extends Controller
     }
 
     #[Permission('update-transaction')]
-    public function update(Request $request, Transaction $transaction) : RedirectResponse
+    public function update(Request $request, Transaction $transaction): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
         $transaction->update($validatedData);
@@ -53,32 +50,26 @@ class TransactionController extends Controller
     }
 
     #[Permission('delete-transaction')]
-    public function destroy(Transaction $transaction) : RedirectResponse
+    public function destroy(Transaction $transaction): RedirectResponse
     {
         $transaction->delete();
+
         return redirect()->route('admin.transactions.index')
             ->with('message', ['type' => 'success', 'message' => 'تراکنش حذف شد.']);
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
     private function validateRequest(Request $request): array
     {
         $validatedData = $request->validate([
             'user_id' => 'required|ulid',
             'order_id' => 'required|ulid',
             'price' => 'required|numeric',
-//            'type' => 'nullable|in:order',
+            //            'type' => 'nullable|in:order',
             'status' => 'nullable|boolean',
         ]);
-        $validatedData ['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
-        $validatedData ['alias'] = empty($request->alias) ? Str::limit($request->title, 110) : Str::slug($request->alias);
+        $validatedData['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
+        $validatedData['alias'] = empty($request->alias) ? Str::limit($request->title, 110) : Str::slug($request->alias);
+
         return $validatedData;
     }
-
-
 }
-
-

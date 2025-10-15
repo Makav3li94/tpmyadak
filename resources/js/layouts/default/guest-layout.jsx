@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link, usePage } from '@inertiajs/react'
 import { themeChange } from 'theme-change'
 import { Toaster } from 'sonner'
 import { showToast } from '@/utils'
+import LandingIntro from "@/pages/user/auth/partials/LandingIntro.jsx";
 
 export default function Guest({ children }) {
     const {
@@ -24,29 +25,21 @@ export default function Guest({ children }) {
     }, [])
 
     return (
-        <div className="min-h-screen flex flex-col sm:justify-center items-center md:pt-6 bg-base-300">
-            {/* card */}
-            <div className="w-full h-screen md:h-fit bg-base-100 shadow-xl max-w-md flex flex-col md:rounded-xl">
-                <div className="p-5 md:px-8 md:py-10">
-                    <div className="flex justify-center pt-2 pb-4">
-                        <Link href="/">
-                            <>
-                                {app_logo ? (
-                                    <img
-                                        src={route('file.show', app_logo)}
-                                        className="p-4"
-                                    />
-                                ) : (
-                                    <h1 className="w-auto fill-current text-base-content text-4xl font-bold mb-2">
-                                        {app_name}
-                                    </h1>
-                                )}
-                            </>
-                        </Link>
+        <div className="min-h-screen flex flex-col sm:justify-center items-center md:pt-6 ">
+            <div className="min-h-screen bg-base-200 flex items-center">
+                <div className="card mx-auto w-full max-w-5xl  shadow-xl">
+                    <div className="grid  md:grid-cols-2 grid-cols-1  bg-base-100 rounded-xl">
+                        <div className='py-24 px-10'>
+                            {children}
+                        </div>
+
+                        <div className=''>
+                            <LandingIntro />
+                        </div>
                     </div>
-                    {children}
                 </div>
             </div>
+
             <Toaster
                 theme="system"
                 richColors="true"

@@ -9,7 +9,7 @@ class GeneralController extends Controller
 {
     public function index(Request $request)
     {
-        return inertia('main/welcome', [
+        return inertia('main/welcome/index', [
         ]);
     }
 }

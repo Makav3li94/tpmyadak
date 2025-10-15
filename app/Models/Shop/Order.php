@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Order extends Model
 {
     protected $guarded = ['id'];
+
     protected $fillable = [
         'user_id',
         'transaction_id',
@@ -36,7 +37,6 @@ class Order extends Model
         'address',
     ];
 
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -51,18 +51,21 @@ class Order extends Model
     {
         return $this->belongsTo(Transaction::class);
     }
+
     public function shippingMethod(): BelongsTo
     {
         return $this->belongsTo(ShippingMethod::class);
     }
+
     public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
     }
+
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => verta($value)->format('Y-m-d')
+            get: fn ($value) => verta($value)->format('Y-m-d')
         );
     }
 }

@@ -128,9 +128,14 @@
     }
     body{
         direction: rtl;
+        background-color: #fff;
     }
 }
-
+@media (min-width: 1200px) {
+    .container {
+        width: 1200px;
+    }
+}
 /* Make clicks pass-through */
 #nprogress {
     pointer-events: none;

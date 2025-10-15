@@ -22,7 +22,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('auth/register');
+        return Inertia::render('user/auth/register');
     }
 
     /**
@@ -53,6 +53,6 @@ class RegisteredUserController extends Controller
 
         UserJwtService::generateJwtToken();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('user.dashboard', absolute: false));
     }
 }

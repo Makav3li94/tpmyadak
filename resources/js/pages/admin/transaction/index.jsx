@@ -105,7 +105,7 @@ export default function Home(props) {
                                         <td>{++index}</td>
                                         <td>{transaction.user.name}</td>
                                         <td>{transaction.order.id}</td>
-                                        <td>{transaction.order.total}</td>
+                                        <td>{parseInt(transaction.price).toLocaleString('en')}</td>
 
                                         <td>
                                             {transaction.status?(

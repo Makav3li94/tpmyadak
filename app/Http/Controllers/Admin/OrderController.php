@@ -5,15 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Attributes\Permission;
 use App\Http\Controllers\Controller;
 use App\Models\Shop\Order;
-use App\Models\User;
 use App\Rules\IranMobileValidator;
 use App\Rules\IranPhoneValidator;
 use App\Rules\IranPostalCodeValidator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
-use phpDocumentor\Reflection\Type;
-
 
 class OrderController extends Controller
 {
@@ -39,7 +36,7 @@ class OrderController extends Controller
     #[Permission('create-order')]
     public function create(): Response
     {
-        return inertia('admin/order/form',[
+        return inertia('admin/order/form', [
         ]);
     }
 
@@ -48,7 +45,8 @@ class OrderController extends Controller
     {
         $validatedData = $this->handleValidate($request);
         $order = Order::create($validatedData);
-        return redirect()->route('admin.orders.show',$order->id)
+
+        return redirect()->route('admin.orders.show', $order->id)
             ->with('message', ['type' => 'success', 'message' => 'سفارش با موفقیت ساخته شد.']);
     }
 
@@ -56,16 +54,14 @@ class OrderController extends Controller
     public function show(Order $order): Response
     {
         return inertia('admin/order/show', [
-            'order' => $order->load(['details','details.product:id,price,title,minimum', 'user','shippingMethod','paymentMethod']),
+            'order' => $order->load(['details', 'details.product:id,price,title,minimum', 'user', 'shippingMethod', 'paymentMethod']),
         ]);
     }
 
     #[Permission('update-order')]
     public function update(Request $request, Order $order): RedirectResponse
     {
-        $validatedData = $this->handleValidate($request,'update');
-
-
+        $validatedData = $this->handleValidate($request, 'update');
 
         $order->fill($validatedData);
 
@@ -84,11 +80,7 @@ class OrderController extends Controller
             ->with('message', ['type' => 'success', 'message' => 'سفارش با موفقیت حذف شد.']);
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
-    private function handleValidate(Request $request,$type='store'): array
+    private function handleValidate(Request $request, $type = 'store'): array
     {
         $defaultValidationArray = [
             'user_id' => 'required|ulid',
@@ -97,23 +89,23 @@ class OrderController extends Controller
             'shipping_method_id' => 'required|ulid',
             'note' => 'nullable|string',
             'name' => 'required|string',
-            'postal_code' => ['required',new IranPostalCodeValidator()],
-            'mobile' => ['required',new IranMobileValidator()],
-            'phone' => ['required',new IranPhoneValidator()],
+            'postal_code' => ['required', new IranPostalCodeValidator],
+            'mobile' => ['required', new IranMobileValidator],
+            'phone' => ['required', new IranPhoneValidator],
             'status' => 'required|in:new,pending,hold,verify,processing,done,canceled,refunded',
         ];
         $conRules = [];
-        if ($type = 'update'){
+        if ($type == 'update') {
             $conRules = [
-                'address' => 'required|string',
+                'address_id' => 'required|ulid',
                 'discount' => 'nullable|numeric',
                 'other_fee' => 'nullable|numeric',
                 'shipping' => 'nullable|numeric',
-                'subtotal' => 'required|numeric',
+                'subtotal' => 'nullable|numeric',
                 'tax' => 'nullable|numeric',
-                'total' => 'required|numeric',
+                'total' => 'nullable|numeric',
             ];
-        }else{
+        } else {
             $conRules = [
                 'order_address' => 'required|string',
             ];
@@ -121,18 +113,13 @@ class OrderController extends Controller
         $rules = array_merge($defaultValidationArray, $conRules);
         $validatedData = $request->validate($rules);
 
-        if ($type = 'update'){
-            $validatedData['total'] = $validatedData['subtotal']+$validatedData['other_fee']+$validatedData['shipping']+$validatedData['tax']-$validatedData['discount'];
-        }else{
+        if ($type == 'update') {
+            $validatedData['total'] = $validatedData['subtotal'] + $validatedData['other_fee'] + $validatedData['shipping'] + $validatedData['tax'] - $validatedData['discount'];
+        } else {
             $validatedData['address'] = $validatedData['order_address'];
             unset($validatedData['order_address']);
         }
 
         return $validatedData;
     }
-
-
-
 }
-
-

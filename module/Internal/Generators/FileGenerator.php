@@ -51,7 +51,7 @@ class FileGenerator
             ->replaces($this->replaces)
             ->generate();
 
-        // Index.jsx
+        // index.jsx
         (new StubFileGenerator)->from(base_path('stubs/scaffold_modal/') . 'index.stub')
             ->to($this->resourcePath)
             ->name('index')
@@ -78,7 +78,7 @@ class FileGenerator
             ->replaces($this->replaces)
             ->generate();
 
-        // Index.jsx
+        // index.jsx
         (new StubFileGenerator)->from(base_path('stubs/scaffold_page/') . 'index.stub')
             ->to($this->resourcePath)
             ->name('index')
@@ -105,7 +105,7 @@ class FileGenerator
             ->replaces($this->replaces)
             ->generate();
 
-        // Index.jsx
+        // index.jsx
         (new StubFileGenerator)->from(base_path('stubs/single_page/') . 'index.stub')
             ->to($this->resourcePath)
             ->name('index')

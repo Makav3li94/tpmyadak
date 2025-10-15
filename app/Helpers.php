@@ -7,8 +7,8 @@ use App\Notifications\UserNotifications;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Number;
 
-if (!function_exists('splitPascalCase')) {
-    function splitPascalCase($string)
+if (! function_exists('splitPascalCase')) {
+    function splitPascalCase($string): string
     {
         $word = '';
         // Use a regular expression to insert a space before each capital letter except the first one
@@ -19,17 +19,17 @@ if (!function_exists('splitPascalCase')) {
 
                 continue;
             }
-            $word .= '-' . $s;
+            $word .= '-'.$s;
         }
 
         return $word;
     }
 }
 
-if (!function_exists('formatIDR')) {
-    function formatIDR($number)
+if (! function_exists('formatIDR')) {
+    function formatIDR($number): int|string
     {
-        if (!$number) {
+        if (! $number) {
             return 0;
         }
 
@@ -37,15 +37,15 @@ if (!function_exists('formatIDR')) {
     }
 }
 
-if (!function_exists('formatDate')) {
-    function formatDate($date)
+if (! function_exists('formatDate')) {
+    function formatDate($date): string
     {
         return \Illuminate\Support\Carbon::parse($date)->format('d-m-Y');
     }
 }
 
-if (!function_exists('formatNumZero')) {
-    function formatNumZero($n)
+if (! function_exists('formatNumZero')) {
+    function formatNumZero($n): string
     {
         $max = 3; // 0001
 
@@ -54,11 +54,11 @@ if (!function_exists('formatNumZero')) {
             $number .= '0';
         }
 
-        return $number . $n;
+        return $number.$n;
     }
 }
 
- function notifyAdmin($user_id, $name, $mobile, $type, $type_id, $status, $message = null): void
+function notifyAdmin($user_id, $name, $mobile, $type, $type_id, $status, $message = null): void
 {
     $details = [
         'user_id' => $user_id,
@@ -67,7 +67,7 @@ if (!function_exists('formatNumZero')) {
         'type' => $type,
         'type_id' => $type_id,
         'status' => $status,
-        'message' => $message
+        'message' => $message,
     ];
     $users = Admin::all();
     Notification::send($users, new AdminNotifications($details));
@@ -80,7 +80,7 @@ function notifyUser($user_id, $type, $type_id, $status, $message = null): void
         'type' => $type,
         'type_id' => $type_id,
         'status' => $status,
-        'message' => $message
+        'message' => $message,
     ];
     $user = User::find($user_id);
     Notification::send($user, new UserNotifications($user, $details));
@@ -91,14 +91,16 @@ function array_mapper($array): array
     foreach ($array as $key => $item) {
         $mapped_array[] = $item['value'];
     }
+
     return $mapped_array;
 }
 function array_labeler($array): array
 {
     $labeled_array = [];
     foreach ($array as $key => $item) {
-        $labeled_array[] = ["value" => strval($item["id"]), "label" => $item["title"]];
+        $labeled_array[] = ['value' => strval($item['id']), 'label' => $item['title']];
     }
+
     return $labeled_array;
 }
 function slug_gen($title, $separator = '-'): string
@@ -116,6 +118,7 @@ function slug_gen($title, $separator = '-'): string
 
     $title = preg_replace('/[\s\-_]+/', ' ', $title);
     $title = preg_replace('/[\s_]/', $separator, $title);
+
     return trim($title, $separator);
 }
 function convertPersianNumbers(mixed $input, bool $reverseConvert = false): string
@@ -128,7 +131,7 @@ function convertPersianNumbers(mixed $input, bool $reverseConvert = false): stri
         ? str_replace($en_num, $fa_num, (string) $input)
         : str_replace([...$fa_num, ...$ar_num], $en_num, (string) $input);
 }
- function getIranianPhoneAreaCodes(): array
+function getIranianPhoneAreaCodes(): array
 {
     return [
         '021', // Tehran
@@ -172,7 +175,7 @@ function separator(string $input, string $default = '-', ?array $allows = null, 
         '|' => '\|',
         '*' => '\*',
         '.' => '\.',
-        'space' => '\s'
+        'space' => '\s',
     ];
 
     if (! is_null($allows)) {
@@ -180,7 +183,7 @@ function separator(string $input, string $default = '-', ?array $allows = null, 
 
         if (! empty($invalidValues)) {
             throw new \InvalidArgumentException(
-                'Invalid delimiter allows parameter. allowed values: ' . implode(', ', $allowsMap)
+                'Invalid delimiter allows parameter. allowed values: '.implode(', ', $allowsMap)
             );
         }
     }

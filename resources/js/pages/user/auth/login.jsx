@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import GuestLayout from '@/layouts/default/guest-layout'
-import { Head, useForm } from '@inertiajs/react'
+import {Head, Link, useForm} from '@inertiajs/react'
 
-import { TextInput, Checkbox, Button } from '@/components/index'
+import {TextInput, Checkbox, Button} from '@/components/index'
+import LandingIntro from "@/pages/user/auth/partials/LandingIntro.jsx";
 
-export default function Login({ status }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+export default function Login({status}) {
+    const {data, setData, post, processing, errors, reset} = useForm({
         email: '',
         password: '',
         remember: '',
@@ -40,16 +41,12 @@ export default function Login({ status }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title="ورود"/>
 
-            {status && (
-                <div className="mb-4 font-medium text-sm text-green-600">
-                    {status}
-                </div>
-            )}
-
+            <h2 className='text-2xl font-semibold mb-2 text-center'>ورود</h2>
             <form onSubmit={submit}>
-                <div>
+
+                <div className="mb-4">
                     <TextInput
                         type="text"
                         label="ایمیل"
@@ -63,8 +60,7 @@ export default function Login({ status }) {
                         error={errors.email}
                     />
                 </div>
-
-                <div>
+                <div className="mb-4">
                     <TextInput
                         type="password"
                         label="رمزعبور"
@@ -77,7 +73,6 @@ export default function Login({ status }) {
                         onKeyDownCapture={handleKeyDown}
                     />
                 </div>
-
                 <div className="mt-2">
                     <Checkbox
                         label="به خاطر بسپار"
@@ -87,17 +82,31 @@ export default function Login({ status }) {
                         error={errors.remember}
                     />
                 </div>
+                <div className='text-right text-primary'>
+                    <Link href={route('password.request')}>
+                        <span
+                            className="text-sm  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">فراموشی رمز عبور</span></Link>
+                </div>
 
-                <div className="flex items-center justify-end mt-4">
-                    <Button
-                        onClick={submit}
-                        processing={processing}
-                        type={'primary'}
-                    >
-                       ورود
-                    </Button>
+
+                <Button
+                    onClick={submit}
+                    processing={processing}
+                    type={'primary'}
+                    className={"btn mt-2 w-full btn-primary"}
+                >
+                    ورود
+                </Button>
+                <div className='text-center mt-4'>اکانت ندارید ؟
+                    <Link href={route('register')}>
+                    <span
+                        className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">ثبت نام</span>
+                </Link> کنید.
+
                 </div>
             </form>
+
+
         </GuestLayout>
     )
 }

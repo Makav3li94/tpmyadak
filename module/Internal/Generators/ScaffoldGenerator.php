@@ -231,7 +231,7 @@ class ScaffoldGenerator
     public function ScaffoldModal()
     {
         try {
-            // File: ModelController.php, Index.jsx, Form.jsx
+            // File: ModelController.php, index.jsx, Form.jsx
             FileGenerator::new($this->Model)
                 ->withResoucePath($this->modelSplitPascalCase)
                 ->withReplaces($this->replaces)
@@ -264,7 +264,7 @@ class ScaffoldGenerator
     public function ScaffoldPage()
     {
         try {
-            // File: ModelController.php, Index.jsx, Form.jsx
+            // File: ModelController.php, index.jsx, Form.jsx
             FileGenerator::new($this->Model)
                 ->withResoucePath($this->modelSplitPascalCase)
                 ->withReplaces($this->replaces)
@@ -292,7 +292,7 @@ class ScaffoldGenerator
     public function ScaffoldSinglePage()
     {
         try {
-            // File: ModelController.php, Index.jsx
+            // File: ModelController.php, index.jsx
             FileGenerator::new($this->Model)
                 ->withResoucePath($this->modelSplitPascalCase)
                 ->withReplaces($this->replaces)

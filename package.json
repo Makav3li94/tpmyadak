@@ -37,6 +37,7 @@
     "vite": "^7.0.6"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@ijavad805/react-datepicker": "^2.2.18",
     "@react-pdf/renderer": "^4.3.1",
     "@tinymce/tinymce-react": "^6.3.0",

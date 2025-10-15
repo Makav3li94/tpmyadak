@@ -37,7 +37,7 @@ export default function ForgotPassword({ status }) {
 
             <form onSubmit={submit}>
                 <TextInput
-                    label="Email"
+                    label="ایمیل"
                     type="text"
                     name="email"
                     value={data.email}
@@ -51,7 +51,7 @@ export default function ForgotPassword({ status }) {
                         processing={processing}
                         onClick={submit}
                     >
-                        Email Password Reset Link
+                        ارسال ایمیل بازیابی رمز
                     </Button>
                 </div>
             </form>

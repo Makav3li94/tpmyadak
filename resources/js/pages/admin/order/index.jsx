@@ -15,6 +15,7 @@ import {
     Button,
     Card
 } from '@/components/index/index.js'
+import Badge from "@/components/daisy-ui/badge.jsx";
 
 export default function Home(props) {
     const {
@@ -99,7 +100,13 @@ export default function Home(props) {
                                         <td>{parseInt(order.total).toLocaleString('en')}</td>
                                         <td>{order.payment_status}</td>
                                         <td>{order.shipping_status}</td>
-                                        <td>{order.status}</td>
+                                        <td>
+                                            {order.status?(
+                                                <Badge type="success" outline={true}>موفق</Badge>
+                                            ):(
+                                                <Badge type="error" outline={true}>ناموفق</Badge>
+                                            )}
+                                        </td>
                                         <td>{order.created_at}</td>
                                         <td className="text-right">
                                             <Dropdown>

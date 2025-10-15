@@ -12,6 +12,7 @@ class OrderDetail extends Model
         'product_id',
         'title',
         'amount',
+        'discount',
         'unit',
         'total_price',
         'tax',

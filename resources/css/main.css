@@ -1,0 +1,11 @@
+
+.red-main {
+    color: #ff2d37;
+}
+
+/* ---------- media ---------- */
+@media only screen and (max-width: 640px) {
+    svg * {
+        width: 80%;
+    }
+}
