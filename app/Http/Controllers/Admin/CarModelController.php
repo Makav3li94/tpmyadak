@@ -26,14 +26,12 @@ class CarModelController extends Controller
         $query->orderBy('created_at', 'desc');
 
         return inertia('admin/car-model/index', [
-            'data' => $query->with('carBrand:id,title')->paginate(10)
+            'data' => $query->with('carBrand:id,title')->paginate(10),
         ]);
     }
 
-
-
     #[Permission('create-car-model')]
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
         CarModel::create($validatedData);
@@ -43,7 +41,7 @@ class CarModelController extends Controller
     }
 
     #[Permission('update-car-model')]
-    public function update(Request $request, CarModel $carModel) : RedirectResponse
+    public function update(Request $request, CarModel $carModel): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
         $carModel->update($validatedData);
@@ -53,17 +51,14 @@ class CarModelController extends Controller
     }
 
     #[Permission('delete-car-model')]
-    public function destroy(CarModel $carModel) : RedirectResponse
+    public function destroy(CarModel $carModel): RedirectResponse
     {
         $carModel->delete();
+
         return redirect()->route('admin.car.models.index')
             ->with('message', ['type' => 'success', 'message' => 'مدل خودرو حذف شد.']);
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
     private function validateRequest(Request $request): array
     {
         $validatedData = $request->validate([
@@ -71,7 +66,8 @@ class CarModelController extends Controller
             'slug' => 'nullable|string|max:125',
             'car_brand_id' => 'required|ulid',
         ]);
-        $validatedData ['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
+        $validatedData['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
+
         return $validatedData;
     }
 }

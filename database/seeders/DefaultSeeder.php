@@ -10,6 +10,7 @@ use App\Models\Familiarity;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Setting;
+use App\Models\Shop\Brand;
 use App\Models\Shop\ProductCategory;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -57,93 +58,50 @@ class DefaultSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        $bc1 = ProductCategory::create([
-            'title' => 'موتور',
-            'slug' => 'موتور',
-            'status' => true,
-        ]);
-        $bc2 = ProductCategory::create([
-            'title' => 'جلوبندی',
-            'slug' => 'جلوبندی',
-            'status' => true,
-        ]);
-        $bc3 = ProductCategory::create([
-            'title' => 'روغن',
-            'slug' => 'روغن',
-            'status' => true,
-        ]);
-        ProductCategory::create([
-            'title' => 'تسمه تایم',
-            'slug' => 'تسمه-تایم',
-            'parent_id' => $bc1->id,
-            'status' => true,
-        ]);
-        ProductCategory::create([
-            'title' => 'بلبرینگ',
-            'slug' => 'بلبرینگ',
-            'parent_id' => $bc1->id,
-            'status' => true,
-        ]);
-        ProductCategory::create([
-            'title' => 'کمک فنر',
-            'slug' => 'کمک-فنر',
-            'parent_id' => $bc2->id,
-            'status' => true,
-        ]);
-        ProductCategory::create([
-            'title' => 'پلوس',
-            'slug' => 'پلوس',
-            'parent_id' => $bc2->id,
-            'status' => true,
-        ]);
-        ProductCategory::create([
-            'title' => 'جعبه فرمان',
-            'slug' => 'جعبه-فرمان',
-            'parent_id' => $bc2->id,
-            'status' => true,
-        ]);
+
         BlogCategory::create([
             'title' => 'مجله',
             'slug' => 'مجله',
             'status' => true,
         ]);
+
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         Familiarity::truncate();
         for ($i = 1; $i < 8; $i++) {
             switch ($i) {
                 case 1:
                     Familiarity::create([
-                        'title' => 'موتورهای جستجوگر'
+                        'title' => 'موتورهای جستجوگر',
                     ]);
                     break;
                 case 2:
                     Familiarity::create([
-                        'title' => 'شبکه های اجتماعی'
+                        'title' => 'شبکه های اجتماعی',
                     ]);
                     break;
                 case 3:
                     Familiarity::create([
-                        'title' => 'دوستان و آشنایان'
+                        'title' => 'دوستان و آشنایان',
                     ]);
                     break;
                 case 4:
                     Familiarity::create([
-                        'title' => 'تبلیغات بنری'
+                        'title' => 'تبلیغات بنری',
                     ]);
                     break;
                 case 5:
                     Familiarity::create([
-                        'title' => 'پیامک مارکتینگ'
+                        'title' => 'پیامک مارکتینگ',
                     ]);
                     break;
                 case 6:
                     Familiarity::create([
-                        'title' => 'ایمیل مارکتینگ'
+                        'title' => 'ایمیل مارکتینگ',
                     ]);
                     break;
                 case 7:
                     Familiarity::create([
-                        'title' => 'مشتریان قبلی ما'
+                        'title' => 'مشتریان قبلی ما',
                     ]);
                     break;
             }

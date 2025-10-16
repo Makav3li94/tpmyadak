@@ -21,16 +21,13 @@ class TaxController extends Controller
             });
         }
 
-
         return inertia('admin/tax/index', [
-            'data' => $query->paginate(10)
+            'data' => $query->paginate(10),
         ]);
     }
 
-
-
     #[Permission('create-tax')]
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
         Tax::create($validatedData);
@@ -40,7 +37,7 @@ class TaxController extends Controller
     }
 
     #[Permission('update-tax')]
-    public function update(Request $request, Tax $tax) : RedirectResponse
+    public function update(Request $request, Tax $tax): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
         $tax->update($validatedData);
@@ -50,17 +47,14 @@ class TaxController extends Controller
     }
 
     #[Permission('delete-tax')]
-    public function destroy(Tax $tax) : RedirectResponse
+    public function destroy(Tax $tax): RedirectResponse
     {
         $tax->delete();
+
         return redirect()->route('admin.taxes.index')
             ->with('message', ['type' => 'success', 'message' => 'مالیات حذف شد.']);
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
     private function validateRequest(Request $request): array
     {
         return $request->validate([
