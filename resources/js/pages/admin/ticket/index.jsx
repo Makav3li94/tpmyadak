@@ -15,6 +15,7 @@ import {
     Button,
     Card
 } from '@/components/index/index.js'
+import Badge from "@/components/daisy-ui/badge.jsx";
 
 export default function Home(props) {
     const {
@@ -107,8 +108,18 @@ export default function Home(props) {
                                         <td>{item.updated_at}</td>
                                         <td>{item.section}</td>
                                         <td>{item.priority}</td>
-                                        <td>{item.answer}</td>
-                                        <td>{item.status}</td>
+                                        <td>
+                                            {item.answer === '0' && <Badge type="secondry" outline={true}>کاربر</Badge>}
+                                            {item.answer === '1' && <Badge type="secondry" outline={true}>منتظر</Badge>}
+                                            {item.answer === '2' && <Badge type="secondry" outline={true}>ادمین</Badge>}
+                                        </td>
+                                        <td>
+                                            {item.status?(
+                                                <Badge type="info" outline={true}>باز</Badge>
+                                            ):(
+                                                <Badge type="success" outline={true}>بسته</Badge>
+                                            )}
+                                        </td>
                                         <td className="text-right">
                                             <Dropdown>
                                                 <HasPermission p="update-ticket">

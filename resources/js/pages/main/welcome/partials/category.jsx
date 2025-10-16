@@ -5,8 +5,9 @@ import {ChevronLeft} from "lucide-react";
 
 export default function Category(props) {
     return (
-        <section className=" w-full container justify-center ">
-            <div className=" hidden lg:grid grid-cols-12 justify-between pt-10 z-0 gap-x-10">
+        <section className="bg-base-100 w-full flex justify-center py-12">
+            <div className="container   ">
+            <div className="  hidden lg:grid grid-cols-12 justify-between  z-0 gap-x-10">
                 <div className="lg:col-span-3 lg:flex bg-[#ff2d37] rounded-t-md px-5 py-3 text-center justify-between">
                     <span className="text-white">تمام دسته بندی ها</span>
                     <AlignJustify className="w-6 h-6 text-white"/>
@@ -224,14 +225,14 @@ export default function Category(props) {
             {/* --------sub menu right categories---------- */}
             <div className=" ">
                 <div className="grid grid-cols-12 justify-between relative gap-x-10">
-                    <div className="hidden lg:flex lg:col-span-3 bg-white shadow-lg shadow-gray-400">
+                    <div className="hidden lg:flex lg:col-span-3 bg-base-100 shadow-lg shadow-gray-400">
                         <ul className="relative z-20 w-full">
                             {/* --------------- lightning category--------- */}
                             <li className="group hover:bg-[#ff2d37] transition duration-300 ease-in px-5 relative">
                                 <div
                                    className="flex justify-between text-center items-center py-3 border-b curser-pointer
                                     border-gray-300 hover:border-[#ff2d37] z-10">
-                                    <div className="text-[#333333] text-sm group-hover:text-white">
+                                    <div className=" text-sm group-hover:text-gray-50">
                                         روشنایی
                                     </div>
                                     <ChevronLeft className="w-3 h-3 group-hover:fill-[white]"/>
@@ -367,6 +368,7 @@ export default function Category(props) {
                     </div>
                     <Slider/>
                 </div>
+            </div>
             </div>
         </section>
     )

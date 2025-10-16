@@ -2,7 +2,12 @@ import UserAuthenticatedLayout from "@/layouts/user/user-authenticated-layout.js
 
 export default function Dashboard(props) {
     return (
-        <UserAuthenticatedLayout>
+        <UserAuthenticatedLayout
+            title={'پنل کاربری'}
+            breadcumbs={[
+                { name: 'پنل کاربری', href: route('user.dashboard') },
+                { name: 'نیم نگاه', href: null },
+            ]}>
             <h1 className="text-center py-44">USER</h1>
         </UserAuthenticatedLayout>
     )

@@ -3,7 +3,7 @@ import categories02 from "../../../../../images/cate2.jpg";
 import categories03 from "../../../../../images/cate3.jpg";
 export default function ProductCategories(props) {
     return (
-        <section className="bg-white w-full flex justify-center ">
+        <section className="bg-base-200 w-full flex justify-center my-12">
             {/* -----------------------Top featured collections------ */}
             <div className="container">
                 <div className="text-center">
@@ -12,7 +12,7 @@ export default function ProductCategories(props) {
                     </h5>
                     {/* <div className="rounded-full w-3 h-3 bg-[#ff2d37] text-center"></div> */}
 
-                    <h3 className="text-2xl font-extrabold text-[#333333] my-4">
+                    <h3 className="text-2xl font-extrabold  my-4">
                         خرید بر اساس دسته بندی
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-2 xl:gap-x-5 mt-12">

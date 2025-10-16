@@ -12,9 +12,9 @@ import { useSidebar } from '@/hooks'
 import NotificationMenu from "@/layouts/default/partials/notification-menu.jsx";
 
 export default function AuthenticatedLayout({
-    children,
-    title = '',
-    breadcumbs = [],
+                                                children,
+                                                title = '',
+                                                breadcumbs = [],
 }) {
     const {
         props: { auth, flash },

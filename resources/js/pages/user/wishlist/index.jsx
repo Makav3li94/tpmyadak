@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {router} from '@inertiajs/react'
 import {Head} from '@inertiajs/react'
-import {Pencil} from 'lucide-react'
+import {Pencil, Trash} from 'lucide-react'
 
 import {
     Pagination,
@@ -16,35 +16,35 @@ export default function Home(props) {
 
     return (
         <UserAuthenticatedLayout
-            title={'تراکنش'}
+            title={'علاقه مندی ها'}
             breadcumbs={[
                 { name: 'پنل کاربری', href: route('user.dashboard') },
-                { name: 'تراکنش', href: route('user.transactions.index') },
+                { name: 'علاقه مندی ها', href: route('user.wishlists.index') },
             ]}>
-            <Head title="تراکنش"/>
+            <Head title="علاقه مندی ها"/>
             <Card>
                 <div className="overflow-x-auto">
                     <table className="table">
                         <thead>
                         <tr>
                             <th>ردیف</th>
-                            <th>سفارش</th>
-                            <th>مبلغ</th>
+                            <th>محصول</th>
                             <th>وضعیت</th>
+                            <th>تاریخ</th>
+
                             <th/>
                         </tr>
                         </thead>
                         <tbody>
-                        {data.map((transaction, index) => (
+                        {data.map((item, index) => (
                             <tr key={index}>
                                 <td>{++index}</td>
-                                <td>{transaction.order.id}</td>
-                                <td>{parseInt(transaction.price).toLocaleString('en')}</td>
+                                <td>{item.product.title}</td>
                                 <td>
-                                    {transaction.status?(
-                                        <Badge type="success" outline={true}>موفق</Badge>
+                                    {item.status?(
+                                        <Badge type="success" outline={true}>خریداری شده!</Badge>
                                     ):(
-                                        <Badge type="error" outline={true}>ناموفق</Badge>
+                                        <Badge type="warning" outline={true}>در صف</Badge>
                                     )}
                                 </td>
                                 <td className="text-right">
@@ -61,10 +61,24 @@ export default function Home(props) {
                                         >
                                             <div className="flex space-x-1 items-center">
                                                 <Pencil className='w-4 h-4'/>
-                                                <div>مشاهده</div>
+                                                <div>مشاهده محصول</div>
                                             </div>
                                         </Dropdown.Item>
-
+                                        <Dropdown.Item
+                                            onClick={() =>
+                                                router.visit(
+                                                    route(
+                                                        'admin.orders.show',
+                                                        order
+                                                    )
+                                                )
+                                            }
+                                        >
+                                            <div className="flex space-x-1 items-center">
+                                                <Trash className='w-4 h-4'/>
+                                                <div>حذف محصول</div>
+                                            </div>
+                                        </Dropdown.Item>
                                     </Dropdown>
                                 </td>
                             </tr>

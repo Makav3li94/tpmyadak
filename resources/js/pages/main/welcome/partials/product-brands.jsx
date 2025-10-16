@@ -21,12 +21,12 @@ const BrandBox = ({image})=>{
 }
 export default function ProductBrands(props) {
     return (
-        <section className="bg-white w-full flex justify-center pb-12">
+        <section className="bg-base-100 w-full flex justify-center pb-12">
 
             <div className="container pt-14">
                 <div className="text-center pb-4">
                     <h5 className=" text-[#ff2d37] text-base">برترین شرکای تجاری ما</h5>
-                    <h3 className="text-2xl font-extrabold text-[#333333] my-4">
+                    <h3 className="text-2xl font-extrabold  my-4">
                         خرید بر اساس برند
                     </h3>
                 </div>

@@ -10,9 +10,9 @@ import bestseller03Hover from '../../../../../images/bestsellerHover03.jpg'
 
 export default function Promotion(props) {
     return (
-        <section className="w-full flex justify-center  bg-[#fff]">
+        <section className="w-full flex justify-center  bg-base-200 py-12">
             <div className="container">
-                <div className="grid grid-cols-12 mt-10 lg:gap-x-10">
+                <div className="grid grid-cols-12  lg:gap-x-10">
                     <div
                         className="col-span-12 flex lg:col-span-9 justify-between bg-white drop-shadow-lg shadow-gray-400 px-2 py-4 mt-16">
                         {/* image product- deal of the day---------- */}

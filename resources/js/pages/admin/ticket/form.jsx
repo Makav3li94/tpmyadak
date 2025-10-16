@@ -5,6 +5,7 @@ import {isEmpty} from 'lodash'
 import AuthenticatedLayout from '@/layouts/default/authenticated-layout.jsx'
 import {Button, Card} from '@/components/index/index.js'
 import TextareaInput from "@/components/daisy-ui/textarea-input.jsx";
+import Badge from "@/components/daisy-ui/badge.jsx";
 
 export default function Form(props) {
 
@@ -108,8 +109,18 @@ export default function Form(props) {
                                 <td>{ticket.updated_at}</td>
                                 <td>{ticket.section}</td>
                                 <td>{ticket.priority}</td>
-                                <td>{ticket.answer}</td>
-                                <td>{ticket.status}</td>
+                                <td>
+                                    {ticket.answer === '0' && <Badge type="secondry" outline={true}>کاربر</Badge>}
+                                    {ticket.answer === '1' && <Badge type="secondry" outline={true}>منتظر</Badge>}
+                                    {ticket.answer === '2' && <Badge type="secondry" outline={true}>ادمین</Badge>}
+                                </td>
+                                <td>
+                                    {ticket.status?(
+                                        <Badge type="info" outline={true}>باز</Badge>
+                                    ):(
+                                        <Badge type="success" outline={true}>بسته</Badge>
+                                    )}
+                                </td>
 
                             </tr>
                             </tbody>

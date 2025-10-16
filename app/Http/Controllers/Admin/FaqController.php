@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 
 class FaqController extends Controller
 {
-    public function update(Request $request, Ticket $ticket): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, $id)
     {
+
         $request->validate([
             'reply' => 'required',
         ]);
+        $ticket = Ticket::find($id);
         $faq = $ticket->faqs()->latest()->first();
         $faq->update([
             'admin_id' => auth()->id(),

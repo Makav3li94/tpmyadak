@@ -77,6 +77,7 @@ class HandleInertiaRequests extends Middleware
                     'data' => fn() => Session::get('data'),
                 ],
                 'app' => Setting::getByKeys(['app_name', 'app_logo']),
+                'notification_count'=>$request->user() ? $request->user()->unreadNotifications()->count() : 0,
             ]);
         }
 

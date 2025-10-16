@@ -9,14 +9,14 @@ import bestseller06Hover from '../../../../../images/bestsellerHover06.jpg'
 
 export default function LatestProducts(props) {
     return (
-        <section className="w-full flex justify-center  bg-[#fff]">
+        <section className="w-full flex justify-center  bg-base-100 py-12">
             <div className="container">
-                <div className="flex mt-16 bg-white">
+                <div className="flex  bg-base-100">
                     <a href="#" title="replecment" className="hidden md:flex md:flex-shrink-0">
                         <img src={replacement} alt="replacement"
                              className="md:w-[200px] h:[660px] lg:w-[280px] lg:h-[560px]"/>
                     </a>
-                    <div className="bg-white py-6 mx-auto">
+                    <div className="bg-base-100 py-6 mx-auto">
                         <div className="mb-4">
                             <ul className=" md:flex flex-wrap -mb-px font-bold text-center px-6">
                                 <li className="me-2" role="presentation">

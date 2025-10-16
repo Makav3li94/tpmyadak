@@ -11,9 +11,15 @@ import UserProfileMenu from "@/layouts/default/partials/user-profile-menu.jsx";
 import {themeChange} from "theme-change";
 import TopHeader from "@/layouts/common/top-header.jsx";
 import Header from "@/layouts/common/header.jsx";
+import {Breadcrumb} from "@/components/index/index.js";
 
 
-export default function UserAuthenticatedLayout(props) {
+export default function UserAuthenticatedLayout({
+                                                    children,
+                                                    title = '',
+                                                    breadcumbs = [],
+                                                }
+) {
     const {props: {auth, flash},} = usePage()
     const {isShowSidebar, toggleSidebar} = useSidebar(true)
 
@@ -39,34 +45,38 @@ export default function UserAuthenticatedLayout(props) {
                                 <div className="-mr-2 flex items-center space-x-2">
                                     <button
                                         onClick={() => toggleSidebar()}
-                                        className="inline-flex items-center justify-center p-2 rounded-md text-base-content focus:outline-hidden transition duration-150 ease-in-out btn btn-ghost"
+                                        className="inline-flex items-center justify-center lg:hidden p-2 rounded-md text-base-content focus:outline-hidden transition duration-150 ease-in-out btn btn-ghost"
                                     >
-                                        <Menu className="h-5 w-5" />
+                                        <Menu className="h-5 w-5"/>
                                     </button>
                                 </div>
 
                                 <div className="flex flex-row items-center gap-3">
                                     <div className="h-full flex items-center">
-                                        <DarkSwitch />
+                                        <DarkSwitch/>
                                     </div>
-                                    {/*<div className="h-full flex items-center">*/}
-                                    {/*    <ThemeSwitch />*/}
-                                    {/*</div>*/}
-                                    <div className="h-full flex items-center">
 
+                                    <div className="h-full flex items-center">
                                         <NotificationMenu/>
-
                                     </div>
                                     <div className="h-full flex items-center">
-                                        <UserProfileMenu />
+                                        <UserProfileMenu/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </nav>
                     <div className="p-6">
+                        <div className="flex flex-row justify-between items-center">
+                            <Breadcrumb>
+                                {breadcumbs.map((b, i) => (
+                                    <Breadcrumb.Item key={i} r={b.href}>{b.name}</Breadcrumb.Item>
+                                ))}
+                            </Breadcrumb>
+                            <h3 className="text-lg font-medium">{title}</h3>
 
-                        <div className="mt-6">{props.children}</div>
+                        </div>
+                        <div className="mt-6">{children}</div>
                     </div>
                     <div className="mb-4"></div>
                 </main>

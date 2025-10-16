@@ -14,11 +14,11 @@ import {
 import {Link, router} from '@inertiajs/react'
 const navigation = [
     {name: 'داشبورد', href: route('user.dashboard'), icon: LayoutDashboard, current: true},
-    {name: 'سفارش ها', href: route('user.orders'), icon: BringToFront, current: true},
-    {name: 'تراکنش ها', href: route('user.transactions'), icon: SaudiRiyal, current: true},
-    {name: 'لیست خرید', href: route('user.wishlists'), icon: ListOrdered, current: true},
-    {name: 'تیکت ها', href: route('user.tickets'), icon: TicketCheck, current: true},
-    {name: 'اعلان ها', href: route('user.notifications'), icon: Megaphone, current: true},
+    {name: 'سفارش ها', href: route('user.orders.index'), icon: BringToFront, current: true},
+    {name: 'تراکنش ها', href: route('user.transactions.index'), icon: SaudiRiyal, current: true},
+    {name: 'لیست خرید', href: route('user.wishlists.index'), icon: ListOrdered, current: true},
+    {name: 'تیکت ها', href: route('user.tickets.index'), icon: TicketCheck, current: true},
+    {name: 'اعلان ها', href: route('user.notifications.index'), icon: Megaphone, current: true},
 ]
 
 

@@ -9,12 +9,18 @@ import {
     Card
 } from '@/components/index/index.js'
 import UserAuthenticatedLayout from "@/layouts/user/user-authenticated-layout.jsx";
+import Badge from "@/components/daisy-ui/badge.jsx";
 
 export default function Home(props) {
     const {data: { links, data },} = props
 
     return (
-        <UserAuthenticatedLayout>
+        <UserAuthenticatedLayout
+            title={'سفارش'}
+            breadcumbs={[
+                { name: 'پنل کاربری', href: route('user.dashboard') },
+                { name: 'سفارش', href: route('user.orders.index') },
+            ]}>
             <Head title="سفارش" />
             <Card>
                 <div className="overflow-x-auto">
@@ -37,7 +43,13 @@ export default function Home(props) {
                                 <td>{parseInt(order.total).toLocaleString('en')}</td>
                                 <td>{order.payment_status}</td>
                                 <td>{order.shipping_status}</td>
-                                <td>{order.status}</td>
+                                <td>
+                                    {order.status?(
+                                        <Badge type="success" outline={true}>موفق</Badge>
+                                    ):(
+                                        <Badge type="error" outline={true}>ناموفق</Badge>
+                                    )}
+                                </td>
                                 <td>{order.created_at}</td>
                                 <td className="text-right">
                                     <Dropdown>
