@@ -17,7 +17,7 @@
     @inertiaHead
 </head>
 
-<body class="antialiased bg-base-300" author="neogood@yahoo.com" id="root">
+<body class="antialiased bg-base-100" author="neogood@yahoo.com" id="root">
     @inertia
 </body>
 

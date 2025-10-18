@@ -105,7 +105,7 @@ export default function Home(props) {
 
                                         {/*</td>*/}
                                         <td>{product.created_at}</td>
-                                        <td>{product.price}</td>
+                                        <td>{parseInt(product.price).toLocaleString('en')}</td>
                                         <td>
                                             {product.status?(
                                                 <Badge type="success" outline={true}>فعال</Badge>

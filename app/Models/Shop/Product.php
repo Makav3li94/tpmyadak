@@ -106,4 +106,10 @@ class Product extends Model
             get: fn($value) => strip_tags($value)
         );
     }
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => verta($value)->format('Y-m-d')
+        );
+    }
 }
