@@ -3,12 +3,13 @@
 use App\Http\Controllers\Default\FileController;
 use App\Http\Controllers\Default\SitemapController;
 use App\Http\Controllers\Front\FrontBlogController;
+use App\Http\Controllers\Front\GeneralController;
 use Illuminate\Support\Facades\Route;
 
 // define module as main route
 // Route::get('/', [App\Module\Shortlink\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', [\App\Http\Controllers\Front\GeneralController::class, 'index'])->name('home');
-
+Route::get('/', [GeneralController::class, 'index'])->name('home');
+Route::post('/prsearch/{search_term_string}', [GeneralController::class, 'search'])->name('home.product.search');
 Route::get('/article/{slug}', [FrontBlogController::class, 'getBlog'])->name('home.getBlog');
 
 // #Guest

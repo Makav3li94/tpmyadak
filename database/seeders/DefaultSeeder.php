@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\Setting;
 use App\Models\Shop\Brand;
 use App\Models\Shop\ProductCategory;
+use App\Models\Slider;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -107,5 +108,18 @@ class DefaultSeeder extends Seeder
             }
         }
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        Slider::create([
+           'image'=>'bannerSlide01.jpg',
+           'status'=>1
+        ]);
+        Slider::create([
+            'image'=>'bannerSlider02.jpg',
+            'status'=>1
+        ]);
+        Slider::create([
+            'image'=>'bannerSlider03.jpg',
+            'status'=>1
+        ]);
     }
 }

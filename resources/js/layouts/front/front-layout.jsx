@@ -7,6 +7,7 @@ import TopHeader from "@/layouts/common/top-header.jsx";
 import Header from "@/layouts/common/header.jsx";
 import {Toaster} from "sonner";
 import Footer from "@/layouts/common/footer.jsx";
+import {CartProvider} from "react-use-cart";
 
 
 export default function FrontLayout(props) {
@@ -24,6 +25,7 @@ export default function FrontLayout(props) {
         // 👆 false parameter is required for react project
     }, [])
     return (
+        <CartProvider>
         <div className="min-h-screen flex flex-col sm:justify-center items-center w-full">
             <TopHeader user={auth.user}/>
             <Header/>
@@ -37,5 +39,6 @@ export default function FrontLayout(props) {
             }}
             />
         </div>
+        </CartProvider>
     )
 }

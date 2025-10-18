@@ -8,7 +8,7 @@ const FeatureBox = (props) => {
                 {props.icon}
             </div>
             <div className="px-4 py-2 flex flex-col">
-                <span className="text-[#333333] text-sm font-bold">
+                <span className=" text-sm font-bold">
                  {props.title}
                 </span>
                 <span className="text-gray-500 text-sm pt-2">

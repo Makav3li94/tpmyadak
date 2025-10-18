@@ -35,22 +35,22 @@ class DummySeeder extends Seeder
             'slug' => Str::slug('عظام'),
             'image' => 'Brands-Logo-Ezam.jpg',
         ]);
-        $bb3=Brand::create([
+        $bb3 = Brand::create([
             'title' => 'سوخت آما',
             'slug' => Str::slug('سوخت آما'),
             'image' => 'Logo-sookhtama-Retina.png',
         ]);
-        $bb4=Brand::create([
+        $bb4 = Brand::create([
             'title' => 'ایران کاربراتور',
             'slug' => Str::slug('ایران کاربراتور'),
             'image' => '8d414109-c18e-4128-92f5-33dfc68b79e1.webp',
         ]);
-        $bb5=Brand::create([
+        $bb5 = Brand::create([
             'title' => 'سکو',
             'slug' => Str::slug('سکو'),
             'image' => 'seco.png',
         ]);
-        $bb6=Brand::create([
+        $bb6 = Brand::create([
             'title' => 'لیزر',
             'slug' => Str::slug('لیزر'),
             'image' => 'a7bc68a1d4624030910118524e076169__image=400x300,300x225,200x150,100x100,100x75,65x65,155x155,600x600,300x400,75x75,300x300,160x160.jpg',
@@ -66,12 +66,12 @@ class DummySeeder extends Seeder
             'slug' => Str::slug('ایران خودرو'),
             'image' => 'Iran-Khodro-logo.png',
         ]);
-        $spp2=Supplier::create([
+        $spp2 = Supplier::create([
             'title' => 'سایپا',
             'slug' => Str::slug('سایپا'),
             'image' => 'Saipa-logo.png',
         ]);
-        $spp3 =Supplier::create([
+        $spp3 = Supplier::create([
             'title' => 'TPM',
             'slug' => Str::slug('TPM'),
             'image' => '7vFIZB5WjGodKSBe9hy1mPKpSK06yb0nNm3vjN7f.png',
@@ -138,16 +138,19 @@ class DummySeeder extends Seeder
             'title' => 'موتور',
             'slug' => 'موتور',
             'status' => true,
+            'image' => 'cate1.jpg',
         ]);
         $bc2 = ProductCategory::create([
             'title' => 'جلوبندی',
             'slug' => 'جلوبندی',
             'status' => true,
+            'image' => 'cate2.jpg',
         ]);
         $bc3 = ProductCategory::create([
             'title' => 'روغن',
             'slug' => 'روغن',
             'status' => true,
+            'image' => 'cate3.jpg',
         ]);
         $bcc1 = ProductCategory::create([
             'title' => 'روغن موتور',
@@ -212,10 +215,11 @@ class DummySeeder extends Seeder
             'parent_id' => $bc2->id,
             'status' => true,
         ]);
-        $pcp=ProductCategory::create([
+        $pcp = ProductCategory::create([
             'title' => 'نظافت خارجی خودرو',
             'slug' => 'نظافت-خارجی-خودرو',
             'status' => true,
+            'image' => 'cate4.jpg',
         ]);
         $tax1 = Tax::create(['title' => 'ارزش افزوده', 'value' => '10']);
         Tax::create(['title' => 'بدون مالیات', 'value' => '0']);
@@ -289,7 +293,7 @@ class DummySeeder extends Seeder
             'title' => 'روغن ترمز خودرو تکستار TEXTAR مدل DOT 4',
             'slug' => Str::slug('روغن ترمز خودرو تکستار TEXTAR مدل DOT 4'),
             'alias' => 'روغن ترمز خودرو تکستار TEXTAR مدل DOT 4',
-            'excerpt' =>  'روغن ترمز خودرو تکستار TEXTAR مدل DOT 4',
+            'excerpt' => 'روغن ترمز خودرو تکستار TEXTAR مدل DOT 4',
             'product_category_id' => $bcc2->id,
             'brand_id' => $bb4->id,
             'supplier_id' => $spp3->id,
@@ -309,7 +313,7 @@ class DummySeeder extends Seeder
             'title' => 'روغن گیربکس اتوماتیک خودرو لوکینی مدل CVT Fluid',
             'slug' => Str::slug('روغن گیربکس اتوماتیک خودرو لوکینی مدل CVT Fluid'),
             'alias' => 'روغن گیربکس اتوماتیک خودرو لوکینی مدل CVT Fluid',
-            'excerpt' =>  'روغن گیربکس اتوماتیک خودرو لوکینی مدل CVT Fluid',
+            'excerpt' => 'روغن گیربکس اتوماتیک خودرو لوکینی مدل CVT Fluid',
             'product_category_id' => $bcc3->id,
             'brand_id' => $bb5->id,
             'supplier_id' => $spp2->id,
@@ -333,7 +337,7 @@ class DummySeeder extends Seeder
             'title' => 'اسپری رفع پنچری تایر گتسان GETSUN مدل Emergency TYRE WELD',
             'slug' => Str::slug('اسپری رفع پنچری تایر گتسان GETSUN مدل Emergency TYRE WELD'),
             'alias' => 'اسپری رفع پنچری تایر گتسان GETSUN مدل Emergency TYRE WELD',
-            'excerpt' =>  'اسپری رفع پنچری تایر گتسان GETSUN مدل Emergency TYRE WELD',
+            'excerpt' => 'اسپری رفع پنچری تایر گتسان GETSUN مدل Emergency TYRE WELD',
             'product_category_id' => $pcp->id,
             'brand_id' => $bb6->id,
             'supplier_id' => $spp3->id,

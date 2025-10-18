@@ -14,7 +14,8 @@ export default function Button(props) {
         //
         info: 'btn-info btn-outline',
         error: 'btn-error btn-outline',
-        success: 'btn-success',
+        danger: 'btn-error text-base-100',
+        success: 'btn-success text-base-100',
         warning: 'btn-warning',
 
         //

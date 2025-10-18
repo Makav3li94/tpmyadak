@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Shop\Wishlist;
+use Illuminate\Http\Request;
 
 class WishlistController extends Controller
 {
@@ -15,5 +16,15 @@ class WishlistController extends Controller
             'data' => $wishlists,
         ]
         );
+    }
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        Wishlist::where([['user_id', auth()->id()], ['product_id', $request['item']]])->delete();
+        Wishlist::create([
+            'user_id' => auth()->id(),
+            'product_id' => $request['item'],
+            'status' => 0,
+        ]);
+        return back()->with('message', ['type' => 'success', 'message' => 'محصول به علاقه مندی اضافه شد.']);
     }
 }

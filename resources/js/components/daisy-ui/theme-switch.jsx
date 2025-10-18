@@ -1,4 +1,5 @@
-import { Moon, Settings2, Sun } from 'lucide-react'
+import {Heart, Moon, Settings2, Sun} from 'lucide-react'
+import React from "react";
 
 export function ThemeSwitch() {
     const themes = [
@@ -47,17 +48,25 @@ export function ThemeSwitch() {
 
 export function DarkSwitch() {
     return (
-        <label className="swap swap-rotate hover:bg-base-200 p-1 rounded-2xl">
-            <input
-                type="checkbox"
-                data-toggle-theme="dark,light" // change here
-                data-act-class="ACTIVECLASS"
-                className="hidden theme-controller"
-            />
-            {/* sun icon */}
-            <Moon className="swap-off h-5 w-5" />
-            {/* moon icon */}
-            <Sun className="swap-on h-5 w-5" />
-        </label>
+        <a
+            href="#"
+            title="favourite"
+            className="hidden xl:block items-center border-[1.5px] border-gray-300 rounded-md p-2 xl:mr-3 group"
+        >
+            <label className="swap swap-rotate hover:bg-base-200 p-1 rounded-2xl">
+                <input
+                    type="checkbox"
+                    data-toggle-theme="dark,light" // change here
+                    data-act-class="ACTIVECLASS"
+                    className="hidden theme-controller"
+                />
+                {/* sun icon */}
+                <Moon className="swap-off h-5 w-5" />
+                {/* moon icon */}
+                <Sun className="swap-on h-5 w-5" />
+            </label>
+
+        </a>
+
     )
 }

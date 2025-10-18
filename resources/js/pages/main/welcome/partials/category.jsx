@@ -3,7 +3,7 @@ import {Link} from "@inertiajs/react";
 import Slider from "@/pages/main/welcome/partials/slider.jsx";
 import {ChevronLeft} from "lucide-react";
 
-export default function Category(props) {
+export default function Category({sliders}) {
     return (
         <section className="bg-base-100 w-full flex justify-center py-12">
             <div className="container   ">
@@ -366,7 +366,7 @@ export default function Category(props) {
 
                         </ul>
                     </div>
-                    <Slider/>
+                    <Slider sliders={sliders}/>
                 </div>
             </div>
             </div>

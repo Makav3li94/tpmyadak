@@ -181,6 +181,13 @@ class MenuConstant
                         'permission' => 'view-setting',
                     ],
                     [
+                        'name' => 'اسلایدر',
+                        'show' => true,
+                        'route' => route('admin.sliders.index'),
+                        'active' => 'admin.sliders.*',
+                        'permission' => 'view-slider',
+                    ],
+                    [
                         'name' => 'بکاپ',
                         'show' => true,
                         'route' => route('admin.backup.index'),

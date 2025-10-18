@@ -1,10 +1,3 @@
-import {AlignJustify} from "lucide-react";
-import brand1 from '../../../../../images/b1.jpg'
-import brand2 from '../../../../../images/b2.jpg'
-import brand3 from '../../../../../images/b3.jpg'
-import brand4 from '../../../../../images/b4.jpg'
-import brand5 from '../../../../../images/b5.jpg'
-import brand6 from '../../../../../images/b6.jpg'
 
 const BrandBox = ({image})=>{
     return(
@@ -19,7 +12,7 @@ const BrandBox = ({image})=>{
         </div>
     )
 }
-export default function ProductBrands(props) {
+export default function ProductBrands({brands}) {
     return (
         <section className="bg-base-100 w-full flex justify-center pb-12">
 
@@ -31,14 +24,9 @@ export default function ProductBrands(props) {
                     </h3>
                 </div>
                 <div className="flex">
-
-                    <BrandBox image={brand1}/>
-                    <BrandBox image={brand2}/>
-                    <BrandBox image={brand3}/>
-                    <BrandBox image={brand4}/>
-                    <BrandBox image={brand5}/>
-                    <BrandBox image={brand6}/>
-
+                    {brands.map((brand,i)=>
+                    <BrandBox image={route('file.show',brand.image)}/>
+                )}
                 </div>
             </div>
         </section>

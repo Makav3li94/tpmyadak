@@ -27,6 +27,11 @@ class PermissionConstant
         ['label' => 'View Setting', 'name' => 'view-setting', 'group' => 'Sertting'],
         ['label' => 'Update Setting', 'name' => 'update-setting', 'group' => 'Setting'],
 
+        ['label' => 'Create Slider', 'name' => 'create-slider', 'group' => 'slider'],
+        ['label' => 'Update Slider', 'name' => 'update-slider', 'group' => 'slider'],
+        ['label' => 'View Slider', 'name' => 'view-slider', 'group' => 'slider'],
+        ['label' => 'Delete Slider', 'name' => 'delete-slider', 'group' => 'slider'],
+
         // #Add New Permission Below!
 		['label' => 'Delete Blog Category', 'name' => 'delete-blog-category' , 'group' => 'blog-category'],
 		['label' => 'Update Blog Category', 'name' => 'update-blog-category' , 'group' => 'blog-category'],

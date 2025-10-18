@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ShippingMethodController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Admin\TicketController;
@@ -103,6 +104,7 @@ Route::prefix('tpmauto')->group(static function () {
         Route::resource('ticket', TicketController::class, ['names' => 'admin.tickets'])->only(['index', 'show', 'create', 'destroy']);
         Route::resource('faq', FaqController::class, ['names' => 'admin.faq'])->only(['update']);
 
+        Route::resource('slider', SliderController::class, ['names' => 'admin.sliders'])->only(['index', 'store', 'update', 'destroy']);
         Route::resource('brand', BrandController::class, ['names' => 'admin.brands'])->only(['index', 'store', 'update', 'destroy']);
         Route::resource('car-brand', CarBrandController::class, ['names' => 'admin.car.brands'])->only(['index', 'store', 'update', 'destroy']);
         Route::resource('car-model', CarModelController::class, ['names' => 'admin.car.models'])->only(['index', 'store', 'update', 'destroy']);
