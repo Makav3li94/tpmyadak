@@ -9,6 +9,8 @@ This is a laravel starterkit with inertia, react, user role based access crud wi
 
 ## How to run
 
+php artisan queue:listen --queue=high,medium,low
+
 prepare env
 
 ```bash

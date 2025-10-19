@@ -20,7 +20,7 @@ class AuthenticatedSessionController extends Controller
         return Inertia::render('user/auth/login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
-//            'provider' => Inertia::optional(fn () => 'google'),
+            //            'provider' => Inertia::optional(fn () => 'google'),
         ]);
     }
 
@@ -32,11 +32,10 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
         return Inertia::location(route('user.dashboard', absolute: false));
-//        return redirect()->intended(route('dashboard', absolute: false));
+        //        return redirect()->intended(route('dashboard', absolute: false));
     }
-
-
 
     /**
      * Destroy an authenticated session.
@@ -48,7 +47,8 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
         return Inertia::location(route('login', absolute: false));
-//        return redirect()->route('login');
+        //        return redirect()->route('login');
     }
 }

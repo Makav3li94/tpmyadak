@@ -10,8 +10,6 @@ use App\Models\Familiarity;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Setting;
-use App\Models\Shop\Brand;
-use App\Models\Shop\ProductCategory;
 use App\Models\Slider;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -58,7 +56,6 @@ class DefaultSeeder extends Seeder
             'mobile' => '09121234567',
             'password' => bcrypt('password'),
         ]);
-
 
         BlogCategory::create([
             'title' => 'مجله',
@@ -110,16 +107,16 @@ class DefaultSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         Slider::create([
-           'image'=>'bannerSlide01.jpg',
-           'status'=>1
+            'image' => 'bannerSlide01.jpg',
+            'status' => 1,
         ]);
         Slider::create([
-            'image'=>'bannerSlider02.jpg',
-            'status'=>1
+            'image' => 'bannerSlider02.jpg',
+            'status' => 1,
         ]);
         Slider::create([
-            'image'=>'bannerSlider03.jpg',
-            'status'=>1
+            'image' => 'bannerSlider03.jpg',
+            'status' => 1,
         ]);
     }
 }
