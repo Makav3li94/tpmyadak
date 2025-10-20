@@ -4,7 +4,7 @@ export default function Footer(props) {
     return (
         <footer className="bg-black w-full flex justify-center ">
 
-            <div className="container">
+            <div className="container  px-5 md:px-0">
                 <div className="flex flex-wrap justify-between">
                     <ul className="text-white py-14 pl-4">
                         {/* conract us--------- */}

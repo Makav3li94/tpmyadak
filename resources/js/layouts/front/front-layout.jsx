@@ -8,9 +8,10 @@ import Header from "@/layouts/common/header.jsx";
 import {Toaster} from "sonner";
 import Footer from "@/layouts/common/footer.jsx";
 import {CartProvider} from "react-use-cart";
+import HeaderSingle from "@/layouts/common/header-single.jsx";
 
 
-export default function FrontLayout(props) {
+export default function FrontLayout({isSingle = false, children}) {
     const {props: {auth, flash},} = usePage()
     const {isShowSidebar, toggleSidebar} = useSidebar(true)
 
@@ -26,19 +27,22 @@ export default function FrontLayout(props) {
     }, [])
     return (
         <CartProvider>
-        <div className="min-h-screen flex flex-col sm:justify-center items-center w-full">
-            <TopHeader user={auth.user}/>
-            <Header/>
+            <div className="min-h-screen flex flex-col sm:justify-center items-center w-full">
+                <TopHeader user={auth.user}/>
 
-            {props.children}
+                <Header/>
+                {isSingle && <HeaderSingle/>}
 
-            <Footer/>
-            <Toaster theme="system" richColors="true" toastOptions={{
-                duration: 3000,
-                dismissible: true,
-            }}
-            />
-        </div>
+
+                {children}
+
+                <Footer/>
+                <Toaster theme="system" richColors="true" toastOptions={{
+                    duration: 3000,
+                    dismissible: true,
+                }}
+                />
+            </div>
         </CartProvider>
     )
 }

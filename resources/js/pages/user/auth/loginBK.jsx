@@ -87,74 +87,59 @@ export default function Login({status}) {
         }
     }
 
-    // Helper to process phoneStat response (extracted to avoid duplication)
-    const processPhoneStatResponse = (responseData) => {
-        // Clear password field when phoneStat returns
-        setData('password', '')
+    const submit = (e) => {
+        e.preventDefault()
 
-        if (responseData.user === 'True') {
-            showToast('رمز عبور جدید برای شما ارسال شد.', 'success')
-            setStatusMessage(responseData.statusMessage)
-            setShowPass(true)
-            return
-        }
-
-        if (responseData.user === 'False') {
-            if (responseData.sms_active === 'yes') {
-                showToast('کد با موفقیت ارسال شد.', 'success')
-                // reverse-engineer code as before
-                const suckit = (parseInt(responseData.code) - ((parseInt(data.mobile) * 100) / 2)) / 1363
-                console.log(suckit)
-                setMfCode(suckit)
-            } else {
-                setDisableSms(true)
-            }
-            setIsRegister(true)
-        }
+        post(route('login'))
     }
-
-    // Optimized click handler (refactored, uses async/await and helper above)
-    const handleConfirmButtonClick = async (e, type = 'login') => {
+    const handleConfirmButtonClick = (e, type = 'login') => {
         e.preventDefault()
         setBtnDis(true)
         setErrMobile(null)
-
-        // LOGIN or RESEND flows
         if (type === 'login' || type === 'resend') {
             setCounter(45)
+            if ((!showPass) || type === 'resend') {
+                setErrMobile(null)
+                axios.get(route('phoneStat', {mobile: data.mobile})).then(response => {
+                        setData('password', '')
+                        if (response.data.user === 'True') {
+                            showToast('رمز عبور جدید برای شما ارسال شد.', 'success')
+                            setStatusMessage(response.data.statusMessage)
+                            setShowPass(true)
+                            setBtnDis(false)
+                        } else if (response.data.user === 'False') {
+                            if (response.data.sms_active === 'yes') {
+                                showToast('کد با موفقیت ارسال شد.', 'success')
+                                let suckit = (parseInt(response.data.code) - ((parseInt(data.mobile) * 100) / 2)) / 1363
+                                console.log(suckit)
+                                setMfCode(suckit)
+                            } else {
+                                setDisableSms(true)
+                            }
+                            setIsRegister(true)
+                            setIsRegister(true)
+                            setBtnDis(false)
+                        }
+                        if (Object.keys(response.data.errs).length !== 0) {
 
-            // If user is requesting code or hasn't chosen password flow
-            if (!showPass || type === 'resend') {
-                try {
-                    setErrMobile(null)
-                    const response = await axios.get(route('phoneStat', {mobile: data.mobile}))
-                    const responseData = response.data
-
-                    // process main response
-                    processPhoneStatResponse(responseData)
-
-                    // handle validation errors returned by endpoint
-                    if (responseData.errs && Object.keys(responseData.errs).length !== 0) {
-                        const err = responseData.errs
-                        if (err.mobile) {
-                            setErrMobile(err.mobile)
+                            let err = response.data.errs
+                            if (err.mobile) {
+                                setErrMobile(err.mobile)
+                            }
+                            setBtnDis(false)
                         }
                     }
-                } catch (error) {
+                ).catch(error => {
                     console.log(error)
-                } finally {
                     setBtnDis(false)
-                }
+                });
+
             } else {
-                // Password login flow
-                if (!data.password || data.password.length !== 6) {
+                if (data.password.length !== 6) {
                     showToast('لطفا رمز را به درستی وارد کنید.', 'error')
-                    setBtnDis(false)
                     return
                 }
-
-                router.post(
-                    route('login'),
+                router.post(route('login'),
                     {
                         email: data.email,
                         mobile: data.mobile,
@@ -168,58 +153,51 @@ export default function Login({status}) {
                     }
                 )
             }
-
-            return
-        }
-
-        // REGISTER flow
-        try {
+        } else {
             if (!disableSms) {
-                const codeIsValid = handleCode()
-                if (!codeIsValid) {
-                    // keep button disabled state until user fixes code; re-enable
-                    setBtnDis(false)
+                if (!handleCode()) {
                     return false
                 }
             }
-
-            // Clear previous errors
             setErrMobile(null)
             setErrName(null)
             setErrEmail(null)
-
-            const response = await axios.post(
-                route('registerPost'),
+            axios.post(route('registerPost',
                 {
                     code: data.code,
                     name: data.name,
                     mobile: data.mobile,
                     email: data.email,
                     password: data.password,
-                },
-            )
+                },)).then(response => {
+                    if (response.data.status === 'success'){
+                        router.visit(route('user.dashboard'))
+                    }
+                    if (Object.keys(response.data.errs).length !== 0) {
 
-            const responseData = response.data
-
-            if (responseData.status === 'success') {
-                router.visit(route('user.dashboard'))
-                return
-            }
-
-            if (responseData.errs && Object.keys(responseData.errs).length !== 0) {
-                const err = responseData.errs
-                if (err.mobile) setErrMobile(err.mobile)
-                if (err.name) setErrName(err.name)
-                if (err.email) setErrEmail(err.email)
-                if (err.code) setErrCode(err.code)
-            }
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setBtnDis(false)
+                        let err = response.data.errs
+                        if (err.mobile) {
+                            setErrMobile(err.mobile)
+                        }
+                        if (err.name) {
+                            setErrName(err.name)
+                        }
+                        if (err.email) {
+                            setErrEmail(err.email)
+                        }
+                        if (err.code) {
+                            setErrCode(err.code)
+                        }
+                        setBtnDis(false)
+                    }
+                }
+            ).catch(error => {
+                console.log(error)
+                setBtnDis(false)
+            });
         }
-    }
 
+    }
     return (
         <GuestLayout>
             <Head title="ورود | ثبت نام"/>
@@ -262,37 +240,36 @@ export default function Login({status}) {
                                     onKeyDownCapture={handleKeyDown}
                                 />
                             </div>
-                            {/*<div className='text-right text-primary'>*/}
-                            {/*    <Link href={route('password.request')}>*/}
-                            {/*        <span*/}
-                            {/*            className="text-sm  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">فراموشی*/}
-                            {/*            رمز عبور</span></Link>*/}
-                            {/*</div>*/}
+                            <div className='text-right text-primary'>
+                                <Link href={route('password.request')}>
+                                    <span
+                                        className="text-sm  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">فراموشی
+                                        رمز عبور</span></Link>
+                            </div>
                         </>
                     )}
+                    {showPass &&
+                        <Button type="error"
+                                onClick={(e) => handleConfirmButtonClick(e, 'login')}
+                                disabled={counter !== 0}>ارسال مجدد
+                            <strong
+                                className="text-danger mr-2">{counter !== 0 ? counter : ''}</strong>
+                        </Button>
+                    }
 
                     <Button btnType="submit" processing={processing} type={'primary'}
                             className={"btn mt-2 w-full btn-primary"}>
                         ورود
                     </Button>
-                    {showPass &&
-                    <Button type="error"
-                            className={"btn mt-5 w-full "}
-                            onClick={(e) => handleConfirmButtonClick(e, 'login')}
-                            disabled={counter !== 0}>ارسال مجدد پیامک
-                        <strong
-                            className="text-danger mr-2">{counter !== 0 ? counter : ''}</strong>
-                    </Button>
-                    }
-                    {/*<div className='text-center mt-4'>اکانت ندارید ؟*/}
-                    {/*    <Link href={route('register')}>*/}
-                    {/*        <span*/}
-                    {/*            className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">*/}
-                    {/*            ثبت نام*/}
-                    {/*        </span>*/}
-                    {/*    </Link> کنید.*/}
+                    <div className='text-center mt-4'>اکانت ندارید ؟
+                        <Link href={route('register')}>
+                            <span
+                                className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">
+                                ثبت نام
+                            </span>
+                        </Link> کنید.
 
-                    {/*</div>*/}
+                    </div>
                 </form>
             ) : (
                 <form onSubmit={(e) => handleConfirmButtonClick(e, 'register')}>
@@ -333,30 +310,29 @@ export default function Login({status}) {
                             />
                         </div>
                     }
-                    <Button btnType="submit" processing={btnDis} type={'primary'}
+                    <Button btnType="submit" processing={processing} type={'primary'}
                             className={"btn mt-2 w-full btn-primary"}>
                         ثبت نام
                     </Button>
-                    {!disableSms &&
+                    {disableSms &&
                         <Button type="error"
-                                className={"btn mt-5 w-full "}
                                 onClick={(e) => handleConfirmButtonClick(e, 'resend')}
-                                disabled={counter !== 0}>ارسال مجدد پیامک
+                                disabled={counter !== 0}>ارسال مجدد
                             <strong
                                 className="text-danger mr-2">{counter !== 0 ? counter : ''}</strong>
                         </Button>
                     }
 
 
-                    {/*<div className='text-center mt-4'>اکانت ندارید ؟*/}
-                    {/*    <Link href={route('register')}>*/}
-                    {/*        <span*/}
-                    {/*            className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">*/}
-                    {/*            ثبت نام*/}
-                    {/*        </span>*/}
-                    {/*    </Link> کنید.*/}
+                    <div className='text-center mt-4'>اکانت ندارید ؟
+                        <Link href={route('register')}>
+                            <span
+                                className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">
+                                ثبت نام
+                            </span>
+                        </Link> کنید.
 
-                    {/*</div>*/}
+                    </div>
                 </form>
             )}
 

@@ -1,120 +1,238 @@
 import {DarkSwitch} from "@/components/daisy-ui/theme-switch.jsx";
-import React from "react";
-import {ShoppingCart, Search, Plus, Minus} from "lucide-react";
+import React, {useState} from "react";
+
 import logo from "../../../images/logo.png"
 import {Link} from "@inertiajs/react";
-import HeaderMobile from "@/layouts/common/header-mobile.jsx";
-import {useCart} from "react-use-cart";
-import {Button} from "@/components/index/index.js";
 import SearchBar from "@/components/common/search-bar.jsx";
+import {motion} from "motion/react"
+import {useIsMobile} from '@/hooks'
+import GetCart from "@/components/common/get-cart.jsx";
+import {Search, Menu, Moon} from "lucide-react";
 
 export default function Header(props) {
-    const {
-        totalUniqueItems,
-        items,
-        updateItemQuantity,
-        removeItem,
-        cartTotal,
-        isEmpty,
-    } = useCart();
+    const [openSearch, setOpenSearch] = useState(false)
+    const isMobile = useIsMobile()
     return (
-        <header>
-            <div className="container">
-                <div className="grid grid-cols-12 py-6 items-center">
-                    <div className="hidden lg:flex lg:col-span-4">
+        <header className=" w-full flex justify-center items-center">
+            {!isMobile ? (
+                <div className="container">
+                    <div className="grid grid-cols-12 py-6 items-center">
+                        <div className="hidden md:flex md:col-span-4">
 
-                        <div
-                            title="shoppingCard"
-                            className="flex border-[1.5px] relative border-gray-300 rounded-md px-2 group hover:drop-shadow-2xl hover:drop-shadow-gray-300 hover:shadow-lg hover:shadow-gray-300 z-50 "
-                        >
-                            <div
-                                className="relative after:content-[''] after:absolute after:bg-gray-300 after:h-[100%] after:w-[2px] after:top-1/2 after:-translate-y-1/2 after:right-[30px] py-2">
-                                <div className="indicator">
-                                    <span className="indicator-item badge badge-secondary ">{totalUniqueItems}</span>
-                                    <ShoppingCart className="w-6 h-6 "/>
+                            <GetCart/>
+
+                            <DarkSwitch/>
+                        </div>
+                        {/* ---------- search bar big screen------------- */}
+                        <SearchBar/>
+
+                        {/* ------------- logo ----------------- */}
+                        <Link href={route('home')}
+                              className="w-[150px] sm:w-[200px] flex col-span-12 md:col-span-2 h-auto   text-left ">
+                            <img src={logo} alt="logo"/>
+                        </Link>
+                    </div>
+                </div>
+            ) : (
+
+                <div className="w-full  bg-base-200 lg:hidden   my-0">
+                    {/* ------------------------ menu categories small sceern----------------- */}
+                    <div class="container grid grid-cols-12 py-3 px-4">
+                        <div className="col-span-4 flex items-center px-1 sm:px-0">
+                            <GetCart isMobile={isMobile}/>
+                            <DarkSwitch/>
+                        </div>
+                            <Link href={route('home')}
+                                  className="col-span-4 flex items-center py-2  ">
+                                <img src={logo} alt="logo"/>
+                            </Link>
+                        {/* ------------------------ shopping basket small screen----------------- */}
+
+                        <div className="col-span-4 flex items-center px-1 sm:px-0">
+
+                                <div className="btn" onClick={()=>setOpenSearch(!openSearch)}>
+                                    <Search className=" h-5 w-5" />
                                 </div>
+                            {openSearch &&
+                                <motion.div
+                                    style={{overflow: "hidden"}}
+                                    initial={{height: 0}}
+                                    animate={{height: "auto"}}
+                                    transition={{duration: 0.5}}
+                                    exit={{height: 0}}
+                                    key={"container"}
+                                >
+                                    <SearchBar isMobile={isMobile}/>
+                                </motion.div>
+                            }
+                        {/* -------- menu drawer small sceern----- */}
+                        <div className="flex items-center justify-end mr-3">
+                            <div className="drawer">
+                                <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
+                                <div className="drawer-content">
+                                    {/* Page content here */}
+                                    <label htmlFor="my-drawer-1" className="btn drawer-button">
+                                        <Menu/>
+                                    </label>
+                                </div>
+                                <div className="drawer-side">
+                                    <label htmlFor="my-drawer-1" aria-label="close sidebar" className="drawer-overlay"></label>
+                                    <ul className="menu bg-base-200 min-h-full w-80 ">
+                                        {/* Sidebar content here */}
+                                        <div className="py-4 overflow-y-auto ">
+                                            <ul className="space-y-2 font-medium">
+                                                {/* ------ menu drawer list HOME------ */}
 
-                            </div>
-                            <span className=" tracking-[0.5px] px-3 py-2">
-                                سبد خرید
-                            </span>
-                            <span className="text-[#ff2d37] font-bold py-2">
-                                ۲۸۸,۰۰۰ تومان
-                            </span>
-                            {/* ------------ drop down shopping basket big screen------------ */}
+                                                <li>
+                                                    <div className="collapse collapse-plus bg-base-100 border border-base-300">
+                                                        <input type="radio" name="my-accordion-3" defaultChecked />
+                                                        <div className="collapse-title font-semibold">اصلی</div>
+                                                        <ul  className=" collapse-content py-2 space-y-2 bg-white px-2">
+                                                            <li>
+                                                                <Link href={route('home')} className="cursor-pointer ">
+                                                                    خانه
+                                                                </Link>
+                                                            </li>
+                                                            <li>
+                                                                <Link href={route('home')} className="cursor-pointer ">
+                                                                    محصولات
+                                                                </Link>
+                                                            </li>
+                                                            <li>
+                                                                <Link href={route('home')} className="cursor-pointer ">
+                                                                    وبلاگ
+                                                                </Link>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
 
-                            <div className="hidden border-1 border-gray-300 group-hover:block w-[180%]
-                                absolute top-full right-2 translate-x-2 z-50 mt-1 py-2 bg-white">
-                                {items.map((item, index) => (
-                                    <div className="flex items-center text-gray-600 justify-between
-                                         pt-3 pb-4 border-b border-gray-300 px-3" key={index}>
-                                        <span
-                                            className="flex-1 w-full  text-sm text-gray-500 hover:text-[#ff2d37] transition duration-300 ease-in pr-2 pl-3">
-                                            {item.title}
-                                        </span>
-                                        <Link href="#" title="product01">
-                                            <img src={route('file.show', item.image)} alt="محصول انتخابی"
-                                                 className="w-52 "/>
-                                        </Link>
 
-                                        <span className="text-gray-500 px-2">{item.quantity + ' عدد'} </span>
-                                        <span className="text-gray-500 pr-2 pl-5  ">
-                                            {parseInt(item.price).toLocaleString('en')} تومان
-                                        </span>
-                                        <div className="inline-flex">
-                                            <ul className="action flex items-center list-unstyled justify-center gap-3 ">
-                                                <li className="edit">
-                                                    <Button type='success' className="btn-xs"
-                                                            onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
-                                                    >
-                                                        <Plus className="fs-6_5  align-middle "/>
-                                                    </Button>
+
                                                 </li>
+                                                <li>
+                                                    <div className="collapse collapse-plus bg-base-100 border border-base-300">
+                                                        <input type="radio" name="my-accordion-3" defaultChecked />
+                                                        <div className="collapse-title font-semibold">صفحات</div>
+                                                            <ul  className=" collapse-content py-2 space-y-2 bg-white px-2">
+                                                                <li className="py-1">
+                                                                    <a
+                                                                        href="#"
+                                                                        title="faqpage"
+                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                    >
+                                                                        سوالات متداول
+                                                                    </a>{" "}
+                                                                </li>
+                                                                <li className="py-1">
+                                                                    <a
+                                                                        href="#"
+                                                                        title="sitemappage"
+                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                    >
+                                                                        نقشه سایت{" "}
+                                                                    </a>{" "}
+                                                                </li>
+                                                                <li className="py-1">
+                                                                    <a
+                                                                        href="#"
+                                                                        title="contactus"
+                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                    >
+                                                                        تماس با ما
+                                                                    </a>{" "}
+                                                                </li>
+                                                                <li className="py-1">
+                                                                    <a
+                                                                        href="#"
+                                                                        title="bannerefectpage"
+                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                    >
+                                                                        گالری تصاویر{" "}
+                                                                    </a>{" "}
+                                                                </li>
+                                                                <li className="py-1">
+                                                                    <a
+                                                                        href="#"
+                                                                        title="aboutus"
+                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                    >
+                                                                        درباره ما
+                                                                    </a>{" "}
+                                                                </li>
+                                                            </ul>
+                                                    </div>
 
-                                                <li className="edit">
-                                                    {parseInt(item.quantity).toLocaleString('en')}
-                                                </li>
-                                                <li className="edit">
-                                                    <Button type='warning' className="btn-xs"
-                                                            onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
-                                                    >
-                                                        <Minus className="fs-6_5  align-middle "/>
-                                                    </Button>
-                                                </li>
 
+
+                                                </li>
+                                                <li>
+                                                    <div className="collapse collapse-plus bg-base-100 border border-base-300">
+                                                        <input type="radio" name="my-accordion-3" defaultChecked />
+                                                        <div className="collapse-title font-semibold">دسته بندی ها</div>
+                                                        <ul  className=" collapse-content py-2 space-y-2 bg-white px-2">
+                                                            <li className="py-1">
+                                                                <h4 className="font-bold text-base">
+                                                                    لوازم جانبی خودرو
+                                                                </h4>
+                                                            </li>
+                                                            <li className="py-1">
+                                                                <a
+                                                                    href="#"
+                                                                    title="securityalarms"
+                                                                    className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                >
+                                                                    دزدگیر و سیستم‌های امنیتی
+                                                                </a>{" "}
+                                                            </li>
+                                                            <li className="py-1">
+                                                                <a
+                                                                    href="#"
+                                                                    title="speakers"
+                                                                    className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                >
+                                                                    سیستم صوتی و بلندگوها
+                                                                </a>{" "}
+                                                            </li>
+                                                            <li className="py-1">
+                                                                <a
+                                                                    href="#"
+                                                                    title="gadgets"
+                                                                    className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                >
+                                                                    گجت‌ها و قطعات یدکی
+                                                                </a>{" "}
+                                                            </li>
+                                                            <li className="py-1">
+                                                                <a
+                                                                    href="#"
+                                                                    title="moreaccessories"
+                                                                    className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                >
+                                                                    سایر لوازم جانبی
+                                                                </a>{" "}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+
+
+                                                </li>
+                                                {/* ------ menu drawer categories list------ */}
                                             </ul>
                                         </div>
-
-                                    </div>
-                                ))}
-
-
-                                <div className="flex justify-between px-3 py-2">
-                                    <span className="text-[#ff2d37] font-bold py-2">
-                                        مبلغ کل: {cartTotal} تومان
-                                    </span>
-                                    <Button type='success' className="text-base hover:text-[#ff2d37]" title="checkout">
-                                        تکمیل خرید
-
-                                    </Button>
+                                    </ul>
                                 </div>
                             </div>
+
+
                         </div>
-
-                        <DarkSwitch/>
                     </div>
-                    {/* ---------- search bar big screen------------- */}
-                    <SearchBar/>
-
-                    {/* ------------- logo ----------------- */}
-                    <Link href={route('home')}
-                          className="w-[150px] sm:w-[200px] flex col-span-12 lg:col-span-2 h-auto   text-left ">
-                        <img src={logo} alt="logo"/>
-                    </Link>
+                    </div>
                 </div>
-            </div>
+            )}
+
             {/* ------------------------ menu small screen----------------- */}
-            <HeaderMobile/>
+
         </header>
     )
 }

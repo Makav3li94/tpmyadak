@@ -111,6 +111,7 @@ class RegisteredUserController extends Controller
             return redirect()->route('user.dashboard')->with('message', 'ثبت نام موفق');
 
         } else {
+            return response()->json(['status' => 'success']);
             return back()->with('message', 'ثبت نام موفق');
 
         }

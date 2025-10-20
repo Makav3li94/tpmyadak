@@ -1,726 +1,728 @@
 import React from "react";
 import {ChevronDown} from "lucide-react";
+
 export default function HeaderMobile(props) {
     return (
 
-            <div className="container grid grid-cols-12 bg-[#f5f5f5] lg:hidden py-2 mx-auto my-0">
-                {/* ------------------------ menu categories small sceern----------------- */}
-
+        <div className="w-full  bg-[#f5f5f5] lg:hidden   my-0">
+            {/* ------------------------ menu categories small sceern----------------- */}
+            <div class="container grid grid-cols-12 py-3 px-4">
                 <a className="col-span-5 flex items-center py-2">
-            <span className="flex text-sm font-bold text-[#333333]">
-              دسته بندی ها
-              <div className="flex items-center justify-end">
-                <div>
-                  <button
-                      type="button"
-                      className="col-span-1 flex items-center mr-auto py-1"
-                      data-drawer-target="drawer-navigation-categories"
-                      data-drawer-show="drawer-navigation-categories"
-                      aria-controls="drawer-navigation-categories"
-                  >
-                      <ChevronDown className="px-1 text-grey-500"/>
+                    <span className="flex text-sm font-bold text-[#333333]">
+                        دسته بندی ها
+                        <div className="flex items-center justify-end">
+                            <div>
+                                <button
+                                    type="button"
+                                    className="col-span-1 flex items-center mr-auto py-1"
+                                    data-drawer-target="drawer-navigation-categories"
+                                    data-drawer-show="drawer-navigation-categories"
+                                    aria-controls="drawer-navigation-categories"
+                                >
+                                    <ChevronDown className="px-1 text-grey-500"/>
 
-                  </button>
-                </div>
-                <div
-                    id="drawer-navigation-categories"
-                    className="fixed w-64 top-0 left-0 z-40 h-screen px-4 py-6 overflow-y-auto transition-transform -translate-x-full bg-[#333333] border-b-[1px] border-gray-300"
-                    tabindex="-1"
-                    aria-labelledby="drawer-navigation-label"
-                >
-                  {/* ------- close button----- */}
-                    <button
-                        type="button"
-                        data-drawer-hide="drawer-navigation-categories"
-                        aria-controls="drawer-navigation-categories"
-                        className="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 start-2.5 inline-flex items-center justify-center cursor-pointer dark:hover:text-white"
-                    >
-                    <svg
-                        className="w-3 h-3"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="#ffffff"
-                        viewBox="0 0 14 14"
-                    >
-                      <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                      />
-                    </svg>
-                  </button>
-                    {/* ---------- category drawer list------- */}
-                    <div className="py-4 overflow-y-auto bg-[#333333]">
-                    <ul className="space-y-2 font-medium">
-                      {/* ------ menu drawer list lightning------ */}
-                        <li>
-                        <button
-                            type="button"
-                            className="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-white hover:text-[#333333] cursor-pointer"
-                            aria-controls="dropdown-example-category"
-                            data-collapse-toggle="dropdown-example-category"
-                        >
-                          <span className="flex-1 ms-3 text-left hover:text-[#ff2d37] rtl:text-right">
-                            روشنایی
-                          </span>
-
-                          <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 640 640"
-                              className="w-4 h-4 group-hover:fill-[#333333]"
-                              fill="#ffffff"
-                          >
-                            <path
-                                d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/>
-                          </svg>
-                        </button>
-                        <ul
-                            id="dropdown-example-category"
-                            className="hidden py-2 space-y-2 bg-white"
-                        >
-                          <ul className="p-3 text-sm">
-                            {/* --------------APPAREL----------- */}
-                              <li className="font-bold">
-                              <h4 className="text-[#333333]">کاورها</h4>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="tabpcacc">
-                                لوازم جانبی تبلت و کامپیوتر
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="ipadacc">
-                                لوازم جانبی آیپد{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="ipadacc">
-                                لوازم جانبی آیفون{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="tarvel">
-                                کیف و لوازم سفر{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="security">
-                                دزدگیر و امنیت خودرو{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="speaker">
-                                سیستم صوتی و بلندگوهای خودرو{" "}
-                              </a>
-                            </li>
-                            <li>
-                              <h4 className="text-[#333333] mt-5 font-bold">
-                                کابل و رابط‌ها
-                              </h4>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="camera">
-                                دوربین و عکاسی{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="electronics">
-                                لوازم الکترونیکی{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="outdoor">
-                                فضای باز و مسافرتی{" "}
-                              </a>
-                            </li>
-                          </ul>
-                          <ul className="p-3 text-sm">
-                            <li className="font-bold">
-                              <h4 className="text-[#333333] font-bold">
-                                کمپینگ و کوهنوردی
-                              </h4>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="cammping">
-                                گوشی ها{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="hiking">
-                                اصلاح و موزدایی{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="outdoor">
-                                تجهیزات سالن و اسپا{" "}
-                              </a>
-                            </li>
-                            <li className="font-bold">
-                              <h4 className="text-[#333333] font-bold mt-5">
-                                تبلت ها و گوشی های هوشمند
-                              </h4>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="sport">
-                                لوازم ورزشی و فضای باز{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="bath">
-                                بهداشت و مراقبت بدن{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="gadget">
-                                گجت‌ها و قطعات خودرو{" "}
-                              </a>
-                            </li>
-                          </ul>
-                          <ul className="p-3 text-sm">
-                            <li className="font-bold">
-                              <h4 className="text-[#333333] font-bold">
-                                کیف و لوازم سفر
-                              </h4>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="battery">
-                                باتری و شارژر{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="headset">
-                                هدفون و هدست{" "}
-                              </a>
-                            </li>
-                            <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                              <a href="#" title="oudiohome">
-                                لوازم صوتی خانگی{" "}
-                              </a>
-                            </li>
-                          </ul>
-                        </ul>
-                      </li>
-                        {/* ------ menu drawer list features------ */}
-                        <li>
-                        <button
-                            type="button"
-                            className="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-white hover:text-[#333333] dark:hover:bg-gray-700 cursor-pointer"
-                            aria-controls="dropdown-features"
-                            data-collapse-toggle="dropdown-features"
-                        >
-                          <span className="flex-1 ms-3 text-left rtl:text-right">
-                            مشخصات
-                          </span>
-
-                          <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 640 640"
-                              className="w-4 h-4 group-hover:fill-[#333333]"
-                              fill="#ffffff"
-                          >
-                            <path
-                                d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/>
-                          </svg>
-                        </button>
-                        <ul
-                            id="dropdown-features"
-                            className="py-2 space-y-2 bg-white"
-                        >
-                          {/* -------- drawer menu pages list------ */}
-                            <ul className="px-3 pt-2">
-                            <li className="py-1">
-                              <h4 className="font-bold text-base">
-                                لیست صفحات
-                              </h4>
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="categorypage1"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه دسته اول
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="categorypage2"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه دسته دوم
-                              </a>{" "}
-                            </li>
-                          </ul>
-                            {/* ------------ drawer menu product pages------ */}
-                            <ul className="px-3 pt-2">
-                            <li className="py-1">
-                              <h4 className="font-bold text-base">
-                                {" "}
-                                  صفحات محصولات
-                              </h4>
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="productpage1"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه اول محصول
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="productpage2"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه دوم محصول
-                              </a>{" "}
-                            </li>
-                          </ul>
-                            {/* --------- drawer menu shopping list-------- */}
-                            <ul className="px-3 pt-2">
-                            <li className="py-1">
-                              <h4 className="font-bold text-base">
-                                صفحات خرید
-                              </h4>
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="shoppingcardpage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه سبد خرید
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="checkoutpage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه صورت حساب
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="comparepage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه مقایسه محصولات
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="wishlistpage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه علاقه مندی ها
-                              </a>{" "}
-                            </li>
-                          </ul>
-                            {/* --------- drawer my account pages-------- */}
-
-                            <ul className="px-3 pt-2">
-                            <li className="py-1">
-                              <h4 className="font-bold text-base">
-                                صفحات پروفایل شخصی
-                              </h4>
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="loginpage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه ورود
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="registerpage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                صفحه ثبت نام
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="myaccountpage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                پروفایل شخصی
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="orderhistorypage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                تاریخچه سفارشات
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="orderinfopage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                اطلاعات سفارشات
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="productsreturnpage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                مرجوعی ها{" "}
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="giftcardpage"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                کارت هدیه{" "}
-                              </a>{" "}
-                            </li>
-                          </ul>
-                        </ul>
-                      </li>
-                        {/* ------ menu drawer list main pages------ */}
-                        <li>
-                        <button
-                            type="button"
-                            className="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-white hover:text-[#333333] dark:hover:bg-gray-700 cursor-pointer"
-                            aria-controls="dropdown-pages"
-                            data-collapse-toggle="dropdown-pages"
-                        >
-                          <span className="flex-1 ms-3 text-left rtl:text-right">
-                            صفحات مهم
-                          </span>
-
-                          <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 640 640"
-                              className="w-4 h-4 group-hover:fill-[#333333]"
-                              fill="#ffffff"
-                          >
-                            <path
-                                d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/>
-                          </svg>
-                        </button>
-                        <ul
-                            id="dropdown-pages"
-                            className="py-2 space-y-2 bg-white px-2"
-                        >
-                          <li className="py-1">
-                            <a
-                                href="#"
-                                title="faqpage"
-                                className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                </button>
+                            </div>
+                            <div
+                                id="drawer-navigation-categories"
+                                className="fixed w-64 top-0 left-0 z-40 h-screen px-4 py-6 overflow-y-auto transition-transform -translate-x-full bg-[#333333] border-b-[1px] border-gray-300"
+                                tabindex="-1"
+                                aria-labelledby="drawer-navigation-label"
                             >
-                              سوالات متداول
-                            </a>{" "}
-                          </li>
-                          <li className="py-1">
-                            <a
-                                href="#"
-                                title="sitemappage"
-                                className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                            >
-                              نقشه سایت{" "}
-                            </a>{" "}
-                          </li>
-                          <li className="py-1">
-                            <a
-                                href="#"
-                                title="contactus"
-                                className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                            >
-                              تماس با ما
-                            </a>{" "}
-                          </li>
-                          <li className="py-1">
-                            <a
-                                href="#"
-                                title="bannerefectpage"
-                                className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                            >
-                              گالری تصاویر{" "}
-                            </a>{" "}
-                          </li>
-                          <li className="py-1">
-                            <a
-                                href="#"
-                                title="aboutus"
-                                className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                            >
-                              درباره ما
-                            </a>{" "}
-                          </li>
-                        </ul>
-                      </li>
-                        {/* ------ menu drawer categories list------ */}
-                        <li>
-                        <button
-                            type="button"
-                            className="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-white hover:text-[#333333] dark:hover:bg-gray-700 cursor-pointer"
-                            aria-controls="dropdown-categories"
-                            data-collapse-toggle="dropdown-categories"
-                        >
-                          <span className="flex-1 ms-3 text-left rtl:text-right">
-                            دسته بندی ها{" "}
-                          </span>
+                                {/* ------- close button----- */}
+                                <button
+                                    type="button"
+                                    data-drawer-hide="drawer-navigation-categories"
+                                    aria-controls="drawer-navigation-categories"
+                                    className="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 start-2.5 inline-flex items-center justify-center cursor-pointer dark:hover:text-white"
+                                >
+                                    <svg
+                                        className="w-3 h-3"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="#ffffff"
+                                        viewBox="0 0 14 14"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                        />
+                                    </svg>
+                                </button>
+                                {/* ---------- category drawer list------- */}
+                                <div className="py-4 overflow-y-auto bg-[#333333]">
+                                    <ul className="space-y-2 font-medium">
+                                        {/* ------ menu drawer list lightning------ */}
+                                        <li>
+                                            <button
+                                                type="button"
+                                                className="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-white hover:text-[#333333] cursor-pointer"
+                                                aria-controls="dropdown-example-category"
+                                                data-collapse-toggle="dropdown-example-category"
+                                            >
+                                                <span
+                                                    className="flex-1 ms-3 text-left hover:text-[#ff2d37] rtl:text-right">
+                                                    روشنایی
+                                                </span>
 
-                          <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 640 640"
-                              className="w-4 h-4 group-hover:fill-[#333333]"
-                              fill="#ffffff"
-                          >
-                            <path
-                                d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/>
-                          </svg>
-                        </button>
-                        <ul
-                            id="dropdown-categories"
-                            className="py-2 space-y-2 bg-white"
-                        >
-                          {/* -------- drawer menu sub-categories------ */}
-                            <ul>
-                            <li>
-                              <a href="#" title="categories01">
-                                <img
-                                    src="./src/assets/image/categories01.jpg"
-                                    alt="categories01"
-                                    className="mx-auto"
-                                />
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" title="categories02">
-                                <img
-                                    src="./src/assets/image/categories02.jpg"
-                                    alt="categories02"
-                                    className="mx-auto"
-                                />
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" title="categories03">
-                                <img
-                                    src="./src/assets/image/categories03.jpg"
-                                    alt="categories03"
-                                    className="mx-auto"
-                                />
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" title="categories04">
-                                <img
-                                    src="./src/assets/image/categories04.jpg"
-                                    alt="categories04"
-                                    className="mx-auto"
-                                />
-                              </a>
-                            </li>
-                          </ul>
-                          <ul className="px-3 pt-2">
-                            <li className="py-1">
-                              <h4 className="font-bold text-base">
-                                لوازم جانبی خودرو
-                              </h4>
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="securityalarms"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                دزدگیر و سیستم‌های امنیتی
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="speakers"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                سیستم صوتی و بلندگوها
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="gadgets"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                گجت‌ها و قطعات یدکی
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="moreaccessories"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                سایر لوازم جانبی
-                              </a>{" "}
-                            </li>
-                          </ul>
-                            {/* -------- drawer menu pages sub-categories------ */}
-                            <ul className="px-3 pt-2">
-                            <li className="py-1">
-                              <h4 className="font-bold text-base">
-                                لوازم جانبی خودرو
-                              </h4>
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="securityalarms"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                دزدگیر و سیستم‌های امنیتی
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="speakers"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                سیستم صوتی و بلندگوها
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="gadgets"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                گجت‌ها و قطعات یدکی
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="moreaccessories"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                سایر لوازم جانبی
-                              </a>{" "}
-                            </li>
-                          </ul>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 640 640"
+                                                    className="w-4 h-4 group-hover:fill-[#333333]"
+                                                    fill="#ffffff"
+                                                >
+                                                    <path
+                                                        d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/>
+                                                </svg>
+                                            </button>
+                                            <ul
+                                                id="dropdown-example-category"
+                                                className="hidden py-2 space-y-2 bg-white"
+                                            >
+                                                <ul className="p-3 text-sm">
+                                                    {/* --------------APPAREL----------- */}
+                                                    <li className="font-bold">
+                                                        <h4 className="text-[#333333]">کاورها</h4>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="tabpcacc">
+                                                            لوازم جانبی تبلت و کامپیوتر
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="ipadacc">
+                                                            لوازم جانبی آیپد{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="ipadacc">
+                                                            لوازم جانبی آیفون{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="tarvel">
+                                                            کیف و لوازم سفر{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="security">
+                                                            دزدگیر و امنیت خودرو{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="speaker">
+                                                            سیستم صوتی و بلندگوهای خودرو{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <h4 className="text-[#333333] mt-5 font-bold">
+                                                            کابل و رابط‌ها
+                                                        </h4>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="camera">
+                                                            دوربین و عکاسی{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="electronics">
+                                                            لوازم الکترونیکی{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="outdoor">
+                                                            فضای باز و مسافرتی{" "}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul className="p-3 text-sm">
+                                                    <li className="font-bold">
+                                                        <h4 className="text-[#333333] font-bold">
+                                                            کمپینگ و کوهنوردی
+                                                        </h4>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="cammping">
+                                                            گوشی ها{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="hiking">
+                                                            اصلاح و موزدایی{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="outdoor">
+                                                            تجهیزات سالن و اسپا{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="font-bold">
+                                                        <h4 className="text-[#333333] font-bold mt-5">
+                                                            تبلت ها و گوشی های هوشمند
+                                                        </h4>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="sport">
+                                                            لوازم ورزشی و فضای باز{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="bath">
+                                                            بهداشت و مراقبت بدن{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="gadget">
+                                                            گجت‌ها و قطعات خودرو{" "}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul className="p-3 text-sm">
+                                                    <li className="font-bold">
+                                                        <h4 className="text-[#333333] font-bold">
+                                                            کیف و لوازم سفر
+                                                        </h4>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="battery">
+                                                            باتری و شارژر{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="headset">
+                                                            هدفون و هدست{" "}
+                                                        </a>
+                                                    </li>
+                                                    <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                                        <a href="#" title="oudiohome">
+                                                            لوازم صوتی خانگی{" "}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </ul>
+                                        </li>
+                                        {/* ------ menu drawer list features------ */}
+                                        <li>
+                                            <button
+                                                type="button"
+                                                className="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-white hover:text-[#333333] dark:hover:bg-gray-700 cursor-pointer"
+                                                aria-controls="dropdown-features"
+                                                data-collapse-toggle="dropdown-features"
+                                            >
+                                                <span className="flex-1 ms-3 text-left rtl:text-right">
+                                                    مشخصات
+                                                </span>
 
-                            {/* -------- drawer menu pages sub-categories------ */}
-                            <ul className="px-3 pt-2">
-                            <li className="py-1">
-                              <h4 className="font-bold text-base">
-                                لوازم جانبی خودرو
-                              </h4>
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="securityalarms"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                دزدگیر و سیستم‌های امنیتی
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="speakers"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                سیستم صوتی و بلندگوها
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="gadgets"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                گجت‌ها و قطعات یدکی
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="moreaccessories"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                سایر لوازم جانبی
-                              </a>{" "}
-                            </li>
-                          </ul>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 640 640"
+                                                    className="w-4 h-4 group-hover:fill-[#333333]"
+                                                    fill="#ffffff"
+                                                >
+                                                    <path
+                                                        d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/>
+                                                </svg>
+                                            </button>
+                                            <ul
+                                                id="dropdown-features"
+                                                className="py-2 space-y-2 bg-white"
+                                            >
+                                                {/* -------- drawer menu pages list------ */}
+                                                <ul className="px-3 pt-2">
+                                                    <li className="py-1">
+                                                        <h4 className="font-bold text-base">
+                                                            لیست صفحات
+                                                        </h4>
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="categorypage1"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه دسته اول
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="categorypage2"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه دسته دوم
+                                                        </a>{" "}
+                                                    </li>
+                                                </ul>
+                                                {/* ------------ drawer menu product pages------ */}
+                                                <ul className="px-3 pt-2">
+                                                    <li className="py-1">
+                                                        <h4 className="font-bold text-base">
+                                                            {" "}
+                                                            صفحات محصولات
+                                                        </h4>
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="productpage1"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه اول محصول
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="productpage2"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه دوم محصول
+                                                        </a>{" "}
+                                                    </li>
+                                                </ul>
+                                                {/* --------- drawer menu shopping list-------- */}
+                                                <ul className="px-3 pt-2">
+                                                    <li className="py-1">
+                                                        <h4 className="font-bold text-base">
+                                                            صفحات خرید
+                                                        </h4>
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="shoppingcardpage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه سبد خرید
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="checkoutpage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه صورت حساب
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="comparepage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه مقایسه محصولات
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="wishlistpage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه علاقه مندی ها
+                                                        </a>{" "}
+                                                    </li>
+                                                </ul>
+                                                {/* --------- drawer my account pages-------- */}
 
-                            {/* -------- drawer menu pages sub-categories------ */}
-                            <ul className="px-3 pt-2">
-                            <li className="py-1">
-                              <h4 className="font-bold text-base">
-                                لوازم جانبی خودرو
-                              </h4>
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="securityalarms"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                دزدگیر و سیستم‌های امنیتی
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="speakers"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                سیستم صوتی و بلندگوها
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="gadgets"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                گجت‌ها و قطعات یدکی
-                              </a>{" "}
-                            </li>
-                            <li className="py-1">
-                              <a
-                                  href="#"
-                                  title="moreaccessories"
-                                  className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
-                              >
-                                سایر لوازم جانبی
-                              </a>{" "}
-                            </li>
-                          </ul>
-                        </ul>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </span>
+                                                <ul className="px-3 pt-2">
+                                                    <li className="py-1">
+                                                        <h4 className="font-bold text-base">
+                                                            صفحات پروفایل شخصی
+                                                        </h4>
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="loginpage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه ورود
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="registerpage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            صفحه ثبت نام
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="myaccountpage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            پروفایل شخصی
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="orderhistorypage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            تاریخچه سفارشات
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="orderinfopage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            اطلاعات سفارشات
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="productsreturnpage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            مرجوعی ها{" "}
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="giftcardpage"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            کارت هدیه{" "}
+                                                        </a>{" "}
+                                                    </li>
+                                                </ul>
+                                            </ul>
+                                        </li>
+                                        {/* ------ menu drawer list main pages------ */}
+                                        <li>
+                                            <button
+                                                type="button"
+                                                className="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-white hover:text-[#333333] dark:hover:bg-gray-700 cursor-pointer"
+                                                aria-controls="dropdown-pages"
+                                                data-collapse-toggle="dropdown-pages"
+                                            >
+                                                <span className="flex-1 ms-3 text-left rtl:text-right">
+                                                    صفحات مهم
+                                                </span>
+
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 640 640"
+                                                    className="w-4 h-4 group-hover:fill-[#333333]"
+                                                    fill="#ffffff"
+                                                >
+                                                    <path
+                                                        d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/>
+                                                </svg>
+                                            </button>
+                                            <ul
+                                                id="dropdown-pages"
+                                                className="py-2 space-y-2 bg-white px-2"
+                                            >
+                                                <li className="py-1">
+                                                    <a
+                                                        href="#"
+                                                        title="faqpage"
+                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                    >
+                                                        سوالات متداول
+                                                    </a>{" "}
+                                                </li>
+                                                <li className="py-1">
+                                                    <a
+                                                        href="#"
+                                                        title="sitemappage"
+                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                    >
+                                                        نقشه سایت{" "}
+                                                    </a>{" "}
+                                                </li>
+                                                <li className="py-1">
+                                                    <a
+                                                        href="#"
+                                                        title="contactus"
+                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                    >
+                                                        تماس با ما
+                                                    </a>{" "}
+                                                </li>
+                                                <li className="py-1">
+                                                    <a
+                                                        href="#"
+                                                        title="bannerefectpage"
+                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                    >
+                                                        گالری تصاویر{" "}
+                                                    </a>{" "}
+                                                </li>
+                                                <li className="py-1">
+                                                    <a
+                                                        href="#"
+                                                        title="aboutus"
+                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                    >
+                                                        درباره ما
+                                                    </a>{" "}
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        {/* ------ menu drawer categories list------ */}
+                                        <li>
+                                            <button
+                                                type="button"
+                                                className="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-white hover:text-[#333333] dark:hover:bg-gray-700 cursor-pointer"
+                                                aria-controls="dropdown-categories"
+                                                data-collapse-toggle="dropdown-categories"
+                                            >
+                                                <span className="flex-1 ms-3 text-left rtl:text-right">
+                                                    دسته بندی ها{" "}
+                                                </span>
+
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 640 640"
+                                                    className="w-4 h-4 group-hover:fill-[#333333]"
+                                                    fill="#ffffff"
+                                                >
+                                                    <path
+                                                        d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/>
+                                                </svg>
+                                            </button>
+                                            <ul
+                                                id="dropdown-categories"
+                                                className="py-2 space-y-2 bg-white"
+                                            >
+                                                {/* -------- drawer menu sub-categories------ */}
+                                                <ul>
+                                                    <li>
+                                                        <a href="#" title="categories01">
+                                                            <img
+                                                                src="./src/assets/image/categories01.jpg"
+                                                                alt="categories01"
+                                                                className="mx-auto"
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" title="categories02">
+                                                            <img
+                                                                src="./src/assets/image/categories02.jpg"
+                                                                alt="categories02"
+                                                                className="mx-auto"
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" title="categories03">
+                                                            <img
+                                                                src="./src/assets/image/categories03.jpg"
+                                                                alt="categories03"
+                                                                className="mx-auto"
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" title="categories04">
+                                                            <img
+                                                                src="./src/assets/image/categories04.jpg"
+                                                                alt="categories04"
+                                                                className="mx-auto"
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul className="px-3 pt-2">
+                                                    <li className="py-1">
+                                                        <h4 className="font-bold text-base">
+                                                            لوازم جانبی خودرو
+                                                        </h4>
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="securityalarms"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            دزدگیر و سیستم‌های امنیتی
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="speakers"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            سیستم صوتی و بلندگوها
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="gadgets"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            گجت‌ها و قطعات یدکی
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="moreaccessories"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            سایر لوازم جانبی
+                                                        </a>{" "}
+                                                    </li>
+                                                </ul>
+                                                {/* -------- drawer menu pages sub-categories------ */}
+                                                <ul className="px-3 pt-2">
+                                                    <li className="py-1">
+                                                        <h4 className="font-bold text-base">
+                                                            لوازم جانبی خودرو
+                                                        </h4>
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="securityalarms"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            دزدگیر و سیستم‌های امنیتی
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="speakers"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            سیستم صوتی و بلندگوها
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="gadgets"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            گجت‌ها و قطعات یدکی
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="moreaccessories"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            سایر لوازم جانبی
+                                                        </a>{" "}
+                                                    </li>
+                                                </ul>
+
+                                                {/* -------- drawer menu pages sub-categories------ */}
+                                                <ul className="px-3 pt-2">
+                                                    <li className="py-1">
+                                                        <h4 className="font-bold text-base">
+                                                            لوازم جانبی خودرو
+                                                        </h4>
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="securityalarms"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            دزدگیر و سیستم‌های امنیتی
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="speakers"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            سیستم صوتی و بلندگوها
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="gadgets"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            گجت‌ها و قطعات یدکی
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="moreaccessories"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            سایر لوازم جانبی
+                                                        </a>{" "}
+                                                    </li>
+                                                </ul>
+
+                                                {/* -------- drawer menu pages sub-categories------ */}
+                                                <ul className="px-3 pt-2">
+                                                    <li className="py-1">
+                                                        <h4 className="font-bold text-base">
+                                                            لوازم جانبی خودرو
+                                                        </h4>
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="securityalarms"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            دزدگیر و سیستم‌های امنیتی
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="speakers"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            سیستم صوتی و بلندگوها
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="gadgets"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            گجت‌ها و قطعات یدکی
+                                                        </a>{" "}
+                                                    </li>
+                                                    <li className="py-1">
+                                                        <a
+                                                            href="#"
+                                                            title="moreaccessories"
+                                                            className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                        >
+                                                            سایر لوازم جانبی
+                                                        </a>{" "}
+                                                    </li>
+                                                </ul>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
                 </a>
                 {/* ------------------------ shopping basket small screen----------------- */}
 
@@ -743,11 +745,11 @@ export default function HeaderMobile(props) {
                             </svg>
                         </div>
                         <span className="hidden md:flex text-[#282828] tracking-[0.5px] pr-4 pl-1 py-2">
-                سبد خرید
-              </span>
+                            سبد خرید
+                        </span>
                         <span className="hidden md:flex text-[#ff2d37] font-bold py-2">
-                ۲۸۸,۰۰۰ تومان
-              </span>
+                            ۲۸۸,۰۰۰ تومان
+                        </span>
                         {/* ------------------------ dropdown shopping basket md----------------- */}
                         <div
                             className="hidden sm:w-max border-1 border-gray-300 group-hover:block absolute top-full right-auto translate-x-2 z-30 mt-1 py-2 -left-20">
@@ -764,14 +766,14 @@ export default function HeaderMobile(props) {
                                 </a>
                                 <span
                                     className="text-xs sm:text-sm text-gray-500 hover:text-[#ff2d37] transition duration-300 ease-in pr-2 pl-3">
-                    تایر درجه یک خارجی
-                  </span>
+                                    تایر درجه یک خارجی
+                                </span>
                                 <span className="text-xs sm:text-base text-gray-500 px-2">
-                    x۱
-                  </span>
+                                    x۱
+                                </span>
                                 <span className="text-xs sm:text-base text-gray-500 pr-2 pl-5">
-                    ۵۰۰,۰۰۰ تومان
-                  </span>
+                                    ۵۰۰,۰۰۰ تومان
+                                </span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 640 640"
@@ -805,14 +807,14 @@ export default function HeaderMobile(props) {
                                 </a>
                                 <span
                                     className="text-xs sm:text-sm text-gray-500 hover:text-[#ff2d37] transition duration-300 ease-in pr-2 pl-3">
-                    جعبه فرمان اورجینال{" "}
-                  </span>
+                                    جعبه فرمان اورجینال{" "}
+                                </span>
                                 <span className="text-xs sm:text-base text-gray-500 px-2">
-                    x۱
-                  </span>
+                                    x۱
+                                </span>
                                 <span className="text-xs sm:text-base text-gray-500 pr-2 pl-5">
-                    ۸۰۰,۰۰۰ تومان
-                  </span>
+                                    ۸۰۰,۰۰۰ تومان
+                                </span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 640 640"
@@ -837,37 +839,37 @@ export default function HeaderMobile(props) {
                             {/* ------dropdown shopping basket details prices md--------------- */}
                             <div
                                 className="flex justify-between text-sm sm:text-base px-3 py-2 border-b border-gray-300">
-                  <span className="font-extrabold text-[14px] text-gray-600">
-                    جمع جز
-                  </span>
+                                <span className="font-extrabold text-[14px] text-gray-600">
+                                    جمع جز
+                                </span>
                                 <span className="t text-gray-500">۱,۳۰۰،۰۰۰ تومان</span>
                             </div>
                             <div
                                 className="flex justify-between text-sm sm:text-base px-3 py-2 border-b border-gray-300">
-                  <span className="font-extrabold text-[14px] text-gray-600">
-                    تخفیف
-                  </span>
+                                <span className="font-extrabold text-[14px] text-gray-600">
+                                    تخفیف
+                                </span>
                                 <span className="text-gray-500">۱۰۰،۰۰۰ تومان</span>
                             </div>
                             <div
                                 className="flex justify-between text-sm sm:text-base px-3 py-2 border-b border-gray-300">
-                  <span className="font-extrabold text-[14px] text-gray-600">
-                    عوارض محیط زیست
-                  </span>
+                                <span className="font-extrabold text-[14px] text-gray-600">
+                                    عوارض محیط زیست
+                                </span>
                                 <span className="text-gray-500">۲۰۰،۰۰۰ تومان</span>
                             </div>
                             <div
                                 className="flex justify-between text-sm sm:text-base px-3 py-2 border-b border-gray-300">
-                  <span className="font-extrabold text-[14px] text-gray-600">
-                    مالیات بر ارزش افزوده
-                  </span>
+                                <span className="font-extrabold text-[14px] text-gray-600">
+                                    مالیات بر ارزش افزوده
+                                </span>
                                 <span className="text-gray-500">۳۰،۰۰۰ تومان</span>
                             </div>
                             <div
                                 className="flex justify-between text-sm sm:text-base px-3 py-2 border-b border-gray-300">
-                  <span className="font-extrabold text-[14px] text-gray-600">
-                    جمع کل
-                  </span>
+                                <span className="font-extrabold text-[14px] text-gray-600">
+                                    جمع کل
+                                </span>
                                 <span className="text-gray-500">۳۰،۰۰۰ تومان</span>
                             </div>
                             <div className="flex justify-between text-sm sm:text-base px-3 py-2">
@@ -876,9 +878,9 @@ export default function HeaderMobile(props) {
                                     title="viewcard"
                                     className="flex text-gray-400 group"
                                 >
-                    <span className="text-sm sm:text-base hover:text-[#ff2d37]">
-                      مشاهده سبد
-                    </span>
+                                    <span className="text-sm sm:text-base hover:text-[#ff2d37]">
+                                        مشاهده سبد
+                                    </span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 640 640"
@@ -895,9 +897,9 @@ export default function HeaderMobile(props) {
                                     title="checkout"
                                     className="flex text-gray-400 group"
                                 >
-                    <span className="text-sm sm:text-base hover:text-[#ff2d37]">
-                      تکمیل خرید
-                    </span>
+                                    <span className="text-sm sm:text-base hover:text-[#ff2d37]">
+                                        تکمیل خرید
+                                    </span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 640 640"
@@ -913,11 +915,7 @@ export default function HeaderMobile(props) {
                         </div>
                     </a>
                 </div>
-                <a
-                    href="#"
-                    title=""
-                    className="w-fit col-span-1 flex items-center ml-0 mr-auto py-2"
-                >
+                <a href="#" title="" className="w-fit col-span-1 flex items-center ml-0 mr-auto py-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 640 640"
@@ -990,9 +988,9 @@ export default function HeaderMobile(props) {
                                         aria-controls="dropdown-example"
                                         data-collapse-toggle="dropdown-example"
                                     >
-                      <span className="flex-1 ms-3 text-left hover:text-[#ff2d37] rtl:text-right">
-                        خانه
-                      </span>
+                                        <span className="flex-1 ms-3 text-left hover:text-[#ff2d37] rtl:text-right">
+                                            خانه
+                                        </span>
 
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -1054,9 +1052,9 @@ export default function HeaderMobile(props) {
                                         aria-controls="dropdown-features"
                                         data-collapse-toggle="dropdown-features"
                                     >
-                      <span className="flex-1 ms-3 text-left rtl:text-right">
-                        مشخصات
-                      </span>
+                                        <span className="flex-1 ms-3 text-left rtl:text-right">
+                                            مشخصات
+                                        </span>
 
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -1247,9 +1245,9 @@ export default function HeaderMobile(props) {
                                         aria-controls="dropdown-pages"
                                         data-collapse-toggle="dropdown-pages"
                                     >
-                      <span className="flex-1 ms-3 text-left rtl:text-right">
-                        صفحات مهم
-                      </span>
+                                        <span className="flex-1 ms-3 text-left rtl:text-right">
+                                            صفحات مهم
+                                        </span>
 
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -1320,9 +1318,9 @@ export default function HeaderMobile(props) {
                                         aria-controls="dropdown-categories"
                                         data-collapse-toggle="dropdown-categories"
                                     >
-                      <span className="flex-1 ms-3 text-left rtl:text-right">
-                        دسته بندی ها{" "}
-                      </span>
+                                        <span className="flex-1 ms-3 text-left rtl:text-right">
+                                            دسته بندی ها{" "}
+                                        </span>
 
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -1561,5 +1559,6 @@ export default function HeaderMobile(props) {
                     </div>
                 </div>
             </div>
+        </div>
     )
 }

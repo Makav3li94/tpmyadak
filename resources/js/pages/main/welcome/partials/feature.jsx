@@ -21,8 +21,8 @@ const FeatureBox = (props) => {
 export default function Feature(props) {
     return (
         <section className="w-full flex justify-center mb-12">
-            <div className="container">
-                <div className="grid grid-cols-12 mt-12">
+            <div className="container px-5 md:px-0">
+                <div className="grid grid-cols-12 ">
                     <FeatureBox title="ارسال رایگان" subTitle="خرید های بالاتر از ۵ میلیون"
                                 icon={<Car className="w-6 h-6 sm:w-8 sm:h-8 text-error/90"/>}/>
                     <FeatureBox title="مرجوعی ۳۰ روزه" subTitle="۳۰ روز برای بازگشت محصول"

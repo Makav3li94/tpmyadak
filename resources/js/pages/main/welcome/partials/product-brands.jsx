@@ -16,14 +16,14 @@ export default function ProductBrands({brands}) {
     return (
         <section className="bg-base-100 w-full flex justify-center pb-12">
 
-            <div className="container pt-14">
+            <div className="container pt-14  px-5 md:px-0">
                 <div className="text-center pb-4">
                     <h5 className=" text-[#ff2d37] text-base">برترین شرکای تجاری ما</h5>
                     <h3 className="text-2xl font-extrabold  my-4">
                         خرید بر اساس برند
                     </h3>
                 </div>
-                <div className="flex">
+                <div className="grid grid-cols-3 md:grid-cols-6">
                     {brands.map((brand,i)=>
                     <BrandBox image={route('file.show',brand.image)}/>
                 )}

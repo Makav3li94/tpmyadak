@@ -26,8 +26,8 @@ export default function Guest({ children }) {
 
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center md:pt-6 ">
-            <div className="min-h-screen  flex items-center">
-                <div className="card mx-auto w-full max-w-5xl  shadow-xl">
+            <div className="container  flex items-center">
+                <div className="card mx-auto w-full lg:w-[70%]   shadow-xl">
                     <div className="grid  md:grid-cols-2 grid-cols-1  bg-base-100 rounded-xl">
                         <div className='py-24 px-10'>
                             {children}

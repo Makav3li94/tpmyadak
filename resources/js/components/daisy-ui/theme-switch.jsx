@@ -48,11 +48,7 @@ export function ThemeSwitch() {
 
 export function DarkSwitch() {
     return (
-        <a
-            href="#"
-            title="favourite"
-            className="hidden xl:block items-center border-[1.5px] border-gray-300 rounded-md p-2 xl:mr-3 group"
-        >
+        <div className="btn md:btn-ghost mr-3">
             <label className="swap swap-rotate hover:bg-base-200 p-1 rounded-2xl">
                 <input
                     type="checkbox"
@@ -66,7 +62,7 @@ export function DarkSwitch() {
                 <Sun className="swap-on h-5 w-5" />
             </label>
 
-        </a>
+        </div>
 
     )
 }

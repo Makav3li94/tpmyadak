@@ -96,7 +96,7 @@ export default function Promotion({promoProducts}) {
                 </span>
                         </div>
                         <div id="indicators-carousel" className="relative w-full bg-white" data-carousel="static">
-                            <div className="relative h-[1500px] md:h-[1200px] lg:h-[500px] overflow-hidden rounded-lg">
+                            <div className="relative md:h-[1200px] lg:h-[500px] overflow-hidden rounded-lg">
                                 <div className=" duration-700 ease-in-out" data-carousel-item="active">
                                     {otherPromo.map((product, i) =>
                                         <div key={i}
