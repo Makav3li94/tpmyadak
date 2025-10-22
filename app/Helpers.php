@@ -196,3 +196,13 @@ function separator(string $input, string $default = '-', ?array $allows = null, 
 
     return strtr($value, $replaceMap);
 }
+
+function queryMapper($query)
+{
+    return $query->map(function ($item) {
+        return [
+            'value' => strval($item['id']),
+            'label' => $item['title'],
+        ];
+    })->values()->toArray();
+}

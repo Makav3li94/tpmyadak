@@ -85,37 +85,37 @@ class DummySeeder extends Seeder
             'title' => 'پراید',
             'slug' => Str::slug('پراید'),
         ]);
-        CarModel::create([
+        $cm1 = CarModel::create([
             'title' => '206',
             'slug' => Str::slug('206'),
             'car_brand_id' => $cb1->id,
         ]);
-        CarModel::create([
+        $cm2 = CarModel::create([
             'title' => '207',
             'slug' => Str::slug('207'),
             'car_brand_id' => $cb1->id,
         ]);
-        CarModel::create([
+        $cm3 = CarModel::create([
             'title' => '405',
             'slug' => Str::slug('405'),
             'car_brand_id' => $cb1->id,
         ]);
-        CarModel::create([
+        $cm4 = CarModel::create([
             'title' => 'پارس',
             'slug' => Str::slug('پارس'),
             'car_brand_id' => $cb1->id,
         ]);
-        CarModel::create([
+        $cm5 = CarModel::create([
             'title' => '131',
             'slug' => Str::slug('131'),
             'car_brand_id' => $cb2->id,
         ]);
-        CarModel::create([
+        $cm6 = CarModel::create([
             'title' => '132',
             'slug' => Str::slug('132'),
             'car_brand_id' => $cb2->id,
         ]);
-        CarModel::create([
+        $cm7 = CarModel::create([
             'title' => '133',
             'slug' => Str::slug('133'),
             'car_brand_id' => $cb2->id,
@@ -229,7 +229,7 @@ class DummySeeder extends Seeder
 
         ShippingMethod::create(['title' => 'پست', 'cost' => '150000']);
         ShippingMethod::create(['title' => 'تیپاکس', 'cost' => '200000']);
-        Product::create([
+        $pr1 = Product::create([
             'title' => 'تسمه تایم هرینگتون Harrington مدل 801063 ',
             'slug' => Str::slug('تسمه تایم هرینگتون Harrington مدل 801063 '),
             'alias' => 'تسمه تایم هرینگتون Harrington مدل 801063 ',
@@ -249,7 +249,7 @@ class DummySeeder extends Seeder
             'status' => 1,
             'approve' => 1,
         ]);
-        Product::create([
+        $pr2 = Product::create([
             'title' => 'بلبرینگ چرخ جلو ایساکو مدل 02702023 ',
             'slug' => Str::slug('بلبرینگ چرخ جلو ایساکو مدل 02702023 مناسب پژو 206 تیپ 2 ، تیپ 3 و صندوقدار V20'),
             'alias' => 'بلبرینگ چرخ جلو ایساکو مدل 02702023 مناسب پژو 206 تیپ 2 ، تیپ 3 و صندوقدار V20',
@@ -269,7 +269,7 @@ class DummySeeder extends Seeder
             'status' => 1,
             'approve' => 1,
         ]);
-        Product::create([
+        $pr3 = Product::create([
             'title' => 'روغن موتور خودرو کاسپین مدل',
             'slug' => Str::slug('روغن موتور خودرو کاسپین مدل MULTI GRADE 20W50 (چهار لیتری)'),
             'alias' => 'روغن موتور خودرو کاسپین مدل MULTI GRADE 20W50 (چهار لیتری)',
@@ -289,7 +289,7 @@ class DummySeeder extends Seeder
             'status' => 1,
             'approve' => 1,
         ]);
-        Product::create([
+        $pr4 = Product::create([
             'title' => 'روغن ترمز خودرو تکستار TEXTAR مدل DOT 4',
             'slug' => Str::slug('روغن ترمز خودرو تکستار TEXTAR مدل DOT 4'),
             'alias' => 'روغن ترمز خودرو تکستار TEXTAR مدل DOT 4',
@@ -309,7 +309,7 @@ class DummySeeder extends Seeder
             'status' => 1,
             'approve' => 1,
         ]);
-        Product::create([
+        $pr5 = Product::create([
             'title' => 'روغن گیربکس اتوماتیک خودرو لوکینی مدل CVT Fluid',
             'slug' => Str::slug('روغن گیربکس اتوماتیک خودرو لوکینی مدل CVT Fluid'),
             'alias' => 'روغن گیربکس اتوماتیک خودرو لوکینی مدل CVT Fluid',
@@ -333,7 +333,7 @@ class DummySeeder extends Seeder
             'date_start' => Carbon::now()->toDateTimeString(),
             'date_end' => Carbon::now()->addDays(25)->toDateTimeString(),
         ]);
-        Product::create([
+        $pr6 = Product::create([
             'title' => 'اسپری رفع پنچری تایر گتسان GETSUN مدل Emergency TYRE WELD',
             'slug' => Str::slug('اسپری رفع پنچری تایر گتسان GETSUN مدل Emergency TYRE WELD'),
             'alias' => 'اسپری رفع پنچری تایر گتسان GETSUN مدل Emergency TYRE WELD',
@@ -357,5 +357,11 @@ class DummySeeder extends Seeder
             'date_start' => Carbon::now()->toDateTimeString(),
             'date_end' => Carbon::now()->addDays(14)->toDateTimeString(),
         ]);
+        $pr1->carModels()->attach([$cm1->id, $cm2->id]);
+        $pr2->carModels()->attach([$cm2->id, $cm3->id]);
+        $pr3->carModels()->attach([$cm4->id]);
+        $pr4->carModels()->attach([$cm5->id]);
+        $pr5->carModels()->attach([$cm6->id]);
+        $pr6->carModels()->attach([$cm7->id]);
     }
 }

@@ -1,7 +1,5 @@
-import {Star, Search, Heart, Undo2} from "lucide-react";
 import replacement from '../../../../../images/replacement.jpg'
 import {useCart} from "react-use-cart";
-import {Button} from "@/components/index/index.js";
 import {router, usePage} from "@inertiajs/react";
 import ProductCard from "@/components/common/product-card.jsx";
 import {showToast} from "@/utils.js";
@@ -10,6 +8,7 @@ export default function LatestProducts({latestProducts}) {
     const {props: {auth},} = usePage()
     const {addItem} = useCart();
     const handleAdd = (item) => {
+        console.log(item)
         addItem({
             id: item.id,
             title: item.title,

@@ -6,7 +6,7 @@ import {Heart, Star} from "lucide-react";
 export default function ProductCard({product,i,handleWish,handleAdd}) {
     return (
         <div key={i} className="group relative border-b border-r border-gray-200 p-4 sm:p-6">
-            <Button title="favourite" type='ghost' className="btn-xs absolute top-0 left-0 z-99"
+            <Button title="favourite" type='ghost' className="btn-xs absolute top-2 left-2 z-99"
                     onClick={() => {
                         handleWish(product.id)
                     }}>
@@ -43,7 +43,7 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
             </div>
             <div className="mt-6">
                 <Button onClick={() => handleAdd(product)} type="danger"
-                        className="relative flex w-full items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200">
+                        className="relative flex w-full items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-xs font-medium text-gray-900 hover:bg-gray-200">
                     افزودن به سبد خرید <span className="sr-only">, {product.title}</span>
                 </Button>
             </div>

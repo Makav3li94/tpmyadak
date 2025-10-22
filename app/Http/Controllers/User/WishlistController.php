@@ -19,10 +19,10 @@ class WishlistController extends Controller
     }
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
-        Wishlist::where([['user_id', auth()->id()], ['product_id', $request['item']]])->delete();
+        Wishlist::where([['user_id', auth()->id()], ['product_id', $request['item']['id']]])->delete();
         Wishlist::create([
             'user_id' => auth()->id(),
-            'product_id' => $request['item'],
+            'product_id' => $request['item']['id'],
             'status' => 0,
         ]);
         return back()->with('message', ['type' => 'success', 'message' => 'محصول به علاقه مندی اضافه شد.']);

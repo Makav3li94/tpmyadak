@@ -3,6 +3,7 @@
 use App\Http\Controllers\Default\FileController;
 use App\Http\Controllers\Default\SitemapController;
 use App\Http\Controllers\Front\FrontBlogController;
+use App\Http\Controllers\Front\FrontProductController;
 use App\Http\Controllers\Front\GeneralController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +11,12 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', [App\Module\Shortlink\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [GeneralController::class, 'index'])->name('home');
 Route::post('/prsearch/{search_term_string}', [GeneralController::class, 'search'])->name('home.product.search');
+
+
+Route::get('/products', [FrontProductController::class, 'getProducts'])->name('home.getProducts');
+Route::get('/product/{sku}/{slug?}', [FrontProductController::class, 'getProduct'])->name('home.getProduct');
+
+Route::get('/articles', [FrontBlogController::class, 'getBlogs'])->name('home.getBlogs');
 Route::get('/article/{slug}', [FrontBlogController::class, 'getBlog'])->name('home.getBlog');
 
 // #Guest
