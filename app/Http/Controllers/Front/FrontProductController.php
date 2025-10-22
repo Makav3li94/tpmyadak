@@ -16,38 +16,7 @@ class FrontProductController extends Controller
     {
         $query = Product::query();
 
-        if ($request->q) {
-            // multi columns search
-            $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', "%{$request->q}%");
-            });
-        }
-        if ($request->priceMin || $request->priceMax) {
-            // multi columns search
-            $query->whereBetween('price', [(int) $request->priceMin, (int) $request->priceMax]);
-        }
-        if ($request->arrayFilter) {
-            if ($request->group == 'brands') {
-                $query->whereIn('brand_id', $request->arrayFilter);
-            }
-            if ($request->group == 'carBrands') {
-                $arrayFilter = $request->arrayFilter;
-                $query->whereHas('carModels', function ($query) use ($arrayFilter) {
-                    $query->whereHas('carBrand', function ($query2) use ($arrayFilter) {
-                        $query2->whereIn('id', $arrayFilter);
-                    });
-                });
-            }
-            if ($request->group == 'carModels') {
-                $arrayFilter = $request->arrayFilter;
-                $query->whereHas('carModels', function ($query) use ($arrayFilter) {
-                    $query->whereIn('car_model_id', $arrayFilter);
-                });
-            }
-            if ($request->group == 'categories') {
-                $query->whereIn('product_category_id', $request->arrayFilter);
-            }
-        }
+        $this->commonFilters($request, $query);
         if ($request->column) {
             $cl = explode(',', $request->column);
             $query->orderBy($cl[0], $cl[1]);
@@ -71,4 +40,109 @@ class FrontProductController extends Controller
     {
         return 123;
     }
+
+    public function getBrand($slug, Request $request)
+    {
+        $brand = Brand::where('slug', $slug)->firstOrFail();
+        $query = Product::query();
+        $query->where('brand_id', $brand->id);
+        $this->commonFilters($request, $query);
+        if ($request->column) {
+            $cl = explode(',', $request->column);
+            $query->orderBy($cl[0], $cl[1]);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        return inertia('main/brand/list', [
+            'brand' => $brand,
+            'data' => $query->paginate(10),
+            //            'brands' => inertia()->defer(fn () => queryMapper(Brand::where('status', 1)->get())),
+            'carBrands' => queryMapper(CarBrand::get()),
+            //            'carBrands' => inertia()->defer(fn () => queryMapper(CarBrand::get())),
+            'carModels' => queryMapper(CarModel::get()),
+            //            'carModels' => inertia()->defer(fn () => queryMapper(CarModel::get())),
+            'categories' => ProductCategory::flatTree(),
+        ]);
+    }
+
+    public function getCategory($slug, Request $request)
+    {
+        // 1. دسته‌بندی اصلی و زیر دسته‌ها
+        $productCategory = ProductCategory::where('slug', $slug)->firstOrFail();
+        $categoryIds = array_merge([$productCategory->id], $productCategory->getAllChildrenIds());
+
+        // 2. فیلترهای مرتبط با دسته و زیر دسته‌ها
+        $filters = $productCategory->getAllChildrenFiltersWithValues();
+
+        // 3. Query اصلی محصولات
+        $query = Product::query();
+        $query->whereIn('product_category_id', $categoryIds);
+        $this->commonFilters($request, $query);
+
+        // 7. فیلترهای داینامیک
+        if ($request->dynamicFilters && is_array($request->dynamicFilters)) {
+            foreach ($request->dynamicFilters as $filterId => $values) {
+                $query->whereHas('filters', function ($q) use ($filterId, $values) {
+                    $q->where('filters.id', $filterId)
+                        ->whereIn('filter_products.value', $values);
+                });
+            }
+        }
+
+        // 8. مرتب‌سازی
+        if ($request->column) {
+            $cl = explode(',', $request->column);
+            $query->orderBy($cl[0], $cl[1]);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // 9. بازگشت داده‌ها به Inertia
+        return inertia('main/category/list', [
+            'productCategory' => $productCategory,
+            'filters' => $filters,
+            'data' => $query->paginate(10),
+            'brands' => queryMapper(Brand::where('status', 1)->get()),
+            'carBrands' => queryMapper(CarBrand::get()),
+            'carModels' => queryMapper(CarModel::get()),
+        ]);
+    }
+
+
+    public function commonFilters(Request $request, $query): void
+    {
+// 4. جستجوی متنی
+        if ($request->q) {
+            $query->where('title', 'like', "%{$request->q}%");
+        }
+
+        // 5. محدوده قیمت
+        if ($request->priceMin || $request->priceMax) {
+            $query->whereBetween('price', [(int)$request->priceMin, (int)$request->priceMax]);
+        }
+
+        // 6. فیلترهای ثابت
+        $staticFilters = $request->staticFilters ?? [];
+
+        if (isset($staticFilters['brands']) && count($staticFilters['brands'])) {
+            $query->whereIn('brand_id', $staticFilters['brands']);
+        }
+
+        if (isset($staticFilters['carBrands']) && count($staticFilters['carBrands'])) {
+            $query->whereHas('carModels.carBrand', function ($q) use ($staticFilters) {
+                $q->whereIn('id', $staticFilters['carBrands']);
+            });
+        }
+
+        if (isset($staticFilters['carModels']) && count($staticFilters['carModels'])) {
+            $query->whereHas('carModels', function ($q) use ($staticFilters) {
+                $q->whereIn('car_model_id', $staticFilters['carModels']);
+            });
+        }
+        if (isset($staticFilters['categories']) && count($staticFilters['categories'])) {
+            $query->whereIn('product_category_id', $staticFilters['categories']);
+        }
+    }
+
 }

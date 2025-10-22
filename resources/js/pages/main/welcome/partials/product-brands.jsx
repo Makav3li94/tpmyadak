@@ -1,14 +1,15 @@
+import {Link} from "@inertiajs/react";
 
-const BrandBox = ({image})=>{
+const BrandBox = ({image,slug})=>{
     return(
         <div className="border-[1px] w-full border-gray-300 rounded-r-md p-4">
-            <a href="#" title="ferari">
+            <Link href={route('home.getBrand',slug)} title="ferari">
                 <img
                     src={image}
                     alt="ferari"
                     className="hover:scale-105 xl:w-[168px] xl:h-[115px] mx-auto"
                 />
-            </a>
+            </Link>
         </div>
     )
 }
@@ -25,7 +26,7 @@ export default function ProductBrands({brands}) {
                 </div>
                 <div className="grid grid-cols-3 md:grid-cols-6">
                     {brands.map((brand,i)=>
-                    <BrandBox image={route('file.show',brand.image)}/>
+                    <BrandBox image={route('file.show',brand.image)} slug={brand.slug}/>
                 )}
                 </div>
             </div>

@@ -18,6 +18,6 @@ class Filter extends ModelBase
 
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'filter_products');
+        return $this->belongsToMany(Product::class, 'filter_products')->withPivot('value');
     }
 }

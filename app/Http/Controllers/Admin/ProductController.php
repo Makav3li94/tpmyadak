@@ -92,7 +92,6 @@ class ProductController extends Controller
     #[Permission('update-product')]
     public function edit(Product $product)
     {
-
         $prFiles = $this->getPrStoredImages($product->id);
         [$categories, $attrGroups, $carModels] = $this->getLabels();
         $product['def_models'] = array_labeler($product->carModels);

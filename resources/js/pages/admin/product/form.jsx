@@ -121,8 +121,9 @@ export default function Form(props) {
             }
             if (product.filters && product.filters.length > 0){
                 setCategoryFilters(product.filters.map(it => ({id: it.pivot.filter_id, title: it.title,value:it.pivot.value})))
+            }else {
+                handCatAndFilter(product.product_category_id,true).then(r => console.log(r))
             }
-            // handCatAndFilter(product.product_category_id,true).then(r => console.log(r))
         }
         setMounted(true)
     }, [product])
@@ -259,8 +260,7 @@ export default function Form(props) {
     useEffect(() => {
 
     }, [categoryFilters]);
-    console.log(carModels)
-    console.log(data.car_model_id)
+    console.log(categoryFilters)
     return (
         <AuthenticatedLayout title={' محصول'} breadcumbs={[
             {name: 'داشبورد', href: route('admin.dashboard')},

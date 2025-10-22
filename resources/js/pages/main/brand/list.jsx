@@ -9,14 +9,14 @@ import Breadcrumb from "@/layouts/common/breadcrumb.jsx";
 import ListSidebar from "@/pages/main/product/list-sidebar.jsx";
 
 export default function ProductList(props) {
-    const {data: {links, data}, brands, carBrands, carModels, categories} = props
+    const {data: {links, data}, brands=null, carBrands=null, carModels=null, categories=null,brand} = props
     const {addItem} = useCart();
     const [sortColumn, setSortColumn] = useState('')
 
     const sortList = (e) => {
         setSortColumn(e.target.value)
         router.get(
-            route(route().current()),
+            route(route().current(),brand.slug),
             {column: e.target.value},
             {
                 replace: true,
@@ -46,13 +46,13 @@ export default function ProductList(props) {
 
     return (
         <>
-            <Breadcrumb l1={['محصولات', '']}/>
-            <section className="w-full container justify-center">
+            <Breadcrumb l1={['برندها', '']} l2={[brand.title,'']}/>
+            <section className="w-full container justify-center mb-12">
                 <div className="grid grid-cols-1 md:grid-cols-12 md:gap-x-2 lg:gap-x-8 xl:gap-x-10">
-                    <ListSidebar brands={brands} carBrands={carBrands} carModels={carModels} categories={categories}/>
+                    <ListSidebar brands={brands} carBrands={carBrands} carModels={carModels} categories={categories} routeParam={brand.slug}/>
                     {/* ------ left side----- */}
                     <div className="md:col-span-8 lg:col-span-9 mt-6 md:mt-0">
-                        <h2 className="font-bold text-2xl pb-6">محصولات</h2>
+                        <h2 className="font-bold text-2xl pb-6">{brand.title}</h2>
                         <a href="#" title="img-cate" className="group">
                             <img
                                 src={imageCate}

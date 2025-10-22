@@ -16,6 +16,9 @@ Route::post('/prsearch/{search_term_string}', [GeneralController::class, 'search
 Route::get('/products', [FrontProductController::class, 'getProducts'])->name('home.getProducts');
 Route::get('/product/{sku}/{slug?}', [FrontProductController::class, 'getProduct'])->name('home.getProduct');
 
+Route::get('/brand/{slug?}', [FrontProductController::class, 'getBrand'])->name('home.getBrand');
+Route::get('/category/{slug?}', [FrontProductController::class, 'getCategory'])->name('home.getCategory');
+
 Route::get('/articles', [FrontBlogController::class, 'getBlogs'])->name('home.getBlogs');
 Route::get('/article/{slug}', [FrontBlogController::class, 'getBlog'])->name('home.getBlog');
 
