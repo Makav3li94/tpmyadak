@@ -28,7 +28,9 @@ class ProductCategory extends Model
         while ($category->parent_id) {
             $ids[] = $category->parent_id;
             $category = self::find($category->parent_id);
-            if (!$category) break;
+            if (! $category) {
+                break;
+            }
         }
 
         // گرفتن همه فرزندان
@@ -48,7 +50,7 @@ class ProductCategory extends Model
         while ($category->parent_id) {
             $ids[] = $category->parent_id;
             $category = self::find($category->parent_id);
-            if (!$category) {
+            if (! $category) {
                 break;
             }
         }
@@ -93,6 +95,7 @@ class ProductCategory extends Model
         $filters->map(function ($filter) {
             $filter->values = $filter->products->pluck('pivot.value')->unique()->values();
             unset($filter->products); // محصولات لازم نیست برگردن
+
             return $filter;
         });
 
@@ -140,7 +143,7 @@ class ProductCategory extends Model
         foreach ($categories as $cat) {
             $result->push([
                 'value' => $cat->id,
-                'label' => str_repeat('-', $level) . ' ' . $cat->title,
+                'label' => str_repeat('-', $level).' '.$cat->title,
             ]);
 
             if ($cat->children->isNotEmpty()) {
@@ -157,8 +160,8 @@ class ProductCategory extends Model
         $tree = $tree ?? [];
         $lisCategory = $categories[$parent] ?? [];
         foreach ($lisCategory as $category) {
-            $tree[$category->id] = $st . $category->name;
-            if (!empty($categories[$category->id])) {
+            $tree[$category->id] = $st.$category->name;
+            if (! empty($categories[$category->id])) {
                 $st .= '--';
                 $this->getTreeCategories($category->id, $tree, $categories, $st);
                 $st = '';

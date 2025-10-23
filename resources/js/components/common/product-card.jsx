@@ -1,5 +1,5 @@
 import {hasPermission} from '@/utils'
-import {usePage} from '@inertiajs/react'
+import {Link, usePage} from '@inertiajs/react'
 import {Button} from "@/components/index/index.js";
 import {Heart, Star} from "lucide-react";
 
@@ -21,10 +21,10 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
             </div>
             <div className="pb-4 pt-10 text-center">
                 <h3 className="text-sm font-medium ">
-                    <a href='#'>
+                    <Link href={route('home.getProduct',[product.sku,product.slug])}>
                         <span aria-hidden="true" className="absolute inset-0"/>
                         {product.title}
-                    </a>
+                    </Link>
                 </h3>
                 <div className="mt-3 flex flex-col items-center">
                     <p className="sr-only">{product.rating} out of 5 stars</p>

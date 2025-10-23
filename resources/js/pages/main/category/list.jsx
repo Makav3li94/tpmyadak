@@ -72,7 +72,7 @@ export default function ProductList(props) {
                                 {/*<option value="audi">منتخب</option>*/}
                             </select>
                         </div>
-                        <div className="-mx-px grid grid-cols-1 border-l border-gray-200 sm:mx-0  md:grid-cols-4 ">
+                        <div className="-mx-px grid grid-cols-1 border-l border-gray-200 sm:mx-0  sm:grid-cols-2 lg:grid-cols-4 ">
                             {data.map((product, i) => (
                                 <ProductCard product={product} key={i} handleAdd={() => handleAdd(product)}
                                              handleWish={() => handleWish(product)}/>

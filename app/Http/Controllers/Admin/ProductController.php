@@ -153,7 +153,7 @@ class ProductController extends Controller
             'brand_id' => 'required|ulid',
             'supplier_id' => 'required|ulid',
             'tax_id' => 'required|ulid',
-            'sku' => 'required|string|max:50',
+            'sku' => 'required|numeric',
             'minimum' => 'required|numeric',
             'kind' => 'required|numeric',
             'price' => 'required|numeric',

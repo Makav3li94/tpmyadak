@@ -17,8 +17,9 @@ export default function Breadcrumb({l1,l2=null}) {
                 <li className="px-2">
                         <ChevronLeft size={12} color="#878787"/>
                 </li>
+
                 <li>
-                    <Link href={l1[1] !== '' ? route(l1[1]) : route(route().current())} title={l1[0]} className="text-[#ff2d37] text-xs">
+                    <Link href={l1[1] !== '' ? route(l1[1],l1[2]?l1[2]:null) : route(route().current())} title={l1[0]} className="text-[#ff2d37] text-xs">
                         {l1[0]}
                     </Link>
                 </li>
@@ -28,7 +29,7 @@ export default function Breadcrumb({l1,l2=null}) {
                         <ChevronLeft size={12} color="#878787"/>
                     </li>
                     <li>
-                        <Link href={l2[1] !== '' ? route(l2[1]) : route(route().current())} title={l2[0]} className="text-[#ff2d37] text-xs">
+                        <Link href={l2[1] !== '' ? route(l2[1],l2[2]?l2[2]:null) : route(route().current())} title={l2[0]} className="text-[#ff2d37] text-xs">
                             {l2[0]}
                         </Link>
                     </li>

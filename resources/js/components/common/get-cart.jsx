@@ -16,7 +16,7 @@ const GetCart = ({isMobile = false}) => {
     } = useCart();
     const [hoverCart, setHoverCart] = useState(false)
     return (
-        <motion.div className="flex border-[1.5px] relative border-gray-300 rounded-md  px-3 " onHoverStart={event => {
+        <motion.div className={`flex border-[1.5px] relative border-gray-300 rounded-md  ${!isMobile && 'px-3'}`} onHoverStart={event => {
             setHoverCart(true)
         }} onTap={event => {
             setHoverCart(!hoverCart)
@@ -85,7 +85,7 @@ const GetCart = ({isMobile = false}) => {
                                         </li>
                                         <li className="edit">
                                             <Button type='warning' className="btn-xs"
-                                                    onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
+                                                    onClick={(e) => updateItemQuantity(item.id, item.quantity - 1)}
                                             >
                                                 <Minus className="fs-6_5  align-middle "/>
                                             </Button>

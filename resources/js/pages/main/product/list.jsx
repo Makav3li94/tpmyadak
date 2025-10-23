@@ -49,6 +49,7 @@ export default function ProductList(props) {
             <Breadcrumb l1={['محصولات', '']}/>
             <section className="w-full container justify-center">
                 <div className="grid grid-cols-1 md:grid-cols-12 md:gap-x-2 lg:gap-x-8 xl:gap-x-10">
+
                     <ListSidebar brands={brands} carBrands={carBrands} carModels={carModels} categories={categories}/>
                     {/* ------ left side----- */}
                     <div className="md:col-span-8 lg:col-span-9 mt-6 md:mt-0">
@@ -71,7 +72,7 @@ export default function ProductList(props) {
                                 {/*<option value="audi">منتخب</option>*/}
                             </select>
                         </div>
-                        <div className="-mx-px grid grid-cols-1 border-l border-gray-200 sm:mx-0  md:grid-cols-4 ">
+                        <div className="-mx-px grid grid-cols-1 border-l border-gray-200 sm:mx-0  sm:grid-cols-2 lg:grid-cols-4 ">
                             {data.map((product, i) => (
                                 <ProductCard product={product} key={i} handleAdd={() => handleAdd(product)}
                                              handleWish={() => handleWish(product)}/>

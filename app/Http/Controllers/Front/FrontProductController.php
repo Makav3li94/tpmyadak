@@ -38,7 +38,16 @@ class FrontProductController extends Controller
 
     public function getProduct($sku, $slug = null)
     {
-        return 123;
+
+        $product = Product::where('sku', $sku)->first();
+        $relatedProducts = $product->getRelatedProducts(4);
+        $attributeGroupsWithDetails = $product->attributeGroupsWithDetails();
+
+        return inertia('main/product/single', [
+            'product' => $product->load('brand', 'carModels', 'specs', 'filters', 'images'),
+            'attributeGroups' => $attributeGroupsWithDetails,
+            'relatedProducts' => $relatedProducts,
+        ]);
     }
 
     public function getBrand($slug, Request $request)
@@ -109,17 +118,16 @@ class FrontProductController extends Controller
         ]);
     }
 
-
     public function commonFilters(Request $request, $query): void
     {
-// 4. جستجوی متنی
+        // 4. جستجوی متنی
         if ($request->q) {
             $query->where('title', 'like', "%{$request->q}%");
         }
 
         // 5. محدوده قیمت
         if ($request->priceMin || $request->priceMax) {
-            $query->whereBetween('price', [(int)$request->priceMin, (int)$request->priceMax]);
+            $query->whereBetween('price', [(int) $request->priceMin, (int) $request->priceMax]);
         }
 
         // 6. فیلترهای ثابت
@@ -144,5 +152,4 @@ class FrontProductController extends Controller
             $query->whereIn('product_category_id', $staticFilters['categories']);
         }
     }
-
 }

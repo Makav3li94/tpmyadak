@@ -25,7 +25,7 @@ export default function SearchFilter({ data = [], groupName = "", selected = [],
 
     return (
         <div className="max-w-sm mx-auto">
-            <label className="flex items-center gap-2 border rounded-xl px-3 py-2 w-54 shadow-sm bg-white">
+            <label className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full lg:w-54 shadow-sm bg-white">
                 <Search className="h-5 w-5 opacity-50" />
                 <input
                     type="search"

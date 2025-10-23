@@ -20,7 +20,7 @@ const FeatureBox = (props) => {
 }
 export default function Feature(props) {
     return (
-        <section className="w-full flex justify-center mb-12">
+        <section className={`w-full flex justify-center  ${props.isSingle ?'bg-base-300 py-6 mt-12':'mb-12'}`}>
             <div className="container px-5 md:px-0">
                 <div className="grid grid-cols-12 ">
                     <FeatureBox title="ارسال رایگان" subTitle="خرید های بالاتر از ۵ میلیون"

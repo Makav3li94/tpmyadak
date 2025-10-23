@@ -36,7 +36,7 @@ export default function FrontLayout({isSingle = false, children}) {
 
                 {children}
 
-                <Footer/>
+                <Footer isSingle={isSingle}/>
                 <Toaster theme="system" richColors="true" toastOptions={{
                     duration: 3000,
                     dismissible: true,
