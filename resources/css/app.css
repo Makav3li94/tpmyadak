@@ -276,3 +276,9 @@
         transform: scale(1.0);
     }
 }
+.mfon {
+    color: #e8ce37 !important;
+}
+.mfoff {
+    color: #ccc !important;
+}

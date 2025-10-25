@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\FrontReviewController;
 use App\Http\Controllers\User\FaqController;
 use App\Http\Controllers\User\GeneralController;
 use App\Http\Controllers\User\NotificationController;
@@ -18,6 +19,7 @@ Route::prefix('customer')->group(static function () {
         Route::resource('faq', FaqController::class, ['names' => 'user.faqs'])->only(['update']);
         Route::resource('/wishlist', WishlistController::class, ['names' => 'user.wishlists']);
         Route::resource('/notification', NotificationController::class, ['names' => 'user.notifications']);
+        Route::post('/comment-store',[FrontReviewController::class,'store'])->name('user.review.store');
     });
 
 });

@@ -95,6 +95,7 @@ export default function Login({status}) {
         if (responseData.user === 'True') {
             showToast('رمز عبور جدید برای شما ارسال شد.', 'success')
             setStatusMessage(responseData.statusMessage)
+            console.log(responseData.pass)
             setShowPass(true)
             return
         }

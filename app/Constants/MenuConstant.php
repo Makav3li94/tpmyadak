@@ -145,6 +145,13 @@ class MenuConstant
                         'active' => 'admin.payment.methods.*',
                         'permission' => 'view-payment-method',
                     ],
+                    [
+                        'name' => 'کد تخفیف',
+                        'show' => true,
+                        'route' => route('admin.discounts.index'),
+                        'active' => 'admin.discounts.*',
+                        'permission' => 'view-discount',
+                    ],
                 ],
             ],
             [

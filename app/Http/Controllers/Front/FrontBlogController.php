@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 
 class FrontBlogController extends Controller
 {
@@ -10,6 +11,6 @@ class FrontBlogController extends Controller
 
     public function getBlog($slug)
     {
-        return 123;
+        return $blog=Blog::where('slug',$slug)->first();
     }
 }

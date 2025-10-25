@@ -40,13 +40,22 @@ class FrontProductController extends Controller
     {
 
         $product = Product::where('sku', $sku)->first();
+        $reviews = $product->reviews()->with('author')->get();
         $relatedProducts = $product->getRelatedProducts(4);
         $attributeGroupsWithDetails = $product->attributeGroupsWithDetails();
+
+        $canReview = true;
+        if ($product->hasReviewed(auth()->user())) {
+            $canReview = false;
+        }
 
         return inertia('main/product/single', [
             'product' => $product->load('brand', 'carModels', 'specs', 'filters', 'images'),
             'attributeGroups' => $attributeGroupsWithDetails,
             'relatedProducts' => $relatedProducts,
+            'reviews' => $reviews,
+            'canReview' => $canReview,
+
         ]);
     }
 

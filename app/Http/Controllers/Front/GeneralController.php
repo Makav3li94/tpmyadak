@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Models\Shop\Brand;
 use App\Models\Shop\Product;
 use App\Models\Shop\ProductCategory;
@@ -27,6 +28,8 @@ class GeneralController extends Controller
                 ->limit(6)->get()),
             'brands' => inertia()->defer(fn () => Brand::where('status', 1)
                 ->limit(6)->get()),
+            'latestBlogs' => inertia()->defer(fn () => Blog::where('status', 1)->with('category:id,slug,title')
+                ->limit(3)->get()),
         ]);
     }
 

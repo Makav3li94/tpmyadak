@@ -3,11 +3,13 @@
 namespace App\Models\Shop;
 
 use App\Models\Model;
+use Digikraaft\ReviewRating\Traits\HasReviewRating;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
+    use HasReviewRating;
     protected $guarded = ['id'];
 
     protected $fillable = [

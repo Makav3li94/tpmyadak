@@ -289,6 +289,26 @@ class DummySeeder extends Seeder
             'status' => 1,
             'approve' => 1,
         ]);
+        $pr33 = Product::create([
+            'title' => '2 هشت لیتری روغن موتور خودرو کاسپین مدل',
+            'slug' => Str::slug('روغن موتور خودرو کاسپین مدل MULTI GRADE 20W50 (هشت لیتری)'),
+            'alias' => 'روغن موتور خودرو کاسپین مدل MULTI GRADE 20W50 (چهار لیتری)',
+            'excerpt' => 'روغن موتور خودرو کاسپین مدل MULTI GRADE 20W50 (چهار لیتری)',
+            'product_category_id' => $bccc1->id,
+            'brand_id' => $bb3->id,
+            'supplier_id' => $spp3->id,
+            'tax_id' => $tax1->id,
+            'sku' => 'tpm-'.rand(11111, 99999),
+            'minimum' => 1,
+            'stock' => 1,
+            'kind' => 0,
+            'price' => 35050000,
+            'about' => 'about text',
+            'description' => 'about description',
+            'image' => 'b7c4b037654ab739004f312456bee84e.jpg',
+            'status' => 1,
+            'approve' => 1,
+        ]);
         $pr4 = Product::create([
             'title' => 'روغن ترمز خودرو تکستار TEXTAR مدل DOT 4',
             'slug' => Str::slug('روغن ترمز خودرو تکستار TEXTAR مدل DOT 4'),

@@ -5,39 +5,11 @@ import {showToast} from "@/utils.js";
 import Breadcrumb from "@/layouts/common/breadcrumb.jsx";
 import {Minus, Plus, ShoppingCart, Star, SquareCheckBig, Heart} from "lucide-react";
 import RelatedProducts from "@/pages/main/product/partials/related-products.jsx";
+import Review from "@/components/review.jsx";
+import ReviewForm from "@/components/review-form.jsx";
 
-const reviews = {
-    average: 4,
-    featured: [
-        {
-            id: 1,
-            rating: 5,
-            content: `
-        <p>محصول خیلی خوبی بود</p>
-      `,
-            date: 'July 16, 2021',
-            datetime: '2021-07-16',
-            author: 'پرهام اکبری',
-            avatarSrc:
-                'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-        },
-        {
-            id: 1,
-            rating: 5,
-            content: `
-        <p>یکی دیگه خریدم، این یکی خوب نبود</p>
-      `,
-            date: 'July 16, 2021',
-            datetime: '2021-07-16',
-            author: 'پرهام اکبری',
-            avatarSrc:
-                'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-        },
 
-        // More reviews...
-    ],
-}
-export default function ProductSingle({product, attributeGroups = [],relatedProducts}) {
+export default function ProductSingle({product, attributeGroups = [],relatedProducts,reviews,canReview}) {
     const {addItem} = useCart();
 
 
@@ -226,35 +198,20 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
 
                         <input type="radio" name="my_tabs_3" className="tab" aria-label="دیدگاه ها"/>
                         <div className="tab-content bg-base-100 border-base-300 p-6">
-                            {reviews.featured.map((review, reviewIdx) => (
-                                <div key={review.id} className="flex space-x-4 text-sm text-gray-500">
-                                    <div className="flex-none py-10">
-                                        <img alt="" src={review.avatarSrc}
-                                             className="h-10 w-10 rounded-full bg-gray-100"/>
-                                    </div>
-                                    <div
-                                        className={`${reviewIdx === 0 ? '' : 'border-t border-gray-200'}  py-10 w-full`}>
-                                        <h3 className="font-medium text-gray-900">{review.author}</h3>
-                                        <p>
-                                            <time dateTime={review.datetime}>{review.date}</time>
-                                        </p>
-
-                                        <div className="mt-4 flex items-center">
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>
-                                        </div>
-                                        <p className="sr-only">{review.rating} out of 5 stars</p>
-
-                                        <div
-                                            dangerouslySetInnerHTML={{__html: review.content}}
-                                            className="prose prose-sm mt-4 max-w-none text-gray-500"
-                                        />
-                                    </div>
-                                </div>
+                            {reviews.map((review, reviewIdx) => (
+                                <Review review={review} i={reviewIdx}/>
                             ))}
+                            {canReview ?(
+                                <ReviewForm reviewType='product' model_id={product.id}/>
+                            ):(
+                                <div role="alert" className="alert alert-success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>شما دیدگاه خود را قبلا ارسال کرده اید.</span>
+                                </div>
+                            )}
+
                         </div>
                     </div>
 

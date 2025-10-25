@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {router, Head, Link} from '@inertiajs/react'
 import { usePrevious } from 'react-use'
-import { Pencil, Trash } from 'lucide-react'
+import { Pencil, Trash,MessageSquareMore } from 'lucide-react'
 import { useModal } from '@/hooks'
 
 import HasPermission from '@/components/common/has-permission'
@@ -143,6 +143,18 @@ export default function Home(props) {
                                                         <div className="flex space-x-1 items-center">
                                                             <Trash className='w-4 h-4'/>
                                                             <div>حذف</div>
+                                                        </div>
+                                                    </Dropdown.Item>
+                                                </HasPermission>
+                                                <HasPermission p="update-product">
+                                                    <Dropdown.Item
+                                                        onClick={() =>
+                                                            router.visit(route('admin.reviews.index', {type:'product',model_id:product.id}))
+                                                        }
+                                                    >
+                                                        <div className="flex space-x-1 items-center">
+                                                            <MessageSquareMore className='w-4 h-4'/>
+                                                            <div>نظرات</div>
                                                         </div>
                                                     </Dropdown.Item>
                                                 </HasPermission>

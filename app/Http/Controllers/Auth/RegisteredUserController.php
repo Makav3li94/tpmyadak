@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
             defer(fn () => dispatch((new SendPassSms($request->mobile, 'fajq9tz6xx83v9a', $user->name, $pass))->onQueue('high')));
             defer(fn () => $user->update(['password' => Hash::make($pass)]));
 
-            return response()->json(['user' => 'True', 'statusMessage' => 'رمز یکبار مصرف جدید به گوشی شما ارسال شد.']);
+            return response()->json(['user' => 'True', 'statusMessage' => 'رمز یکبار مصرف جدید به گوشی شما ارسال شد.', 'pass' => $pass]);
         } else {
             $sms_active = Setting::where('key', 'sms_active')->first();
             $code = 0000;
