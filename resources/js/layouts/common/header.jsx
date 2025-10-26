@@ -99,7 +99,7 @@ export default function Header(props) {
                                                                 </Link>
                                                             </li>
                                                             <li>
-                                                                <Link href={route('home')} className="cursor-pointer ">
+                                                                <Link href={route('home.getBlogs')} className="cursor-pointer ">
                                                                     وبلاگ
                                                                 </Link>
                                                             </li>

@@ -45,8 +45,10 @@ class FrontProductController extends Controller
         $attributeGroupsWithDetails = $product->attributeGroupsWithDetails();
 
         $canReview = true;
-        if ($product->hasReviewed(auth()->user())) {
-            $canReview = false;
+        if (auth()->user()) {
+            if ($product->hasReviewed(auth()->user())) {
+                $canReview = false;
+            }
         }
 
         return inertia('main/product/single', [

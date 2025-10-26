@@ -14,7 +14,7 @@ export default function ReviewForm({reviewType,model_id}){
             body: '',
             overall: '',
             recommend: '',
-            review_type:'product'
+            review_type:reviewType
         })
 
 

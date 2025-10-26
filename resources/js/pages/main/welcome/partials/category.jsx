@@ -28,9 +28,9 @@ export default function Category({sliders}) {
                             </Link>
                         </li>
                         <li className="bg-white max-w-fit py-3 rounded-t-md text-[#333333] px-5 font-bold ml-2 hover:bg-[#ff2d37] hover:text-white transition duration-300 ease-in">
-                            <a href="#" title="blog">
+                            <Link href={route('home.getBlogs')} title="blog">
                                 بلاگ
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

@@ -4,7 +4,7 @@ namespace App\Constants;
 
 class SettingConstant
 {
-    public static function all()
+    public static function all(): array
     {
         return [
             ['key' => 'app_name', 'value' => 'TPM', 'type' => 'text'],

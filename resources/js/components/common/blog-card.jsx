@@ -17,7 +17,7 @@ export default function BlogCard({blog,i}) {
                     <time dateTime={blog.created_at} className="text-gray-500">
                         {blog.published_at}
                     </time>
-                    <Link href={blog.category.slug} className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
+                    <Link href={route('home.getBlogs', {category: blog.category.id})} className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
                         {blog.category.title}
                     </Link>
                 </div>

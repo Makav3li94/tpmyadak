@@ -36,7 +36,7 @@ const GetCart = ({isMobile = false}) => {
                         سبد خرید
                     </span>
                     <span className="text-[#ff2d37] font-bold py-2">
-                        ۲۸۸,۰۰۰ تومان
+                        {cartTotal} تومان
                     </span>
                 </>
             }
