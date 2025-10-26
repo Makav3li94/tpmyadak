@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->ulid('admin_id')->nullable();
-            $table->ulid('ticket_id');
+//            $table->ulid('admin_id')->nullable();
+//            $table->ulid('ticket_id');
             $table->string('user_file')->nullable();
             $table->string('admin_file')->nullable();
             $table->longText('question')->nullable();
