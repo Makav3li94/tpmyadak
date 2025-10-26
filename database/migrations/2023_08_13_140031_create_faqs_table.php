@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->ulid('id')->primary();
-//            $table->ulid('admin_id')->nullable();
-//            $table->ulid('ticket_id');
+            $table->ulid('admin_id')->nullable();
+            $table->ulid('ticket_id');
             $table->string('user_file')->nullable();
             $table->string('admin_file')->nullable();
             $table->longText('question')->nullable();
@@ -25,8 +25,8 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreignUlid('admin_id')->references('id')->on('admins')->onDelete('cascade');
-            $table->foreignUlid('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
+//            $table->foreignUlid('admin_id')->references('id')->on('admins')->onDelete('cascade');
+//            $table->foreignUlid('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
         });
     }
 
