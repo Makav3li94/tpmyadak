@@ -16,7 +16,7 @@ return new class extends Migration
             $table->ulid('product_id')->index();
             $table->ulid('filter_id')->index();
             $table->string('value');
-            $table->foreign('product_id')->references('id')->on('product_id')
+            $table->foreign('product_id')->references('id')->on('products')
                 ->onDelete('cascade');
             $table->foreign('filter_id')->references('id')->on('filters')
                 ->onDelete('cascade');
