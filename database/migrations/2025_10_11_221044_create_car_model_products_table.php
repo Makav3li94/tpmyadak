@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('car_model_products', function (Blueprint $table) {
             $table->ulid('product_id')->index();
             $table->ulid('car_model_id')->index();
-            $table->foreign('product_id')->references('id')->on('product_id')
+            $table->foreign('product_id')->references('id')->on('products')
                 ->onDelete('cascade');
             $table->foreign('car_model_id')->references('id')->on('car_models')
                 ->onDelete('cascade');
