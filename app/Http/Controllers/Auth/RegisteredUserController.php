@@ -30,7 +30,7 @@ class RegisteredUserController extends Controller
             $pass = mt_rand(ceil(111111 / 100), floor(999999 / 100)) * 100;
             //            dispatch((new SendPassSms($request->mobile, 'fajq9tz6xx83v9a', $user->name, $pass))->onQueue('high'));
             //            $user->update(['password' => Hash::make(123456)]);
-            defer(fn () => dispatch((new SendPassSms($request->mobile, 'fajq9tz6xx83v9a', $user->name, $pass))->onQueue('high')));
+            defer(fn () => dispatch((new SendPassSms($request->mobile, 'l23msp3ocdlkmwk', $user->name, $pass))->onQueue('high')));
             defer(fn () => $user->update(['password' => Hash::make($pass)]));
 
             return response()->json(['user' => 'True', 'statusMessage' => 'رمز یکبار مصرف جدید به گوشی شما ارسال شد.', 'pass' => $pass]);
@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
                 //                $code = rand(1111, 9999);
                 $code = mt_rand(ceil(1111 / 10), floor(9999 / 10)) * 10;
                 //                dispatch((new SendRegSms($request->mobile, '8s60hmgv5tahnlq', $code))->onQueue('high'));
-                defer(fn () => dispatch((new SendRegSms($request->mobile, '33j778pu228bj4t', (int) $code))->onQueue('high')));
+                defer(fn () => dispatch((new SendRegSms($request->mobile, 'yv5imo84fywjiub', (int) $code))->onQueue('high')));
                 //                dispatch((new SendRegSms($request->mobile, '33j778pu228bj4t', (int)$code))->onQueue('high'));
             }
             $code = $code * 1363 + (((int) $request->mobile * 100) / 2);
