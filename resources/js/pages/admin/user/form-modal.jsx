@@ -6,7 +6,7 @@ import { Modal, Button, TextInput, SelectModalInput } from '@/components/index'
 import TextareaInput from "@/components/daisy-ui/textarea-input.jsx";
 
 export default function FormModal(props) {
-    const { modalState ,user} = props
+    const { modalState ,user,is_user=false} = props
     const { data, setData, post, put, processing, errors, reset, clearErrors } =
         useForm({
             user_id: user.id,
@@ -17,7 +17,7 @@ export default function FormModal(props) {
             phone: '',
             address: '',
         })
-
+    console.log(is_user)
     const handleOnChange = (event) => {
         setData(
             event.target.name,
@@ -43,13 +43,15 @@ export default function FormModal(props) {
     const handleSubmit = (e) => {
         e.preventDefault()
         const address = modalState.data
+
         if (address !== null) {
             put(route('admin.addresses.update', address), {
                 onSuccess: () => handleClose(),
             })
             return
         }
-        post(route('admin.addresses.store'), {
+        const uri=is_user?'home.address':'admin.addresses.store'
+        post(route(uri), {
             onSuccess: () => handleClose(),
         })
     }
@@ -85,12 +87,14 @@ export default function FormModal(props) {
                     onChange={handleOnChange}
                     label="کدپستی"
                     error={errors.postal_code}
+                    maxLength={10}
                 />
                 <TextInput
                     name="m_code"
                     value={data.m_code}
                     onChange={handleOnChange}
                     label="کدملی خریدار"
+                    maxLength={10}
                     error={errors.m_code}
                 />
 
@@ -99,6 +103,7 @@ export default function FormModal(props) {
                     value={data.mobile}
                     onChange={handleOnChange}
                     label="موبایل"
+                    maxLength={11}
                     error={errors.mobile}
                 />
                 <TextInput
@@ -106,6 +111,7 @@ export default function FormModal(props) {
                     value={data.phone}
                     onChange={handleOnChange}
                     label="تلفن ثابت"
+                    maxLength={11}
                     error={errors.phone}
                 />
                 <TextareaInput name='address' value={data.address} label='آدرس' onChange={handleOnChange}

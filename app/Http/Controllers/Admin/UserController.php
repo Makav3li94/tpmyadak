@@ -9,7 +9,6 @@ use App\Rules\IranMobileValidator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
-use phpDocumentor\Reflection\Types\Null_;
 
 class UserController extends Controller
 {
@@ -52,7 +51,7 @@ class UserController extends Controller
     public function edit(User $user): Response
     {
         return inertia('admin/user/form', [
-            'user' => $user->load(['addresses', 'familiarity'])
+            'user' => $user->load(['addresses', 'familiarity']),
         ]);
     }
 
@@ -83,11 +82,7 @@ class UserController extends Controller
             ->with('message', ['type' => 'success', 'message' => 'کاربر با موفقیت حذف شد.']);
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
-    private function validateData(Request $request, $type = 'store', $id = NULL): array
+    private function validateData(Request $request, $type = 'store', $id = null): array
     {
         $defaultValidationArray = [
             'name' => 'required|string|max:255',
@@ -97,16 +92,17 @@ class UserController extends Controller
         ];
         if ($type == 'update') {
             $conRules = [
-                'email' => 'required|email|unique:users,email,' . $id,
-                'mobile' => ['required',new IranMobileValidator(),'unique:users,mobile,' . $id],
+                'email' => 'required|email|unique:users,email,'.$id,
+                'mobile' => ['required', new IranMobileValidator, 'unique:users,mobile,'.$id],
             ];
         } else {
             $conRules = [
                 'email' => 'required|email|unique:users,email',
-                'mobile' => ['required',new IranMobileValidator(),'unique:users,mobile'],
+                'mobile' => ['required', new IranMobileValidator, 'unique:users,mobile'],
             ];
         }
         $rules = array_merge($defaultValidationArray, $conRules);
+
         return $request->validate($rules);
 
     }

@@ -72,47 +72,48 @@ class RegisteredUserController extends Controller
         $code = session($request->mobile);
         $rqode = ((int) $code - (((int) $request->mobile * 100) / 2)) / 1363;
         if ($request->code != (int) $rqode) {
-            return response()->json(['errs' => ['code' => 'کد درست وارد کنید.']]);
+            return back()->withErrors(["code" => 'کد درست وارد کنید.'])->withInput();
         }
 
         $valid = [
             'name' => 'required|string|max:255',
-            'email'=>'required|email'
+            'email' => 'required|email|unique:users',
         ];
         if ($request->isKharej) {
             $valid['mobile'] = 'required|string|unique:users';
         } else {
             $valid['mobile'] = 'required|regex:/(09)[0-9]{9}/|digits:11|numeric|unique:users';
         }
-        if ($request->is_page) {
-            $valid['email'] = 'nullable|email|unique:users';
-        }
-        $validator = Validator::make($request->all(), $valid);
-        if ($validator->fails()) {
-            return response()->json(['errs' => $validator->errors()->toArray()]);
-        }
+        $request->validate($valid);
+//        $validator = Validator::make($request->all(), $valid);
+//        if ($validator->fails()) {
+//            return response()->json(['errs' => $validator->errors()->toArray()]);
+//        }
         $user = User::create([
             'name' => $request->name,
             'mobile' => $request->mobile ?? null,
             'email' => $request->email ?? null,
             'familiarity_id' => $request->familiarity_id ?? null,
-//            'ref_id' => $request->ref_id ? (($request->ref_id - 73) / 1000) : 0,
+            //            'ref_id' => $request->ref_id ? (($request->ref_id - 73) / 1000) : 0,
             //            'password' => Hash::make($request->password),
             'password' => Hash::make(rand(111111, 999999)),
             'status' => 'active',
-//            'is_kharej' => $request->isKharej ? '1' : '0',
+            //            'is_kharej' => $request->isKharej ? '1' : '0',
             //            'code' => $code,
         ]);
         defer(fn () => notifyAdmin($user->id, $user->name, $user->mobile, 'register', $user->id, 1, 'کاربر جدید ثبت نام کرد'));
-//        defer(fn () => notifyUser($user->id, 'profile', $user->id, 0, 'جهت خرید محصول لطفا اطلاعات پروفایل رو کامل کنید.'));
-//        defer(fn () => notifyUser($user->id, 'register', $user->id, 0, 'کاربر عزیز به کادویاب خوش امدید.'));
+        //        defer(fn () => notifyUser($user->id, 'profile', $user->id, 0, 'جهت خرید محصول لطفا اطلاعات پروفایل رو کامل کنید.'));
+        //        defer(fn () => notifyUser($user->id, 'register', $user->id, 0, 'کاربر عزیز به کادویاب خوش امدید.'));
         Auth::login($user, true);
         if ($request->is_page) {
-            return redirect()->route('user.dashboard')->with('message', 'ثبت نام موفق');
+            return redirect()->intended(route('user.dashboard', absolute: false));
+//            return redirect()->route('user.dashboard')->with('message', 'ثبت نام موفق');
 
         } else {
-            return response()->json(['status' => 'success']);
-            return back()->with('message', 'ثبت نام موفق');
+            return redirect()->intended(route('user.dashboard', absolute: false));
+//            return response()->json(['status' => 'success']);
+
+//            return back()->with('message', 'ثبت نام موفق');
 
         }
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Default\SitemapController;
 use App\Http\Controllers\Front\FrontBlogController;
 use App\Http\Controllers\Front\FrontOrderController;
 use App\Http\Controllers\Front\FrontProductController;
+use App\Http\Controllers\Front\FrontReviewController;
 use App\Http\Controllers\Front\GeneralController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', [App\Module\Shortlink\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [GeneralController::class, 'index'])->name('home');
 Route::post('/prsearch/{search_term_string}', [GeneralController::class, 'search'])->name('home.product.search');
-
 
 Route::get('/products', [FrontProductController::class, 'getProducts'])->name('home.getProducts');
 Route::get('/product/{sku}/{slug?}', [FrontProductController::class, 'getProduct'])->name('home.getProduct');
@@ -23,8 +23,15 @@ Route::get('/category/{slug?}', [FrontProductController::class, 'getCategory'])-
 Route::get('/articles', [FrontBlogController::class, 'getBlogs'])->name('home.getBlogs');
 Route::get('/article/{slug}', [FrontBlogController::class, 'getBlog'])->name('home.getBlog');
 
+Route::get('/cart', [FrontOrderController::class, 'cart'])->name('home.cart');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/comment-store', [FrontReviewController::class, 'store'])->name('user.review.store');
 
-Route::get('/cart',[FrontOrderController::class, 'cart'])->name('home.cart');
+    Route::get('/checkout', [FrontOrderController::class, 'checkout'])->name('home.checkout');
+    Route::post('/order', [FrontOrderController::class, 'order'])->name('home.order');
+    Route::get('/discount/{code}/', [FrontOrderController::class, 'discount'])->name('home.discount');
+    Route::post('/address', [FrontOrderController::class, 'address'])->name('home.address');
+});
 // #Guest
 
 // Route::get('/{link:code}', [App\Module\Shortlink\Controllers\HomeController::class, 'redirect'])->name('redirect');

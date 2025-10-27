@@ -102,10 +102,10 @@ const GetCart = ({isMobile = false}) => {
                         <span className="text-[#ff2d37] font-bold py-2">
                             مبلغ کل: {cartTotal} تومان
                         </span>
-                        <Button type='success' className="text-base hover:text-[#ff2d37]" title="checkout">
+                        <Link href={route('home.cart')} className="btn btn-success text-base-100 hover:text-[#ff2d37]" title="checkout">
                             تکمیل خرید
 
-                        </Button>
+                        </Link>
                     </div>
                 </motion.div>
             }

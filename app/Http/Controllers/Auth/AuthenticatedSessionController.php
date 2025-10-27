@@ -33,8 +33,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return Inertia::location(route('user.dashboard', absolute: false));
-        //        return redirect()->intended(route('dashboard', absolute: false));
+        //        return Inertia::location(route('user.dashboard', absolute: false));
+        return redirect()->intended(route('user.dashboard', absolute: false));
     }
 
     /**

@@ -1,11 +1,10 @@
-import FrontLayout from "@/layouts/front/front-layout.jsx";
 import React, {useEffect, useState} from "react";
-import Breadcrumb from "@/layouts/common/breadcrumb.jsx";
 import {useCart} from "react-use-cart";
 import {Link} from "@inertiajs/react";
 import {CheckIcon, CircleQuestionMark, ClockIcon, Minus, Plus, XIcon} from "lucide-react";
 import {Button} from "@/components/index/index.js";
 import {numLatinToAr} from "@/utils.js";
+import OrderLayout from "@/layouts/front/order-layout.jsx";
 
 export default function Cart(props) {
     const [hasMounted, setHasMounted] = useState(false);
@@ -41,8 +40,6 @@ export default function Cart(props) {
 
     console.log(items)
     return (
-        <>
-            <Breadcrumb l1={['سبد خرید', '']}/>
             <section className="w-full container justify-center">
                 <div className="bg-white">
                     <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -190,19 +187,17 @@ export default function Cart(props) {
                                 </dl>
                                 )}
                                 <div className="mt-6">
-                                    <button
-                                        type="submit"
-                                        className="w-full rounded-md border border-transparent bg-red-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                                    <Link href={route('home.checkout')}
+                                        className="block text-center w-full rounded-md border border-transparent bg-red-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                                     >
-                                        پرداخت صورتحساب
-                                    </button>
+                                        رفتن به صفحه صورتحساب
+                                    </Link>
                                 </div>
                             </section>
                         </form>
                     </div>
                 </div>
             </section>
-        </>
     )
 }
-Cart.layout = (Page) => <FrontLayout isSingle={true}>{Page}</FrontLayout>;
+Cart.layout = (Page) => <OrderLayout>{Page}</OrderLayout>;

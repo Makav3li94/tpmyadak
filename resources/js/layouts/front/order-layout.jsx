@@ -9,11 +9,11 @@ import {Toaster} from "sonner";
 import Footer from "@/layouts/common/footer.jsx";
 import {CartProvider} from "react-use-cart";
 import HeaderSingle from "@/layouts/common/header-single.jsx";
+import OrderHeader from "@/layouts/common/order-header.jsx";
 
 
-export default function FrontLayout({isSingle = false, children}) {
+export default function OrderLayout({children}) {
     const {props: {auth, flash},} = usePage()
-    const {isShowSidebar, toggleSidebar} = useSidebar(true)
 
     useEffect(() => {
         if (flash.message !== null) {
@@ -28,12 +28,19 @@ export default function FrontLayout({isSingle = false, children}) {
     return (
         <CartProvider>
             <div className="min-h-screen flex flex-col sm:justify-center items-center w-full">
-                <TopHeader user={auth.user}/>
-                <Header/>
-                {isSingle && <HeaderSingle/>}
-                {children}
-                <Footer isSingle={isSingle}/>
-                <Toaster theme="system" richColors="true" toastOptions={{duration: 3000, dismissible: true,}}/>
+                    <div className="bg-white">
+                        {/* Background color split screen for large screens */}
+                        <div aria-hidden="true" className="fixed left-0 top-0 hidden h-full w-1/2 bg-white lg:block"/>
+                        <div aria-hidden="true" className="fixed right-0 top-0 hidden h-full w-1/2 bg-gray-50 lg:block"/>
+                        <OrderHeader/>
+
+
+                        <div
+                            className="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:px-8 xl:gap-x-48">
+                            {children}
+                        </div>
+                    </div>
+
             </div>
         </CartProvider>
     )

@@ -19,8 +19,6 @@ export default function Login({status}) {
     const [isRegister, setIsRegister] = useState(false);
     const [showPass, setShowPass] = useState(false);
     const [errMobile, setErrMobile] = useState(null);
-    const [errName, setErrName] = useState(null);
-    const [errEmail, setErrEmail] = useState(null);
     const [errCode, setErrCode] = useState(null);
     const [btnDis, setBtnDis] = useState(false)
     const [statusMessage, setStatusMessage] = useState('');
@@ -184,36 +182,7 @@ export default function Login({status}) {
                 }
             }
 
-            // Clear previous errors
-            setErrMobile(null)
-            setErrName(null)
-            setErrEmail(null)
 
-            const response = await axios.post(
-                route('registerPost'),
-                {
-                    code: data.code,
-                    name: data.name,
-                    mobile: data.mobile,
-                    email: data.email,
-                    password: data.password,
-                },
-            )
-
-            const responseData = response.data
-
-            if (responseData.status === 'success') {
-                router.visit(route('user.dashboard'))
-                return
-            }
-
-            if (responseData.errs && Object.keys(responseData.errs).length !== 0) {
-                const err = responseData.errs
-                if (err.mobile) setErrMobile(err.mobile)
-                if (err.name) setErrName(err.name)
-                if (err.email) setErrEmail(err.email)
-                if (err.code) setErrCode(err.code)
-            }
         } catch (error) {
             console.log(error)
         } finally {
@@ -221,6 +190,22 @@ export default function Login({status}) {
         }
     }
 
+    const handleSubmit=(e)=>{
+        e.preventDefault()
+        // Clear previous errors
+
+        post(
+            route('registerPost',{
+                code: data.code,
+                name: data.name,
+                mobile: data.mobile,
+                email: data.email,
+                password: data.password,
+            }),
+        )
+
+
+    }
     return (
         <GuestLayout>
             <Head title="ورود | ثبت نام"/>
@@ -296,7 +281,7 @@ export default function Login({status}) {
                     {/*</div>*/}
                 </form>
             ) : (
-                <form onSubmit={(e) => handleConfirmButtonClick(e, 'register')}>
+                <form onSubmit={(e) => handleSubmit(e)}>
 
 
                     <div className="mb-4">
@@ -307,7 +292,7 @@ export default function Login({status}) {
                             value={data.name}
                             className="mt-1 block w-full"
                             onChange={onHandleChange}
-                            error={errName}
+                            error={errors.name}
                         />
                     </div>
                     <div className="mb-4">
@@ -318,7 +303,7 @@ export default function Login({status}) {
                             value={data.email}
                             className="mt-1 block w-full"
                             onChange={onHandleChange}
-                            error={errEmail}
+                            error={errors.email}
                         />
                     </div>
                     {!disableSms &&
@@ -330,11 +315,11 @@ export default function Login({status}) {
                                 value={data.code}
                                 className="mt-1 block w-full"
                                 onChange={onHandleChange}
-                                error={errCode}
+                                error={errors.code}
                             />
                         </div>
                     }
-                    <Button btnType="submit" processing={btnDis} type={'primary'}
+                    <Button btnType="submit" processing={processing} type={'primary'}
                             className={"btn mt-2 w-full btn-primary"}>
                         ثبت نام
                     </Button>
