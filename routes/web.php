@@ -3,6 +3,7 @@
 use App\Http\Controllers\Default\FileController;
 use App\Http\Controllers\Default\SitemapController;
 use App\Http\Controllers\Front\FrontBlogController;
+use App\Http\Controllers\Front\FrontOrderController;
 use App\Http\Controllers\Front\FrontProductController;
 use App\Http\Controllers\Front\GeneralController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,8 @@ Route::get('/category/{slug?}', [FrontProductController::class, 'getCategory'])-
 Route::get('/articles', [FrontBlogController::class, 'getBlogs'])->name('home.getBlogs');
 Route::get('/article/{slug}', [FrontBlogController::class, 'getBlog'])->name('home.getBlog');
 
+
+Route::get('/cart',[FrontOrderController::class, 'cart'])->name('home.cart');
 // #Guest
 
 // Route::get('/{link:code}', [App\Module\Shortlink\Controllers\HomeController::class, 'redirect'])->name('redirect');

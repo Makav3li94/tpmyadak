@@ -21,6 +21,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
             discount: item.discount,
             image: item.image,
             price: item.price,
+            stock: item.stock,
         })
         showToast('محصول به سبد خرید اضافه شد', 'success')
     }
@@ -104,7 +105,13 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                             text-xs leading-8 text-gray-900 border border-gray-200 flex items-center
                                              rounded-full justify-center transition-all duration-300 hover:bg-gray-50
                                               hover:shadow-sm hover:shadow-gray-100 hover:border-gray-300
-                                              visited:border-gray-300 visited:bg-gray-50 mb-2">
+                                              visited:border-gray-300 visited:bg-gray-50 mb-2"
+                                                                    // onClick={()=>{
+                                                                    //     updateItem(product.id, {
+                                                                    //         price: prc,
+                                                                    //         tax: Math.ceil((prc / 10) / 10000) * 10000
+                                                                    //     });}}
+                                                            >
                                                                 {attribute.title}
                                                                 {/*{attribute.add_price}*/}
                                                             </button>

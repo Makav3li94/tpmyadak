@@ -94,3 +94,5 @@ export const trimText = (text, maxLength = 30) => {
     if (text.length <= maxLength) return text
     return text.slice(0, maxLength) + '...'
 }
+
+export const numLatinToAr = (n) => n.replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]).replace(/\./g, "٫");

@@ -25,12 +25,11 @@ export default function Footer({isSingle=false}) {
                                      d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/>
                              </svg>
                              <span className="px-2 font-light text-gray-400">
-                                 {" "}
-                                 تهران، میدان صادقیه، ساختمان الماس، واحد۶
+                                 تهران ، شهرک غرب، بلوار دریا ، خ گلها، خ توحید یک، پلاک ۱۰۱
                              </span>
                          </li>
                          <li className="py-4">
-                             <a href="#" title="phonenumber" className="flex">
+                             <a href="tel:02188582172" title="phonenumber" className="flex">
                                  <svg
                                      xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 640 640"
@@ -41,12 +40,12 @@ export default function Footer({isSingle=false}) {
                                          d="M415.8 89C423.6 70.2 444.2 60.1 463.9 65.5L469.4 67C534 84.6 589.2 147.2 573.1 223.4C536 398.4 398.3 536.1 223.3 573.2C147 589.4 84.5 534.1 66.9 469.5L65.4 464C60 444.3 70.1 423.7 88.9 415.9L186.2 375.4C202.7 368.5 221.8 373.3 233.2 387.2L271.8 434.4C342.1 399.5 398.6 341.1 431.1 269.5L387 233.4C373.1 222.1 368.4 203 375.2 186.4L415.8 89z"/>
                                  </svg>
                                  <span className="px-2 font-light text-gray-400">
-                                     888 9344 6000 - 888 1234 6789
+                                     ۰۲۱-۸۸۵۸۲۱۷۲
                                  </span>
                              </a>
                          </li>
                          <li className="py-4">
-                             <a href="#" title="phonenumber" className="flex">
+                             <a href="mailto:info@tpmyadak.com" title="phonenumber" className="flex">
                                  <svg
                                      xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 640 640"
@@ -57,7 +56,7 @@ export default function Footer({isSingle=false}) {
                                          d="M112 128C85.5 128 64 149.5 64 176C64 191.1 71.1 205.3 83.2 214.4L291.2 370.4C308.3 383.2 331.7 383.2 348.8 370.4L556.8 214.4C568.9 205.3 576 191.1 576 176C576 149.5 554.5 128 528 128L112 128zM64 260L64 448C64 483.3 92.7 512 128 512L512 512C547.3 512 576 483.3 576 448L576 260L377.6 408.8C343.5 434.4 296.5 434.4 262.4 408.8L64 260z"/>
                                  </svg>
                                  <span className="px-2 font-light text-gray-400">
-                                     contact@opencartworks.com
+                                     info@tpmyadak.com
                                  </span>
                              </a>
                          </li>
