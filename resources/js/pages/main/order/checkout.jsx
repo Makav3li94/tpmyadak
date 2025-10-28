@@ -8,6 +8,7 @@ import {useForm, usePage} from "@inertiajs/react";
 import Button from "@/components/daisy-ui/button.jsx";
 import {useModal} from "@/hooks.js";
 import FormModal from "@/pages/admin/user/form-modal.jsx";
+import {showToast} from "@/utils.js";
 
 
 export default function Checkout({user, paymentMethods, shippingMethods}) {
@@ -29,11 +30,13 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
 
     const {processing, data, setData, get, post} = useForm({
         items: items,
-        discount: null,
         address_id: '',
         payment_type: 'online',
         payment_method_id: paymentMethods[0].id,
-        shipping_method_id: shippingMethods[0].id
+        shipping_method_id: shippingMethods[0].id,
+        subtotal:'',
+        discount: null,
+        total_cost:cartTotal
     });
     const toggleFormModal = (address = null) => {
         formModal.setData(address)
@@ -43,6 +46,11 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
     function handleSubs() {
         let sub = items.reduce((a, v) => a = a + (v.discount === null ? v.itemTotal : (parseInt(v.price) * v.quantity)), 0)
         let dis = items.reduce((a, v) => a = a + (v.discount === null ? 0 : (v.itemTotal - parseInt(v.price) * v.quantity)), 0)
+        setData({
+            ...data,
+            subtotal: sub,
+            discount: dis
+        })
         setSubTotal(sub)
         setDiscountTotal(dis)
     }
@@ -67,24 +75,24 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
             return
         }
         if (discount !== null) {
-            toast.dark('کد تخفیف قبلا انجام شده.')
+            showToast('کد تخفیف قبلا استفاده شده.','error')
             return
         }
         axios.get(route('home.discount', code)).then(response => {
             if (response.data.status === 'success') {
                 setDiscount(response.data.discount)
                 setData('discount', response.data.discount.id)
-                toast.success('کد تخفیف اعمال شد')
+                showToast('کد تخفیف اعمال شد.','success')
             }
             if (response.data.status === 'error') {
                 setDiscount(null)
                 setData('discount', null)
-                toast.dark('کد تخفیف منقضی شده یا معتبر نیست.')
+                showToast('کد تخفیف منقضی شده یا معتبر نیست.','error')
             }
         }).catch(error => {
             setDiscount(null)
             setData('discount', null)
-            toast.dark('کد تخفیف منقضی شده یا معتبر نیست.')
+            showToast('کد تخفیف منقضی شده یا معتبر نیست.','error')
             console.error(error);
         });
     }

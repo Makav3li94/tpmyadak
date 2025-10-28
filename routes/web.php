@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order', [FrontOrderController::class, 'order'])->name('home.order');
     Route::get('/discount/{code}/', [FrontOrderController::class, 'discount'])->name('home.discount');
     Route::post('/address', [FrontOrderController::class, 'address'])->name('home.address');
+    Route::get('/check_payment/{order_id?}', [FrontOrderController::class, 'checkPayment'])->name('home.check_payment');
 });
 // #Guest
 

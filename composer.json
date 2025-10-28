@@ -22,6 +22,7 @@
         "laravel/prompts": "^0.3.6",
         "laravel/tinker": "^2.10.1",
         "react/async": "^4.3",
+        "shetabit/payment": "^6.3",
         "spatie/async": "^1.7.0",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-backup": "^9.3",

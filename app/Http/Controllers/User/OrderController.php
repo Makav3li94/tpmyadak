@@ -16,4 +16,11 @@ class OrderController extends Controller
             'data' => $orders,
         ]);
     }
+
+    public function show(Order $order)
+    {
+        return inertia('user/order/show', [
+            'order' => $order->load('details','transaction:id,order_id,verify_code,created_at','details.product:id,image,sku'),
+        ]);
+    }
 }

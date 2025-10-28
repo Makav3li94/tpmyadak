@@ -18,7 +18,7 @@ return new class extends Migration
             $table->ulid('order_id')->index();
             $table->string('price');
             $table->enum('status', ['0', '1'])->default('0')->comment('is paid or not');
-            $table->enum('type', ['deposit','withdraw','order','other'])->nullable()->default('order');
+            $table->enum('type', ['deposit', 'withdraw', 'order', 'other'])->nullable()->default('order');
             $table->string('transaction_id')->nullable();
             $table->string('verify_code')->nullable();
             $table->timestamps();

@@ -84,11 +84,12 @@ export default function Home(props) {
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th>مشتری</th>
+                                    <th>گیرنده</th>
                                     <th>مبلغ کل</th>
                                     <th> پرداخت</th>
                                     <th> ارسال</th>
-                                    <th>وضعیت</th>
+                                    <th>وضعیت سفارش</th>
+                                    <th>وضعیت پرداخت</th>
                                     <th>تاریخ</th>
                                     <th />
                                 </tr>
@@ -98,14 +99,27 @@ export default function Home(props) {
                                     <tr key={index}>
                                         <td>{order.user.name}</td>
                                         <td>{parseInt(order.total).toLocaleString('en')}</td>
-                                        <td>{order.payment_status}</td>
-                                        <td>{order.shipping_status}</td>
                                         <td>
-                                            {order.status?(
-                                                <Badge type="success" outline={true}>موفق</Badge>
-                                            ):(
-                                                <Badge type="error" outline={true}>ناموفق</Badge>
-                                            )}
+                                            {order.payment_status==='unpaid'&&  <Badge type="Error" outline={true}>عدم پرداخت</Badge>}
+                                            {order.payment_status==='partial'&&  <Badge type="Error" outline={true}>قسطی</Badge>}
+                                            {order.payment_status==='paid'&&  <Badge type="Error" outline={true}>پرداخت شده</Badge>}
+                                            {order.payment_status==='refund'&&  <Badge type="Error" outline={true}>مرجوعی</Badge>}
+                                        </td>
+                                        <td>
+                                            {order.shipping_status==='refunded'&&  <Badge type="Error" outline={true}>مرجوعی</Badge>}
+                                            {order.shipping_status==='done'&&  <Badge type="success" outline={true}>تحویل شده</Badge>}
+                                            {order.shipping_status==='sending'&&  <Badge type="primary" outline={true}>درحال ارسال</Badge>}
+                                            {order.shipping_status==='not_sent'&&  <Badge type="info" outline={true}>ارسال نشده</Badge>}
+                                        </td>
+                                        <td>
+                                            {order.status==='new'&&  <Badge type="primary" outline={true}>انتظار تایید</Badge>}
+                                            {order.status==='pending'&&  <Badge type="accent" outline={true}>درصف پردازش</Badge>}
+                                            {order.status==='hold'&&  <Badge type="secondary" outline={true}>معلق</Badge>}
+                                            {order.status==='verify'&&  <Badge type="success" outline={true}>تایید شده</Badge>}
+                                            {order.status==='processing'&&  <Badge type="info" outline={true}>درحال پردازش</Badge>}
+                                            {order.status==='done'&&  <Badge type="success" outline={true}>تکمیل شده</Badge>}
+                                            {order.status==='canceled'&&  <Badge type="Warning" outline={true}>کنسل شده</Badge>}
+                                            {order.status==='refunded'&&  <Badge type="Error" outline={true}>مرجوعی</Badge>}
                                         </td>
                                         <td>{order.created_at}</td>
                                         <td className="text-right">
