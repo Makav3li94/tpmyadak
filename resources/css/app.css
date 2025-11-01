@@ -282,3 +282,69 @@
 .mfoff {
     color: #ccc !important;
 }
+ .modtitle2 {
+    margin: -9px 20px 0;
+    padding: 15px 30px;
+     position: absolute;
+     top: 0;
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+    background-color: #ff2d37;
+    border-radius: 0 0 5px 5px;
+    z-index: 2;
+}
+.modtitle2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    right: -22px;
+    left: auto;
+    border-bottom: 0 solid transparent;
+    border-top: 9px solid transparent;
+    border-left: 10px solid #c60009;
+    border-right: 12px solid transparent;
+}
+.modtitle2::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    right: auto;
+    left: -22px;
+    border-bottom: 0 solid transparent;
+    border-top: 9px solid transparent;
+    border-right: 10px solid #c60009;
+    border-left: 12px solid transparent;
+}
+ .article-date {
+     position: absolute;
+     z-index: 10;
+     top: 10px;
+     right: 10px;
+     line-height: 20px;
+}
+.article-date .date {
+    font-size: 14px;
+    color: #909090;
+    display: block;
+}
+.article-image::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-bottom: 85px solid transparent;
+    top: 0;
+    position: absolute;
+    z-index: 2;
+    border-right: 80px solid #fff;
+    right: 0;
+}
+.article-date .date b {
+    font-size: 24px;
+    color: #909090;
+    display: block;
+}

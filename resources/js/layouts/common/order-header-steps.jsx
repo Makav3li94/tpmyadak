@@ -7,7 +7,6 @@ const steps = [
     {name: 'صورت حساب', href: route('home.checkout'), status: route().current() === 'home.checkout' ? 'current' :'complete'},
     {name: 'ثبت سفارش', href: '#', status: 'upcoming'},
 ]
-console.log(route().current())
 import {ChevronLeft} from "lucide-react";
 import {Link} from "@inertiajs/react";
 export default function OrderHeaderSteps(props) {

@@ -20,7 +20,7 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
                 />
             </div>
             <div className="pb-4 pt-10 text-center">
-                <h3 className="text-sm font-medium ">
+                <h3 className="text-sm font-medium h-12">
                     <Link href={route('home.getProduct',[product.sku,product.slug])}>
                         <span aria-hidden="true" className="absolute inset-0"/>
                         {product.title}

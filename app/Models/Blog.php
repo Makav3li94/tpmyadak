@@ -33,6 +33,7 @@ class Blog extends Model implements Feedable
 
     protected $appends = [
         'persian_date',
+        'fucking_pub_at',
     ];
 
     public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -62,6 +63,10 @@ class Blog extends Model implements Feedable
         );
     }
 
+    protected function getFuckingPubAtAttribute(): array
+    {
+        return explode(' ',verta($this->getRawOriginal('published_at'))->format('%B %d'));
+    }
     protected function getPersianDateAttribute(): string
     {
         return verta($this->getRawOriginal('published_at'))->formatDifference();

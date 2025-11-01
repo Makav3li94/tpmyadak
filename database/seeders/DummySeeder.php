@@ -135,22 +135,32 @@ class DummySeeder extends Seeder
         Filter::create(['title' => 'ابعاد']);
 
         $bc1 = ProductCategory::create([
-            'title' => 'موتور',
-            'slug' => 'موتور',
+            'title' => 'قطعات خودرو',
+            'slug' => 'قطعات-خودرو',
             'status' => true,
             'image' => 'cate1.jpg',
         ]);
         $bc2 = ProductCategory::create([
-            'title' => 'جلوبندی',
-            'slug' => 'جلوبندی',
+            'title' => 'روغن و روان کننده ها',
+            'slug' => 'روغن-روان-کننده-ها',
             'status' => true,
             'image' => 'cate2.jpg',
         ]);
         $bc3 = ProductCategory::create([
-            'title' => 'روغن',
-            'slug' => 'روغن',
+            'title' => 'نظافت و نگهداری خودرو',
+            'slug' => 'نظافت-نگهداری-خودرو',
             'status' => true,
             'image' => 'cate3.jpg',
+        ]);
+        $bc4 = ProductCategory::create([
+            'title' => 'اکتان و مکمل ها',
+            'slug' => 'اکتان-مکمل-ها',
+            'status' => true,
+        ]);
+        $bc5 = ProductCategory::create([
+            'title' => 'خوشبو کننده',
+            'slug' => 'خوشبو-کننده',
+            'status' => true,
         ]);
         $bcc1 = ProductCategory::create([
             'title' => 'روغن موتور',

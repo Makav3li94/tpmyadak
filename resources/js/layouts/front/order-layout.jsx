@@ -1,14 +1,8 @@
 import React, {useEffect} from 'react'
 import {usePage} from "@inertiajs/react";
 import {showToast} from "@/utils.js";
-import {useSidebar} from "@/hooks.js";
 import {themeChange} from "theme-change";
-import TopHeader from "@/layouts/common/top-header.jsx";
-import Header from "@/layouts/common/header.jsx";
-import {Toaster} from "sonner";
-import Footer from "@/layouts/common/footer.jsx";
 import {CartProvider} from "react-use-cart";
-import HeaderSingle from "@/layouts/common/header-single.jsx";
 import OrderHeader from "@/layouts/common/order-header.jsx";
 
 
@@ -36,7 +30,7 @@ export default function OrderLayout({children}) {
 
 
                         <div
-                            className="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:px-8 xl:gap-x-48">
+                            className="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:px-8 xl:gap-x-48 mt-28 sm:mt-16">
                             {children}
                         </div>
                     </div>

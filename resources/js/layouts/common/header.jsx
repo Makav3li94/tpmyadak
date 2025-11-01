@@ -16,8 +16,8 @@ export default function Header(props) {
         <header className=" w-full flex justify-center items-center">
             {!isMobile ? (
                 <div className="container">
-                    <div className="grid grid-cols-12 py-6 items-center">
-                        <div className="hidden md:flex md:col-span-4">
+                    <div className="grid grid-cols-12 py-6 items-center ">
+                        <div className="hidden md:flex md:col-span-4 items-center">
 
                             <GetCart/>
 
@@ -28,8 +28,8 @@ export default function Header(props) {
 
                         {/* ------------- logo ----------------- */}
                         <Link href={route('home')}
-                              className="w-[150px] sm:w-[200px] flex col-span-12 md:col-span-2 h-auto   text-left ">
-                            <img src={logo} alt="logo"/>
+                              className="w-full flex col-span-12 md:col-span-3 h-auto   text-left " dir="ltr">
+                            <img src={logo} alt="logo" className="h-8 sm:h-12"/>
                         </Link>
                     </div>
                 </div>
@@ -43,8 +43,8 @@ export default function Header(props) {
                             <DarkSwitch/>
                         </div>
                             <Link href={route('home')}
-                                  className="col-span-4 flex items-center py-2  ">
-                                <img src={logo} alt="logo"/>
+                                  className="col-span-4 flex items-center py-2 justify-center  ">
+                                <img src={logo} alt="logo"  className="h-8 sm:h-12"/>
                             </Link>
                         {/* ------------------------ shopping basket small screen----------------- */}
 

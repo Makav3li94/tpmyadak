@@ -97,16 +97,25 @@ const GetCart = ({isMobile = false}) => {
 
                         </div>
                     ))}
+                    {items.length >0 ?(
+                        <div className="flex justify-between px-3 py-2">
+                            <span className="text-[#ff2d37] font-bold py-2">
+                                مبلغ کل: {cartTotal} تومان
+                            </span>
+                            <Link href={route('home.cart')} className="btn btn-success text-base-100 hover:text-[#ff2d37]" title="checkout">
+                                تکمیل خرید
 
-                    <div className="flex justify-between px-3 py-2">
-                        <span className="text-[#ff2d37] font-bold py-2">
-                            مبلغ کل: {cartTotal} تومان
-                        </span>
-                        <Link href={route('home.cart')} className="btn btn-success text-base-100 hover:text-[#ff2d37]" title="checkout">
-                            تکمیل خرید
+                            </Link>
+                        </div>
+                    ):(
+                        <div role="alert" className="alert w-64 sm:w-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info h-6 w-6 shrink-0">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span>سبد خرید خالی است.</span>
+                        </div>
+                    )}
 
-                        </Link>
-                    </div>
                 </motion.div>
             }
         </motion.div>

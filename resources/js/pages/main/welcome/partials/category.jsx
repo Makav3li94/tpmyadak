@@ -35,13 +35,13 @@ export default function Category({sliders}) {
                     </ul>
                 </div>
             </div>
-            <div className="w-full border-b-2 border-[#ff2d37]"></div>
+            <div className="w-full border-b-2 border-[#ff2d37] absolute left-0 right-0"></div>
             {/* ------- menu right side big screen------- */}
 
             {/* --------sub menu right categories---------- */}
-            <div className="overflow-hidden w-full flex">
+            <div className=" w-full flex">
                 <div className="grid grid-cols-12 justify-between relative gap-x-10">
-                    <div className="hidden lg:flex lg:col-span-3 bg-base-100 shadow-lg shadow-gray-400">
+                    <div className="hidden lg:flex lg:col-span-3 bg-base-100 c-shadow">
                         <ul className="relative z-20 w-full">
                             {/* --------------- lightning category--------- */}
                             <li className="group hover:bg-[#ff2d37] transition duration-300 ease-in px-5 relative">
@@ -49,138 +49,152 @@ export default function Category({sliders}) {
                                    className="flex justify-between text-center items-center py-3 border-b curser-pointer
                                     border-gray-300 hover:border-[#ff2d37] z-10">
                                     <div className=" text-sm group-hover:text-gray-50">
-                                        روشنایی
+                                        قطعات خودرو
                                     </div>
                                     <ChevronLeft className="w-3 h-3 group-hover:fill-[white]"/>
 
                                 </div>
                                 {/* -------------sub menu lightning------------- */}
-                                <div
-                                    className="hidden group-hover:flex w-[650px] drop-shadow-lg bg-white shadow-gray-400 absolute top-0 xl:-right-[60px] md:-right-[100px] -translate-x-1/2  p-5 z-10">
+                                <div className="hidden group-hover:flex w-[650px] drop-shadow-lg bg-white shadow-gray-400 absolute top-0 xl:-right-[60px] md:-right-[100px] -translate-x-1/2  p-5 z-10">
                                     {/*className="hidden group-hover:flex drop-shadow-lg bg-white shadow-gray-400 absolute top-0 -translate-x-1/2 -left-[280px] p-5">*/}
                                     <ul className="p-3 text-sm">
                                         {/* --------------APPAREL----------- */}
                                         <li className="font-bold">
-                                            <h4 className="text-[#333333]">کاورها</h4>
+                                            <h4 className="text-[#333333]">قطعات موتوری</h4>
                                         </li>
                                         <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="tabpcacc">
-                                                لوازم جانبی تبلت و کامپیوتر
-                                            </a>
+                                            <Link href="#" title="tabpcacc">
+                                                تسمه تایم
+                                            </Link>
+                                        </li>
+
+                                        <li>
+                                            <h4 className="text-[#333333] mt-5 font-bold">
+                                                قطعات مصرفی
+                                            </h4>
                                         </li>
                                         <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="ipadacc">
-                                                لوازم جانبی آیپد{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="ipadacc">
-                                                لوازم جانبی آیفون{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="tarvel">
-                                                کیف و لوازم سفر{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="security">
-                                                دزدگیر و امنیت خودرو{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="speaker">
-                                                سیستم صوتی و بلندگوهای خودرو{" "}
-                                            </a>
+                                            <Link href="#" title="camera">
+                                                لنت ترمز
+                                            </Link>
                                         </li>
                                         <li>
                                             <h4 className="text-[#333333] mt-5 font-bold">
-                                                کابل و رابط‌ها
+                                               قطعات گیربکس
                                             </h4>
                                         </li>
                                         <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="camera">
-                                                دوربین و عکاسی{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="electronics">
-                                                لوازم الکترونیکی{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="outdoor">
-                                                فضای باز و مسافرتی{" "}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul className="p-3 text-sm">
-                                        <li className="font-bold">
-                                            <h4 className="text-[#333333] font-bold">
-                                                کمپینگ و کوهنوردی
-                                            </h4>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="cammping">
-                                                گوشی ها{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="hiking">
-                                                اصلاح و موزدایی{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="outdoor">
-                                                تجهیزات سالن و اسپا{" "}
-                                            </a>
-                                        </li>
-                                        <li className="font-bold">
-                                            <h4 className="text-[#333333] font-bold mt-5">
-                                                تبلت ها و گوشی های هوشمند
-                                            </h4>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="sport">
-                                                لوازم ورزشی و فضای باز{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="bath">
-                                                بهداشت و مراقبت بدن{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="gadget">
-                                                گجت‌ها و قطعات خودرو{" "}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul className="p-3 text-sm">
-                                        <li className="font-bold">
-                                            <h4 className="text-[#333333] font-bold">
-                                                کیف و لوازم سفر
-                                            </h4>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="battery">
-                                                باتری و شارژر{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="headset">
-                                                هدفون و هدست{" "}
-                                            </a>
-                                        </li>
-                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                            <a href="#" title="oudiohome">
-                                                لوازم صوتی خانگی{" "}
-                                            </a>
+                                            <Link href="#" title="camera">
+                                                کیت کلاچ
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
 
+                            <li className="group hover:bg-[#ff2d37] transition duration-300 ease-in px-5 relative">
+                                <div
+                                    className="flex justify-between text-center items-center py-3 border-b curser-pointer
+                                    border-gray-300 hover:border-[#ff2d37] z-10">
+                                    <div className=" text-sm group-hover:text-gray-50">
+                                        روغن و روان کننده ها
+                                    </div>
+                                    <ChevronLeft className="w-3 h-3 group-hover:fill-[white]"/>
+
+                                </div>
+                                {/* -------------sub menu lightning------------- */}
+                                <div className="hidden group-hover:flex w-[650px] drop-shadow-lg bg-white shadow-gray-400 absolute top-0 xl:-right-[60px] md:-right-[100px] -translate-x-1/2  p-5 z-10">
+                                    {/*className="hidden group-hover:flex drop-shadow-lg bg-white shadow-gray-400 absolute top-0 -translate-x-1/2 -left-[280px] p-5">*/}
+                                    <ul className="p-3 text-sm">
+                                        {/* --------------APPAREL----------- */}
+                                        <li className="font-bold">
+                                            <h4 className="text-[#333333]">روغن موتور</h4>
+                                        </li>
+
+                                    </ul>
+                                    <ul className="p-3 text-sm">
+                                        {/* --------------APPAREL----------- */}
+                                        <li className="font-bold">
+                                            <h4 className="text-[#333333]">روغن ترمز</h4>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li className="group hover:bg-[#ff2d37] transition duration-300 ease-in px-5 relative">
+                                <div
+                                    className="flex justify-between text-center items-center py-3 border-b curser-pointer
+                                    border-gray-300 hover:border-[#ff2d37] z-10">
+                                    <div className=" text-sm group-hover:text-gray-50">
+                                    نظافت و نگهداری خودرو
+                                    </div>
+                                    <ChevronLeft className="w-3 h-3 group-hover:fill-[white]"/>
+
+                                </div>
+                                {/* -------------sub menu lightning------------- */}
+                                <div className="hidden group-hover:flex w-[650px] drop-shadow-lg bg-white shadow-gray-400 absolute top-0 xl:-right-[60px] md:-right-[100px] -translate-x-1/2  p-5 z-10">
+                                    {/*className="hidden group-hover:flex drop-shadow-lg bg-white shadow-gray-400 absolute top-0 -translate-x-1/2 -left-[280px] p-5">*/}
+                                    <ul className="p-3 text-sm">
+                                        {/* --------------APPAREL----------- */}
+                                        <li className="font-bold">
+                                            <h4 className="text-[#333333]">چسب</h4>
+                                        </li>
+                                        <li className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
+                                            <Link href="#" title="tabpcacc">
+                                                چسب دوقلو
+                                            </Link>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li className="group hover:bg-[#ff2d37] transition duration-300 ease-in px-5 relative">
+                                <div
+                                    className="flex justify-between text-center items-center py-3 border-b curser-pointer
+                                    border-gray-300 hover:border-[#ff2d37] z-10">
+                                    <div className=" text-sm group-hover:text-gray-50">
+                                        اکتان و مکمل ها
+                                    </div>
+                                    <ChevronLeft className="w-3 h-3 group-hover:fill-[white]"/>
+
+                                </div>
+                                {/* -------------sub menu lightning------------- */}
+                                <div className="hidden group-hover:flex w-[650px] drop-shadow-lg bg-white shadow-gray-400 absolute top-0 xl:-right-[60px] md:-right-[100px] -translate-x-1/2  p-5 z-10">
+                                    {/*className="hidden group-hover:flex drop-shadow-lg bg-white shadow-gray-400 absolute top-0 -translate-x-1/2 -left-[280px] p-5">*/}
+                                    <ul className="p-3 text-sm">
+                                        {/* --------------APPAREL----------- */}
+                                        <li className="font-bold">
+                                            <h4 className="text-[#333333]">اکتان بنزین</h4>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li className="group hover:bg-[#ff2d37] transition duration-300 ease-in px-5 relative">
+                                <div
+                                    className="flex justify-between text-center items-center py-3 border-b curser-pointer
+                                    border-gray-300 hover:border-[#ff2d37] z-10">
+                                    <div className=" text-sm group-hover:text-gray-50">
+                                        خوشبو کننده
+                                    </div>
+                                    <ChevronLeft className="w-3 h-3 group-hover:fill-[white]"/>
+
+                                </div>
+                                {/* -------------sub menu lightning------------- */}
+                                <div className="hidden group-hover:flex w-[650px] drop-shadow-lg bg-white shadow-gray-400 absolute top-0 xl:-right-[60px] md:-right-[100px] -translate-x-1/2  p-5 z-10">
+                                    {/*className="hidden group-hover:flex drop-shadow-lg bg-white shadow-gray-400 absolute top-0 -translate-x-1/2 -left-[280px] p-5">*/}
+                                    <ul className="p-3 text-sm">
+                                        {/* --------------APPAREL----------- */}
+                                        <li className="font-bold">
+                                            <h4 className="text-[#333333]">مشاهده همه</h4>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <Slider sliders={sliders}/>

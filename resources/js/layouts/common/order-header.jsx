@@ -10,7 +10,7 @@ export default function OrderHeader(props) {
         setHasMounted(true);
     }, []);
     return (
-        <header className="relative border-b border-gray-200 bg-white text-sm font-medium text-gray-700">
+        <header className="absolute top-0 left-0 right-0 border-b border-gray-200 bg-white text-sm font-medium text-gray-700">
             <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                 <div className=" flex justify-between items-center">
                     <div className="hidden lg:flex lg:items-center">
@@ -28,7 +28,7 @@ export default function OrderHeader(props) {
                             </Button>
                         }
                     </div>
-                    <p className="sm:hidden">Step 2 of 4</p>
+                    <p className="sm:hidden">       <img alt="tpm" src={logo} className="h-8 w-auto"/></p>
                 </div>
             </div>
         </header>
