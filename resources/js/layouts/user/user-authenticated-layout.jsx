@@ -5,7 +5,6 @@ import SidebarNavUser from "@/layouts/user/partials/sidebar-nav-user.jsx";
 import {Toaster} from "sonner";
 import {useSidebar} from "@/hooks.js";
 import {Menu} from "lucide-react";
-import {DarkSwitch} from "@/components/daisy-ui/theme-switch.jsx";
 import NotificationMenu from "@/layouts/default/partials/notification-menu.jsx";
 import UserProfileMenu from "@/layouts/default/partials/user-profile-menu.jsx";
 import {themeChange} from "theme-change";
@@ -36,6 +35,7 @@ export default function UserAuthenticatedLayout({
         setMounted(true)
         // 👆 false parameter is required for react project
     }, [])
+    console.log(isShowSidebar)
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center w-full">
             <TopHeader user={auth.user}/>
@@ -45,22 +45,20 @@ export default function UserAuthenticatedLayout({
                 {mounted &&
                 <>
                     <main className={`transition ${isShowSidebar ? 'lg:mr-64' : 'ml-0 '}`}>
-                        <nav className="bg-base-200 border-b border-base-300">
+                        <nav className="bg-base-100 c-shadow">
                             <div className="mx-auto px-4 py-2">
                                 <div className="flex justify-between">
                                     <div className="-mr-2 flex items-center space-x-2">
                                         <button
                                             onClick={() => toggleSidebar()}
-                                            className="inline-flex items-center justify-center lg:hidden p-2 rounded-md text-base-content focus:outline-hidden transition duration-150 ease-in-out btn btn-ghost"
+                                            className="inline-flex items-center justify-center lg:hidden  p-2 rounded-md text-base-content focus:outline-hidden transition duration-150 ease-in-out btn btn-ghost"
                                         >
                                             <Menu className="h-5 w-5"/>
                                         </button>
                                     </div>
 
                                     <div className="flex flex-row items-center gap-3">
-                                        <div className="h-full flex items-center">
-                                            <DarkSwitch/>
-                                        </div>
+
 
                                         <div className="h-full flex items-center">
                                             <NotificationMenu/>

@@ -1,0 +1,1 @@
+import{j as r}from"./app-B1q_DvLQ.js";const d=({children:s})=>r.jsx("div",{className:"card bg-base-100 shadow border border-base-300",children:r.jsx("div",{className:"card-body",children:s})});export{d as C};

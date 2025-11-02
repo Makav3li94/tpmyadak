@@ -26,7 +26,10 @@ export default function SidebarNavUser({ user, show, setShow }) {
 
     return (
       <>
-          <div className={`${show ? 'block' : 'hidden'} flex flex-col h-screen overflow-y-auto transition-all duration-300 transform sticky top-0 start-0 bottom-0 z-50 w-full md:w-64 bg-base-200 border-r border-base-300 lg:translate-x-0 lg:end-auto lg:bottom-0 `}>
+          <div className={`${!show && 'hidden'} flex flex-col h-screen overflow-y-auto transition-all
+           duration-300 transform sticky top-0 start-0 bottom-0  w-full md:w-64
+            bg-base-100 c-shadow
+            lg:translate-x-0 lg:end-auto lg:bottom-0 `}>
               <div className="flex flex-col justify-between flex-1">
                   <div className="">
                       <div className="flex flex-row justify-between items-center lg:justify-center p-6">

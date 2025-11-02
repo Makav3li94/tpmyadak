@@ -20,8 +20,8 @@ export default function HeaderSingle() {
                             <ul>
 
                                 <li className="px-4 py-2 hover:bg-red-500 hover:text-base-100 text-[#333333] group ">
-                                    <div className="flex justify-between text-center items-center py-3 border-b
-                                    curser-pointer border-gray-300 z-10">
+                                    <div className="flex justify-between text-center items-center py-3
+                                    curser-pointer  z-10">
                                         <div className=" text-sm group-hover:text-gray-50">
                                             قطعات خودرو
                                         </div>
@@ -68,8 +68,8 @@ export default function HeaderSingle() {
 
                                 <li className="px-4 py-2 hover:bg-red-500 hover:text-base-100 text-[#333333] group ">
                                     <div
-                                        className="flex justify-between text-center items-center py-3 border-b curser-pointer
-                                    border-gray-300 z-10">
+                                        className="flex justify-between text-center items-center py-3  curser-pointer
+                                     z-10">
                                         <div className=" text-sm group-hover:text-gray-50">
                                             روغن و روان کننده ها
                                         </div>
@@ -98,8 +98,8 @@ export default function HeaderSingle() {
 
                                 <li className="px-4 py-2 hover:bg-red-500 hover:text-base-100 text-[#333333] group ">
                                     <div
-                                        className="flex justify-between text-center items-center py-3 border-b curser-pointer
-                                    border-gray-300 z-10">
+                                        className="flex justify-between text-center items-center py-3  curser-pointer
+                                     z-10">
                                         <div className=" text-sm group-hover:text-gray-50">
                                             نظافت و نگهداری خودرو
                                         </div>
@@ -126,8 +126,8 @@ export default function HeaderSingle() {
 
                                 <li className="px-4 py-2 hover:bg-red-500 hover:text-base-100 text-[#333333] group ">
                                     <div
-                                        className="flex justify-between text-center items-center py-3 border-b curser-pointer
-                                    border-gray-300 z-10">
+                                        className="flex justify-between text-center items-center py-3  curser-pointer
+                                     z-10">
                                         <div className=" text-sm group-hover:text-gray-50">
                                             اکتان و مکمل ها
                                         </div>
@@ -149,8 +149,8 @@ export default function HeaderSingle() {
 
                                 <li className="px-4 py-2 hover:bg-red-500 hover:text-base-100 text-[#333333] group ">
                                     <div
-                                        className="flex justify-between text-center items-center py-3 border-b curser-pointer
-                                    border-gray-300 z-10">
+                                        className="flex justify-between text-center items-center py-3  curser-pointer
+                                     z-10">
                                         <div className=" text-sm group-hover:text-gray-50">
                                             خوشبو کننده
                                         </div>

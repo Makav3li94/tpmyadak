@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useRef, useState} from "react";
-import "./multiRangeSlider.css";
+import "../../../../../css/multiRangeSlider.css";
 
 
 const MultiRangeSlider = ({min, max, onChange}) => {
