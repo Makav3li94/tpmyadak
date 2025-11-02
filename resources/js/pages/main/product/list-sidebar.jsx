@@ -1,4 +1,3 @@
-import bannerSide from '../../../../images/banner-sidebar.jpg';
 import { router } from "@inertiajs/react";
 import { useState } from "react";
 import MultiRangeSlider from "@/pages/main/product/partials/MultiRangeSlider.jsx";
