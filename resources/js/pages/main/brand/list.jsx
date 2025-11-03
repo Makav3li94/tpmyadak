@@ -51,15 +51,19 @@ export default function ProductList(props) {
                 <div className="grid grid-cols-1 md:grid-cols-12 md:gap-x-2 lg:gap-x-8 xl:gap-x-10">
                     <ListSidebar brands={brands} carBrands={carBrands} carModels={carModels} categories={categories} routeParam={brand.slug}/>
                     {/* ------ left side----- */}
-                    <div className="md:col-span-8 lg:col-span-9 mt-6 md:mt-0">
-                        <h2 className="font-bold text-2xl pb-6">{brand.title}</h2>
-                        <a href="#" title="img-cate" className="group">
-                            <img
-                                src={imageCate}
-                                alt="imagecat"
-                                className="group-hover:opacity-110 w-full"
-                            />
-                        </a>
+                    <div className="md:col-span-8 lg:col-span-9 mt-6 md:mt-0 ">
+                        <div  className="sm:flex items-center border-[1px] border-gray-300 rounded">
+                            <div className="sm:flex-shrink-0">
+                                <div className="flow-root">
+                                    <img alt="" src={route('file.show',brand.image)} className="h-24 w-28" />
+                                </div>
+                            </div>
+                            <div className="mt-3 sm:ml-3 sm:mt-0">
+                                <h3 className="text-sm font-medium text-gray-900">{brand.title}</h3>
+                                <p className="mt-2 text-sm text-gray-500">محصولات برند : {brand.title}</p>
+                            </div>
+                        </div>
+
                         <div className="my-8 text-left">
                             <label htmlFor="cars">مرتب سازی</label>
                             <select name="cars" id="cars" className="border-[1px] border-gray-300 px-1 mx-2"
