@@ -99,7 +99,9 @@ export default function FormModal(props) {
                     onChange={(file_path) => setData('image', file_path)}
                     error={errors.image}
                     url={data.image}
-                    filemimes="image/jpg,image/jpeg,image/png"
+                    dir='brand/'
+                    compress={true}
+                    filemimes="image/jpg,image/jpeg,image/png,image/webp"
                 />
                 <Checkbox
                     label="فعال"

@@ -1,12 +1,12 @@
-import { useRef, useState } from 'react'
-import { toast } from 'sonner'
-import { isEmpty } from 'lodash'
-import { usePage } from '@inertiajs/react'
+import {useRef, useState} from 'react'
+import {toast} from 'sonner'
+import {isEmpty} from 'lodash'
+import {usePage} from '@inertiajs/react'
 
 import Spinner from './spinner'
 import TextInputError from './text-input-error'
 import Label from './label'
-import { trimText } from '@/utils'
+import {trimText} from '@/utils'
 
 /**
  *
@@ -24,16 +24,18 @@ import { trimText } from '@/utils'
  *
  */
 export default function FormFile({
-    label,
-    onChange,
-    error,
-    preview,
-    help,
-    url,
-    filemimes = '',
-}) {
+                                     label,
+                                     onChange,
+                                     error,
+                                     preview,
+                                     help,
+                                     url,
+                                     filemimes = '',
+                                     dir = '',
+                                     compress = false
+                                 }) {
     const {
-        props: { auth },
+        props: {auth},
     } = usePage()
     const inputRef = useRef()
 
@@ -60,6 +62,8 @@ export default function FormFile({
         const formData = new FormData()
         formData.append('filemimes', filemimes)
         formData.append('file', e.target.files[0])
+        formData.append('dir', dir)
+        formData.append('compress', compress)
 
         axios
             .post(route('api.file.store'), formData, {
@@ -90,7 +94,7 @@ export default function FormFile({
 
     return (
         <div className="fieldset">
-            <Label label={label} />
+            <Label label={label}/>
             {preview && preview}
             <div
                 onClick={handleClick}
@@ -106,7 +110,7 @@ export default function FormFile({
                     <div className="text-opacity-35 text-base-content flex flex-row items-center">
                         {loading ? (
                             <div className="flex flex-row space-x-2 items-center h-full pl-2">
-                                <Spinner />
+                                <Spinner/>
                                 <div>{percent} Uploading...</div>
                             </div>
                         ) : (
@@ -131,11 +135,11 @@ export default function FormFile({
             {link && (
                 <div className="label">
                     <a className="label-text-alt link" href={link} target="_blank">
-                       دانلود فایل
+                        دانلود فایل
                     </a>
                 </div>
             )}
-            <TextInputError error={error} />
+            <TextInputError error={error}/>
         </div>
     )
 }

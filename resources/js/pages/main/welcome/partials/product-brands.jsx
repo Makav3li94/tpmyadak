@@ -26,7 +26,7 @@ export default function ProductBrands({brands}) {
                 </div>
                 <div className="grid grid-cols-3 md:grid-cols-6">
                     {brands.map((brand,i)=>
-                    <BrandBox image={route('file.show',brand.image)} slug={brand.slug}/>
+                    <BrandBox image={route('file.show',{file:brand.image,dir:'brand/'})} slug={brand.slug}/>
                 )}
                 </div>
             </div>

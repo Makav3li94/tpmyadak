@@ -25,14 +25,12 @@ class BrandController extends Controller
         $query->orderBy('created_at', 'desc');
 
         return inertia('admin/brand/index', [
-            'data' => $query->paginate(10)
+            'data' => $query->paginate(10),
         ]);
     }
 
-
-
     #[Permission('create-brand')]
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
         Brand::create($validatedData);
@@ -42,7 +40,7 @@ class BrandController extends Controller
     }
 
     #[Permission('update-brand')]
-    public function update(Request $request, Brand $brand) : RedirectResponse
+    public function update(Request $request, Brand $brand): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
         $brand->update($validatedData);
@@ -52,17 +50,14 @@ class BrandController extends Controller
     }
 
     #[Permission('delete-brand')]
-    public function destroy(Brand $brand) : RedirectResponse
+    public function destroy(Brand $brand): RedirectResponse
     {
         $brand->delete();
+
         return redirect()->route('admin.brands.index')
             ->with('message', ['type' => 'success', 'message' => 'برند حذف شد.']);
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
     private function validateRequest(Request $request): array
     {
         $validatedData = $request->validate([
@@ -73,8 +68,9 @@ class BrandController extends Controller
             'url' => 'nullable|url|max:100',
             'status' => 'nullable|boolean',
         ]);
-        $validatedData ['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
-        $validatedData ['alias'] = empty($request->alias) ? Str::limit($request->title, 110) : Str::slug($request->alias);
+        $validatedData['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
+        $validatedData['alias'] = empty($request->alias) ? Str::limit($request->title, 110) : Str::slug($request->alias);
+
         return $validatedData;
     }
 }

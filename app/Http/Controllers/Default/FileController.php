@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Default;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File as Filler;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\File as FileRule;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Encoders\WebpEncoder;
+use Intervention\Image\ImageManager;
 
 class FileController extends Controller
 {
-    public function show(string $name)
+    public function show(string $name, string $dir = '')
     {
-        $path = Storage::disk('public')->path($name);
+        $dir == '' ? $path = Storage::disk('public')->path($name) : $path = Storage::disk('public')->path($dir.'/'.$name);
 
         if (Storage::disk('default')->exists($name)) {
             $path = Storage::disk('default')->path($name);
@@ -40,11 +44,22 @@ class FileController extends Controller
         $file = $request->file('file');
 
         // the `/` its mean that in disk public it will store in root folder
-        Storage::disk('public')->put('/', $file);
-
+        $dir = $request->dir == '' ? '/' : $request->dir;
+        Storage::disk('public')->put($dir, $file);
+        $hash_name = $file->hashName();
+        if ($request->compress) {
+            $id = uniqid();
+            $image_name = rtrim($dir, '/').'-'.$id.'.'.'webp';
+            $manager = new ImageManager(new Driver);
+            $dir == '' ? $img_path = '/app/public/' : $img_path = '/app/public/'.$dir;
+            $img = Filler::get(storage_path($img_path.$hash_name));
+            $manager->read($img)->resize(250, 250)->encode(new WebpEncoder(quality: 70))->save(storage_path($img_path.$image_name));
+            Storage::disk('public')->delete($dir.$hash_name);
+            $hash_name = $image_name;
+        }
         File::create([
             'upload_name' => $file->getClientOriginalName(),
-            'hash_name' => $file->hashName(),
+            'hash_name' => $hash_name,
             'name' => $file->getClientOriginalName(),
             'type' => File::FILE,
         ]);
@@ -52,7 +67,7 @@ class FileController extends Controller
         return response()->json([
             'id' => Str::ulid(),
             'name_original' => $file->getClientOriginalName(),
-            'name' => $file->hashName(),
+            'name' => $hash_name,
             'url' => route('file.show', ['file' => $file->hashName()]),
         ]);
     }

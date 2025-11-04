@@ -55,7 +55,7 @@ export default function ProductList(props) {
                         <div  className="sm:flex items-center border-[1px] border-gray-300 rounded">
                             <div className="sm:flex-shrink-0">
                                 <div className="flow-root">
-                                    <img alt="" src={route('file.show',brand.image)} className="h-24 w-28" />
+                                    <img alt="" src={route('file.show',{file:brand.image,dir:'brand/'})} className="h-24 w-28" />
                                 </div>
                             </div>
                             <div className="mt-3 sm:ml-3 sm:mt-0">

@@ -102,8 +102,8 @@ class ProductController extends Controller
             'productCategories' => $categories,
             'attrGroups' => $attrGroups,
             'carModels' => $carModels,
-            'startDate' =>$product->date_start,
-            'endDate' =>$product->date_end,
+            'startDate' => $product->date_start,
+            'endDate' => $product->date_end,
         ]);
     }
 
@@ -189,12 +189,12 @@ class ProductController extends Controller
         $validatedData['excerpt'] = empty($request->excerpt) ? strip_tags(Str::limit($validatedData['description'], 125)) : $request->excerpt;
         $validatedData['slug'] = empty($request->slug) ? slug_gen($request->title) : slug_gen($request->slug);
         if (isset($validatedData['date_start'])) {
-            if (!isNull($validatedData['date_start'])) {
+            if (! isNull($validatedData['date_start'])) {
                 $validatedData['date_start'] = Carbon::parse($validatedData['date_start'])->toDateTimeString();
             }
         }
         if (isset($validatedData['date_end'])) {
-            if (!isNull($validatedData['date_end'])) {
+            if (! isNull($validatedData['date_end'])) {
                 $validatedData['date_end'] = Carbon::parse($validatedData['date_end'])->toDateTimeString();
             }
         }
@@ -210,29 +210,29 @@ class ProductController extends Controller
 
         $imagesArr = [];
         if ($type == 'update') {
-            Storage::disk('public')->delete('product/' . $product->image);
+            Storage::disk('public')->delete('product/'.$product->image);
             foreach ($product->images as $img) {
 
-                if (file_exists(storage_path('/app/public/product' . $img))) {
-                    Storage::disk('public')->delete('product/' . $img);
+                if (file_exists(storage_path('/app/public/product'.$img))) {
+                    Storage::disk('public')->delete('product/'.$img);
                 }
-                if (file_exists(storage_path('/app/public/prothumb' . $img))) {
-                    Storage::disk('public')->delete('prothumb/' . $img);
+                if (file_exists(storage_path('/app/public/prothumb'.$img))) {
+                    Storage::disk('public')->delete('prothumb/'.$img);
                 }
-                if (file_exists(storage_path('/app/public/product510' . $img))) {
-                    Storage::disk('public')->delete('product510/' . $img);
+                if (file_exists(storage_path('/app/public/product510'.$img))) {
+                    Storage::disk('public')->delete('product510/'.$img);
                 }
-                if (file_exists(storage_path('/app/public/product75' . $img))) {
-                    Storage::disk('public')->delete('product75/' . $img);
+                if (file_exists(storage_path('/app/public/product75'.$img))) {
+                    Storage::disk('public')->delete('product75/'.$img);
                 }
 
                 $jpeg = explode('.', $img);
-                $jpeg = $jpeg[0] . 'jpg';
-                if (file_exists(storage_path('/app/public/productjpg' . $img))) {
-                    Storage::disk('public')->delete('productjpg/' . $jpeg);
+                $jpeg = $jpeg[0].'jpg';
+                if (file_exists(storage_path('/app/public/productjpg'.$img))) {
+                    Storage::disk('public')->delete('productjpg/'.$jpeg);
                 }
-                if (file_exists(storage_path('/app/public/prothumbjpg' . $img))) {
-                    Storage::disk('public')->delete('prothumbjpg/' . $jpeg);
+                if (file_exists(storage_path('/app/public/prothumbjpg'.$img))) {
+                    Storage::disk('public')->delete('prothumbjpg/'.$jpeg);
                 }
 
             }
@@ -242,19 +242,19 @@ class ProductController extends Controller
         $manager = new ImageManager(new Driver);
         foreach ($request->images as $key => $file) {
             $id = uniqid();
-            $image_name = $id . '.' . 'webp';
-            $image_name_jpg = $id . '.' . 'jpg';
+            $image_name = $id.'.'.'webp';
+            $image_name_jpg = $id.'.'.'jpg';
             if ($key == 0) {
                 $product->update(['image' => $image_name]);
             }
 
-            $manager->read($file)->resize(1024, 1024)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/productjpg/' . $image_name_jpg));
-            $manager->read($file)->resize(350, 350)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/prothumbjpg/' . $image_name_jpg));
+            $manager->read($file)->resize(1024, 1024)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/productjpg/'.$image_name_jpg));
+            $manager->read($file)->resize(350, 350)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/prothumbjpg/'.$image_name_jpg));
             // WEBP
-            $manager->read($file)->resize(1024, 1024)->encode(new AutoEncoder(quality: 65))->save(storage_path('/app/public/product/' . $image_name));
-            $manager->read($file)->resize(510, 510)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/product510/' . $image_name));
-            $manager->read($file)->resize(350, 350)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/prothumb/' . $image_name));
-            $manager->read($file)->resize(75, 75)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/product75/' . $image_name));
+            $manager->read($file)->resize(1024, 1024)->encode(new AutoEncoder(quality: 65))->save(storage_path('/app/public/product/'.$image_name));
+            $manager->read($file)->resize(510, 510)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/product510/'.$image_name));
+            $manager->read($file)->resize(350, 350)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/prothumb/'.$image_name));
+            $manager->read($file)->resize(75, 75)->encode(new AutoEncoder(quality: 60))->save(storage_path('/app/public/product75/'.$image_name));
 
             $imagesArr[] = ['id' => Str::ulid(), 'product_id' => $product->id, 'image' => $image_name];
 
@@ -273,11 +273,11 @@ class ProductController extends Controller
             foreach ($images as $image) {
                 $image = $image['image'];
                 $obj['name'] = $image;
-                $file_path = storage_path('/app/public/prothumb/' . $image);
+                $file_path = storage_path('/app/public/prothumb/'.$image);
                 $obj['size'] = filesize($file_path);
                 $obj['path'] = $storeFolder;
                 $obj['type'] = 'image/webp';
-                $obj['preview'] = url('storage/prothumb/' . $image);
+                $obj['preview'] = url('storage/prothumb/'.$image);
 
                 $adFiles[] = $obj;
             }
