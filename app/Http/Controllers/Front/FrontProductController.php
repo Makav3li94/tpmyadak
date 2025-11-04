@@ -90,6 +90,7 @@ class FrontProductController extends Controller
     {
         // 1. دسته‌بندی اصلی و زیر دسته‌ها
         $productCategory = ProductCategory::with('children')->where('slug', $slug)->firstOrFail();
+
         $categoryIds = array_merge([$productCategory->id], $productCategory->getAllChildrenIds());
 
         // 2. فیلترهای مرتبط با دسته و زیر دسته‌ها

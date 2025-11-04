@@ -18,7 +18,12 @@ export default function ProductCategories({productCategories}) {
                         {productCategories.map((productCategory,i)=>
                             <div className="flex lg:col-span-4 px-3 border-[1px] border-gray-300 p-5 mb-4 bg-base-100" key={i}>
                                 <Link href={route('home.getCategory',productCategory.slug)} title="oilfluid" className="inline-block">
-                                    <img src={route('file.show',productCategory.image)} alt="oilfluid" className="lg:w-[130px] lg:h-[160px] xl:w-[170px] xl:h-[200px] hover:scale-105"/>
+                                    {productCategory.image!==null ?(
+                                        <img src={route('file.show',{file:productCategory.image,dir:'category/'})} alt="oilfluid" className="lg:w-[130px] lg:h-[160px] xl:w-[170px] xl:h-[200px] hover:scale-105"/>
+                                    ):(
+                                        <img  src='/thumbnail.webp' alt="oilfluid" className="lg:w-[130px] lg:h-[160px] xl:w-[170px] xl:h-[200px] hover:scale-105"/>
+                                    )}
+
                                 </Link>
                                 <div className="pr-5 text-right">
                                     <h6 className="text-base font-blod">{productCategory.title}</h6>

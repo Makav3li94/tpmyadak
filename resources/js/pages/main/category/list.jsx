@@ -79,10 +79,10 @@ export default function ProductList(props) {
                                                 <Card>
                                                     <figure>
                                                         {item.image!==null ?(
-                                                            <img  src={route('file.show',item.image)}
+                                                            <img  src={route('file.show',{file:item.image,dir:'category/'})}
                                                                   className='h-22' alt='slide'/>
                                                         ):(
-                                                            <div className="bembla__slide__number">{item.title}</div>
+                                                            <img  src='/thumbnail.webp' className='h-22' alt='slide'/>
                                                         )}
                                                     </figure>
                                                     <div className="card-body text-center p-2">

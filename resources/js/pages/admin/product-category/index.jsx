@@ -97,7 +97,7 @@ export default function Home(props) {
                                         <td>{ProductCategory.title}</td>
                                         <td>
                                             {ProductCategory.image?(
-                                                <img src={route('file.show',ProductCategory.image)} className="w-12" alt="-"/>
+                                                <img src={route('file.show',{file:ProductCategory.image,dir:'category/'})} className="w-12" alt="-"/>
                                             ):(
                                                 '-'
                                             )}

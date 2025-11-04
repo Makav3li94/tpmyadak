@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
 require __DIR__.'/user.php';
 require __DIR__.'/admin.php';
 
-Route::get('files/{file}/{dir?}', [FileController::class, 'show'])->name('file.show');
+Route::get('files/{file?}/{dir?}', [FileController::class, 'show'])->name('file.show');
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 Route::get('/sitemap/main.xml', [SitemapController::class, 'main']);
