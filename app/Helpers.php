@@ -206,3 +206,29 @@ function queryMapper($query)
         ];
     })->values()->toArray();
 }
+if (! function_exists('findSimilarRecord')) {
+    function findSimilarRecord($model, $title, $extraFields = [], $threshold = 75)
+    {
+        $records = $model::all(['id', 'title']);
+        $best = null;
+        $bestPercent = 0;
+
+        foreach ($records as $record) {
+            similar_text($title, $record->title, $percent);
+            if ($percent > $bestPercent) {
+                $bestPercent = $percent;
+                $best = $record;
+            }
+        }
+
+        if ($best && $bestPercent >= $threshold) {
+            return $best;
+        }
+
+        return $model::create(array_merge([
+            'id' => \Str::ulid(),
+            'title' => $title,
+            'slug' => \Str::slug($title),
+        ], $extraFields));
+    }
+}

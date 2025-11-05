@@ -6,7 +6,7 @@ import {Heart, Star} from "lucide-react";
 export default function ProductCard({product,i,handleWish,handleAdd}) {
     return (
         <div key={i} className="group relative border-b border-r border-gray-200 p-4 sm:p-6">
-            <Button title="favourite" type='ghost' className="btn-xs absolute top-2 left-2 z-99"
+            <Button title="favourite" type='ghost' className="btn-xs absolute top-2 left-2 z-1"
                     onClick={() => {
                         handleWish(product.id)
                     }}>
@@ -15,7 +15,9 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
             <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
                 <img
                     alt='product'
-                    src={route('file.show', product.image)}
+                    src={`http://127.0.0.1:8000/storage/prothumb/${product.image}`}
+                    // src={`https://cdn.tpmyadak.com/prothumb/${product.image}`}
+                    // src={route('file.show', product.image)}
                     className="h-full w-full object-cover object-center"
                 />
             </div>

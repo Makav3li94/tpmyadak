@@ -127,9 +127,28 @@ class ProductCategory extends Model
         return $this->hasMany(ProductCategory::class, 'parent_id', 'id')->orderBy('sort');
     }
 
+//    public static function tree(): \Illuminate\Database\Eloquent\Collection
+//    {
+//        return static::with(implode('.', array_fill(0, 100, 'children')))->where('parent_id', '=', '0')->orderBy('sort')->get();
+//    }
+
     public static function tree(): \Illuminate\Database\Eloquent\Collection
     {
-        return static::with(implode('.', array_fill(0, 100, 'children')))->where('parent_id', '=', '0')->orderBy('sort')->get();
+        return static::select(['id', 'title', 'slug'])
+            ->with([
+                'children' => function($query) {
+                    $query->select(['id', 'title', 'slug', 'parent_id'])
+                        ->with([
+                            'children' => function($query) {
+                                $query->select(['id', 'title', 'slug', 'parent_id']);
+                            }
+                        ]);
+                }
+            ])
+            ->where('parent_id', 0)
+            ->where('status', 1)
+            ->orderBy('sort')
+            ->get();
     }
 
     public static function flatTree($categories = null, $level = 0)

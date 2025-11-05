@@ -290,7 +290,7 @@ export default function Form(props) {
                                        error={errors.alias} required/>
                         </div>
                         <div className="basis-1/2">
-                            <TextInput name="sku" value={data.sku} onChange={handleOnChange} label="کد اسکو"
+                            <TextInput type='number' min={111111} max={999999} name="sku" value={data.sku} onChange={handleOnChange} label="کد اسکو"
                                        error={errors.sku}/>
                         </div>
                     </div>

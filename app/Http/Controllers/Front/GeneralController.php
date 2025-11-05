@@ -18,6 +18,7 @@ class GeneralController extends Controller
     {
         $sliders = Slider::where('status', 1)->get();
 
+        //              json_encode(ProductCategory::tree(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);  ;
         return inertia('main/welcome/index', [
             'sliders' => $sliders,
             'promoProducts' => inertia()->defer(fn () => Product::where('status_promotion', 1)

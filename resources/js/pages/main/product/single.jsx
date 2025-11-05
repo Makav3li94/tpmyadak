@@ -1,3 +1,4 @@
+import '../../../../css/pembla.css'
 import FrontLayout from "@/layouts/front/front-layout.jsx";
 import {Deferred, router} from "@inertiajs/react";
 import {useCart} from "react-use-cart";
@@ -7,12 +8,90 @@ import {Minus, Plus, ShoppingCart, Star, SquareCheckBig, Heart} from "lucide-rea
 import RelatedProducts from "@/pages/main/product/partials/related-products.jsx";
 import Review from "@/components/review.jsx";
 import ReviewForm from "@/components/review-form.jsx";
+import useEmblaCarousel from "embla-carousel-react";
+import {useCallback, useEffect, useState} from "react";
+
+const Share = ({slug}) => {
+
+    return (
+        <div className="d-flex  pattr mt-3" key={444444442}>
+            <span className="ml-auto">اشتراک گذاری:</span>
+            <span className="text-muted fs-6_5">
+                <button className="btn btn-sm btn-outline-secondary   " data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="اشتراک گذاری مستقیم"
+                        onClick={() => {
+                            navigator.clipboard.writeText(`https://kadooyab.com/product/${String(slug)}`)
+                            toast.success('لینک کپی شد.');
+                        }
+
+                        }
+                >
+                    کپی لینک
+                </button>
+            </span>
+        </div>
 
 
-export default function ProductSingle({product, attributeGroups = [],relatedProducts,reviews,canReview}) {
+    )
+}
+const Thumb = (props) => {
+    const {selected, index, onClick, img, ali} = props
+
+    return (
+        <div key={index}
+             className={'pembla-thumbs__slide'.concat(
+                 selected ? ' pembla-thumbs__slide--selected' : ''
+             )}
+        >
+            <button
+                onClick={onClick}
+                type="button"
+                className="btn p-0"
+            >
+                <img src={img} alt={ali} onClick={onClick}
+                     width="75" height={75} loading={index === 0 ? "eager" : "lazy"}
+                />
+            </button>
+        </div>
+    )
+}
+export default function ProductSingle({product, attributeGroups = [],relatedProducts,reviews,canReview,images}) {
     const {addItem} = useCart();
+    const [selectedIndex, setSelectedIndex] = useState(0)
+    const [isZoomed, setIsZoomed] = useState(false);
+    const [zoomSrc, setZoomSrc] = useState('');
+    const [emblaMainRef, emblaMainApi] = useEmblaCarousel({direction: 'rtl',})
+    const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
+        direction: 'rtl',
+        containScroll: 'keepSnaps',
+        dragFree: true
+    })
 
+    const onThumbClick = useCallback(
+        (index) => {
+            if (!emblaMainApi || !emblaThumbsApi) return
+            emblaMainApi.scrollTo(index)
+        },
+        [emblaMainApi, emblaThumbsApi]
+    )
+    const onSelect = useCallback(() => {
+        if (!emblaMainApi || !emblaThumbsApi) return
+        setSelectedIndex(emblaMainApi.selectedScrollSnap())
+        emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap())
+    }, [emblaMainApi, emblaThumbsApi, setSelectedIndex])
+    useEffect(() => {
+        if (!emblaMainApi) return
+        onSelect()
 
+        emblaMainApi.on('select', onSelect).on('reInit', onSelect)
+    }, [emblaMainApi, onSelect])
+
+    const handleZoom = (e, fullscreen) => {
+        e.preventDefault()
+        setZoomSrc(fullscreen)
+        setIsZoomed(true)
+    }
     const handleAdd = (item) => {
         addItem({
             id: item.id,
@@ -38,15 +117,61 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
             <section className="relative container">
                 <div className="w-full mx-auto px-4 sm:px-6 lg:px-0">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mx-auto max-md:px-2 ">
-                        <div className="img">
-                            <div className="img-box h-full max-lg:mx-auto ">
-                                <img
-                                    // src="https://pagedone.io/asset/uploads/1700471600.png"
-                                    src={route('file.show', product.image)}
-                                    alt="Yellow Tropical Printed Shirt image"
-                                    className="max-lg:mx-auto lg:ml-auto h-full object-cover"/>
+                        <div className="pembla">
+                            <div className="pembla__viewport" ref={emblaMainRef}>
+                                <div className="pembla__container">
+                                    {images.map((img, index) => (
+                                        <div className="pembla__slide" key={index}>
+                                            <picture className="d-flex align-items-center  cursor-pointer">
+                                                <source srcSet={img.thumbnail} media="(max-width:580px)"
+                                                        type="image/webp"/>
+                                                <source srcSet={img.original} media="(min-width:581px)"
+                                                        type="image/webp"/>
+                                                <source srcSet={img.main} media="(min-width:800px)" type="image/webp"/>
+                                                <source srcSet={img.fullscreen} media="(min-width:1401px)"
+                                                        type="image/jpg"/>
+
+                                                <img src={img.fullscreen} alt={product.title} width={510} height={510}
+                                                     className="card-pr-img-top  mx-auto articleShakes"
+                                                     onClick={(e) => handleZoom(e, isMobile ? img.main : img.fullscreen)}
+                                                     loading={index === 0 ? "eager" : "lazy"}
+                                                />
+                                            </picture>
+                                        </div>
+                                    ))}
+
+                                </div>
+
+                            </div>
+
+                            <div className="pembla-thumbs">
+                                <div className="pembla-thumbs__viewport" ref={emblaThumbsRef}>
+                                    <div className="pembla-thumbs__container justify-between">
+                                        {images.map((img, index) => (
+                                            <Thumb
+                                                key={index}
+                                                onClick={() => onThumbClick(index)}
+                                                selected={index === selectedIndex}
+                                                index={index}
+                                                img={img.thumbnailxs}
+                                                ali={product.title}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        {isZoomed &&
+                            <div id="myModal" className={`myModal ${isZoomed && 'd-block'}`}
+                                 onClick={() => setIsZoomed(false)}>
+                                <img src={zoomSrc} alt='zoomed' className="myModal-content"/>
+                            </div>
+                        }
+                        {/*<div className="img">*/}
+                        {/*    <div className="img-box h-full max-lg:mx-auto ">*/}
+                        {/*        <img src={route('file.show', product.image)} alt="Yellow Tropical Printed Shirt image" className="max-lg:mx-auto lg:ml-auto h-full object-cover"/>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <div
                             className="data w-full lg:pr-8 pr-0 xl:justify-start justify-center flex items-center max-lg:pb-10 xl:my-2 lg:my-5 my-0">
                             <div className="data w-full max-w-xl">
@@ -136,7 +261,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                     <div className="grid grid-cols-3 min-[400px]:grid-cols-5 gap-3 max-w-md">
                                         {product.car_models.map((carModel, i) =>
                                             <div key={i}
-                                                 className="badge badge-neutral badge-dash ">{carModel.title}</div>
+                                                 className="badge badge-neutral badge-dash ruby ">{carModel.title}</div>
                                         )}
                                     </div>
                                 </div>

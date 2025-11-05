@@ -50,13 +50,18 @@ class FrontProductController extends Controller
                 $canReview = false;
             }
         }
+        $images = $this->passeImages($product->images);
+        $jsnimages = json_encode($images['jsnimages']);
+        unset($images['jsnimages']);
 
+        defer(fn () =>$product->increment('total_view'));
         return inertia('main/product/single', [
             'product' => $product->load('brand', 'carModels', 'specs', 'filters', 'images'),
             'attributeGroups' => $attributeGroupsWithDetails,
             'relatedProducts' => $relatedProducts,
             'reviews' => $reviews,
             'canReview' => $canReview,
+            'images' => $images,
 
         ]);
     }
@@ -163,5 +168,35 @@ class FrontProductController extends Controller
         if (isset($staticFilters['categories']) && count($staticFilters['categories'])) {
             $query->whereIn('product_category_id', $staticFilters['categories']);
         }
+    }
+
+    private function passeImages($product_images): array
+    {
+        $jsnimages = [];
+        $images = [];
+
+        foreach ($product_images as $image) {
+
+            $webpic = $image["image"];
+            $jpgpic = substr_replace($image["image"], 'jpg', -4, 4);
+//            $jsnimages[] = 'https://cdn.tpmyadak.com/productjpg/' . $jpgpic;
+//            $images[] = [
+//                "fullscreen" => 'https://cdn.tpmyadak.com/productjpg/' . $jpgpic,
+//                "main" => 'https://cdn.tpmyadak.com/product/' . $webpic,
+//                "original" => 'https://cdn.tpmyadak.com/product510/' . $webpic,
+//                "thumbnail" => 'https://cdn.tpmyadak.com/prothumb/' . $webpic,
+//                "thumbnailxs" => 'https://cdn.tpmyadak.com/product75/' . $webpic,
+//            ];
+            $jsnimages[] = 'http://127.0.0.1:8000/storage/productjpg/' . $jpgpic;
+            $images[] = [
+                "fullscreen" => 'http://127.0.0.1:8000/storage/productjpg/' . $jpgpic,
+                "main" => 'http://127.0.0.1:8000/storage/product/' . $webpic,
+                "original" => 'http://127.0.0.1:8000/storage/product510/' . $webpic,
+                "thumbnail" => 'http://127.0.0.1:8000/storage/prothumb/' . $webpic,
+                "thumbnailxs" => 'http://127.0.0.1:8000/storage/product75/' . $webpic,
+            ];
+        }
+        $images['jsnimages'] = $jsnimages;
+        return $images;
     }
 }

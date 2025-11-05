@@ -66,7 +66,7 @@ export default function ListSidebar({
     return (
 
         <div className="md:col-span-4 lg:col-span-3 lg:px-0  px-3">
-            <div className="drawer lg:drawer-open">
+            <div className="drawer lg:drawer-open flex">
                 <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col items-center justify-center">
                     {/* Page content here */}
