@@ -135,6 +135,8 @@ export default function Form(props) {
                     onChange={(file_path) => setData('image', file_path)}
                     error={errors.image}
                     url={data.image}
+                    dir='category/'
+                    compress={true}
                     filemimes="image/jpg,image/jpeg,image/png"
                 />
                 <Checkbox

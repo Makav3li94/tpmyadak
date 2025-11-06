@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Shop\Brand;
 use App\Models\Shop\CarBrand;
 use App\Models\Shop\CarModel;
 use App\Models\Shop\Product;
@@ -11,14 +12,14 @@ use Illuminate\Console\Command;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Encoders\WebpEncoder;
+use Intervention\Image\ImageManager;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ScrapeProducts extends Command
 {
-    protected $signature = 'scrape:products {limit=3}';
+    protected $signature = 'scrape:products {limit=50}';
 
     protected $description = 'Scrape products from MrYadaki (test mode)';
 
@@ -44,202 +45,189 @@ class ScrapeProducts extends Command
             $html = Http::get($url)->body();
             $dom = new Crawler($html);
 
-            // تابع کمکی برای گرفتن متن امن
             $getText = fn (Crawler $crawler, string $selector): ?string => $crawler->filter($selector)->count() ? trim($crawler->filter($selector)->first()->text()) : null;
 
             // Title
             $title = $getText($dom, 'h1') ?? 'بدون عنوان';
 
-            $producerBrandName = null;
-            $producerNode = $dom->filter('div:contains("برند تولید کننده")')->filter('a');
+            // حذف بخش "مناسب ..." از عنوان
+            $baseTitle = preg_replace('/\s*مناسب\s.+$/u', '', $title);
+            $slug = Str::slug($baseTitle);
 
-            if ($producerNode->count()) {
-                $producerBrandName = trim($producerNode->text());
-            }
-
-            // تلاش برای یافتن برند مشابه
-            $producerBrand = null;
-            if ($producerBrandName) {
-                $producerBrand = findSimilarRecord(\App\Models\Shop\Brand::class, $producerBrandName);
-            }
-
-            // اگر پیدا نشد => fallback به TPM (ساخت اگر وجود ندارد)
+            // تولید برند
+            $producerBrandName = $getText($dom, 'li:contains("شرکت سازنده") > div:nth-child(2) div');
+            $producerBrand = $producerBrandName ? findSimilarRecord(Brand::class, $producerBrandName) : null;
             if (! $producerBrand) {
-                $producerBrand = \App\Models\Shop\Brand::firstOrCreate(
+                $producerBrand = Brand::firstOrCreate(
                     ['slug' => 'tpm'],
-                    [
-                        'title' => 'TPM',
-                        'alias' => 'TPM',
-                        'status' => 1,
-                    ]
+                    ['title' => 'TPM', 'alias' => 'TPM', 'status' => 1]
                 );
             }
-
-            // حالا همیشه برند وجود دارد → ID امن
             $brandId = $producerBrand->id;
 
-            // Category
+            // دسته‌بندی
             $catName = $getText($dom, 'li:contains("دسته بندی") div[data-checkbox]');
             $category = $catName ? findSimilarRecord(ProductCategory::class, $catName) : null;
-
             if (! $category) {
                 $this->error("⛔ دسته یافت نشد → $catName");
 
                 continue;
-            } else {
-                $this->line("\n🔍 category: $category->title");
             }
 
-            // Price
+            // قیمت
             $priceText = $getText($dom, 'span.font-bold');
             $price = $priceText ? intval(str_replace([',', ' '], '', $priceText)) : 0;
-
             if (! $price) {
                 $this->error("⛔ قیمت یافت نشد → $price");
 
                 continue;
-            } else {
-                $this->line("\n🔍 price: $price");
             }
-            // Car Brand
+
+            // برند خودرو
             $carBrandName = $getText($dom, 'li:contains("برند خودرو") div[data-checkbox]');
             $carBrand = $carBrandName ? findSimilarRecord(CarBrand::class, $carBrandName) : null;
             if (! $carBrand) {
-                $this->error("⛔ برند خودرو یافت نشد → $carBrand");
-
-                continue;
-            } else {
-                $this->line("\n🔍 carBrand: $carBrand->title");
+                $carBrand = CarBrand::firstOrCreate(
+                    ['slug' => 'all'],
+                    ['title' => 'all', 'alias' => 'all', 'status' => 1]
+                );
             }
-            // Car Model
 
-            // تیپ خودرو → مدل‌ها
-            $carTrims = $getText($dom, 'li:contains("تیپ خودرو") div.col-span-2');
+            // بررسی محصول مشابه
+            $existingProduct = Product::where('slug', $slug)->first();
+
+            // Car Models
             $carModelsToAttach = [];
+            $carTrims = $getText($dom, 'li:contains("تیپ خودرو") div.col-span-2');
+            $carType = $getText($dom, 'li:contains("نوع خودرو") div[data-checkbox]');
+            $carList = [];
+            if ($carType) {
+                $carList[] = $carType;
+            }
+            if ($carTrims) {
+                $carList = array_merge($carList, preg_split('/،|,/', $carTrims));
+            }
 
-            if ($carTrims && $carBrand) {
+            foreach ($carList as $trimName) {
+                $trimName = trim($trimName);
+                if (! $trimName) {
+                    continue;
+                }
+                $model = findSimilarRecord(CarModel::class, $trimName, ['car_brand_id' => $carBrand->id]);
+                $carModelsToAttach[] = $model->id;
+            }
 
-                // جدا کردن موارد با کاما فارسی/انگلیسی
-                $trimList = preg_split('/،|,/', $carTrims);
+            if ($existingProduct) {
+                // فقط اضافه کردن CarModels
+                if ($carModelsToAttach) {
+                    $existingProduct->carModels()->syncWithoutDetaching($carModelsToAttach);
+                    $this->line('ℹ️ محصول مشابه یافت شد → مدل‌های خودرو اضافه شدند: '.implode(', ', $carModelsToAttach));
+                }
+                $product = $existingProduct;
+            } else {
+                // ایجاد محصول جدید
+                $sku = 'tpm-'.rand(100000, 999999);
+                $product = Product::create([
+                    'title' => $baseTitle,
+                    'slug' => $slug,
+                    'alias' => $baseTitle,
+                    'product_category_id' => $category->id,
+                    'brand_id' => $brandId,
+                    'supplier_id' => '01k86an50vsawm8cjhdhs37thj',
+                    'tax_id' => '01k86an54q3xzaf0njwx36bae4',
+                    'sku' => $sku,
+                    'upc' => $sku,
+                    'ean' => $sku,
+                    'jan' => $sku,
+                    'isbn' => $sku,
+                    'mpn' => $sku,
+                    'price' => $price,
+                    'stock' => 1,
+                    'minimum' => 1,
+                    'status_promotion' => 0,
+                ]);
 
-                foreach ($trimList as $trimName) {
-                    $trimName = trim($trimName);
-                    if (! $trimName) {
-                        continue;
-                    }
-
-                    // پیدا کردن یا ساخت مدل خودرو
-                    $model = findSimilarRecord(CarModel::class, $trimName, [
-                        'car_brand_id' => $carBrand->id,
-                    ]);
-
-                    $carModelsToAttach[] = $model->id;
+                if ($carModelsToAttach) {
+                    $product->carModels()->sync($carModelsToAttach);
+                    $this->line('🚗 مدل‌های خودرو متصل شد: '.implode(', ', $carModelsToAttach));
                 }
             }
 
-            $carModelsToAttach = array_unique($carModelsToAttach);
-
-            if (empty($carModelsToAttach)) {
-                $this->error("⛔ هیچ مدل خودرویی از «تیپ خودرو» یافت نشد → $title");
-
-                continue;
-            }
-
-            // Create product
-            $sku = 'tpm-'.rand(100000, 999999);
-            $product = Product::create([
-                'title' => $title,
-                'alias' => $title,
-                'slug' => Str::slug($title),
-                'product_category_id' => $category->id,
-                //                'car_brand_id' => $carBrand->id ?? null,
-                'brand_id' => $brandId,
-                'supplier_id' => '01k86an50vsawm8cjhdhs37thj',
-                'tax_id' => '01k86an54q3xzaf0njwx36bae4',
-                'sku' => $sku,
-                'upc' => $sku,
-                'ean' => $sku,
-                'jan' => $sku,
-                'isbn' => $sku,
-                'mpn' => $sku,
-                'price' => $price,
-                'stock' => 1,
-                'minimum' => 1,
-                'status_promotion' => 0,
-            ]);
-
-            if ($carModelsToAttach) {
-                $product->carModels()->sync($carModelsToAttach);
-                $this->line('🚗 مدل‌های متصل شده: '.implode(', ', $carModelsToAttach));
-            }
-
-            // Specs
-            $dom->filter('#specs li')->each(function ($li) use ($product, $getText) {
-                $title = $getText($li, '.text-text\/60');
-                $value = $getText($li, '.col-span-2, .lg\:col-span-4');
-
-                if (! $title || in_array($title, ['برند خودرو', 'نوع خودرو', 'دسته بندی'])) {
+            // Specs → حذف فیلدهای مربوط به مدل خودرو
+            $dom->filter('div[data-show-max] ul li')->each(function ($li) use ($product, $getText) {
+                $titleSpec = $getText($li, 'div.col-span-1');
+                $value = $getText($li, 'div.col-span-2 div');
+                if (! $titleSpec || ! $value) {
                     return;
                 }
 
-                ProductSpecs::create([
-                    'id' => Str::ulid(),
-                    'product_id' => $product->id,
-                    'title' => $title,
-                    'value' => $value,
-                ]);
+                if (in_array($titleSpec, ['نوع خودرو', 'تیپ خودرو'])) {
+                    return;
+                }
+
+                $category = $product->category;
+                if (! $category) {
+                    return;
+                }
+
+                $filter = $category->filters()->where('title', $titleSpec)->first();
+                if ($filter) {
+                    $product->filters()->syncWithoutDetaching([$filter->id => ['value' => $value]]);
+                } else {
+                    // فقط محصول جدید → Specs
+                    if (! $product->exists) {
+                        return;
+                    }
+                    ProductSpecs::create([
+                        'product_id' => $product->id,
+                        'title' => $titleSpec,
+                        'value' => $value,
+                    ]);
+                }
             });
 
-            // Images
-            $imgs = $dom->filter('.product-gallery-mobile-swiper img')->each(fn ($img) => $img->attr('src'));
-            $imgs = array_unique($imgs);
+            // Images → فقط برای محصول جدید
+            if (! $existingProduct) {
+                $imgs = $dom->filter('.product-gallery-mobile-swiper img')->each(fn ($img) => $img->attr('src'));
+                $imgs = array_unique($imgs);
+                $downloaded = [];
+                $manager = new ImageManager(new Driver);
 
-            $downloaded = [];
-            $manager = new ImageManager(new Driver);
-
-            foreach ($imgs as $imgUrl) {
-                if (! str_contains($imgUrl, 'cdn.mryadaki.com')) {
-                    continue;
-                }
-
-                try {
-                    $response = Http::timeout(20)->get($imgUrl);
-                    if (! $response->ok() || empty($response->body())) {
+                foreach ($imgs as $imgUrl) {
+                    if (! str_contains($imgUrl, 'cdn.mryadaki.com')) {
                         continue;
                     }
+                    try {
+                        $response = Http::timeout(20)->get($imgUrl);
+                        if (! $response->ok() || empty($response->body())) {
+                            continue;
+                        }
 
-                    // ایجاد تصویر و resize
-                    $image = $manager->read($response->body())->resize(350, 350);
+                        $image = $manager->read($response->body());
+                        $wmW = (int) ($image->width() * 0.18);
+                        $wmH = (int) ($image->height() * 0.21);
+                        $whitePatch = $manager->create($wmW, $wmH);
+                        $whitePatch->fill('#ffffff');
+                        $image->place($whitePatch, 'top-left', 0, 0, 100);
 
-                    // ایجاد patch سفید بالای سمت چپ
-                    $wmW = (int) ($image->width() * 0.18);
-                    $wmH = (int) ($image->height() * 0.21);
-                    $whitePatch = $manager->create($wmW, $wmH);
-                    $whitePatch->fill('#ffffff');
+                        $tmpFinal = storage_path('app/temp/'.Str::random().'.webp');
+                        $image->encode(new WebpEncoder(quality: 70))->save($tmpFinal);
 
-                    $image->place($whitePatch, 'top-left', 0, 0, 100);
+                        $downloaded[] = new UploadedFile($tmpFinal, basename($tmpFinal), 'image/webp', null, true);
+                    } catch (\Throwable $e) {
+                        $this->warn("⚠️ خطا در دانلود یا پردازش تصویر: {$imgUrl} - {$e->getMessage()}");
 
-                    // ذخیره تصویر موقت WebP
-                    $tmpFinal = storage_path('app/temp/'.Str::random().'.webp');
-                    $image->encode(new WebpEncoder(quality: 70))->save($tmpFinal);
+                        continue;
+                    }
+                }
 
-                    // تبدیل به UploadedFile
-                    $downloaded[] = new UploadedFile($tmpFinal, basename($tmpFinal), 'image/webp', null, true);
-
-                } catch (\Throwable $e) {
-                    $this->warn("⚠️ خطا در دانلود یا پردازش تصویر: {$imgUrl} - {$e->getMessage()}");
-
-                    continue;
+                if ($downloaded) {
+                    request()->replace(['images' => $downloaded]);
+                    app('App\Http\Controllers\Admin\ProductController')->handleImages(request(), $product);
                 }
             }
 
-            // اگر تصویر دانلود شد، به request اضافه کن و پردازش کن
-            if ($downloaded) {
-                request()->replace(['images' => $downloaded]);
-                app('App\Http\Controllers\Admin\ProductController')->handleImages(request(), $product);
-            }
-
-            $this->info("✅ ذخیره شد: $title");
+            $this->info("✅ ذخیره شد: $baseTitle");
         }
 
         $this->info("\n🎉 تمام شد");

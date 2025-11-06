@@ -214,7 +214,7 @@ if (! function_exists('findSimilarRecord')) {
         $bestPercent = 0;
 
         foreach ($records as $record) {
-            similar_text($title, $record->title, $percent);
+            similar_text(trim($title), trim($record->title), $percent);
             if ($percent > $bestPercent) {
                 $bestPercent = $percent;
                 $best = $record;
