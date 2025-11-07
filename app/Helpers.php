@@ -209,12 +209,26 @@ function queryMapper($query)
 if (! function_exists('findSimilarRecord')) {
     function findSimilarRecord($model, $title, $extraFields = [], $threshold = 75)
     {
-        $records = $model::all(['id', 'title']);
+        // نرمال ساز برای مقایسه درست
+        $normalize = fn($str) => mb_strtolower(
+            preg_replace('/[\s\-\_‌]+/u', '', trim($str)) // حذف فاصله، دش، نیم‌فاصله
+        );
+
+        $titleNormalized = $normalize($title);
+
         $best = null;
         $bestPercent = 0;
 
-        foreach ($records as $record) {
-            similar_text(trim($title), trim($record->title), $percent);
+        foreach ($model::all(['id', 'title', 'slug']) as $record) {
+
+            // مقایسه نرمال‌شده
+            $recordNormalized = $normalize($record->title);
+            if ($titleNormalized === $recordNormalized) {
+                return $record; // ✅ پیدا شد، تمام
+            }
+
+            // fallback → similar_text
+            similar_text($titleNormalized, $recordNormalized, $percent);
             if ($percent > $bestPercent) {
                 $bestPercent = $percent;
                 $best = $record;
@@ -225,10 +239,12 @@ if (! function_exists('findSimilarRecord')) {
             return $best;
         }
 
+        // اگر چیزی نبود → رکورد جدید
         return $model::create(array_merge([
             'id' => \Str::ulid(),
             'title' => $title,
-            'slug' => \Str::slug($title),
+            'slug' => Str::slug($title),
         ], $extraFields));
     }
+
 }

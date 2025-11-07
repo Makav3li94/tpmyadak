@@ -15,6 +15,7 @@ return new class extends Migration
             // id
             $table->ulid('id')->primary();
             $table->ulid('product_id')->index();
+            $table->string('hash', 64)->nullable()->index();
             $table->string('image');
         });
     }
