@@ -28,29 +28,23 @@ export default function LatestProducts({latestProducts}) {
 
     return (
         <>
-            <section className="w-full flex justify-center  bg-base-100 py-12">
+            <section className="w-full flex justify-center  bg-base-200 py-12">
                 <div className="container">
                     <div className="flex items-center gap-3  bg-base-100">
-                        <a href="#" title="replecment" className="hidden md:flex md:flex-shrink-0">
-                            <img src={replacement} alt="replacement"
-                                 className="md:w-[200px] h:[660px] lg:w-[280px] lg:h-[560px]"/>
-                        </a>
                         <div className="bg-base-100 py-6 mx-auto">
                             <div className="mb-4">
-                                <ul className=" md:flex flex-wrap -mb-px font-bold text-center px-6">
-                                    <li className="me-2" role="presentation">
-                                        <button
-                                            className="inline-block p-4 cursor-pointer text-[#ff2d37] transition duration-300 ease-in"
-                                            id="profile-tab"
-                                            type="button"
+                                <div className="text-center">
+                                    <h5 className=" text-[#d8330a] text-base">
+                                        آخرین محصولات
+                                    </h5>
+                                    {/* <div className="rounded-full w-3 h-3 bg-[#d8330a] text-center"></div> */}
 
-                                        >
-                                            آخرین محصولات
-                                        </button>
-                                    </li>
-                                </ul>
+                                    <h3 className="text-2xl font-extrabold  my-4">
+                                       جدید ترین محصولات TPM
+                                    </h3>
                             </div>
-                            <div className="-mx-px grid grid-cols-1 border-l border-gray-200 sm:mx-0  md:grid-cols-3 ">
+                            </div>
+                            <div className="-mx-px grid grid-cols-1 border-l border-gray-200 sm:mx-0  md:grid-cols-4 ">
                                 {latestProducts.map((product, i) =>
                                     <ProductCard product={product} key={i} handleAdd={()=>handleAdd(product)} handleWish={()=>handleWish(product)}/>
                                 )}

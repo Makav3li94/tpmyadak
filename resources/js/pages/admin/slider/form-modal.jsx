@@ -75,6 +75,8 @@ export default function FormModal(props) {
                     onChange={(file_path) => setData('image', file_path)}
                     error={errors.image}
                     url={data.image}
+                    compress={false}
+                    dir='slider/'
                     filemimes="image/jpg,image/jpeg,image/png"
                 />
                 <Checkbox

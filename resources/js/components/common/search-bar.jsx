@@ -74,7 +74,7 @@ const SearchBar = ({isMobile=false}) => {
                             {searchTerm === '' ? (
                                 <button
                                     type="submit"
-                                    className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-[#ff2d37] rounded-e-lg border border-[#ff2d37] focus:ring-4 focus:outline-none focus:ring-gray-300"
+                                    className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-[#d8330a] rounded-e-lg border border-[#d8330a] focus:ring-4 focus:outline-none focus:ring-gray-300"
                                 >
                                     <Search className="w-5 h-5"/>
 
@@ -84,7 +84,7 @@ const SearchBar = ({isMobile=false}) => {
 
                                 <button
                                 type="submit"
-                                className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-[#ff2d37] rounded-e-lg border border-[#ff2d37] focus:ring-4 focus:outline-none focus:ring-gray-300"
+                                className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-[#d8330a] rounded-e-lg border border-[#d8330a] focus:ring-4 focus:outline-none focus:ring-gray-300"
                                 onClick={(e) => {
                                 e.preventDefault()
                                 setSearchTerm('');

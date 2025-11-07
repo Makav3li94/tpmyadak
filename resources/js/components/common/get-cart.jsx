@@ -35,7 +35,7 @@ const GetCart = ({isMobile = false}) => {
                     <span className=" tracking-[0.5px] px-3 py-2">
                         سبد خرید
                     </span>
-                    <span className="text-[#ff2d37] font-bold py-2">
+                    <span className="text-[#d8330a] font-bold py-2">
                         {cartTotal} تومان
                     </span>
                 </>
@@ -56,7 +56,7 @@ const GetCart = ({isMobile = false}) => {
                                          pt-3 pb-4 border-b border-gray-300 px-3" key={index}>
                             <div className="flex flex-col lg:flex-row w-full justify-around items-center">
                                 <span
-                                    className="flex-1 w-full  text-sm text-gray-500 hover:text-[#ff2d37] transition duration-300 ease-in  ">
+                                    className="flex-1 w-full  text-sm text-gray-500 hover:text-[#d8330a] transition duration-300 ease-in  ">
                                     {item.title}
                                 </span>
                                 <Link href="#" title="product01">
@@ -99,10 +99,10 @@ const GetCart = ({isMobile = false}) => {
                     ))}
                     {items.length >0 ?(
                         <div className="flex justify-between px-3 py-2">
-                            <span className="text-[#ff2d37] font-bold py-2">
+                            <span className="text-[#d8330a] font-bold py-2">
                                 مبلغ کل: {cartTotal} تومان
                             </span>
-                            <Link href={route('home.cart')} className="btn btn-success text-base-100 hover:text-[#ff2d37]" title="checkout">
+                            <Link href={route('home.cart')} className="btn btn-success text-base-100 hover:text-[#d8330a]" title="checkout">
                                 تکمیل خرید
 
                             </Link>

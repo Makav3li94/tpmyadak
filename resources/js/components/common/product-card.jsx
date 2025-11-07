@@ -37,7 +37,6 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
                         <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
                         <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>
                     </div>
-                    <p className="mt-1 text-sm text-gray-500">12 reviews</p>
                 </div>
                 <p className="mt-4 text-base font-medium ">
                     {parseInt(product.price).toLocaleString('en')} میلیون

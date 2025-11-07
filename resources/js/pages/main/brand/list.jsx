@@ -52,7 +52,12 @@ export default function ProductList(props) {
                     <ListSidebar brands={brands} carBrands={carBrands} carModels={carModels} categories={categories} routeParam={brand.slug}/>
                     {/* ------ left side----- */}
                     <div className="md:col-span-8 lg:col-span-9 mt-6 md:mt-0 ">
-                        <div  className="sm:flex items-center border-[1px] border-gray-300 rounded">
+                        <div  className="sm:flex justify-between px-4 items-center border-[1px] border-gray-300 rounded">
+
+                            <div className="mt-3 sm:ml-3 sm:mt-0">
+                                <h3 className="text-sm font-medium text-gray-900">{brand.title}</h3>
+                                <p className="mt-2 text-sm text-gray-500">محصولات برند : {brand.title}</p>
+                            </div>
                             <div className="sm:flex-shrink-0">
                                 <div className="flow-root">
                                     {brand.image!==null ?(
@@ -62,10 +67,6 @@ export default function ProductList(props) {
                                     )}
 
                                 </div>
-                            </div>
-                            <div className="mt-3 sm:ml-3 sm:mt-0">
-                                <h3 className="text-sm font-medium text-gray-900">{brand.title}</h3>
-                                <p className="mt-2 text-sm text-gray-500">محصولات برند : {brand.title}</p>
                             </div>
                         </div>
 

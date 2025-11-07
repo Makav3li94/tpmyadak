@@ -9,13 +9,13 @@ export default function MenuHeader(props) {
             <div className="col-span-12 ">
                 <ul className="flex relative items-center text-center">
                     {/* -------mega menu home------------- */}
-                    <li className="bg-[#ff2d37] py-3 rounded-t-md text-white px-4 font-bold ml-2 z-40 group">
+                    <li className="bg-[#d8330a] py-3 rounded-t-md text-white px-4 font-bold ml-2 z-40 group">
                         <Link href="#" title="home">
                             خانه
                         </Link>
                     </li>
 
-                    <li className="bg-white py-3 rounded-t-md text-[#333333] px-4 font-bold ml-2 z-40 group hover:bg-[#ff2d37] transition duration-300 ease-in">
+                    <li className="bg-white py-3 rounded-t-md text-[#333333] px-4 font-bold ml-2 z-40 group hover:bg-[#d8330a] transition duration-300 ease-in">
                         <a href="#" title="features" className="group-hover:text-white">
                             مشخصات
                         </a>
@@ -34,7 +34,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="categorypage1"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه دسته اول
                                             </a>
@@ -43,7 +43,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="categorypage2"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه دسته دوم
                                             </a>{" "}
@@ -52,7 +52,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="categorypage3"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه دسته سوم
                                             </a>{" "}
@@ -70,7 +70,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="productpage1"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه اول محصول
                                             </a>{" "}
@@ -79,7 +79,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="productpage2"
-                                                className=" hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className=" hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه دوم محصول
                                             </a>{" "}
@@ -96,7 +96,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="shoppingcardpage"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه سبد خرید
                                             </a>{" "}
@@ -105,7 +105,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="checkoutpage"
-                                                className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه صورت حساب
                                             </a>{" "}
@@ -114,7 +114,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="comparepage"
-                                                className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه مقایسه محصولات
                                             </a>{" "}
@@ -123,7 +123,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="wishlistpage"
-                                                className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه علاقه مندی ها
                                             </a>{" "}
@@ -140,7 +140,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="loginpage"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه ورود
                                             </a>{" "}
@@ -149,7 +149,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="registerpage"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 صفحه ثبت نام
                                             </a>{" "}
@@ -158,7 +158,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="myaccountpage"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 پروفایل شخصی
                                             </a>{" "}
@@ -167,7 +167,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="orderhistorypage"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 تاریخچه سفارشات
                                             </a>{" "}
@@ -176,7 +176,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="orderinfopage"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 اطلاعات سفارشات
                                             </a>{" "}
@@ -185,7 +185,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="productsreturnpage"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 مرجوعی ها{" "}
                                             </a>{" "}
@@ -194,7 +194,7 @@ export default function MenuHeader(props) {
                                             <a
                                                 href="#"
                                                 title="giftcardpage"
-                                                className="hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                className="hover:text-[#d8330a] transition duration-300 ease-in"
                                             >
                                                 کارت هدیه{" "}
                                             </a>{" "}
@@ -204,7 +204,7 @@ export default function MenuHeader(props) {
                             </ul>
                         </div>
                     </li>
-                    <li className="bg-white max-w-fit py-3 rounded-t-md text-[#333333] px-5 font-bold ml-2 hover:bg-[#ff2d37] hover:text-white transition duration-300 ease-in">
+                    <li className="bg-white max-w-fit py-3 rounded-t-md text-[#333333] px-5 font-bold ml-2 hover:bg-[#d8330a] hover:text-white transition duration-300 ease-in">
                         <a href="#" title="blog">
                             بلاگ
                         </a>

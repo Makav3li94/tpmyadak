@@ -2,14 +2,14 @@ import {Link} from "@inertiajs/react";
 
 export default function ProductCategories({productCategories}) {
     return (
-        <section className="bg-base-200 w-full flex justify-center py-12">
+        <section className="bg-base-100 w-full flex justify-center py-12">
             {/* -----------------------Top featured collections------ */}
             <div className="container">
                 <div className="text-center">
-                    <h5 className=" text-[#ff2d37] text-base">
+                    <h5 className=" text-[#d8330a] text-base">
                         پربازدیدترین مجموعه‌ها
                     </h5>
-                    {/* <div className="rounded-full w-3 h-3 bg-[#ff2d37] text-center"></div> */}
+                    {/* <div className="rounded-full w-3 h-3 bg-[#d8330a] text-center"></div> */}
 
                     <h3 className="text-2xl font-extrabold  my-4">
                         خرید بر اساس دسته بندی
@@ -30,7 +30,7 @@ export default function ProductCategories({productCategories}) {
 
                                     <ul className="pr-4">
                                         {(productCategory.children && productCategory.children.length >0) && productCategory.children.map((child,i)=>
-                                        <li className="text-gray-400 list-disc hover:text-[#ff2d37] hover:transition hover:duration-300 hover:ease-in py-1" key={i}>
+                                        <li className="text-gray-400 list-disc hover:text-[#d8330a] hover:transition hover:duration-300 hover:ease-in py-1" key={i}>
                                             <Link href={route('home.getCategory',child.slug)} title="breakoil">
                                                 {child.title}
                                             </Link>
@@ -39,7 +39,7 @@ export default function ProductCategories({productCategories}) {
 
                                     </ul>
                                     <Link href={route('home.getCategory',productCategory.slug)} title="more"
-                                        className="bg-[#333333] text-[white] py-2 px-3 rounded-md hover:bg-[#ff2d37] transition duration-300 ease-in inline-block my-5"
+                                        className="bg-[#333333] text-[white] py-2 px-3 rounded-md hover:bg-[#d8330a] transition duration-300 ease-in inline-block my-5"
                                     >
                                         مشاهده همه
                                     </Link>

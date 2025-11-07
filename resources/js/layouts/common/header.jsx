@@ -118,7 +118,7 @@ export default function Header(props) {
                                                                     <a
                                                                         href="#"
                                                                         title="faqpage"
-                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                        className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                                                     >
                                                                         سوالات متداول
                                                                     </a>{" "}
@@ -127,7 +127,7 @@ export default function Header(props) {
                                                                     <a
                                                                         href="#"
                                                                         title="sitemappage"
-                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                        className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                                                     >
                                                                         نقشه سایت{" "}
                                                                     </a>{" "}
@@ -136,7 +136,7 @@ export default function Header(props) {
                                                                     <a
                                                                         href="#"
                                                                         title="contactus"
-                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                        className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                                                     >
                                                                         تماس با ما
                                                                     </a>{" "}
@@ -145,7 +145,7 @@ export default function Header(props) {
                                                                     <a
                                                                         href="#"
                                                                         title="bannerefectpage"
-                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                        className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                                                     >
                                                                         گالری تصاویر{" "}
                                                                     </a>{" "}
@@ -154,7 +154,7 @@ export default function Header(props) {
                                                                     <a
                                                                         href="#"
                                                                         title="aboutus"
-                                                                        className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                        className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                                                     >
                                                                         درباره ما
                                                                     </a>{" "}
@@ -179,7 +179,7 @@ export default function Header(props) {
                                                                 <a
                                                                     href="#"
                                                                     title="securityalarms"
-                                                                    className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                    className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                                                 >
                                                                     دزدگیر و سیستم‌های امنیتی
                                                                 </a>{" "}
@@ -188,7 +188,7 @@ export default function Header(props) {
                                                                 <a
                                                                     href="#"
                                                                     title="speakers"
-                                                                    className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                    className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                                                 >
                                                                     سیستم صوتی و بلندگوها
                                                                 </a>{" "}
@@ -197,7 +197,7 @@ export default function Header(props) {
                                                                 <a
                                                                     href="#"
                                                                     title="gadgets"
-                                                                    className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                    className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                                                 >
                                                                     گجت‌ها و قطعات یدکی
                                                                 </a>{" "}
@@ -206,7 +206,7 @@ export default function Header(props) {
                                                                 <a
                                                                     href="#"
                                                                     title="moreaccessories"
-                                                                    className="text-sm hover:text-[#ff2d37] transition duration-300 ease-in"
+                                                                    className="text-sm hover:text-[#d8330a] transition duration-300 ease-in"
                                                                 >
                                                                     سایر لوازم جانبی
                                                                 </a>{" "}

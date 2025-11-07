@@ -47,13 +47,22 @@ class FileController extends Controller
         $dir = $request->dir == '' ? '/' : $request->dir;
         Storage::disk('public')->put($dir, $file);
         $hash_name = $file->hashName();
-        if ($request->compress) {
+        if ($request->compress == 'true') {
             $id = uniqid();
             $image_name = rtrim($dir, '/').'-'.$id.'.'.'webp';
             $manager = new ImageManager(new Driver);
             $dir == '' ? $img_path = '/app/public/' : $img_path = '/app/public/'.$dir;
             $img = Filler::get(storage_path($img_path.$hash_name));
             $manager->read($img)->resize(250, 250)->encode(new WebpEncoder(quality: 70))->save(storage_path($img_path.$image_name));
+            Storage::disk('public')->delete($dir.$hash_name);
+            $hash_name = $image_name;
+        } else {
+            $id = uniqid();
+            $image_name = rtrim($dir, '/').'-'.$id.'.'.'webp';
+            $manager = new ImageManager(new Driver);
+            $dir == '' ? $img_path = '/app/public/' : $img_path = '/app/public/'.$dir;
+            $img = Filler::get(storage_path($img_path.$hash_name));
+            $manager->read($img)->encode(new WebpEncoder(quality: 70))->save(storage_path($img_path.$image_name));
             Storage::disk('public')->delete($dir.$hash_name);
             $hash_name = $image_name;
         }

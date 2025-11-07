@@ -76,8 +76,8 @@ export default function ListSidebar({
                 </div>
                 <div className="drawer-side h-full">
                     <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <div className="border-[1px] border-gray-300 border-t-[#ff2d37] rounded-md overflow-hidden">
-                        <div className="bg-[#ff2d37] text-base-100 py-3 px-7 font-semibold">
+                    <div className="border-[1px] border-gray-300 border-t-[#d8330a] rounded-md overflow-hidden">
+                        <div className="bg-[#d8330a] text-base-100 py-3 px-7 font-semibold">
                             فیلترها
                         </div>
 

@@ -71,7 +71,7 @@ export default function ProductList(props) {
                             زیردسته های موجود در : {productCategory.title}
                         </h2>
                         {(productCategory.children && productCategory.children.length >0) &&
-                            <section className="bembla">
+                            <section className="bembla relative">
                                 <div className="bembla__viewport" ref={emblaRef}>
                                     <div className="bembla__container">
                                         { productCategory.children.map((item,index) => (
@@ -87,7 +87,7 @@ export default function ProductList(props) {
                                                     </figure>
                                                     <div className="card-body text-center p-2">
                                                         <Link href={route('home.getCategory',item.slug)}>
-                                                            <h2 className="card-title justify-center">{item.title}</h2>
+                                                            <h2 className="card-title justify-center text-sm">{item.title}</h2>
                                                         </Link>
                                                         {item.description !==null&& <p>{item.description}</p>}
 

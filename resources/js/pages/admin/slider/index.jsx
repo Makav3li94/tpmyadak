@@ -53,11 +53,7 @@ export default function Home({sliders}) {
                 <Card>
                     <div className="flex justify-between mb-4">
                         <HasPermission p="create-slider">
-                            <Button
-                                size="sm"
-                                onClick={() => toggleFormModal()}
-                                type="primary"
-                            >
+                            <Button size="sm" onClick={() => toggleFormModal()} type="primary">
                                 افزودن
                             </Button>
                         </HasPermission>
@@ -79,7 +75,7 @@ export default function Home({sliders}) {
                                         <td>{++index}</td>
                                         <td>
                                             {slider.image?(
-                                                <img src={route('file.show',slider.image)} className="w-12" alt="-"/>
+                                                <img src={route('file.show',{file:slider.image,dir:'slider/'})} className="w-12" alt="-"/>
                                             ):(
                                                 '-'
                                             )}

@@ -2,7 +2,11 @@ import {Car, Undo2, ShieldCheck, LifeBuoy} from "lucide-react";
 
 const FeatureBox = (props) => {
     return (
-        <div className="flex col-span-12 sm:col-span-6 lg:col-span-3">
+        <div className={`flex col-span-12 sm:col-span-6 lg:col-span-3
+         ${props.i===0 && 'justify-start'}
+          ${props.i===4 && 'justify-end'}
+          ${props.i===1 && 'justify-center'}
+          `}>
             <div
                 className="w-12 h-12 sm:w-16 sm:h-16 border-2 border-gray-300 rounded-full flex justify-center items-center">
                 {props.icon}
@@ -22,14 +26,14 @@ export default function Feature(props) {
     return (
         <section className={`w-full flex justify-center  ${props.isSingle ?'bg-base-300 py-6 mt-12':'mb-12'}`}>
             <div className="container px-5 md:px-0">
-                <div className="grid grid-cols-12 ">
-                    <FeatureBox title="ارسال رایگان" subTitle="خرید های بالاتر از ۵ میلیون"
+                <div className="grid grid-cols-12  justify-stretch ">
+                    <FeatureBox title="ارسال رایگان" subTitle="خرید های بالاتر از ۵ میلیون" i={0}
                                 icon={<Car className="w-6 h-6 sm:w-8 sm:h-8 text-error/90"/>}/>
-                    <FeatureBox title="مرجوعی ۳۰ روزه" subTitle="۳۰ روز برای بازگشت محصول"
+                    <FeatureBox title="مرجوعی ۳۰ روزه" subTitle="۳۰ روز برای بازگشت محصول" i={1}
                                 icon={<Undo2 className="w-6 h-6 sm:w-8 sm:h-8 text-error/90"/>}/>
-                    <FeatureBox title="خرید امن" subTitle="پرداخت ۱۰۰٪ امن"
+                    <FeatureBox title="خرید امن" subTitle="پرداخت ۱۰۰٪ امن" i={1}
                                 icon={<ShieldCheck className="w-6 h-6 sm:w-8 sm:h-8 text-error/90"/>}/>
-                    <FeatureBox title="پشتیبانی آنلاین" subTitle="پشتیبانی ۲۴ ساعته آنلاین"
+                    <FeatureBox title="پشتیبانی آنلاین" subTitle="پشتیبانی ۲۴ ساعته آنلاین" i={4}
                                 icon={<LifeBuoy className="w-6 h-6 sm:w-8 sm:h-8 text-error/90"/>}/>
                 </div>
             </div>

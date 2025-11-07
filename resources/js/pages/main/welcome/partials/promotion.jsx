@@ -49,7 +49,7 @@ export default function Promotion({promoProducts}) {
                                 </div>
                                 <div className="py-6 lg:py-12 md:px-8 lg:px-0 lg:pl-2">
                                     <Link href={route('home.getProduct',mainPromo.sku)}  title="producttitle">
-                                        <h4 className="text-[#333333] hover:text-[#ff2d37] text-xs lg:text-base font-bold transition duration-300 ease-in">
+                                        <h4 className="text-[#333333] hover:text-[#d8330a] text-xs lg:text-base font-bold transition duration-300 ease-in">
                                             {mainPromo.title}
                                         </h4>
                                     </Link>
@@ -63,7 +63,7 @@ export default function Promotion({promoProducts}) {
                                     </div>
                                     {/* prices product- deal of the day---------- */}
                                     <div className="my-6 font-bold flex-grow text-gray-400">
-                                        <span className="text-[#ff2d37] text-sm sm:text-base pl-2">
+                                        <span className="text-[#d8330a] text-sm sm:text-base pl-2">
                                             {parseInt((mainPromo.price - mainPromo.discount)).toLocaleString('en')} میلیون
                                         </span>
                                         <span className="line-through text-sm sm:text-base">
@@ -90,7 +90,7 @@ export default function Promotion({promoProducts}) {
                     </div>
                     {/*-------------- best seller section------------------- */}
                     <div className="col-span-12 lg:col-span-3 lg:col-start-10 drop-shadow-lg shadow-gray-400 mt-16">
-                        <div className="bg-[#ff2d37] rounded-t-md py-3">
+                        <div className="bg-[#d8330a] rounded-t-md py-3">
                 <span className="text-white font-blod text-center px-3">
                   حراج روز
                 </span>
@@ -116,7 +116,7 @@ export default function Promotion({promoProducts}) {
                                             <div
                                                 className="lg:py-2 lg:px-0 lg:pl-2 w-full text-center lg:text-start my-auto">
                                                 <Link href={route('home.getProduct',product.sku)} title="producttitle">
-                                                    <h4 className="text-[#333333] hover:text-[#ff2d37] text-lg font-bold lg:font-medium lg:text-sm transition duration-300 ease-in py-2">
+                                                    <h4 className="text-[#333333] hover:text-[#d8330a] text-lg font-bold lg:font-medium lg:text-sm transition duration-300 ease-in py-2">
                                                         {product.title}
                                                     </h4>
                                                 </Link>
@@ -134,7 +134,7 @@ export default function Promotion({promoProducts}) {
                                                     <div className="line-through text-sm sm:text-base">
                                                         {parseInt(product.price).toLocaleString('en')} میلیون
                                                     </div>
-                                                    <div className="text-[#ff2d37] text-sm sm:text-base pl-2">
+                                                    <div className="text-[#d8330a] text-sm sm:text-base pl-2">
                                                         {parseInt((product.price - product.discount)).toLocaleString('en')} میلیون
                                                     </div>
                                                 </div>

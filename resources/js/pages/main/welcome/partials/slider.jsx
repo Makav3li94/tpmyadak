@@ -33,7 +33,7 @@ export default function Slider({sliders}) {
                     <div className="embla__container">
                         {sliders.map((slider,index) => (
                             <div className="embla__slide" key={index}>
-                                            <img  src={route('file.show',slider.image)}  alt='slide'
+                                            <img  src={route('file.show',{file:slider.image,dir:'slider/'})}  alt='slide'
                                                  // loading={`${imageIndex===0 ? 'eager' : 'lazy'}`}
                                             />
                             </div>

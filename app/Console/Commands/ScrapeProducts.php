@@ -20,7 +20,6 @@ use Symfony\Component\DomCrawler\Crawler;
 class ScrapeProducts extends Command
 {
     protected $signature = 'scrape:products {limit=50}';
-
     protected $description = 'Scrape products from MrYadaki (test mode)';
 
     public function handle()
@@ -45,19 +44,23 @@ class ScrapeProducts extends Command
             $html = Http::get($url)->body();
             $dom = new Crawler($html);
 
-            $getText = fn (Crawler $crawler, string $selector): ?string => $crawler->filter($selector)->count() ? trim($crawler->filter($selector)->first()->text()) : null;
+            $getText = fn (Crawler $crawler, string $selector): ?string =>
+            $crawler->filter($selector)->count() ? trim($crawler->filter($selector)->first()->text()) : null;
 
             // Title
             $title = $getText($dom, 'h1') ?? 'بدون عنوان';
 
-            // حذف بخش "مناسب ..." از عنوان
-            $baseTitle = preg_replace('/\s*مناسب\s.+$/u', '', $title);
-            $slug = Str::slug($baseTitle);
+            // استخراج model_code
+            preg_match('/([A-Z]{2,}[0-9]{2,}[A-Z0-9]*)/i', $title, $m);
+            $modelCode = $m[1] ?? null;
 
-            // تولید برند
+            // حذف بخش "مناسب ..." فقط اگر محصول مشابه وجود داشته باشد
+            $slugBase = Str::slug($title);
+
+            // برند تولیدکننده
             $producerBrandName = $getText($dom, 'li:contains("شرکت سازنده") > div:nth-child(2) div');
             $producerBrand = $producerBrandName ? findSimilarRecord(Brand::class, $producerBrandName) : null;
-            if (! $producerBrand) {
+            if (!$producerBrand) {
                 $producerBrand = Brand::firstOrCreate(
                     ['slug' => 'tpm'],
                     ['title' => 'TPM', 'alias' => 'TPM', 'status' => 1]
@@ -68,69 +71,69 @@ class ScrapeProducts extends Command
             // دسته‌بندی
             $catName = $getText($dom, 'li:contains("دسته بندی") div[data-checkbox]');
             $category = $catName ? findSimilarRecord(ProductCategory::class, $catName) : null;
-            if (! $category) {
+            if (!$category) {
                 $this->error("⛔ دسته یافت نشد → $catName");
-
                 continue;
             }
 
             // قیمت
             $priceText = $getText($dom, 'span.font-bold');
             $price = $priceText ? intval(str_replace([',', ' '], '', $priceText)) : 0;
-            if (! $price) {
+            if (!$price) {
                 $this->error("⛔ قیمت یافت نشد → $price");
-
                 continue;
             }
 
             // برند خودرو
             $carBrandName = $getText($dom, 'li:contains("برند خودرو") div[data-checkbox]');
             $carBrand = $carBrandName ? findSimilarRecord(CarBrand::class, $carBrandName) : null;
-            if (! $carBrand) {
+            if (!$carBrand) {
                 $carBrand = CarBrand::firstOrCreate(
                     ['slug' => 'all'],
                     ['title' => 'all', 'alias' => 'all', 'status' => 1]
                 );
             }
 
-            // بررسی محصول مشابه
-            $existingProduct = Product::where('slug', $slug)->first();
+            // بررسی محصول مشابه بر اساس model_code
+            $existingProduct = $modelCode ? Product::where('model_code', $modelCode)->first() : null;
 
             // Car Models
             $carModelsToAttach = [];
             $carTrims = $getText($dom, 'li:contains("تیپ خودرو") div.col-span-2');
             $carType = $getText($dom, 'li:contains("نوع خودرو") div[data-checkbox]');
             $carList = [];
-            if ($carType) {
-                $carList[] = $carType;
-            }
-            if ($carTrims) {
-                $carList = array_merge($carList, preg_split('/،|,/', $carTrims));
-            }
+            if ($carType) $carList[] = $carType;
+            if ($carTrims) $carList = array_merge($carList, preg_split('/،|,/', $carTrims));
 
             foreach ($carList as $trimName) {
                 $trimName = trim($trimName);
-                if (! $trimName) {
-                    continue;
-                }
+                if (!$trimName) continue;
                 $model = findSimilarRecord(CarModel::class, $trimName, ['car_brand_id' => $carBrand->id]);
                 $carModelsToAttach[] = $model->id;
             }
 
             if ($existingProduct) {
-                // فقط اضافه کردن CarModels
+                $product = $existingProduct;
+
+                // فقط محصول مشابه → عنوان کوتاه
+                $cleanTitle = preg_replace('/\s*مناسب\s.+$/u', '', $title);
+                $product->update([
+                    'title' => $cleanTitle,
+                    'alias' => $cleanTitle,
+                    'slug' => Str::slug($cleanTitle)
+                ]);
+
                 if ($carModelsToAttach) {
-                    $existingProduct->carModels()->syncWithoutDetaching($carModelsToAttach);
+                    $product->carModels()->syncWithoutDetaching($carModelsToAttach);
                     $this->line('ℹ️ محصول مشابه یافت شد → مدل‌های خودرو اضافه شدند: '.implode(', ', $carModelsToAttach));
                 }
-                $product = $existingProduct;
             } else {
-                // ایجاد محصول جدید
+                // محصول جدید
                 $sku = 'tpm-'.rand(100000, 999999);
                 $product = Product::create([
-                    'title' => $baseTitle,
-                    'slug' => $slug,
-                    'alias' => $baseTitle,
+                    'title' => $title,
+                    'alias' => $title,
+                    'slug' => $slugBase,
                     'product_category_id' => $category->id,
                     'brand_id' => $brandId,
                     'supplier_id' => '01k86an50vsawm8cjhdhs37thj',
@@ -145,6 +148,7 @@ class ScrapeProducts extends Command
                     'stock' => 1,
                     'minimum' => 1,
                     'status_promotion' => 0,
+                    'model_code' => $modelCode,
                 ]);
 
                 if ($carModelsToAttach) {
@@ -153,31 +157,42 @@ class ScrapeProducts extends Command
                 }
             }
 
-            // Specs → حذف فیلدهای مربوط به مدل خودرو
+            // Specs + About + Description
             $dom->filter('div[data-show-max] ul li')->each(function ($li) use ($product, $getText) {
                 $titleSpec = $getText($li, 'div.col-span-1');
                 $value = $getText($li, 'div.col-span-2 div');
-                if (! $titleSpec || ! $value) {
+                if (!$titleSpec || !$value) return;
+
+                // About
+                if (str_contains($titleSpec, 'طریقه') || str_contains($titleSpec, 'استفاده')) {
+                    $product->about = trim($value);
+                    $product->save();
                     return;
                 }
 
-                if (in_array($titleSpec, ['نوع خودرو', 'تیپ خودرو'])) {
+                // Description
+                if ($titleSpec === 'توضیحات') {
+                    $product->description = trim($value);
+                    $product->save();
                     return;
                 }
 
+                // Car Models → ذخیره نکن
+                if (in_array($titleSpec, ['نوع خودرو', 'تیپ خودرو'])) return;
+
+                // Filter
                 $category = $product->category;
-                if (! $category) {
-                    return;
-                }
+                if (!$category) return;
 
                 $filter = $category->filters()->where('title', $titleSpec)->first();
                 if ($filter) {
                     $product->filters()->syncWithoutDetaching([$filter->id => ['value' => $value]]);
-                } else {
-                    // فقط محصول جدید → Specs
-                    if (! $product->exists) {
-                        return;
-                    }
+                    return;
+                }
+
+                // Spec → فقط اگر مقدار تکراری نباشد
+                $existing = $product->specs()->where('title', $titleSpec)->where('value', $value)->first();
+                if (!$existing) {
                     ProductSpecs::create([
                         'product_id' => $product->id,
                         'title' => $titleSpec,
@@ -187,25 +202,22 @@ class ScrapeProducts extends Command
             });
 
             // Images → فقط برای محصول جدید
-            if (! $existingProduct) {
-                $imgs = $dom->filter('.product-gallery-mobile-swiper img')->each(fn ($img) => $img->attr('src'));
+            if (!$existingProduct) {
+                $imgs = $dom->filter('.product-gallery-mobile-swiper img')->each(fn($img) => $img->attr('src'));
                 $imgs = array_unique($imgs);
                 $downloaded = [];
                 $manager = new ImageManager(new Driver);
 
                 foreach ($imgs as $imgUrl) {
-                    if (! str_contains($imgUrl, 'cdn.mryadaki.com')) {
-                        continue;
-                    }
+                    if (! str_contains($imgUrl, 'cdn.mryadaki.com')) continue;
+
                     try {
                         $response = Http::timeout(20)->get($imgUrl);
-                        if (! $response->ok() || empty($response->body())) {
-                            continue;
-                        }
+                        if (!$response->ok() || empty($response->body())) continue;
 
                         $image = $manager->read($response->body());
-                        $wmW = (int) ($image->width() * 0.18);
-                        $wmH = (int) ($image->height() * 0.21);
+                        $wmW = (int)($image->width() * 0.18);
+                        $wmH = (int)($image->height() * 0.21);
                         $whitePatch = $manager->create($wmW, $wmH);
                         $whitePatch->fill('#ffffff');
                         $image->place($whitePatch, 'top-left', 0, 0, 100);
@@ -216,7 +228,6 @@ class ScrapeProducts extends Command
                         $downloaded[] = new UploadedFile($tmpFinal, basename($tmpFinal), 'image/webp', null, true);
                     } catch (\Throwable $e) {
                         $this->warn("⚠️ خطا در دانلود یا پردازش تصویر: {$imgUrl} - {$e->getMessage()}");
-
                         continue;
                     }
                 }
@@ -227,7 +238,7 @@ class ScrapeProducts extends Command
                 }
             }
 
-            $this->info("✅ ذخیره شد: $baseTitle");
+            $this->info("✅ ذخیره شد: ".$product->title);
         }
 
         $this->info("\n🎉 تمام شد");

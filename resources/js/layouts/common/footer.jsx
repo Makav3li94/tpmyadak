@@ -18,7 +18,7 @@ export default function Footer({isSingle=false}) {
                              <svg
                                  xmlns="http://www.w3.org/2000/svg"
                                  viewBox="0 0 640 640"
-                                 fill="#ff2d37"
+                                 fill="#d8330a"
                                  className="w-6 h-6"
                              >
                                  <path
@@ -33,7 +33,7 @@ export default function Footer({isSingle=false}) {
                                  <svg
                                      xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 640 640"
-                                     fill="#ff2d37"
+                                     fill="#d8330a"
                                      className="w-6 h-6"
                                  >
                                      <path
@@ -49,7 +49,7 @@ export default function Footer({isSingle=false}) {
                                  <svg
                                      xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 640 640"
-                                     fill="#ff2d37"
+                                     fill="#d8330a"
                                      className="w-6 h-6"
                                  >
                                      <path
@@ -64,7 +64,7 @@ export default function Footer({isSingle=false}) {
                              <svg
                                  xmlns="http://www.w3.org/2000/svg"
                                  viewBox="0 0 640 640"
-                                 fill="#ff2d37"
+                                 fill="#d8330a"
                                  className="w-6 h-6"
                              >
                                  <path
@@ -84,7 +84,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="aboutus"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">درباره ما</span>
                              </a>
@@ -93,7 +93,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="aboutus"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">سوالات متداول</span>
                              </a>
@@ -102,7 +102,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="aboutus"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">وارانتی و سرویس</span>
                              </a>
@@ -111,7 +111,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="aboutus"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">پشتیبانی۲۴ ساعته</span>
                              </a>
@@ -120,7 +120,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="aboutus"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">ثبت محصول</span>
                              </a>
@@ -129,7 +129,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="aboutus"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">پشتیبانی محصول</span>
                              </a>
@@ -144,7 +144,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="brands"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">برندها</span>
                              </a>
@@ -153,7 +153,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="giftcard"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">کارت هدیه</span>
                              </a>
@@ -162,7 +162,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="affilitis"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">همکاران تجاری</span>
                              </a>
@@ -171,7 +171,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="customlink"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">لینک اختصاصی</span>
                              </a>
@@ -180,7 +180,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="faqs"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">سوالات متداول</span>
                              </a>
@@ -189,7 +189,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="special"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">پیشنهادات ویژه</span>
                              </a>
@@ -204,7 +204,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="brands"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">روشنایی</span>
                              </a>
@@ -213,7 +213,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="giftcard"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">لوازم الکترونیکی</span>
                              </a>
@@ -222,7 +222,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="affilitis"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">هوشمند سازی</span>
                              </a>
@@ -231,7 +231,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="customlink"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">لینک اختصاصی</span>
                              </a>
@@ -240,7 +240,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="faqs"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">باشگاه مشتریان</span>
                              </a>
@@ -249,7 +249,7 @@ export default function Footer({isSingle=false}) {
                              <a
                                  href="#"
                                  title="special"
-                                 className="text-gray-400 hover:text-[#ff2d37] transition duration-300 ease-in group flex items-center"
+                                 className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                              >
                                  <span className="font-light">خدمات مشتریان</span>
                              </a>

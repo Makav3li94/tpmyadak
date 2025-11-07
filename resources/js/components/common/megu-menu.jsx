@@ -5,10 +5,10 @@ const MegaMenu = ({ isSingle=false }) => {
     return (
         <ul className="relative z-20 w-full">
             {MegaMenuBank?.map(category => (
-                <li key={category.id} className={`${isSingle && 'text-[#333333]'} group hover:bg-[#ff2d37] transition duration-300 ease-in px-5 relative`}>
+                <li key={category.id} className={`${isSingle && 'text-[#333333]'} group hover:bg-[#d8330a] transition duration-300 ease-in px-5 relative`}>
 
                     {/* سطح 1 */}
-                    <div className="flex justify-between text-center items-center py-3 border-b border-gray-300 hover:border-[#ff2d37] cursor-pointer z-10">
+                    <div className="flex justify-between text-center items-center py-3 border-b border-gray-300 hover:border-[#d8330a] cursor-pointer z-10">
                         <div className={`${isSingle && 'text-[#333333]'}text-sm group-hover:text-gray-50`}>
                             {category.title}
                         </div>
@@ -28,16 +28,16 @@ const MegaMenu = ({ isSingle=false }) => {
                                         {/* عنوان ستون (سطح 2) */}
                                         <li className="font-bold mb-2">
                                             <h4 className="text-[#333333]">
-                                                <Link href={`/category/${sub.slug}`}>
-                                                    {sub.title}
+                                                <Link href={`/category/${sub.slug}`} className='text-gray-700 flex justfiy-between items-center  border-r-2 border-gray-200 pr-4'>
+                                                    <div>{sub.title}</div>          <ChevronLeft className="w-3 h-3 mr-3 group-hover:fill-white"/>
                                                 </Link>
                                             </h4>
                                         </li>
 
                                         {/* آیتم‌های ستون (سطح 3) */}
                                         {Array.isArray(sub.children) && sub.children.length > 0 && sub.children.map(item => (
-                                            <li key={item.id} className="text-gray-600 hover:text-[#ff2d37] transition duration-300 ease-in py-1.5">
-                                                <Link href={`/category/${item.slug}`}>
+                                            <li key={item.id} className="text-gray-600 hover:text-[#d8330a] transition duration-300 ease-in py-1.5 text-sm text-xs">
+                                                <Link href={`/category/${item.slug}`} className="pr-4">
                                                     {item.title}
                                                 </Link>
                                             </li>

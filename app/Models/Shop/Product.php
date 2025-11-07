@@ -25,6 +25,7 @@ class Product extends Model
         'brand_id',
         'supplier_id',
         'tax_id',
+        'model_code',
         'sku',
         'upc',
         'ean',

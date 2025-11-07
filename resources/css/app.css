@@ -292,7 +292,7 @@
     color: #fff;
     display: inline-block;
     font-weight: 500;
-    background-color: #ff2d37;
+    background-color: #d8330a;
     border-radius: 0 0 5px 5px;
     z-index: 2;
 }
@@ -305,7 +305,7 @@
     left: auto;
     border-bottom: 0 solid transparent;
     border-top: 9px solid transparent;
-    border-left: 10px solid #c60009;
+    border-left: 10px solid #d8330a;
     border-right: 12px solid transparent;
 }
 .modtitle2::after {
@@ -317,7 +317,7 @@
     left: -22px;
     border-bottom: 0 solid transparent;
     border-top: 9px solid transparent;
-    border-right: 10px solid #c60009;
+    border-right: 10px solid #d8330a;
     border-left: 12px solid transparent;
 }
  .article-date {

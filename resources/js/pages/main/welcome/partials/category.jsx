@@ -10,7 +10,7 @@ export default function Category({sliders}) {
             <div className="container   ">
                 <div className="  hidden lg:grid grid-cols-12 justify-between  z-0 gap-x-10">
                     <div
-                        className="lg:col-span-3 lg:flex bg-[#ff2d37] rounded-t-md px-5 py-3 text-center justify-between">
+                        className="lg:col-span-3 lg:flex bg-[#d8330a] rounded-t-md px-5 py-3 text-center justify-between">
                         <span className="text-white">تمام دسته بندی ها</span>
                         <AlignJustify className="w-6 h-6 text-white"/>
 
@@ -18,18 +18,18 @@ export default function Category({sliders}) {
                     <div className="lg:col-span-9 lg:col-start-4">
                         <ul className="flex relative items-center text-center">
                             {/* -------mega menu home------------- */}
-                            <li className="bg-[#ff2d37] py-3 rounded-t-md text-white px-4 font-bold ml-2 z-40 group">
+                            <li className="bg-[#d8330a] py-3 rounded-t-md text-white px-4 font-bold ml-2 z-40 group">
                                 <Link href="#" title="home">
                                     خانه
                                 </Link>
                             </li>
 
-                            <li className="bg-white max-w-fit py-3 rounded-t-md text-[#333333] px-5 font-bold ml-2 hover:bg-[#ff2d37] hover:text-white transition duration-300 ease-in">
+                            <li className="bg-white max-w-fit py-3 rounded-t-md text-[#333333] px-5 font-bold ml-2 hover:bg-[#d8330a] hover:text-white transition duration-300 ease-in">
                                 <Link href={route('home.getProducts')} title="products">
                                     محصولات
                                 </Link>
                             </li>
-                            <li className="bg-white max-w-fit py-3 rounded-t-md text-[#333333] px-5 font-bold ml-2 hover:bg-[#ff2d37] hover:text-white transition duration-300 ease-in">
+                            <li className="bg-white max-w-fit py-3 rounded-t-md text-[#333333] px-5 font-bold ml-2 hover:bg-[#d8330a] hover:text-white transition duration-300 ease-in">
                                 <Link href={route('home.getBlogs')} title="blog">
                                     بلاگ
                                 </Link>
@@ -37,7 +37,7 @@ export default function Category({sliders}) {
                         </ul>
                     </div>
                 </div>
-                <div className="w-full border-b-2 border-[#ff2d37] absolute left-0 right-0"></div>
+                <div className="w-full border-b-2 border-[#d8330a] absolute left-0 right-0"></div>
                 {/* ------- menu right side big screen------- */}
 
                 {/* --------sub menu right categories---------- */}

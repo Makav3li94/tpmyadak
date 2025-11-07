@@ -15,8 +15,10 @@ export default function Index({sliders,promoProducts,latestProducts,productCateg
         <FrontLayout>
 
 
-            <Category sliders={sliders}/>
-            <Feature/>
+           {/*<div className="min-h-screen">*/}
+               <Category sliders={sliders}/>
+               <Feature/>
+           {/*</div>*/}
             <Deferred data="promoProducts" fallback={<BallSpinner/>}>
                 {/*<WhenVisible data="posts" fallback={<BallSpinner/>}>*/}
                     <Promotion promoProducts={promoProducts}/>

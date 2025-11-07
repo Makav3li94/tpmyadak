@@ -26,6 +26,7 @@ return new class extends Migration
             $table->ulid('supplier_id')->nullable()->default(0)->index();
             $table->ulid('tax_id', 50)->nullable()->default(0)->comment('0:No-tax, auto: Use tax default')->index();
             // columns
+            $table->string('model_code', 155)->nullable()->index();
             $table->string('sku', 50)->index();
             $table->string('upc', 20)->nullable()->comment('upc code');
             $table->string('ean', 20)->nullable()->comment('ean code');

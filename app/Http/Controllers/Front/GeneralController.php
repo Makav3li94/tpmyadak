@@ -24,7 +24,7 @@ class GeneralController extends Controller
             'promoProducts' => inertia()->defer(fn () => Product::where('status_promotion', 1)
                 ->whereDate('date_end', '>=', Carbon::now())->limit(3)->get()),
             'latestProducts' => inertia()->defer(fn () => Product::where('status_promotion', 0)
-                ->limit(3)->get()),
+                ->limit(4)->get()),
             'productCategories' => inertia()->defer(fn () => ProductCategory::with('children')->where([['parent_id', 0], ['status', 1]])
                 ->get()),
             'brands' => inertia()->defer(fn () => Brand::where('status', 1)
