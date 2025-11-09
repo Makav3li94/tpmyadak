@@ -33,14 +33,23 @@ export default function BlogList(props) {
                     <ListSidebar categories={categories}/>
                     {/* ------ left side----- */}
                     <div className="md:col-span-8 lg:col-span-9 mt-6 md:mt-0">
-                        <h2 className="font-bold text-2xl pb-6">بلاگ</h2>
-                        <a href="#" title="img-cate" className="group">
-                            <img
-                                src={imageCate}
-                                alt="imagecat"
-                                className="group-hover:opacity-110 w-full"
-                            />
-                        </a>
+                        <div className="card bg-base-100 image-full  shadow-sm">
+                            <figure>
+                                <img src={imageCate} alt="Shoes" />
+                            </figure>
+                            {/*<div className="card-body">*/}
+                            {/*    <h2 className="card-title">بلاگ</h2>*/}
+                            {/*    <p>آخرین مقالات</p>*/}
+                            {/*</div>*/}
+                        </div>
+                        {/*<h2 className="font-bold text-2xl pb-6">بلاگ</h2>*/}
+                        {/*<a href="#" title="img-cate" className="group">*/}
+                        {/*    <img*/}
+                        {/*        src={imageCate}*/}
+                        {/*        alt="imagecat"*/}
+                        {/*        className="group-hover:opacity-110 w-full"*/}
+                        {/*    />*/}
+                        {/*</a>*/}
                         <div className="my-8 text-left">
                             <label htmlFor="cars">مرتب سازی</label>
                             <select name="cars" id="cars" className="border-[1px] border-gray-300 px-1 mx-2"

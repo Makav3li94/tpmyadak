@@ -5,6 +5,12 @@ namespace App\Models\Shop;
 use App\Models\Model;
 use Illuminate\Support\Collection;
 
+/**
+ * Class ProductCategory
+ *
+ * Optimized tree and traversal helpers: minimize DB queries, build in-memory maps,
+ * and use iterative traversals for flat listing and getting descendants/ancestors.
+ */
 class ProductCategory extends Model
 {
     protected $casts = ['filters.pivot.id' => 'string'];
@@ -19,66 +25,214 @@ class ProductCategory extends Model
         'sort',
     ];
 
+    /**
+     * Corrected hasMany relationship: product_category_id is the FK in products table.
+     */
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Product::class, 'product_category_id', 'id');
+    }
+
+    public function filters(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Filter::class, 'filter_product_categories');
+    }
+
+    public function parent(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(ProductCategory::class, 'id', 'parent_id')->orderBy('sort');
+    }
+
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProductCategory::class, 'parent_id', 'id')->orderBy('sort');
+    }
+
+    /**
+     * Build a nested tree of categories from a flat collection.
+     *
+     * Fetches all categories in one query (if $allCategories is null) and builds the nested tree
+     * using an in-memory parent->children map (O(n)).
+     *
+     * @param Collection|null $allCategories optional pre-fetched categories collection
+     * @param int|string $rootParentId the parent id considered root (default 0)
+     * @return Collection nested tree (each node is a Category model with ->children set)
+     */
+    public static function buildTree(Collection $allCategories = null, $rootParentId = 0): Collection
+    {
+        $all = $allCategories ?? static::select(['id', 'parent_id', 'title', 'slug', 'status', 'sort'])->orderBy('sort')->get();
+
+        // Build lookup map parent_id => [children...]
+        $map = [];
+        foreach ($all as $cat) {
+            $pid = $cat->parent_id ?? 0;
+            $map[$pid][] = $cat;
+        }
+
+        // Use a recursive closure that uses the map (no DB queries)
+        $build = function ($parentId) use (&$map, &$build) {
+            $nodes = collect();
+            foreach ($map[$parentId] ?? [] as $child) {
+                // clone or set children collection on the model for convenience
+                $child->setRelation('children', $build($child->id));
+                $nodes->push($child);
+            }
+            return $nodes;
+        };
+
+        return $build($rootParentId);
+    }
+
+    /**
+     * Return a flattened list of categories suitable for select controls.
+     * This is optimized: it fetches categories only once and then iteratively
+     * produces an ordered flattened list with level prefixes.
+     *
+     * @param Collection|null $categories optional pre-fetched nested categories (from buildTree)
+     * @param int|string $rootParentId
+     * @param string $prefixChar character used to indicate levels ('-' by default)
+     * @return Collection of arrays: ['value' => id, 'label' => prefixed title]
+     */
+    public static function flatTree(Collection $categories = null, $rootParentId = 0, $prefixChar = '-'): Collection
+    {
+        // If nested categories are not provided, build them fast from a single query.
+        if ($categories === null) {
+            $categories = static::buildTree(null, $rootParentId);
+        }
+
+        $result = collect();
+
+        // Use an explicit stack for DFS: each entry is [node, level]
+        $stack = [];
+        // We'll push in reverse order so the original order is preserved when popping
+        $children = $categories->reverse();
+        foreach ($children as $node) {
+            $stack[] = [$node, 0];
+        }
+
+        while (!empty($stack)) {
+            [$node, $level] = array_pop($stack);
+
+            $label = ($level > 0 ? str_repeat($prefixChar, $level) . ' ' : '') . $node->title;
+            $result->push([
+                'value' => $node->id,
+                'label' => $label,
+            ]);
+
+            // If node has children, push them onto the stack in reverse order
+            $nodeChildren = $node->children ?? collect();
+            if ($nodeChildren->isNotEmpty()) {
+                foreach ($nodeChildren->reverse() as $child) {
+                    $stack[] = [$child, $level + 1];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get all children ids (descendants) including the current category id.
+     * This version fetches all categories once and walks the children map in memory.
+     *
+     * @param Collection|null $allCategories optional pre-fetched categories collection
+     * @return array
+     */
+    public function getAllChildrenIds(Collection $allCategories = null): array
+    {
+        $all = $allCategories ?? static::select(['id', 'parent_id'])->get();
+
+        // build map parent_id => children ids
+        $map = [];
+        foreach ($all as $cat) {
+            $pid = $cat->parent_id ?? 0;
+            $map[$pid][] = $cat->id;
+        }
+
+        $ids = [];
+        $stack = [$this->id];
+
+        while (!empty($stack)) {
+            $current = array_pop($stack);
+            if (!in_array($current, $ids, true)) {
+                $ids[] = $current;
+                foreach ($map[$current] ?? [] as $childId) {
+                    $stack[] = $childId;
+                }
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Get all parent ids (ancestors) up to the root.
+     * Uses an in-memory lookup map for O(depth) complexity and single DB fetch when needed.
+     *
+     * @param Collection|null $allCategories optional pre-fetched categories collection
+     * @return array ancestor ids (closest parent first)
+     */
+    public function getAllParentIds(Collection $allCategories = null): array
+    {
+        $all = $allCategories ?? static::select(['id', 'parent_id'])->get();
+
+        // build lookup id => parent_id
+        $parentMap = [];
+        foreach ($all as $cat) {
+            $parentMap[$cat->id] = $cat->parent_id;
+        }
+
+        $ids = [];
+        $currentParent = $parentMap[$this->id] ?? null;
+
+        while ($currentParent && !in_array($currentParent, $ids, true)) {
+            $ids[] = $currentParent;
+            $currentParent = $parentMap[$currentParent] ?? null;
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Get all related category ids (ancestors + descendants + self).
+     * Combines getAllChildrenIds and getAllParentIds efficiently by single-fetching all categories.
+     *
+     * @return array unique ids
+     */
     public function getAllRelatedCategoryIds(): array
     {
-        $ids = [$this->id]; // خود دسته
+        // Pre-fetch all categories once to be shared by both operations
+        $all = static::select(['id', 'parent_id'])->get();
 
-        // گرفتن همه والدها
-        $category = $this;
-        while ($category->parent_id) {
-            $ids[] = $category->parent_id;
-            $category = self::find($category->parent_id);
-            if (! $category) {
-                break;
-            }
-        }
+        $children = $this->getAllChildrenIds($all);
+        $parents = $this->getAllParentIds($all);
 
-        // گرفتن همه فرزندان
-        $ids = array_merge($ids, $this->getAllChildrenIds());
-
-        // حذف تکراری‌ها
-        $ids = array_unique($ids);
+        $ids = array_values(array_unique(array_merge($children, $parents)));
 
         return $ids;
     }
 
-    public function getAllParentIds(): array
-    {
-        $ids = [];
-        $category = $this;
-
-        while ($category->parent_id) {
-            $ids[] = $category->parent_id;
-            $category = self::find($category->parent_id);
-            if (! $category) {
-                break;
-            }
-        }
-
-        return $ids;
-    }
-
-    public function getAllChildrenIds(): array
-    {
-        $ids = [$this->id]; // شامل خود دسته
-        $children = self::where('parent_id', $this->id)->get();
-
-        foreach ($children as $child) {
-            $ids = array_merge($ids, $child->getAllChildrenIds());
-        }
-
-        return $ids;
-    }
-
+    /**
+     * Returns filters belonging to all children (descendants) categories,
+     * implemented via single-query category id collection + eager filter lookup.
+     *
+     * @return Collection
+     */
     public function getAllChildrenFilters(): Collection
     {
         $categoryIds = $this->getAllChildrenIds();
-
+        // Use a single query with whereHas to find related filters
         return Filter::whereHas('productCategories', function ($query) use ($categoryIds) {
             $query->whereIn('product_category_id', $categoryIds);
         })->get();
     }
 
+    /**
+     * Return filters with values aggregated from products within this category subtree.
+     * Efficiently preloads product ids in subtree, then eager loads filter->products constrained to those products.
+     *
+     * @return Collection
+     */
     public function getAllChildrenFiltersWithValues(): Collection
     {
         $categoryIds = $this->getAllChildrenIds();
@@ -91,46 +245,15 @@ class ProductCategory extends Model
             $q->whereIn('products.id', $productIds);
         }])->get();
 
-        // ۵. اضافه کردن مجموعه‌ی valueهای منحصربه‌فرد به هر فیلتر
+        // Add unique pivot values for each filter and remove products relation to reduce payload
         $filters->map(function ($filter) {
             $filter->values = $filter->products->pluck('pivot.value')->unique()->values();
-            unset($filter->products); // محصولات لازم نیست برگردن
-
+            $filter->unsetRelation('products');
             return $filter;
         });
 
         return $filters;
     }
-
-    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Product::class, 'id', 'product_category_id');
-    }
-
-    public function filters(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Filter::class, 'filter_product_categories');
-    }
-
-    //    public function stores()
-    //    {
-    //        return $this->belongsToMany(AdminStore::class, ShopCategoryStore::class, 'category_id', 'store_id');
-    //    }
-
-    public function parent(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(ProductCategory::class, 'id', 'parent_id')->orderBy('sort');
-    }
-
-    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(ProductCategory::class, 'parent_id', 'id')->orderBy('sort');
-    }
-
-//    public static function tree(): \Illuminate\Database\Eloquent\Collection
-//    {
-//        return static::with(implode('.', array_fill(0, 100, 'children')))->where('parent_id', '=', '0')->orderBy('sort')->get();
-//    }
 
     public static function tree(): \Illuminate\Database\Eloquent\Collection
     {
@@ -151,27 +274,7 @@ class ProductCategory extends Model
             ->get();
     }
 
-    public static function flatTree($categories = null, $level = 0)
-    {
-        if ($categories === null) {
-            $categories = static::tree(); // همون متد خودت
-        }
 
-        $result = collect();
-
-        foreach ($categories as $cat) {
-            $result->push([
-                'value' => $cat->id,
-                'label' => str_repeat('-', $level).' '.$cat->title,
-            ]);
-
-            if ($cat->children->isNotEmpty()) {
-                $result = $result->merge(self::flatTree($cat->children, $level + 1));
-            }
-        }
-
-        return $result;
-    }
 
     public function getTreeCategories($parent = 0, &$tree = null, $categories = null, &$st = '')
     {

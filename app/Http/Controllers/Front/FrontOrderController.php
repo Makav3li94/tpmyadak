@@ -54,15 +54,15 @@ class FrontOrderController extends Controller
     public function order(Request $request)
     {
         $user = auth()->user();
-        if (!empty($request->discount)) {
-            $dis = Discount::where([['is_active', 'active'], ['id', $request->discount]])
+        if (! empty($request->discount_id)) {
+            $dis = Discount::where([['status', 1], ['id', $request->discount_id]])
                 ->whereIn('id', [$user->id, 0])->whereDate('active_at', '<=', Carbon::today())->whereDate('expire_at', '>=', Carbon::today())->first();
             $dis->increment('max_time');
-            $discount = (int)$dis->max_minus;
+            $discount = (int) $dis->max_minus;
         } else {
             $discount = 0;
         }
-        $cost = (int)$request->total_cost - $discount;
+        $cost = (int) $request->total_cost - (int) $request->discount - $discount;
 
         $shippingMethod = ShippingMethod::find($request->shipping_method_id);
         $paymentMethod = PaymentMethod::find($request->payment_method_id);
@@ -75,7 +75,7 @@ class FrontOrderController extends Controller
             'shipping_method_id' => $shippingMethod->id,
             'payment_method_id' => $paymentMethod->id,
             'subtotal' => $request->subtotal,
-            'discount' => $request->discount,
+            'discount' => (int) $request->discount - $discount,
             'tax' => 0,
             'other_fee' => 0,
             'total' => $cost,
@@ -96,10 +96,10 @@ class FrontOrderController extends Controller
                 'order_id' => $order->id,
                 'product_id' => $item['id'],
                 'title' => $item['title'],
-                'amount' => (int)$item['price'],
-                'discount' => (int)$item['discount'],
-                'unit' => (int)$item['quantity'],
-                'total_price' => (int)$item['itemTotal'],
+                'amount' => (int) $item['price'],
+                'discount' => (int) $item['discount'],
+                'unit' => (int) $item['quantity'],
+                'total_price' => (int) $item['itemTotal'],
                 'tax' => 0,
                 'attribute' => '-',
             ]);
@@ -145,16 +145,16 @@ class FrontOrderController extends Controller
     public function checkPayment(Request $request)
     {
         $transaction = Transaction::where('order_id', $request->order_id)->first();
-        if (!$transaction) {
+        if (! $transaction) {
             abort(419);
         }
         $order = Order::find($request->order_id);
-        if (!$order) {
+        if (! $order) {
             abort(419);
         }
 
         try {
-            $receipt = Payment::amount((int)$transaction->price)->transactionId($transaction->transaction_id)->verify();
+            $receipt = Payment::amount((int) $transaction->price)->transactionId($transaction->transaction_id)->verify();
 
             // You can show payment referenceId to the user.
             $verify_code = $receipt->getReferenceId();
@@ -186,7 +186,7 @@ class FrontOrderController extends Controller
     {
         $request['code'] = $code;
         $request->validate(['code' => 'required|string|max:10']);
-        $discount = Discount::where([['is_active', 'active'], ['code', $request['code']]])->whereDate('active_at', '<=', Carbon::today())->whereDate('expire_at', '>=', Carbon::today())->first();
+        $discount = Discount::where([['status', 1], ['code', $request['code']]])->whereDate('active_at', '<=', Carbon::today())->whereDate('expire_at', '>=', Carbon::today())->first();
 
         if ($discount) {
             if ($discount->max_time + 1 > $discount->max_limit) {

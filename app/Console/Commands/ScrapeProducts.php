@@ -20,12 +20,13 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ScrapeProducts extends Command
 {
-    protected $signature = 'scrape:products {limit=350}';
+    protected $signature = 'scrape:products {limit=7000}';
 
     protected $description = 'Scrape products from MrYadaki (test mode)';
 
     public function handle()
     {
+        ini_set('memory_limit', '512M');
         $sitemaps = [
             'https://www.mryadaki.com/sitemap-products-1.xml',
             'https://www.mryadaki.com/sitemap-products-2.xml',
@@ -39,11 +40,13 @@ class ScrapeProducts extends Command
         }
 
         $links = array_slice($links, 0, $this->argument('limit'));
-        $allBrands = Brand::all(['id', 'title']);
+        $allBrands = Brand::all(['id', 'title', 'slug']);
         $allCarBrands = CarBrand::all(['id', 'title']);
         $allCarModels = CarModel::all(['id', 'title']);
         $allCategories = ProductCategory::all(['id', 'title']);
-        foreach ($links as $url) {
+        foreach ($links as $key => $url) {
+            $num = ++$key;
+            $this->line("\n🔍 شماره: $num");
             if (ScrapedProduct::where('url', $url)->exists()) {
                 $this->warn("⏭️ قبلا ذخیره شده → $url");
 
@@ -60,41 +63,61 @@ class ScrapeProducts extends Command
             $title = $getText($dom, 'h1') ?? 'بدون عنوان';
 
             // استخراج model_code
-            preg_match('/([A-Z]{2,}[0-9]{2,}[A-Z0-9]*)/i', $title, $m);
-            $modelCode = $m[1] ?? null;
+            // Model Code Detection (Supports alpha-numeric and pure numeric codes)
+            $modelCode = null;
 
-            // حذف بخش "مناسب ..." فقط اگر محصول مشابه وجود داشته باشد
-            $slugBase =  slug_gen($title);
-
-            // برند تولیدکننده
-            $producerBrandName = $getText($dom, 'li:contains("شرکت سازنده") > div:nth-child(2) div');
-            $producerBrand = $producerBrandName ? findSimilarRecord(Brand::class, $producerBrandName) : null;
-            if (! $producerBrand) {
-                $producerBrand = Brand::firstOrCreate(
-                    ['slug' => 'tpm'],
-                    ['title' => 'TPM', 'alias' => 'TPM', 'status' => 1]
-                );
+            // اول کدهای ترکیبی مثل K6RTM3
+            if (preg_match('/([A-Z]{1,}[0-9]{2,}[A-Z0-9]*)/i', $title, $m)) {
+                $modelCode = $m[1];
             }
-            $brandId = $producerBrand->id;
+            // اگر پیدا نشد → دنبال کدهای تمام دیجیت ۵ تا ۱۰ رقمی
+            elseif (preg_match('/\b([0-9]{5,10})\b/', $title, $m)) {
+                $modelCode = $m[1];
+            }
 
-            // دسته‌بندی
+            if ($modelCode) {
+                $modelCode = trim($modelCode);
+            }
+
+            $slugBase = slug_gen($title);
+            $slug = $slugBase;
+            $counter = 1;
+
+            while (Product::where('slug', $slug)->exists()) {
+                $slug = $slugBase.'-'.$counter++;
+            }
+            // --- دسته‌بندی ---
             $catName = $getText($dom, 'li:contains("دسته بندی") div[data-checkbox]');
-            $category = $catName ? findSimilarRecord(ProductCategory::class, $catName) : null;
+            $category = $catName ? findSimilarRecord(ProductCategory::class, $catName, $allCategories) : null;
             if (! $category) {
-                $this->warn("⚠️ دسته یافت نشد → $catName → انتقال به 'other'");
-                $category = ProductCategory::firstOrCreate(
-                    ['slug' => 'other'],
-                    ['title' => 'سایر', 'parent_id' => 0, 'status' => 1]
-                );
+                $category = ProductCategory::firstOrCreate(['slug' => 'other'], [
+                    'title' => 'سایر',
+                    'parent_id' => 0,
+                    'status' => 1,
+                ]);
             }
 
-            // بررسی حذف بر اساس دسته و برند
+            $categoryTitle = $category->title;
+
+            // --- دسته‌های حذف کامل ---
             $skipCategories = [
                 'قاب بلندگو', 'سایر محصولات',
             ];
 
+            if (in_array($categoryTitle, $skipCategories)) {
+                $this->warn("⏭️ دسته {$categoryTitle} حذف شد");
+                ScrapedProduct::create(['url' => $url]); // ثبت اسکیپ
+
+                continue;
+            }
+
+            // --- برند از HTML (فقط متن، بدون ساخت در DB) ---
+            $producerBrandName = $getText($dom, 'li:contains("شرکت سازنده") > div:nth-child(2) div') ?? '';
+            $producerBrandName = trim($producerBrandName);
+
+            // --- لیست برندهای ممنوع براساس دسته ---
             $skipCategoryBrands = [
-                'پلوس' => ['mka', 'ام کی ای', 'جی بی کی لیزر بلبرینگ'],
+                'پلوس' => ['mka', 'ام کی ای', 'جی بی کی', 'لیزر', 'بلبرینگ'],
                 'جعبه فرمان' => ['طوس'],
                 'توپی چرخ' => ['اف ای جی', 'جی بی کی'],
                 'کوئل' => ['ایران کاربراتور', 'والئو'],
@@ -102,7 +125,7 @@ class ScrapeProducts extends Command
                 'فشنگی خودرو' => ['دنیا پارت'],
                 'دریچه گاز' => ['لیزر'],
                 'سنسور ها' => ['لیزر'],
-                'ترمز' => ['گیپارت', 'هایما', 'سوزوکی', 'GOLD', 'بلو', 'سگال', 'های کیو', 'والئو'],
+                'لنت ترمز' => ['گیپارت', 'هایما', 'سوزوکی', 'gold', 'بلو', 'سگال', 'های کیو', 'والئو'],
                 'دیسک ترمز' => ['سوزوکی', 'هایما', 'تلدا'],
                 'شمع موتور' => ['سوزوکی', 'هایما', 'اکیوم'],
                 'صافی بنزین' => ['سوزوکی', 'هایما', 'لوکو موبیل'],
@@ -123,7 +146,7 @@ class ScrapeProducts extends Command
                 'بلبرینگ تسمه دینام' => ['اف ای جی', 'ایران کاربراتور', 'جی بی کی'],
                 'تسمه کولر' => ['فانتوم'],
                 'وایر شمع' => ['یوتا', 'بوجیکورد', 'گرین پاور', 'ایران کاربراتور'],
-                'واتر پمپ' => ['اف ای جی'],
+                'واتر پمپ' => ['اف ای جی', 'fag'],
                 'سر سیلندر' => ['ایران کاربراتور'],
                 'کاسه نمد سوپاپ' => ['سی بی اس', 'تی‌تی‌او'],
                 'سوزن انژکتور' => ['لیزر'],
@@ -137,32 +160,53 @@ class ScrapeProducts extends Command
                 'اسپری داشبورد' => ['فرمول وان', 'اسنوپ'],
             ];
 
-            $categoryTitle = $category->title;
-            $brandTitle = $producerBrand->title;
-            $brandSlug  = $producerBrand->slug;
+            // --- چک اسکیپ ---
+            if (isset($skipCategoryBrands[$categoryTitle]) && $producerBrandName !== '') {
 
-// دسته‌های حذف کامل
-            if (in_array($categoryTitle, $skipCategories)) {
-                $this->warn("⏭️ دسته {$categoryTitle} حذف شد");
-                continue;
-            }
+                // نرمالایز کننده: حذف فاصله، دش، نیم‌فاصله، lowercase
+                $normalize = fn ($str) => mb_strtolower(preg_replace('/[\s\-\_‌]+/u', '', trim((string) $str)));
 
-// اسکیپ برندها بر اساس دسته
-            if (isset($skipCategoryBrands[$categoryTitle])) {
-                $norm = fn($str) => mb_strtolower(preg_replace('/[\s\-‌]+/u', '', $str)); // حذف فاصله، دش، نیم‌فاصله
+                $producerBrandNameNormalized = $normalize($producerBrandName);
 
-                $brandNormalized = $norm($brandTitle);
-                $brandSlugNormalized = $norm($brandSlug);
+                // تلاش می‌کنیم برند داخل جدول برندها پیدا کنیم (title یا slug)
+                $foundBrandInTable = $allBrands->first(function ($b) use ($normalize, $producerBrandNameNormalized) {
+                    $bt = $normalize($b->title);
+                    $bs = $normalize($b->slug ?? Str::slug($b->title));
+
+                    return $bt === $producerBrandNameNormalized || $bs === $producerBrandNameNormalized;
+                });
 
                 foreach ($skipCategoryBrands[$categoryTitle] as $skipBrand) {
-                    $skipNormalized = $norm($skipBrand);
+                    $skipNormalized = $normalize($skipBrand);
 
-                    if ($brandNormalized === $skipNormalized || $brandSlugNormalized === $skipNormalized) {
-                        $this->warn("⏭️ رد شد → برند {$brandTitle} در دسته {$categoryTitle}");
-                        continue 2; // برگشت به حلقه لینک‌ها
+                    // مقایسه با نام داخل HTML
+                    if ($producerBrandNameNormalized === $skipNormalized) {
+                        $this->warn("⏭️ رد شد → {$producerBrandName} در {$categoryTitle} (match by HTML title)");
+                        ScrapedProduct::create(['url' => $url]); // ثبت اسکیپ
+
+                        continue 2;
+                    }
+
+                    // اگر برند در جدول بود، مقایسه با title/slug اون رکورد هم انجام بده
+                    if ($foundBrandInTable) {
+                        $foundTitleNorm = $normalize($foundBrandInTable->title);
+                        $foundSlugNorm = $normalize($foundBrandInTable->slug ?? Str::slug($foundBrandInTable->title));
+                        if ($foundTitleNorm === $skipNormalized || $foundSlugNorm === $skipNormalized) {
+                            ScrapedProduct::create(['url' => $url]); // ثبت اسکیپ
+                            $this->warn("⏭️ رد شد → {$foundBrandInTable->title} در {$categoryTitle} (match by DB)");
+
+                            continue 2;
+                        }
                     }
                 }
             }
+
+            // حالا که اسکیپ نشد → ایجاد/پیدا کردن برند (با findSimilarRecord)
+            $producerBrand = $producerBrandName
+                ? findSimilarRecord(Brand::class, $producerBrandName, $allBrands)
+                : Brand::firstWhere('slug', 'tpm');
+
+            $brandId = $producerBrand?->id ?? Brand::firstWhere('slug', 'tpm')->id;
 
             // قیمت
             $priceText = $getText($dom, 'span.font-bold');
@@ -174,7 +218,7 @@ class ScrapeProducts extends Command
 
             // برند خودرو
             $carBrandName = $getText($dom, 'li:contains("برند خودرو") div[data-checkbox]');
-            $carBrand = $carBrandName ? findSimilarRecord(CarBrand::class, $carBrandName) : null;
+            $carBrand = $carBrandName ? findSimilarRecord(CarBrand::class, $carBrandName, $allCarBrands) : null;
             if (! $carBrand) {
                 $carBrand = CarBrand::firstOrCreate(
                     ['slug' => 'all'],
@@ -202,7 +246,7 @@ class ScrapeProducts extends Command
                 if (! $trimName) {
                     continue;
                 }
-                $model = findSimilarRecord(CarModel::class, $trimName, ['car_brand_id' => $carBrand->id]);
+                $model = findSimilarRecord(CarModel::class, $trimName, $allCarModels, ['car_brand_id' => $carBrand->id]);
                 $carModelsToAttach[] = $model->id;
             }
 
@@ -214,7 +258,7 @@ class ScrapeProducts extends Command
                 $product->update([
                     'title' => $cleanTitle,
                     'alias' => $cleanTitle,
-                    'slug' => Str::slug($cleanTitle),
+//                    'slug' => Str::slug($cleanTitle),
                 ]);
 
                 if ($carModelsToAttach) {
@@ -227,7 +271,7 @@ class ScrapeProducts extends Command
                 $product = Product::create([
                     'title' => $title,
                     'alias' => $title,
-                    'slug' => $slugBase,
+                    'slug' => $slug,
                     'product_category_id' => $category->id,
                     'brand_id' => $brandId,
                     'supplier_id' => '01k86an50vsawm8cjhdhs37thj',
@@ -268,7 +312,7 @@ class ScrapeProducts extends Command
                 }
 
                 // Description
-                if ($titleSpec === 'توضیحات') {
+                if ($titleSpec === 'توضیحات' || $titleSpec === 'توضیحات :' || $titleSpec === 'سایر توضیحات' || $titleSpec === 'محل نصب' || $titleSpec === 'توضیحات تکمیلی') {
                     $product->description = trim($value);
                     $product->save();
 

@@ -35,15 +35,12 @@ export default function UserAuthenticatedLayout({
         setMounted(true)
         // 👆 false parameter is required for react project
     }, [])
-    console.log(isShowSidebar)
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center w-full">
             <TopHeader user={auth.user}/>
             <Header/>
             <HeaderSingle/>
             <div class="container mx-auto relative my-5">
-                {mounted &&
-                <>
                     <main className={`transition ${isShowSidebar ? 'lg:mr-64' : 'ml-0 '}`}>
                         <nav className="bg-base-100 c-shadow">
                             <div className="mx-auto px-4 py-2">
@@ -85,8 +82,6 @@ export default function UserAuthenticatedLayout({
                         <div className="mb-4"></div>
                     </main>
                     <SidebarNavUser user={auth.user} show={isShowSidebar} setShow={toggleSidebar}/>
-                </>
-                }
                 <Toaster theme="system" richColors="true" toastOptions={{
                     duration: 3000,
                     dismissible: true,

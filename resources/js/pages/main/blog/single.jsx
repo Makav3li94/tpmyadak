@@ -51,7 +51,7 @@ export default function BlogSingle({blog, reviews, canReview}) {
                         </div>
 
                     </div>
-                    <div className="w-[90%] mx-auto bg-base-100 border-base-300 p-6">
+                    <div className="w-[80%] mx-auto bg-base-100 border-base-300 p-6">
                         {reviews && reviews.map((review, reviewIdx) => (
                             <Review review={review} i={reviewIdx}/>
                         ))}

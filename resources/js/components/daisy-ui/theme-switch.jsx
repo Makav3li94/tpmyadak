@@ -48,7 +48,7 @@ export function ThemeSwitch() {
 
 export function DarkSwitch() {
     return (
-        <div className="btn md:btn-ghost mr-3">
+        <div className=" mr-3">
             <label className="swap swap-rotate hover:bg-base-200 p-1 rounded-2xl">
                 <input
                     type="checkbox"

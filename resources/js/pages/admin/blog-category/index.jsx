@@ -93,7 +93,7 @@ export default function Home(props) {
                                 <tr>
                                     <th>ردیف</th>
                                     <th>عنوان</th>
-                                    <th>تصویر</th>
+                                    {/*<th>تصویر</th>*/}
                                     <th>سردسته</th>
                                     <th>وضعیت</th>
                                     <th />
@@ -104,14 +104,14 @@ export default function Home(props) {
                                     <tr key={blogCategory.id}>
                                         <td>{++index}</td>
                                         <td>{blogCategory.title}</td>
-                                        <td>
-                                            {blogCategory.image?(
-                                                <img src={route('file.show',blogCategory.image)} className="w-12" alt="-"/>
-                                            ):(
-                                                '-'
-                                            )}
+                                        {/*<td>*/}
+                                        {/*    {blogCategory.image?(*/}
+                                        {/*        <img src={route('file.show',blogCategory.image)} className="w-12" alt="-"/>*/}
+                                        {/*    ):(*/}
+                                        {/*        '-'*/}
+                                        {/*    )}*/}
 
-                                        </td>
+                                        {/*</td>*/}
                                         <td>{blogCategory.parent ? blogCategory.parent.title : 'ندارد'}</td>
                                         <td>
                                             {blogCategory.status?(

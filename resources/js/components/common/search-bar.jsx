@@ -54,7 +54,8 @@ const SearchBar = ({isMobile=false}) => {
 
     return (
         <>
-            <div className={`${!isMobile ? 'searchForm hidden md:flex md:col-span-5 md:pl-6':'border-1 border-gray-300 group-hover:max-h-64  lg:w-[180%] w-full  absolute top-32 left-0 right-2 translate-x-2 z-50 mt-1  bg-white'}`}>
+            <div className={`${!isMobile ? 'searchForm hidden md:flex md:col-span-5 md:pl-6':'border-1 border-gray-300 group-hover:max-h-64 ' +
+                ' lg:w-[180%] w-full  absolute top-32 left-0 right-2 translate-x-2 z-50 mt-1  bg-white'}`}>
                 <form className="w-full mx-auto">
                     <div className="flex">
                         <label htmlFor="search-dropdown" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
@@ -65,7 +66,7 @@ const SearchBar = ({isMobile=false}) => {
                         <div className="relative w-full">
                             <input
                                 type="search"
-                                className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg  border-s-2 border border-gray-300 focus:ring-gray-300 focus:border-gray-300 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400"
+                                className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded  border-s-2 border border-gray-300 focus:ring-gray-300 focus:border-gray-300 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400"
                                 placeholder=" کلمه کلیدی خود را بنویسید..."
                                 value={searchTerm}
                                 required

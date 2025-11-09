@@ -143,6 +143,14 @@ class FrontProductController extends Controller
             $query->where('title', 'like', "%{$request->q}%");
         }
 
+        if ($request->has_promotion == 'true') {
+            $query->where('status_promotion', 1);
+        }
+
+        if ($request->in_stock == 'true') {
+            $query->where('stock', '>', 0);
+        }
+
         // 5. محدوده قیمت
         if ($request->priceMin || $request->priceMax) {
             $query->whereBetween('price', [(int) $request->priceMin, (int) $request->priceMax]);

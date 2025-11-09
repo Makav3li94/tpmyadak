@@ -6,6 +6,7 @@ import {Link} from "@inertiajs/react";
 import {Button} from "@/components/index/index.js";
 
 const GetCart = ({isMobile = false}) => {
+    const [hasMounted, setHasMounted] = useState(false);
     const {
         totalUniqueItems,
         items,
@@ -15,16 +16,29 @@ const GetCart = ({isMobile = false}) => {
         isEmpty,
     } = useCart();
     const [hoverCart, setHoverCart] = useState(false)
+    const [discountTotal, setDiscountTotal] = useState(0);
+    function handleSubs() {
+        let dis = items.reduce((a, v) => a = a + (v.discount === null ? 0 : (parseInt(v.discount) * v.quantity)), 0)
+        setDiscountTotal(dis)
+    }
+    useEffect(() => {
+        if (!hasMounted) {
+            handleSubs();
+        }
+        setHasMounted(true);
+
+
+    }, [hasMounted]);
     return (
-        <motion.div className={`flex border-[1.5px] relative border-gray-300 rounded-md  ${!isMobile && 'px-3'}`} onHoverStart={event => {
+        <motion.div className={`flex border-[1.5px] relative border-gray-300 rounded-md  items-center w-[240px]`} onHoverStart={event => {
             setHoverCart(true)
         }} onTap={event => {
             setHoverCart(!hoverCart)
         }} onHoverEnd={event => {
             setHoverCart(false)
         }}>
-            <div className="btn md:btn-ghost">
-                <div className="indicator">
+            <div className="btn md:btn-ghost ">
+                <div className="indicator ">
                     <span className="indicator-item badge badge-secondary  -top-2 -right-3">{totalUniqueItems}</span>
                     <ShoppingCart className="w-5 h-5 "/>
                 </div>
@@ -32,11 +46,11 @@ const GetCart = ({isMobile = false}) => {
             </div>
             {!isMobile &&
                 <>
-                    <span className=" tracking-[0.5px] px-3 py-2">
+                    <span className=" tracking-[0.5px] px-3 py-1 border-r text-xs">
                         سبد خرید
                     </span>
-                    <span className="text-[#d8330a] font-bold py-2">
-                        {cartTotal} تومان
+                    <span className="text-[#d8330a] font-bold  pl-2 text-xs">
+                        { (cartTotal - discountTotal).toLocaleString('en')} تومان
                     </span>
                 </>
             }
@@ -56,11 +70,11 @@ const GetCart = ({isMobile = false}) => {
                                          pt-3 pb-4 border-b border-gray-300 px-3" key={index}>
                             <div className="flex flex-col lg:flex-row w-full justify-around items-center">
                                 <span
-                                    className="flex-1 w-full  text-sm text-gray-500 hover:text-[#d8330a] transition duration-300 ease-in  ">
+                                    className="flex-1 w-full  text-xs text-gray-500 hover:text-[#d8330a] transition duration-300 ease-in  ">
                                     {item.title}
                                 </span>
-                                <Link href="#" title="product01">
-                                    <img src={route('file.show', item.image)} alt="محصول انتخابی"
+                                <Link href={route('home.getProduct',item.sku)} title="product01">
+                                    <img       src={`http://127.0.0.1:8000/storage/prothumb/${item.image}`} alt="محصول انتخابی"
                                          className="w-24 "/>
                                 </Link>
                             </div>
@@ -68,7 +82,7 @@ const GetCart = ({isMobile = false}) => {
 
                                 <span className="text-gray-500 ">{item.quantity + ' عدد'} </span>
                                 <span className="text-gray-500    ">
-                                    {parseInt(item.price).toLocaleString('en')} تومان
+                                    {parseInt(item.price - item.discount).toLocaleString('en')} تومان
                                 </span>
                                 <div className="">
                                     <ul className="action flex items-center list-unstyled justify-center gap-3 ">
@@ -100,7 +114,7 @@ const GetCart = ({isMobile = false}) => {
                     {items.length >0 ?(
                         <div className="flex justify-between px-3 py-2">
                             <span className="text-[#d8330a] font-bold py-2">
-                                مبلغ کل: {cartTotal} تومان
+                                مبلغ کل: {(cartTotal - discountTotal).toLocaleString('en')} تومان
                             </span>
                             <Link href={route('home.cart')} className="btn btn-success text-base-100 hover:text-[#d8330a]" title="checkout">
                                 تکمیل خرید

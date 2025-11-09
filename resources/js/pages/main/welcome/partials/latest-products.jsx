@@ -11,6 +11,7 @@ export default function LatestProducts({latestProducts}) {
         console.log(item)
         addItem({
             id: item.id,
+            sku: item.sku,
             title: item.title,
             excerpt: item.excerpt,
             discount: item.discount,

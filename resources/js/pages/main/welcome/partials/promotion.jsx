@@ -1,18 +1,33 @@
+import '../../../../../css/dembla.css'
 import {Star, Heart} from "lucide-react";
 import {Link} from "@inertiajs/react";
 import {useCart} from "react-use-cart";
 import {Button} from "@/components/index/index.js";
 import Countdown from "@/components/product/count-down.jsx";
 import {isEmpty} from "@/utils.js";
+import {DotButton, useDotButton} from "@/components/common/carousalDotButtons.jsx";
+import useEmblaCarousel from "embla-carousel-react";
 
 export default function Promotion({promoProducts}) {
     const mainPromo = promoProducts[0]
     const otherPromo = promoProducts.slice(1)
 
+    const chunked = [];
+    for (let i = 0; i < otherPromo.length; i += 3) {
+        chunked.push(otherPromo.slice(i, i + 3));
+    }
+
+    const [emblaRef, emblaApi] = useEmblaCarousel({ axis: 'y' })
+
+    const { selectedIndex, scrollSnaps, onDotButtonClick } =
+        useDotButton(emblaApi)
+
+    console.log(selectedIndex)
     const {addItem} = useCart();
     const handleAdd = (item) => {
         addItem({
             id: item.id,
+            sku: item.sku,
             title: item.title,
             excerpt: item.excerpt,
             discount: item.discount,
@@ -35,7 +50,8 @@ export default function Promotion({promoProducts}) {
                                           className="relative block w-full h-full group overflow-hidden">
                                         {/*LATER MUST CHANGE TO THUMBS!*/}
                                         <img
-                                            src={route('file.show', mainPromo.image)}
+                                            // src={route('file.show', mainPromo.image)}
+                                            src={`http://127.0.0.1:8000/storage/prothumb/${mainPromo.image}`}
                                             alt="deal"
                                             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-75 my-auto "
                                         />
@@ -97,54 +113,74 @@ export default function Promotion({promoProducts}) {
                         </div>
                         <div id="indicators-carousel" className="relative w-full bg-white" data-carousel="static">
                             <div className="relative md:h-[1200px] lg:h-[500px] overflow-hidden rounded-lg">
-                                <div className=" duration-700 ease-in-out" data-carousel-item="active">
-                                    {otherPromo.map((product, i) =>
-                                        <div key={i} className="flex flex-col md:flex-row justify-between items-center relative after:absolute after:content-[''] after:bg-gray-200 after:w-[90%] after:h-[1px] after:top-full after:left-1/2 after:-translate-x-1/2 pt-3 pb-6">
-                                            <div
-                                                className="w-[250px] h-[250px] md:w-[300px] md:h-[300px] lg:w-[75px] lg:h-[75  px] xl:w-[90px] xl:h-[90px] lg:flex-shrink-0 mx-auto my-2">
-                                                <Link href={route('home.getProduct',product.sku)} title="dealofday"
-                                                   className="relative block w-full h-full group overflow-hidden md:mr-5 lg:mr-0">
-                                                    <img src={route('file.show', product.image)} alt="deal"
-                                                         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-75"
-                                                    />
-                                                    {/*<img src={bestseller01Hover} alt="deal"*/}
-                                                    {/*     className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"*/}
-                                                    {/*/>*/}
-                                                </Link>
-                                            </div>
-                                            {" "}
-                                            <div
-                                                className="lg:py-2 lg:px-0 lg:pl-2 w-full text-center lg:text-start my-auto">
-                                                <Link href={route('home.getProduct',product.sku)} title="producttitle">
-                                                    <h4 className="text-[#333333] hover:text-[#d8330a] text-lg font-bold lg:font-medium lg:text-sm transition duration-300 ease-in py-2">
-                                                        {product.title}
-                                                    </h4>
-                                                </Link>
-                                                {/* rating product- deal of the day---------- */}
-                                                <div className="flex justify-center lg:justify-start">
-                                                    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                                    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                                    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                                    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                                    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>
-                                                </div>
-                                                {/* prices product- deal of the day---------- */}
+                                    <section className="dembla h-full">
+                                        <div className="dembla__viewport" ref={emblaRef}>
+                                            <div className="dembla__container h-full">
+                                                {chunked.map((items, i) =>
+                                                    <div className="dembla__slide h-full flex flex-col" key={i}>
+                                                        {items.map((product, i) =>
+                                                        <div key={i} className="flex flex-col md:flex-row justify-between items-center relative after:absolute after:content-[''] after:bg-gray-200 after:w-[90%] after:h-[1px] after:top-full after:left-1/2 after:-translate-x-1/2 pt-3 ">
+                                                            <div
+                                                                className="w-[250px] h-[250px] md:w-[300px] md:h-[300px] lg:w-[75px] lg:h-[75  px] xl:w-[90px] xl:h-[90px] lg:flex-shrink-0 mx-auto my-2">
+                                                                <Link href={route('home.getProduct',product.sku)} title="dealofday"
+                                                                      className="relative block w-full h-full group overflow-hidden md:mr-5 lg:mr-0">
+                                                                    <img
+                                                                        // src={route('file.show', product.image)}
+                                                                        src={`http://127.0.0.1:8000/storage/prothumb/${product.image}`}
+                                                                        alt="deal"
+                                                                        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-75"
+                                                                    />
+                                                                    {/*<img src={bestseller01Hover} alt="deal"*/}
+                                                                    {/*     className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"*/}
+                                                                    {/*/>*/}
+                                                                </Link>
+                                                            </div>
+                                                            {" "}
+                                                            <div
+                                                                className="lg:py-2 lg:px-0 lg:pl-2 w-full text-center lg:text-start my-auto">
+                                                                <Link href={route('home.getProduct',product.sku)} title="producttitle">
+                                                                    <h4 className="text-[#333333] hover:text-[#d8330a] text-lg font-bold lg:font-medium lg:text-sm transition duration-300 ease-in py-2">
+                                                                        {product.title.substring(0,40) + ' ...'}
+                                                                    </h4>
+                                                                </Link>
 
-                                                <div className="text-gray-400 py-1">
-                                                    <div className="line-through text-sm sm:text-base">
-                                                        {parseInt(product.price).toLocaleString('en')} میلیون
+                                                                {/* prices product- deal of the day---------- */}
+
+                                                                <div className="text-gray-400 py-1">
+                                                                    <div className="line-through text-sm sm:text-base">
+                                                                        {parseInt(product.price).toLocaleString('en')} میلیون
+                                                                    </div>
+                                                                    <div className="text-[#d8330a] text-sm sm:text-base pl-2">
+                                                                        {parseInt((product.price - product.discount)).toLocaleString('en')} میلیون
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        )}
                                                     </div>
-                                                    <div className="text-[#d8330a] text-sm sm:text-base pl-2">
-                                                        {parseInt((product.price - product.discount)).toLocaleString('en')} میلیون
-                                                    </div>
-                                                </div>
+                                                )}
                                             </div>
                                         </div>
-                                    )}
+
+                                        <div className="dembla__controls flex justify-center">
+
+                                            <div className="dembla__dots">
+                                                {scrollSnaps.map((_, index) => (
+                                                    <DotButton
+                                                        key={index}
+                                                        onClick={() => onDotButtonClick(index)}
+                                                        className={'dembla__dot'.concat(
+                                                            index === selectedIndex ? ' dembla__dot--selected' : ''
+                                                        )}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </section>
+
 
                                     {/* second seller------ */}
 
-                                </div>
                             </div>
 
 

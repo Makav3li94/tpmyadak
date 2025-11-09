@@ -1,5 +1,5 @@
-import { router } from "@inertiajs/react";
-import { useState } from "react";
+import {router} from "@inertiajs/react";
+import {useState} from "react";
 import MultiRangeSlider from "@/pages/main/product/partials/MultiRangeSlider.jsx";
 import SearchFilter from "@/pages/main/product/partials/searchFilter.jsx";
 
@@ -12,6 +12,8 @@ export default function ListSidebar({
                                         routeParam = null,
                                         children
                                     }) {
+    const [inStock, setInStock] = useState(false);
+    const [hasPromotion, setHasPromotion] = useState(false);
     const [priceMin, setPriceMin] = useState(0);
     const [priceMax, setPriceMax] = useState(99000000);
 
@@ -32,19 +34,19 @@ export default function ListSidebar({
         setPriceMax(max);
         router.get(
             route(route().current(), routeParam),
-            { priceMin: min, priceMax: max, staticFilters, dynamicFilters },
-            { replace: true, preserveState: true, preserveScroll: true }
+            {priceMin: min, priceMax: max, staticFilters, dynamicFilters},
+            {replace: true, preserveState: true, preserveScroll: true}
         );
     };
 
     // --- فیلترهای ثابت ---
     const handleStaticFilters = (group, values) => {
         setStaticFilters(prev => {
-            const updated = { ...prev, [group]: values };
+            const updated = {...prev, [group]: values};
             router.get(
                 route(route().current(), routeParam),
-                { priceMin, priceMax, staticFilters: updated, dynamicFilters },
-                { replace: true, preserveState: true, preserveScroll: true }
+                {priceMin, priceMax, staticFilters: updated, dynamicFilters},
+                {replace: true, preserveState: true, preserveScroll: true}
             );
             return updated;
         });
@@ -53,24 +55,40 @@ export default function ListSidebar({
     // --- فیلترهای داینامیک ---
     const handleDynamicFilters = (filterId, values) => {
         setDynamicFilters(prev => {
-            const updated = { ...prev, [filterId]: values };
+            const updated = {...prev, [filterId]: values};
             router.get(
                 route(route().current(), routeParam),
-                { priceMin, priceMax, staticFilters, dynamicFilters: updated },
-                { replace: true, preserveState: true, preserveScroll: true }
+                {priceMin, priceMax, staticFilters, dynamicFilters: updated},
+                {replace: true, preserveState: true, preserveScroll: true}
             );
             return updated;
         });
     };
-
+    const handleInStock = () => {
+        setInStock(!inStock)
+        router.get(
+            route(route().current(), routeParam),
+            {in_stock: !inStock},
+            {replace: true, preserveState: true, preserveScroll: true}
+        );
+    }
+    const handleHasPromotion = () => {
+        setHasPromotion(!hasPromotion)
+        router.get(
+            route(route().current(), routeParam),
+            {has_promotion: !hasPromotion},
+            {replace: true, preserveState: true, preserveScroll: true}
+        );
+    }
     return (
 
         <div className="md:col-span-4 lg:col-span-3 lg:px-0  px-3">
             <div className="drawer lg:drawer-open flex">
-                <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+                <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
                 <div className="drawer-content flex flex-col items-center justify-center">
                     {/* Page content here */}
-                    <label htmlFor="my-drawer-3" className="btn btn-xs btn-error text-base-100 drawer-button lg:hidden fixed right-0 top-2/4 z-1">
+                    <label htmlFor="my-drawer-3"
+                           className="btn btn-xs btn-error text-base-100 drawer-button lg:hidden fixed right-0 top-2/4 z-1">
                         فیلترها
                     </label>
                 </div>
@@ -84,17 +102,21 @@ export default function ListSidebar({
                         <ul className="bg-base-100 py-4">
                             {/* موجودی و تخفیف */}
                             <li>
-                                <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
+                                <fieldset
+                                    className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
                                     <label className="label flex justify-between items-center">
-                                        <input type="checkbox" defaultChecked className="toggle" />
+                                        <input type="checkbox" defaultChecked className="toggle" checked={inStock}
+                                               onChange={() => handleInStock()}/>
                                         <div>فقط موجود ها</div>
                                     </label>
                                 </fieldset>
                             </li>
                             <li>
-                                <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
+                                <fieldset
+                                    className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
                                     <label className="label flex justify-between items-center">
-                                        <input type="checkbox" defaultChecked className="toggle" />
+                                        <input type="checkbox" defaultChecked className="toggle" checked={hasPromotion}
+                                               onChange={() => handleHasPromotion()}/>
                                         <div>تخفیف دار ها</div>
                                     </label>
                                 </fieldset>
@@ -102,9 +124,11 @@ export default function ListSidebar({
 
                             {/* محدوده قیمت */}
                             <li>
-                                <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
+                                <fieldset
+                                    className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
                                     <div className="">محدوده قیمت</div>
-                                    <MultiRangeSlider min={0} max={99000000} onChange={({ min, max }) => filterPrice(min, max)} />
+                                    <MultiRangeSlider min={0} max={99000000}
+                                                      onChange={({min, max}) => filterPrice(min, max)}/>
                                 </fieldset>
                             </li>
 
@@ -112,8 +136,9 @@ export default function ListSidebar({
                             {brands && (
                                 <li>
                                     <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="filter-brands" defaultChecked />
-                                        <div className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
+                                        <input type="radio" name="filter-brands" defaultChecked/>
+                                        <div
+                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
                                             برند ها
                                         </div>
                                         <div className="collapse-content mt-4 p-0">
@@ -131,8 +156,9 @@ export default function ListSidebar({
                             {carBrands && (
                                 <li>
                                     <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="filter-carBrands" />
-                                        <div className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
+                                        <input type="radio" name="filter-carBrands"/>
+                                        <div
+                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
                                             برند خودرو
                                         </div>
                                         <div className="collapse-content mt-4 p-0">
@@ -150,8 +176,9 @@ export default function ListSidebar({
                             {carModels && (
                                 <li>
                                     <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="filter-carModels" />
-                                        <div className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
+                                        <input type="radio" name="filter-carModels"/>
+                                        <div
+                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
                                             نوع خودرو
                                         </div>
                                         <div className="collapse-content mt-4 p-0">
@@ -169,8 +196,9 @@ export default function ListSidebar({
                             {categories && (
                                 <li>
                                     <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="filter-categories" />
-                                        <div className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
+                                        <input type="radio" name="filter-categories"/>
+                                        <div
+                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
                                             دسته بندی
                                         </div>
                                         <div className="collapse-content mt-4">
@@ -189,14 +217,15 @@ export default function ListSidebar({
                             {filters && filters.map(filter => (
                                 <li key={filter.id}>
                                     <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="accordion-dynamic-filters" />
-                                        <div className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
+                                        <input type="radio" name="accordion-dynamic-filters"/>
+                                        <div
+                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
                                             {filter.title}
                                         </div>
                                         <div className="collapse-content mt-4">
                                             <SearchFilter
                                                 groupName={filter.title}
-                                                data={filter.values.map(v => ({ label: v, value: v }))}
+                                                data={filter.values.map(v => ({label: v, value: v}))}
                                                 selected={dynamicFilters[filter.id] || []}
                                                 setSelected={(values) => handleDynamicFilters(filter.id, values)}
                                             />

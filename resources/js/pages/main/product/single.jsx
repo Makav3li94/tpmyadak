@@ -10,6 +10,7 @@ import Review from "@/components/review.jsx";
 import ReviewForm from "@/components/review-form.jsx";
 import useEmblaCarousel from "embla-carousel-react";
 import {useCallback, useEffect, useState} from "react";
+import Badge from "@/components/daisy-ui/badge.jsx";
 
 const Share = ({slug}) => {
 
@@ -95,6 +96,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
     const handleAdd = (item) => {
         addItem({
             id: item.id,
+            sku: item.sku,
             title: item.title,
             excerpt: item.excerpt,
             discount: item.discount,
@@ -146,7 +148,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
 
                             <div className="pembla-thumbs">
                                 <div className="pembla-thumbs__viewport" ref={emblaThumbsRef}>
-                                    <div className="pembla-thumbs__container justify-between">
+                                    <div className="pembla-thumbs__container justify-center gap-3">
                                         {images.map((img, index) => (
                                             <Thumb
                                                 key={index}
@@ -180,7 +182,12 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                 </h2>
                                 <div className="flex flex-col sm:flex-row sm:items-center mb-6">
                                     <h6 className="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 ml-5">
-                                        {parseInt(product.price).toLocaleString('en')} میلیون
+                                        {parseInt(product.price) !== 0 ? (
+                                            <>{parseInt(product.price).toLocaleString('en')} میلیون</>
+
+                                        ):(
+                                            <Badge type="primary" outline={true}>ناموجود</Badge>
+                                        )}
                                     </h6>
                                     <div className="flex items-center gap-2">
                                         <div className="flex items-center gap-1">
@@ -251,22 +258,29 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                 <div className="Availability inline-block font-bold mb-5 mr-auto">
                                     <span className="text-gray-400 text-xs">موجودی: </span>
                                     <span className="text-gray-400 text-xs px-1">
-                                        موجود در انبار
+                                        {product.stock === 0 ? (
+                                            <>ناموجود</>
+                                        ):(
+                                            <>موجود در انبار</>
+                                        )}
+
                                     </span>
                                     <SquareCheckBig className="w-4 h-4 text-primary inline-block"/>
                                     ({product.stock} عدد)
                                 </div>
                                 <div className="flex justify-start items-center  w-full">
                                     <div className="w-32"><strong>مناسب برای:</strong></div>
-                                    <div className="grid grid-cols-3 min-[400px]:grid-cols-5 gap-3 max-w-md">
+                                    <div className="flex flex-wrap gap-2 max-w-md">
                                         {product.car_models.map((carModel, i) =>
-                                            <div key={i}
-                                                 className="badge badge-neutral badge-dash ruby ">{carModel.title}</div>
+                                            <div key={i} className="badge badge-neutral badge-dash ruby">
+                                                {carModel.title}
+                                            </div>
                                         )}
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-8">
+
                                     <button onClick={() => handleWish(product)}
                                             className="group transition-all duration-500 p-4 w-auto  flex items-center
                                          justify-center gap-2  rounded-full bg-indigo-50

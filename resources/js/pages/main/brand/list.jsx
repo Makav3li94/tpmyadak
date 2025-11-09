@@ -29,6 +29,7 @@ export default function ProductList(props) {
     const handleAdd = (item) => {
         addItem({
             id: item.id,
+            sku: item.sku,
             title: item.title,
             excerpt: item.excerpt,
             discount: item.discount,

@@ -35,7 +35,8 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
         payment_method_id: paymentMethods[0].id,
         shipping_method_id: shippingMethods[0].id,
         subtotal:'',
-        discount: null,
+        discount: discountTotal,
+        discount_id: null,
         total_cost:cartTotal
     });
     const toggleFormModal = (address = null) => {
@@ -45,7 +46,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
 
     function handleSubs() {
         let sub = items.reduce((a, v) => a = a + (v.discount === null ? v.itemTotal : (parseInt(v.price) * v.quantity)), 0)
-        let dis = items.reduce((a, v) => a = a + (v.discount === null ? 0 : (v.itemTotal - parseInt(v.price) * v.quantity)), 0)
+        let dis = items.reduce((a, v) => a = a + (v.discount === null ? 0 : (parseInt(v.discount) * v.quantity)), 0)
         setData({
             ...data,
             subtotal: sub,
@@ -81,17 +82,17 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
         axios.get(route('home.discount', code)).then(response => {
             if (response.data.status === 'success') {
                 setDiscount(response.data.discount)
-                setData('discount', response.data.discount.id)
+                setData('discount_id', response.data.discount.id)
                 showToast('کد تخفیف اعمال شد.','success')
             }
             if (response.data.status === 'error') {
                 setDiscount(null)
-                setData('discount', null)
+                setData('discount_id', null)
                 showToast('کد تخفیف منقضی شده یا معتبر نیست.','error')
             }
         }).catch(error => {
             setDiscount(null)
-            setData('discount', null)
+            setData('discount_id', null)
             showToast('کد تخفیف منقضی شده یا معتبر نیست.','error')
             console.error(error);
         });
@@ -121,7 +122,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                                 <li key={index} className="flex items-start space-x-4 py-6">
                                     <img
                                         alt={item.title}
-                                        src={route('file.show', item.image)}
+                                        src={`http://127.0.0.1:8000/storage/prothumb/${item.image}`}
                                         // src={`https://cdn.kadooyab.com/product75/${item.image}`}
                                         className="h-20 w-20 flex-none rounded-md object-cover object-center"
                                     />
@@ -182,7 +183,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                         <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                             <dt className="text-base">قابل پرداخت</dt>
                             <dd className="text-base">
-                                {parseInt(cartTotal).toLocaleString('en')}
+                                {parseInt(cartTotal-discountTotal).toLocaleString('en')}
                             </dd>
                         </div>
                     </dl>
@@ -193,7 +194,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                             <div className="mx-auto max-w-lg">
                                 <PopoverButton className="flex w-full items-center py-6 font-medium">
                                     <span className="mr-auto text-base">قابل پرداخت</span>
-                                    <span className="mr-2 text-base"> {parseInt(cartTotal).toLocaleString('en')}</span>
+                                    <span className="mr-2 text-base"> {parseInt(cartTotal-discountTotal).toLocaleString('en')}</span>
                                     <ChevronUp aria-hidden="true" className="h-5 w-5 text-gray-500"/>
                                 </PopoverButton>
                             </div>

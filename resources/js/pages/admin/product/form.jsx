@@ -82,7 +82,7 @@ export default function Form(props) {
                     title: product.title,
                     slug: product.slug,
                     alias: product.alias,
-                    sku: product.alias,
+                    sku: product.sku,
                     product_category_id: product.product_category_id,
                     car_model_id: product.def_models,
                     brand_id: product.brand_id,
@@ -290,7 +290,7 @@ export default function Form(props) {
                                        error={errors.alias} required/>
                         </div>
                         <div className="basis-1/2">
-                            <TextInput type='number' min={111111} max={999999} name="sku" value={data.sku} onChange={handleOnChange} label="کد اسکو"
+                            <TextInput type='text' maxLenght={10} name="sku" value={data.sku} onChange={handleOnChange} label="کد اسکو"
                                        error={errors.sku}/>
                         </div>
                     </div>

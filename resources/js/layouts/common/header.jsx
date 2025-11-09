@@ -29,7 +29,7 @@ export default function Header(props) {
                         {/* ------------- logo ----------------- */}
                         <Link href={route('home')}
                               className="w-full flex col-span-12 md:col-span-3 h-auto   text-left " dir="ltr">
-                            <img src={logo} alt="logo" className="h-8 sm:h-12"/>
+                            <img src={logo} alt="logo" className="h-8 sm:h-11"/>
                         </Link>
                     </div>
                 </div>

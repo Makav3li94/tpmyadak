@@ -36,7 +36,7 @@ export default function SearchFilter({ data = [], groupName = "", selected = [],
                 />
             </label>
 
-            <ul className="my-4 space-y-2 max-h-40 overflow-y-scroll">
+            <ul className="my-4 space-y-2 max-h-44 overflow-y-scroll overflow-x-hidden">
                 {filteredData.length > 0 ? (
                     filteredData.map((item) => (
                         <li key={item.value}>

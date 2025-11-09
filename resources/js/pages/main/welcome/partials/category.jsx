@@ -42,7 +42,7 @@ export default function Category({sliders}) {
 
                 {/* --------sub menu right categories---------- */}
                 <div className=" w-full flex">
-                    <div className="grid grid-cols-12 justify-between relative gap-x-10">
+                    <div className="grid grid-cols-12 justify-between relative gap-x-10 w-full">
                         <div className="hidden lg:flex lg:col-span-3 bg-base-100 c-shadow">
                             <MeguMenu/>
                         </div>

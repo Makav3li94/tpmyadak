@@ -1,12 +1,12 @@
-import {hasPermission} from '@/utils'
 import {Link, usePage} from '@inertiajs/react'
 import {Button} from "@/components/index/index.js";
 import {Heart, Star} from "lucide-react";
-
+import Badge from "@/components/daisy-ui/badge.jsx";
 export default function ProductCard({product,i,handleWish,handleAdd}) {
     return (
         <div key={i} className="group relative border-b border-r border-gray-200 p-4 sm:p-6">
-            <Button title="favourite" type='ghost' className="btn-xs absolute top-2 left-2 z-1"
+            {/*<span className="label-product label-new">New </span>*/}
+            <Button title="favourite" type='ghost' className="btn-xs absolute top-8 right-6 z-1"
                     onClick={() => {
                         handleWish(product.id)
                     }}>
@@ -22,13 +22,13 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
                 />
             </div>
             <div className="pb-4 pt-10 text-center">
-                <h3 className="text-sm font-medium h-12">
+                <h3 className="text-sm font-medium h-18">
                     <Link href={route('home.getProduct',[product.sku,product.slug])}>
                         <span aria-hidden="true" className="absolute inset-0"/>
                         {product.title}
                     </Link>
                 </h3>
-                <div className="mt-3 flex flex-col items-center">
+                <div className="mt-4 flex flex-col items-center">
                     <p className="sr-only">{product.rating} out of 5 stars</p>
                     <div className="flex items-center">
                         <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
@@ -38,8 +38,28 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
                         <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>
                     </div>
                 </div>
-                <p className="mt-4 text-base font-medium ">
-                    {parseInt(product.price).toLocaleString('en')} میلیون
+                <p className="mt-4 text-base font-medium h-16">
+                    {parseInt(product.price) !== 0 ? (
+                        <>
+                            {product.status_promotion !==1 ? (
+                                <>{parseInt(product.price).toLocaleString('en')} میلیون</>
+                            ) : (
+                                <div className="text-gray-400 py-1">
+                                    <div className="line-through text-sm sm:text-base">
+                                        {parseInt(product.price).toLocaleString('en')} میلیون
+                                    </div>
+                                    <div className="text-[#d8330a] text-sm sm:text-base pl-2">
+                                        {parseInt((product.price - product.discount)).toLocaleString('en')} میلیون
+                                    </div>
+                                </div>
+                            )}
+
+
+                        </>
+
+                    ):(
+                        <Badge type="primary" outline={true}>ناموجود</Badge>
+                    )}
                 </p>
             </div>
             <div className="mt-6">

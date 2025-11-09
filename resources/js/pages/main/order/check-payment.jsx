@@ -1,29 +1,9 @@
-import {Popover, PopoverBackdrop, PopoverButton, PopoverPanel, Radio, RadioGroup} from '@headlessui/react'
 import React, {useEffect, useState} from "react";
 import {useCart} from "react-use-cart";
 
-import {ChevronUp, CheckCircleIcon} from "lucide-react";
-import OrderLayout from "@/layouts/front/order-layout.jsx";
 import {Link, router, useForm, usePage} from "@inertiajs/react";
-import Button from "@/components/daisy-ui/button.jsx";
-import {useModal} from "@/hooks.js";
-import FormModal from "@/pages/admin/user/form-modal.jsx";
-import {showToast} from "@/utils.js";
 import FrontLayout from "@/layouts/front/front-layout.jsx";
 
-const products = [
-    {
-        id: 1,
-        name: 'Cold Brew Bottle',
-        description:
-            'This glass bottle comes with a mesh insert for steeping tea or cold-brewing coffee. Pour from any angle and remove the top for easy cleaning.',
-        href: '#',
-        quantity: 1,
-        price: '$32.00',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/confirmation-page-05-product-01.jpg',
-        imageAlt: 'Glass bottle with black plastic pour top and mesh insert.',
-    },
-]
 
 export default function CheckPayment({verify_code, order, message}) {
 

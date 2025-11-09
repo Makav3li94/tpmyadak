@@ -354,3 +354,19 @@
 .ruby{
     display: ruby;
 }
+.label-product-new, .label-new {
+    background-color: #3599ff;
+    position: absolute;
+    left: -11px;
+}
+.label-product-new::before, .label-new::before {
+    content: "";
+    position: absolute;
+    top: auto;
+    bottom: -7px;
+    left: 0;
+    right: auto;
+    border-bottom: 7px solid transparent;
+    border-top: 0 solid transparent;
+    border-right: 11px solid #0055ac;
+}

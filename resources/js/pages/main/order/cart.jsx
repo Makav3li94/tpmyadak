@@ -20,7 +20,7 @@ export default function Cart(props) {
 
     function handleSubs() {
         let sub = items.reduce((a, v) => a = a + (v.discount === null ? v.itemTotal : (parseInt(v.price) * v.quantity)), 0)
-        let dis = items.reduce((a, v) => a = a + (v.discount === null ? 0 : (v.itemTotal - parseInt(v.price) * v.quantity)), 0)
+        let dis = items.reduce((a, v) => a = a + (v.discount === null ? 0 : ( parseInt(v.discount) * v.quantity)), 0)
         setSubTotal(sub)
         setDiscountTotal(dis)
     }
@@ -38,7 +38,7 @@ export default function Cart(props) {
 
     }, [hasMounted]);
 
-    console.log(items)
+    console.log(discountTotal)
     return (
            <>
                <h1 className="sr-only">سبد خرید</h1>
@@ -55,7 +55,7 @@ export default function Cart(props) {
                                    <div className="flex-shrink-0">
                                        <img
                                            alt={item.title}
-                                           src={route('file.show',item.image)}
+                                           src={`http://127.0.0.1:8000/storage/prothumb/${item.image}`}
                                            // src={`https://cdn.kadooyab.com/product75/${item.image}`}
                                            className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
                                        />
@@ -180,7 +180,7 @@ export default function Cart(props) {
                            <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                                <dt className="text-base font-medium text-gray-900">قابل پرداخت</dt>
                                <dd className="text-base font-medium text-gray-900">
-                                   {numLatinToAr(parseInt(cartTotal).toLocaleString('en'))}
+                                   {numLatinToAr((parseInt(cartTotal) - discountTotal).toLocaleString('en'))}
                                </dd>
                            </div>
                        </dl>
