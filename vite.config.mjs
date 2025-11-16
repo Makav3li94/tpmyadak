@@ -9,7 +9,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.jsx'],
+            input: ['resources/css/app.css', 'resources/js/app.jsx',  'resources/js/admin.jsx'],
             ssr: 'resources/js/ssr.jsx',
             refresh: true,
         }),

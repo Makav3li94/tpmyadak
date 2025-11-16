@@ -16,16 +16,16 @@ class HandleInertiaRequests extends Middleware
      *
      * @var string
      */
-//    protected $rootView = 'admin';
+    //    protected $rootView = 'admin';
     public function rootView(Request $request): string
     {
         $prefix = explode('/', $request->route()->uri);
         if ($prefix[0] === 'tpmauto') {
             return 'admin';
         }
-//        if ($prefix[0] === 'user') {
-//            return 'user';
-//        }
+        //        if ($prefix[0] === 'user') {
+        //            return 'user';
+        //        }
 
         return 'app';
     }
@@ -54,30 +54,30 @@ class HandleInertiaRequests extends Middleware
                     'jwt_prefix' => UserJwtService::KEYPREFIX,
                 ],
                 'flash' => [
-                    'message' => fn() => Session::get('message'),
-                    'data' => fn() => Session::get('data'),
+                    'message' => fn () => Session::get('message'),
+                    'data' => fn () => Session::get('data'),
                 ],
                 'app' => Setting::getByKeys(['app_name', 'app_logo']),
-                'notification_count'=>$request->user() ? $request->user()->unreadNotifications()->count() : 0,
-                'notifications'=>$request->user() ? $request->user()->unreadNotifications()->get() : [],
-                'navigation' => MenuConstant::handle($request->user())
+                'notification_count' => $request->user() ? $request->user()->unreadNotifications()->count() : 0,
+                'notifications' => $request->user() ? $request->user()->unreadNotifications()->get() : [],
+                'navigation' => MenuConstant::handle($request->user()),
             ]);
         }
-//        elseif ($user = auth()->user()) {}
+        //        elseif ($user = auth()->user()) {}
         else {
             return array_merge(parent::share($request), [
                 'auth' => [
-                    'user' =>  $request->user(),
+                    'user' => $request->user(),
                     'login_at' => Session::get('user_login_at', ''),
                     'jwt_token' => UserJwtService::getActiveToken(),
                     'jwt_prefix' => UserJwtService::KEYPREFIX,
                 ],
                 'flash' => [
-                    'message' => fn() => Session::get('message'),
-                    'data' => fn() => Session::get('data'),
+                    'message' => fn () => Session::get('message'),
+                    'data' => fn () => Session::get('data'),
                 ],
                 'app' => Setting::getByKeys(['app_name', 'app_logo']),
-                'notification_count'=>$request->user() ? $request->user()->unreadNotifications()->count() : 0,
+                'notification_count' => $request->user() ? $request->user()->unreadNotifications()->count() : 0,
             ]);
         }
 
