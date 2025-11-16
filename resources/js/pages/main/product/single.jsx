@@ -1,6 +1,6 @@
 import '../../../../css/pembla.css'
 import FrontLayout from "@/layouts/front/front-layout.jsx";
-import {Deferred, router} from "@inertiajs/react";
+import {Deferred, Head, router} from "@inertiajs/react";
 import {useCart} from "react-use-cart";
 import {showToast} from "@/utils.js";
 import Breadcrumb from "@/layouts/common/breadcrumb.jsx";
@@ -9,7 +9,7 @@ import RelatedProducts from "@/pages/main/product/partials/related-products.jsx"
 import Review from "@/components/review.jsx";
 import ReviewForm from "@/components/review-form.jsx";
 import useEmblaCarousel from "embla-carousel-react";
-import {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Badge from "@/components/daisy-ui/badge.jsx";
 
 const Share = ({slug}) => {
@@ -115,6 +115,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
 
     return (
         <>
+            <Head title={product.title}/>
             <Breadcrumb l1={['محصولات', 'home.getProducts']} l2={[product.title, 'home.getProduct', product.sku]}/>
             <section className="relative container">
                 <div className="w-full mx-auto px-4 sm:px-6 lg:px-0">

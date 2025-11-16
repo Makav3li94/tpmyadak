@@ -1,0 +1,1 @@
+import{jsx as r}from"react/jsx-runtime";const s=({children:a})=>r("div",{className:"card bg-base-100 shadow border border-base-300",children:r("div",{className:"card-body",children:a})});export{s as C};

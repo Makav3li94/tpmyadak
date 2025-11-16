@@ -196,13 +196,13 @@ class FrontProductController extends Controller
             //                "thumbnail" => 'https://cdn.tpmyadak.com/prothumb/' . $webpic,
             //                "thumbnailxs" => 'https://cdn.tpmyadak.com/product75/' . $webpic,
             //            ];
-            $jsnimages[] = 'http://127.0.0.1:8000/storage/productjpg/'.$jpgpic;
+            $jsnimages[] = 'https://cdn.tpmyadak.com/productjpg/'.$jpgpic;
             $images[] = [
-                'fullscreen' => 'http://127.0.0.1:8000/storage/productjpg/'.$jpgpic,
-                'main' => 'http://127.0.0.1:8000/storage/product/'.$webpic,
-                'original' => 'http://127.0.0.1:8000/storage/product510/'.$webpic,
-                'thumbnail' => 'http://127.0.0.1:8000/storage/prothumb/'.$webpic,
-                'thumbnailxs' => 'http://127.0.0.1:8000/storage/product75/'.$webpic,
+                'fullscreen' => 'https://cdn.tpmyadak.com/productjpg/'.$jpgpic,
+                'main' => 'https://cdn.tpmyadak.com/product/'.$webpic,
+                'original' => 'https://cdn.tpmyadak.com/product510/'.$webpic,
+                'thumbnail' => 'https://cdn.tpmyadak.com/prothumb/'.$webpic,
+                'thumbnailxs' => 'https://cdn.tpmyadak.com/product75/'.$webpic,
             ];
         }
         $images['jsnimages'] = $jsnimages;

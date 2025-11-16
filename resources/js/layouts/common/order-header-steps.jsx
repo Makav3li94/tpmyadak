@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {Redo2} from "lucide-react";
-import logo from "../../../images/logo.png"
-import {Button} from "@/components/index/index.js";
-const steps = [
-    {name: 'سبدخرید', href: route('home.cart'), status: route().current() === 'home.cart' ? 'current' :'complete'},
-    {name: 'صورت حساب', href: route('home.checkout'), status: route().current() === 'home.checkout' ? 'current' :'complete'},
-    {name: 'ثبت سفارش', href: '#', status: 'upcoming'},
-]
+
 import {ChevronLeft} from "lucide-react";
 import {Link} from "@inertiajs/react";
 export default function OrderHeaderSteps(props) {
+    const steps = [
+        {name: 'سبدخرید', href: route('home.cart'), status: route().current() === 'home.cart' ? 'current' :'complete'},
+        {name: 'صورت حساب', href: route('home.checkout'), status: route().current() === 'home.checkout' ? 'current' :'complete'},
+        {name: 'ثبت سفارش', href: '#', status: 'upcoming'},
+    ]
     return (
         <nav aria-label="Progress" className="hidden sm:block">
             <ol role="list" className="flex space-x-4">

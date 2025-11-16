@@ -72,7 +72,7 @@ class RegisteredUserController extends Controller
         $code = session($request->mobile);
         $rqode = ((int) $code - (((int) $request->mobile * 100) / 2)) / 1363;
         if ($request->code != (int) $rqode) {
-            return back()->withErrors(["code" => 'کد درست وارد کنید.'])->withInput();
+            return back()->withErrors(['code' => 'کد درست وارد کنید.'])->withInput();
         }
 
         $valid = [
@@ -85,10 +85,10 @@ class RegisteredUserController extends Controller
             $valid['mobile'] = 'required|regex:/(09)[0-9]{9}/|digits:11|numeric|unique:users';
         }
         $request->validate($valid);
-//        $validator = Validator::make($request->all(), $valid);
-//        if ($validator->fails()) {
-//            return response()->json(['errs' => $validator->errors()->toArray()]);
-//        }
+        //        $validator = Validator::make($request->all(), $valid);
+        //        if ($validator->fails()) {
+        //            return response()->json(['errs' => $validator->errors()->toArray()]);
+        //        }
         $user = User::create([
             'name' => $request->name,
             'mobile' => $request->mobile ?? null,
@@ -107,13 +107,13 @@ class RegisteredUserController extends Controller
         Auth::login($user, true);
         if ($request->is_page) {
             return redirect()->intended(route('user.dashboard', absolute: false));
-//            return redirect()->route('user.dashboard')->with('message', 'ثبت نام موفق');
+            //            return redirect()->route('user.dashboard')->with('message', 'ثبت نام موفق');
 
         } else {
             return redirect()->intended(route('user.dashboard', absolute: false));
-//            return response()->json(['status' => 'success']);
+            //            return response()->json(['status' => 'success']);
 
-//            return back()->with('message', 'ثبت نام موفق');
+            //            return back()->with('message', 'ثبت نام موفق');
 
         }
 

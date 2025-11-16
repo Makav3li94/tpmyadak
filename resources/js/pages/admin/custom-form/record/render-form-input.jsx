@@ -3,7 +3,6 @@ import {
     TextInput,
     Checkbox,
     TextareaInput,
-    FormInputDate,
 } from '@/components/index'
 
 import { InputTypes } from '../constants'
@@ -55,15 +54,7 @@ export const RenderFormInput = ({ input, onChange }) => {
         )
     }
 
-    if (input.type === 'date') {
-        return (
-            <FormInputDate
-                value={input.value}
-                label={input.name}
-                onChange={(date) => onChange(input, date)}
-            />
-        )
-    }
+
 
     if (input.type === 'textarea') {
         return (

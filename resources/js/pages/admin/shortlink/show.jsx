@@ -12,7 +12,6 @@ import {
     Pagination,
     Card,
     Button,
-    FormInputDateRange,
 } from '@/components/index/index.js'
 import JsonModal from './json-modal.jsx'
 
@@ -139,12 +138,7 @@ export default function Index(props) {
                 </div>
                 <Card>
                     <div className="w-full h-[270px]">
-                        <div className="p-1">
-                            <FormInputDateRange
-                                value={dates}
-                                onChange={setDates}
-                            />
-                        </div>
+
                         <Chart
                             options={options}
                             series={series}

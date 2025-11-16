@@ -2,6 +2,8 @@ import FrontLayout from "@/layouts/front/front-layout.jsx";
 import Breadcrumb from "@/layouts/common/breadcrumb.jsx";
 import Review from "@/components/review.jsx";
 import ReviewForm from "@/components/review-form.jsx";
+import {Head} from "@inertiajs/react";
+import React from "react";
 
 
 export default function BlogSingle({blog, reviews, canReview}) {
@@ -9,7 +11,9 @@ export default function BlogSingle({blog, reviews, canReview}) {
 
     return (
         <>
+            <Head title={blog.title}/>
             <Breadcrumb l1={['وبلاگ', 'home.getBlogs']} l2={[blog.title, 'home.getBlog', blog.slug]}/>
+
             <section className="relative container">
                 <div className="w-full h-full bg-white dark:bg-gray-800">
                     <div className="w-full mx-auto py-10 bg-white dark:bg-gray-800">

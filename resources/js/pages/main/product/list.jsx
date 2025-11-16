@@ -1,6 +1,6 @@
 import FrontLayout from "@/layouts/front/front-layout.jsx";
 import imageCate from '../../../../images/img-cate.jpg'
-import {Deferred, router} from "@inertiajs/react";
+import {Deferred, Head, router} from "@inertiajs/react";
 import React, {useState} from "react";
 import ProductCard from "@/components/common/product-card.jsx";
 import {useCart} from "react-use-cart";
@@ -48,6 +48,7 @@ export default function ProductList(props) {
 
     return (
         <>
+            <Head title='محصولات'/>
             <Breadcrumb l1={['محصولات', '']}/>
             <section className="w-full container justify-center">
                 <div className="grid grid-cols-1 md:grid-cols-12 md:gap-x-2 lg:gap-x-8 xl:gap-x-10">
@@ -56,13 +57,13 @@ export default function ProductList(props) {
                     {/* ------ left side----- */}
                     <div className="md:col-span-8 lg:col-span-9 mt-6 md:mt-0">
                         <h2 className="font-bold text-2xl pb-6">محصولات</h2>
-                        <a href="#" title="img-cate" className="group">
-                            <img
-                                src={imageCate}
-                                alt="imagecat"
-                                className="group-hover:opacity-110 w-full"
-                            />
-                        </a>
+                        {/*<a href="#" title="img-cate" className="group">*/}
+                        {/*    <img*/}
+                        {/*        src={imageCate}*/}
+                        {/*        alt="imagecat"*/}
+                        {/*        className="group-hover:opacity-110 w-full"*/}
+                        {/*    />*/}
+                        {/*</a>*/}
                         <div className="my-8 text-left">
                             <label htmlFor="cars">مرتب سازی</label>
                             <select name="cars" id="cars" className="border-[1px] border-gray-300 px-1 mx-2"

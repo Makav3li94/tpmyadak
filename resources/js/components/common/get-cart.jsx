@@ -30,14 +30,14 @@ const GetCart = ({isMobile = false}) => {
 
     }, [hasMounted]);
     return (
-        <motion.div className={`flex border-[1.5px] relative border-gray-300 rounded-md  items-center w-[240px]`} onHoverStart={event => {
+        <motion.div className={`flex border-[1.5px] relative border-gray-300 rounded-md  items-center sm:w-[240px]`} onHoverStart={event => {
             setHoverCart(true)
         }} onTap={event => {
             setHoverCart(!hoverCart)
         }} onHoverEnd={event => {
             setHoverCart(false)
         }}>
-            <div className="btn md:btn-ghost ">
+            <div className="btn md:btn-ghost px-2">
                 <div className="indicator ">
                     <span className="indicator-item badge badge-secondary  -top-2 -right-3">{totalUniqueItems}</span>
                     <ShoppingCart className="w-5 h-5 "/>
@@ -74,7 +74,7 @@ const GetCart = ({isMobile = false}) => {
                                     {item.title}
                                 </span>
                                 <Link href={route('home.getProduct',item.sku)} title="product01">
-                                    <img       src={`http://127.0.0.1:8000/storage/prothumb/${item.image}`} alt="محصول انتخابی"
+                                    <img       src={`https://cdn.tpmyadak.com/prothumb/${item.image}`} alt="محصول انتخابی"
                                          className="w-24 "/>
                                 </Link>
                             </div>

@@ -6,14 +6,15 @@ import Promotion from "@/pages/main/welcome/partials/promotion.jsx";
 import LatestProducts from "@/pages/main/welcome/partials/latest-products.jsx";
 import ProductCategories from "@/pages/main/welcome/partials/product-categories.jsx";
 import ProductBrands from "@/pages/main/welcome/partials/product-brands.jsx";
-import {Deferred, WhenVisible} from "@inertiajs/react";
+import {Deferred, Head, WhenVisible} from "@inertiajs/react";
 import BallSpinner from "@/components/common/ball-spinner.jsx";
 import LatestBlogs from "@/pages/main/welcome/partials/latest-blogs.jsx";
+import React from "react";
 
 export default function Index({sliders,promoProducts,latestProducts,productCategories,brands,latestBlogs}) {
     return (
         <FrontLayout>
-
+            <Head title="تی‌پی‌ام یدک مرجع خرید لوازم یدکی خودرو"/>
 
            {/*<div className="min-h-screen">*/}
                <Category sliders={sliders}/>

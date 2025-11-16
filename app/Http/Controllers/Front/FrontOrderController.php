@@ -10,6 +10,7 @@ use App\Models\Shop\OrderDetail;
 use App\Models\Shop\PaymentMethod;
 use App\Models\Shop\ShippingMethod;
 use App\Models\Shop\Transaction;
+use App\Models\Traits\SmsableMokhaberat;
 use App\Rules\IranMobileValidator;
 use App\Rules\IranPhoneValidator;
 use App\Rules\IranPostalCodeValidator;
@@ -25,6 +26,8 @@ use Shetabit\Payment\Facade\Payment;
 
 class FrontOrderController extends Controller
 {
+    use SmsableMokhaberat;
+
     public function cart()
     {
         return inertia('main/order/cart');
@@ -104,7 +107,8 @@ class FrontOrderController extends Controller
                 'attribute' => '-',
             ]);
         }
-        //        defer(fn () => notifyAdmin($user->id, $user->name, $user->mobile, 'order', $parent_id, 0, 'سفارش خرید ثبت شد.'));
+        defer(fn () => notifyAdmin($user->id, $user->name, $user->mobile, 'order', $order->id, 1, 'سفارش خرید ثبت شد.'));
+        //        notifyAdmin($user->id, $user->name, $user->mobile, 'order', $order->id, 0, 'سفارش خرید ثبت شد.');
         $invoice = new Invoice;
         $invoice->detail('mobile', $user->mobile);
         $invoice->detail('email', $user->email);
@@ -152,7 +156,7 @@ class FrontOrderController extends Controller
         if (! $order) {
             abort(419);
         }
-
+        $user = auth()->user();
         try {
             $receipt = Payment::amount((int) $transaction->price)->transactionId($transaction->transaction_id)->verify();
 
@@ -161,8 +165,8 @@ class FrontOrderController extends Controller
             $transaction->update(['status' => '1', 'verify_code' => $verify_code]);
             $order->update(['payment_status' => 'paid']);
             $message = 'پرداخت موفت';
-            //             defer(fn() => $this->sendFastSmsMokhaberat($user->mobile, '6z7rmgwyzp1ir8p', ["name" => $user->name, 'order' => "{$transaction->id}"]));
-            //             defer(fn() => $this->notifyAdmin($user->id, $user->name, $user->mobile, 'order', $order->id, 1, 'سفارش خرید پرداخت شد.'));
+            defer(fn () => $this->sendFastSmsMokhaberat($user->mobile, '9a4xncmdrci65g1', ['name' => $user->name, 'order' => "{$transaction->id}"]));
+            defer(fn () => notifyAdmin($user->id, $user->name, $user->mobile, 'tx', $order->id, 1, 'سفارش خرید پرداخت شد.'));
 
         } catch (InvalidPaymentException $exception) {
             /**

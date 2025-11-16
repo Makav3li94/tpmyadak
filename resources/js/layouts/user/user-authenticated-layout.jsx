@@ -32,7 +32,7 @@ export default function UserAuthenticatedLayout({
 
     useEffect(() => {
         themeChange(false)
-        setMounted(true)
+        // toggleSidebar()
         // 👆 false parameter is required for react project
     }, [])
     return (
@@ -82,10 +82,7 @@ export default function UserAuthenticatedLayout({
                         <div className="mb-4"></div>
                     </main>
                     <SidebarNavUser user={auth.user} show={isShowSidebar} setShow={toggleSidebar}/>
-                <Toaster theme="system" richColors="true" toastOptions={{
-                    duration: 3000,
-                    dismissible: true,
-                }}
+                <Toaster theme="system" richColors="true" toastOptions={{duration: 3000, dismissible: true,}}
                 />
             </div>
         </div>

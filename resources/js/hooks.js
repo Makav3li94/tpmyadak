@@ -150,29 +150,34 @@ export function useFetcher(url = null) {
 }
 
 export function useSidebar(defaultOpen = true) {
-    function isMobile() {
-        return window.innerWidth <= 768
-    }
 
-    const STORAGE_KEY = 'sidebar'
+    const STORAGE_KEY = "sidebar";
 
-    const [isOpen, setIsOpen] = useState(() => {
-        const saved = localStorage.getItem(STORAGE_KEY)
-        return isMobile()
-            ? false
-            : saved !== null
-            ? JSON.parse(saved)
-            : defaultOpen
-    })
+    const [isOpen, setIsOpen] = useState(defaultOpen);  // مقدار اولیه SSR-safe
 
     useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(isOpen))
-    }, [isOpen])
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
 
-    const toggleSidebar = () => setIsOpen((prev) => !prev)
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        // مقدار واقعی را *بعد از mount* ست کن
+        setIsOpen(isMobile() ? false : saved !== null ? JSON.parse(saved) : defaultOpen);
+    }, []);
+
+    useEffect(() => {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(isOpen));
+        } catch (e) {
+            // برای امنیت
+        }
+    }, [isOpen]);
+
+    const toggleSidebar = () => setIsOpen(prev => !prev);
 
     return {
         isShowSidebar: isOpen,
         toggleSidebar,
-    }
+    };
 }

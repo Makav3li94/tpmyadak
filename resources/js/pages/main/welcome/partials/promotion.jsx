@@ -22,7 +22,6 @@ export default function Promotion({promoProducts}) {
     const { selectedIndex, scrollSnaps, onDotButtonClick } =
         useDotButton(emblaApi)
 
-    console.log(selectedIndex)
     const {addItem} = useCart();
     const handleAdd = (item) => {
         addItem({
@@ -51,7 +50,7 @@ export default function Promotion({promoProducts}) {
                                         {/*LATER MUST CHANGE TO THUMBS!*/}
                                         <img
                                             // src={route('file.show', mainPromo.image)}
-                                            src={`http://127.0.0.1:8000/storage/prothumb/${mainPromo.image}`}
+                                            src={`https://cdn.tpmyadak.com/prothumb/${mainPromo.image}`}
                                             alt="deal"
                                             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-75 my-auto "
                                         />
@@ -126,7 +125,7 @@ export default function Promotion({promoProducts}) {
                                                                       className="relative block w-full h-full group overflow-hidden md:mr-5 lg:mr-0">
                                                                     <img
                                                                         // src={route('file.show', product.image)}
-                                                                        src={`http://127.0.0.1:8000/storage/prothumb/${product.image}`}
+                                                                        src={`https://cdn.tpmyadak.com/prothumb/${product.image}`}
                                                                         alt="deal"
                                                                         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-75"
                                                                     />

@@ -1,5 +1,5 @@
 import FrontLayout from "@/layouts/front/front-layout.jsx";
-import {Deferred, router} from "@inertiajs/react";
+import {Deferred, Head, router} from "@inertiajs/react";
 import React, {useState} from "react";
 import Breadcrumb from "@/layouts/common/breadcrumb.jsx";
 import ListSidebar from "@/pages/main/blog/list-sidebar.jsx";
@@ -27,6 +27,7 @@ export default function BlogList(props) {
     return (
         <>
             <Breadcrumb l1={['بلاگ', '']}/>
+            <Head title='اخرین مقاله های'/>
             <section className="w-full container justify-center">
                 <div className="grid grid-cols-1 md:grid-cols-12 md:gap-x-2 lg:gap-x-8 xl:gap-x-10">
 
