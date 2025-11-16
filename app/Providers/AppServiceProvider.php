@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Models\User;
 use App\Observers\GlobalActivityLogger;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
@@ -31,7 +32,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(125);
         Vite::prefetch(concurrency: 3);
-
+        if (request()->is('tpmauto/*')) {
+            Config::set('inertia.ssr.enabled', false);
+        }
         User::observe(GlobalActivityLogger::class);
         Role::observe(GlobalActivityLogger::class);
         Permission::observe(GlobalActivityLogger::class);
