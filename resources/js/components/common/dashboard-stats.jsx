@@ -1,0 +1,23 @@
+function DashboardStats({title, icon, value,  colorIndex}){
+
+    const COLORS = ["info", "success","error"]
+
+    const getDescStyle = () => {
+        if(description.includes("↗︎"))return "font-bold text-green-700 dark:text-green-300"
+        else if(description.includes("↙"))return "font-bold text-rose-500 dark:text-red-400"
+        else return ""
+    }
+
+    return(
+        <div className="stats shadow">
+            <div className="stat">
+                <div className={`stat-figure dark:text-slate-300 text-${COLORS[colorIndex]}`}>{icon}</div>
+                <div className={`stat-title dark:text-slate-300 text-${COLORS[colorIndex]}`}>{title}</div>
+                <div className={`stat-value dark:text-slate-300 text-${COLORS[colorIndex]}`}>{value}</div>
+                {/*<div className={"stat-desc  " + getDescStyle()}>{description}</div>*/}
+            </div>
+        </div>
+    )
+}
+
+export default DashboardStats

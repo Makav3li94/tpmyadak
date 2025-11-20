@@ -7,7 +7,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { createInertiaApp } from '@inertiajs/react'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
-import ErrorBoundary from './components/error-baundry'
+// import ErrorBoundary from './components/error-baundry'
 
 const appName =
     window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel'
@@ -21,9 +21,9 @@ createInertiaApp({
     },
     setup({ el, App, props }) {
         createRoot(el).render(
-            <ErrorBoundary>
+            // <ErrorBoundary>
                 <App {...props} />
-            </ErrorBoundary>
+            // </ErrorBoundary>
         )
     },
     progress: { color: '#003bf1', showSpinner: true, includeCSS: true },

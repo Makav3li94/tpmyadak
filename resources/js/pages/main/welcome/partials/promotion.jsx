@@ -7,19 +7,20 @@ import Countdown from "@/components/product/count-down.jsx";
 import {isEmpty} from "@/utils.js";
 import {DotButton, useDotButton} from "@/components/common/carousalDotButtons.jsx";
 import useEmblaCarousel from "embla-carousel-react";
+import {useIsMobile} from "@/hooks.js";
 
 export default function Promotion({promoProducts}) {
     const mainPromo = promoProducts[0]
     const otherPromo = promoProducts.slice(1)
-
+    const isMobile = useIsMobile()
     const chunked = [];
     for (let i = 0; i < otherPromo.length; i += 3) {
         chunked.push(otherPromo.slice(i, i + 3));
     }
 
-    const [emblaRef, emblaApi] = useEmblaCarousel({ axis: 'y' })
+    const [emblaRef, emblaApi] = useEmblaCarousel({axis: 'y'})
 
-    const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    const {selectedIndex, scrollSnaps, onDotButtonClick} =
         useDotButton(emblaApi)
 
     const {addItem} = useCart();
@@ -39,13 +40,15 @@ export default function Promotion({promoProducts}) {
         <section className="w-full flex justify-center  bg-base-200 py-12">
             <div className="container">
                 <div className="grid grid-cols-12  lg:gap-x-10">
-                    <div className="col-span-12 flex lg:col-span-9 justify-between bg-white drop-shadow-lg shadow-gray-400 px-2 py-4 mt-16 items-center">
+                    <div
+                        className="col-span-12 flex lg:col-span-9 justify-between bg-white drop-shadow-lg shadow-gray-400 px-2 py-4 mt-16 items-center">
                         <h3 className="modtitle2"><span>حراج روز</span></h3>
                         {/* image product- deal of the day---------- */}
                         {mainPromo && !isEmpty(mainPromo) &&
                             <>
-                                <div className="w-[150px] h-[150px] sm:w-[300px] sm:h-[300px] md:w-[250px] md:h-[250px] lg:w-[350px] lg:h-[350px] xl:w-[400px] xl:h-[400px] flex-shrink-0 mx-auto ">
-                                    <Link href={route('home.getProduct',mainPromo.sku)} title="dealofday"
+                                <div
+                                    className="w-[150px] h-[150px] sm:w-[300px] sm:h-[300px] md:w-[250px] md:h-[250px] lg:w-[350px] lg:h-[350px] xl:w-[400px] xl:h-[400px] flex-shrink-0 mx-auto ">
+                                    <Link href={route('home.getProduct', mainPromo.sku)} title="dealofday"
                                           className="relative block w-full h-full group overflow-hidden">
                                         {/*LATER MUST CHANGE TO THUMBS!*/}
                                         <img
@@ -63,7 +66,7 @@ export default function Promotion({promoProducts}) {
                                     </Link>
                                 </div>
                                 <div className="py-6 lg:py-12 md:px-8 lg:px-0 lg:pl-2">
-                                    <Link href={route('home.getProduct',mainPromo.sku)}  title="producttitle">
+                                    <Link href={route('home.getProduct', mainPromo.sku)} title="producttitle">
                                         <h4 className="text-[#333333] hover:text-[#d8330a] text-xs lg:text-base font-bold transition duration-300 ease-in">
                                             {mainPromo.title}
                                         </h4>
@@ -104,24 +107,27 @@ export default function Promotion({promoProducts}) {
                         }
                     </div>
                     {/*-------------- best seller section------------------- */}
+                    {!isMobile &&
                     <div className="col-span-12 lg:col-span-3 lg:col-start-10 drop-shadow-lg shadow-gray-400 mt-16">
                         <div className="bg-[#d8330a] rounded-t-md py-3">
-                <span className="text-white font-blod text-center px-3">
-                  حراج روز
-                </span>
+                            <span className="text-white font-blod text-center px-3">
+                                حراج روز
+                            </span>
                         </div>
                         <div id="indicators-carousel" className="relative w-full bg-white" data-carousel="static">
                             <div className="relative md:h-[1200px] lg:h-[500px] overflow-hidden rounded-lg">
-                                    <section className="dembla h-full">
-                                        <div className="dembla__viewport" ref={emblaRef}>
-                                            <div className="dembla__container h-full">
-                                                {chunked.map((items, i) =>
-                                                    <div className="dembla__slide h-full flex flex-col" key={i}>
-                                                        {items.map((product, i) =>
-                                                        <div key={i} className="flex flex-col md:flex-row justify-between items-center relative after:absolute after:content-[''] after:bg-gray-200 after:w-[90%] after:h-[1px] after:top-full after:left-1/2 after:-translate-x-1/2 pt-3 ">
+                                <section className="dembla h-full">
+                                    <div className="dembla__viewport" ref={emblaRef}>
+                                        <div className="dembla__container h-full">
+                                            {chunked.map((items, i) =>
+                                                <div className="dembla__slide h-full flex flex-col" key={i}>
+                                                    {items.map((product, i) =>
+                                                        <div key={i}
+                                                             className="flex flex-col md:flex-row justify-between items-center relative after:absolute after:content-[''] after:bg-gray-200 after:w-[90%] after:h-[1px] after:top-full after:left-1/2 after:-translate-x-1/2 pt-3 ">
                                                             <div
                                                                 className="w-[250px] h-[250px] md:w-[300px] md:h-[300px] lg:w-[75px] lg:h-[75  px] xl:w-[90px] xl:h-[90px] lg:flex-shrink-0 mx-auto my-2">
-                                                                <Link href={route('home.getProduct',product.sku)} title="dealofday"
+                                                                <Link href={route('home.getProduct', product.sku)}
+                                                                      title="dealofday"
                                                                       className="relative block w-full h-full group overflow-hidden md:mr-5 lg:mr-0">
                                                                     <img
                                                                         // src={route('file.show', product.image)}
@@ -137,9 +143,10 @@ export default function Promotion({promoProducts}) {
                                                             {" "}
                                                             <div
                                                                 className="lg:py-2 lg:px-0 lg:pl-2 w-full text-center lg:text-start my-auto">
-                                                                <Link href={route('home.getProduct',product.sku)} title="producttitle">
+                                                                <Link href={route('home.getProduct', product.sku)}
+                                                                      title="producttitle">
                                                                     <h4 className="text-[#333333] hover:text-[#d8330a] text-lg font-bold lg:font-medium lg:text-sm transition duration-300 ease-in py-2">
-                                                                        {product.title.substring(0,40) + ' ...'}
+                                                                        {product.title.substring(0, 40) + ' ...'}
                                                                     </h4>
                                                                 </Link>
 
@@ -149,42 +156,44 @@ export default function Promotion({promoProducts}) {
                                                                     <div className="line-through text-sm sm:text-base">
                                                                         {parseInt(product.price).toLocaleString('en')} میلیون
                                                                     </div>
-                                                                    <div className="text-[#d8330a] text-sm sm:text-base pl-2">
+                                                                    <div
+                                                                        className="text-[#d8330a] text-sm sm:text-base pl-2">
                                                                         {parseInt((product.price - product.discount)).toLocaleString('en')} میلیون
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        )}
-                                                    </div>
-                                                )}
-                                            </div>
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
+                                    </div>
 
-                                        <div className="dembla__controls flex justify-center">
+                                    <div className="dembla__controls flex justify-center">
 
-                                            <div className="dembla__dots">
-                                                {scrollSnaps.map((_, index) => (
-                                                    <DotButton
-                                                        key={index}
-                                                        onClick={() => onDotButtonClick(index)}
-                                                        className={'dembla__dot'.concat(
-                                                            index === selectedIndex ? ' dembla__dot--selected' : ''
-                                                        )}
-                                                    />
-                                                ))}
-                                            </div>
+                                        <div className="dembla__dots">
+                                            {scrollSnaps.map((_, index) => (
+                                                <DotButton
+                                                    key={index}
+                                                    onClick={() => onDotButtonClick(index)}
+                                                    className={'dembla__dot'.concat(
+                                                        index === selectedIndex ? ' dembla__dot--selected' : ''
+                                                    )}
+                                                />
+                                            ))}
                                         </div>
-                                    </section>
+                                    </div>
+                                </section>
 
 
-                                    {/* second seller------ */}
+                                {/* second seller------ */}
 
                             </div>
 
 
                         </div>
                     </div>
+                    }
                 </div>
             </div>
             {/* replacement parts---------------------------- */}

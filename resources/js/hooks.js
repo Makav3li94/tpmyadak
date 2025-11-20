@@ -150,34 +150,30 @@ export function useFetcher(url = null) {
 }
 
 export function useSidebar(defaultOpen = true) {
-
     const STORAGE_KEY = "sidebar";
 
-    const [isOpen, setIsOpen] = useState(defaultOpen);  // مقدار اولیه SSR-safe
+    const [isOpen, setIsOpen] = useState(defaultOpen);
 
     useEffect(() => {
-        function isMobile() {
-            return window.innerWidth <= 768;
-        }
+        if (typeof window === "undefined") return;
 
         const saved = localStorage.getItem(STORAGE_KEY);
 
-        // مقدار واقعی را *بعد از mount* ست کن
-        setIsOpen(isMobile() ? false : saved !== null ? JSON.parse(saved) : defaultOpen);
+        const mobile = window.matchMedia("(max-width: 768px)").matches;
+
+        if (saved !== null) {
+            setIsOpen(JSON.parse(saved));
+        } else {
+            setIsOpen(mobile ? false : defaultOpen);
+        }
     }, []);
 
     useEffect(() => {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(isOpen));
-        } catch (e) {
-            // برای امنیت
-        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(isOpen));
     }, [isOpen]);
 
     const toggleSidebar = () => setIsOpen(prev => !prev);
 
-    return {
-        isShowSidebar: isOpen,
-        toggleSidebar,
-    };
+    return { isShowSidebar: isOpen, toggleSidebar };
 }
+

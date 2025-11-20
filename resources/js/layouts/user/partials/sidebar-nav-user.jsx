@@ -7,16 +7,17 @@ import {
     SaudiRiyal,
     TicketCheck,
     Megaphone,
+    UserPen,
     LogOut, X
 } from "lucide-react";
 import {Link, router} from '@inertiajs/react'
 
 
-
 export default function SidebarNavUser({ user, show, setShow }) {
     const navigation = [
-        {name: 'داشبورد', href: route('user.dashboard'), icon: LayoutDashboard, current: true},
+        {name: 'خلاصه فعالیت ‌ها', href: route('user.dashboard'), icon: LayoutDashboard, current: true},
         {name: 'سفارش ها', href: route('user.orders.index'), icon: BringToFront, current: true},
+        {name: 'آدرس ها', href: route('user.addresses.index'), icon: BringToFront, current: true},
         {name: 'تراکنش ها', href: route('user.transactions.index'), icon: SaudiRiyal, current: true},
         {name: 'لیست خرید', href: route('user.wishlists.index'), icon: ListOrdered, current: true},
         {name: 'تیکت ها', href: route('user.tickets.index'), icon: TicketCheck, current: true},
@@ -25,17 +26,22 @@ export default function SidebarNavUser({ user, show, setShow }) {
     return (
       <>
           <div className={`${!show && 'hidden'} flex flex-col h-screen overflow-y-auto transition-all
-           duration-300 transform sticky top-0 start-0 bottom-0  w-full md:w-64
+           duration-300 transform sticky top-0 start-0 bottom-0  w-full md:w-64 z-1
             bg-base-100 c-shadow
-            lg:translate-x-0 lg:end-auto lg:bottom-0 `}>
+             lg:end-auto lg:bottom-0 `}>
               <div className="flex flex-col justify-between flex-1">
                   <div className="">
-                      <div className="flex flex-row justify-between items-center lg:justify-center p-6">
-                          <div className="">
-                              {user.name}
+                      <div className="flex flex-row justify-between items-center lg:justify-center  p-5 border-b">
+                          <div className="sm:flex  sm:justify-between w-full hidden">
+                              <div>{user.name}</div>
+                              <div>
+                                  <Link href={route('user.profile.edit',user.id)}>
+                                      <UserPen/>
+                                  </Link>
+                              </div>
                           </div>
                           <div
-                              className="block lg:hidden"
+                              className="block lg:hidden text-left"
                               onClick={() => setShow()}
                           >
                               <X className="w-5 h-5" />

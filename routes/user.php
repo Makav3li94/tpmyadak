@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\FaqController;
 use App\Http\Controllers\User\GeneralController;
 use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\TicketController;
 use App\Http\Controllers\User\TransactionController;
 use App\Http\Controllers\User\WishlistController;
@@ -18,7 +20,8 @@ Route::prefix('customer')->group(static function () {
         Route::resource('faq', FaqController::class, ['names' => 'user.faqs'])->only(['update']);
         Route::resource('/wishlist', WishlistController::class, ['names' => 'user.wishlists']);
         Route::resource('/notification', NotificationController::class, ['names' => 'user.notifications']);
-
+        Route::resource('/profile', ProfileController::class, ['names' => 'user.profile'])->only(['edit', 'update']);
+        Route::resource('/address', AddressController::class, ['names' => 'user.addresses'])->except(['create','show']);
     });
 
 });

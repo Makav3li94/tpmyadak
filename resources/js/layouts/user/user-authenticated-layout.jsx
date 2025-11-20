@@ -22,7 +22,6 @@ export default function UserAuthenticatedLayout({
 ) {
     const {props: {auth, flash},} = usePage()
     const {isShowSidebar, toggleSidebar} = useSidebar(true)
-    const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
         if (flash.message !== null) {
@@ -35,6 +34,7 @@ export default function UserAuthenticatedLayout({
         // toggleSidebar()
         // 👆 false parameter is required for react project
     }, [])
+    console.log(isShowSidebar)
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center w-full">
             <TopHeader user={auth.user}/>
@@ -42,7 +42,7 @@ export default function UserAuthenticatedLayout({
             <HeaderSingle/>
             <div class="container mx-auto relative my-5">
                     <main className={`transition ${isShowSidebar ? 'lg:mr-64' : 'ml-0 '}`}>
-                        <nav className="bg-base-100 c-shadow">
+                        <nav className="bg-base-100 c-shadow sm:hidden">
                             <div className="mx-auto px-4 py-2">
                                 <div className="flex justify-between">
                                     <div className="-mr-2 flex items-center space-x-2">

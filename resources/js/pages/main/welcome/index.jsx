@@ -11,7 +11,9 @@ import BallSpinner from "@/components/common/ball-spinner.jsx";
 import LatestBlogs from "@/pages/main/welcome/partials/latest-blogs.jsx";
 import React from "react";
 
+
 export default function Index({sliders,promoProducts,latestProducts,productCategories,brands,latestBlogs}) {
+
     return (
         <FrontLayout>
             <Head title="تی‌پی‌ام یدک مرجع خرید لوازم یدکی خودرو"/>
