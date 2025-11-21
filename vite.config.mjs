@@ -65,7 +65,7 @@ export default defineConfig({
         minify: 'esbuild',
     },
     ssr: {
-        noExternal: ['react-dropzone','lodash','cally'],
+        noExternal: ['react-dropzone','react-datepicker','lodash','cally'],
     },
 
     server: {

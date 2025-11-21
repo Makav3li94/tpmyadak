@@ -460,7 +460,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-JaRUK5WD.css",
+    "file": "assets/app-CtfD5v89.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -489,7 +489,7 @@
     "src": "resources/images/replacement.jpg"
   },
   "resources/js/admin.jsx": {
-    "file": "assets/admin-CWmaymqU.js",
+    "file": "assets/admin-Z5CvuE9f.js",
     "name": "admin",
     "src": "resources/js/admin.jsx",
     "isEntry": true,
@@ -576,14 +576,14 @@
       "resources/js/pages/admin/user/index.jsx"
     ],
     "css": [
-      "assets/app-JaRUK5WD.css"
+      "assets/app-CtfD5v89.css"
     ],
     "assets": [
       "assets/Vazir-Medium-FD-WOL-CfaUoGyi.woff2"
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-B9HxqlAC.js",
+    "file": "assets/app-DSVO7vAI.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
@@ -639,7 +639,7 @@
     ],
     "css": [
       "assets/app-7WpdOpTi.css",
-      "assets/app-JaRUK5WD.css"
+      "assets/app-CtfD5v89.css"
     ],
     "assets": [
       "assets/Vazir-Medium-FD-WOL-CfaUoGyi.woff2"
