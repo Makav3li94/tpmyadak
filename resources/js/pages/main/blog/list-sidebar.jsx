@@ -26,19 +26,19 @@ export default function ListSidebar({categories = null}) {
                             دسته ها
                         </div>
 
-                        <ul className="bg-base-100 py-4 flex flex-col gap-5 ">
+                        <ul className="bg-base-100 py-4 flex flex-col  ">
                             {categories && categories.map((category, i) =>
                                 <>
-                                    <li key={i} className="w-full lg:w-64 text-gray-700 hover:text-[#d8330a] transition duration-300 ease-in p-2">
+                                    <li key={i} className="w-full lg:w-64  hover:text-[#d8330a] transition duration-300 ease-in p-2">
                                         <Link href={route('home.getBlogs', {category: category.id})}>
                                             {category.title}
                                         </Link>
 
                                     </li>
                                     {category.children.length > 0 && category.children.map((sub, i) =>
-                                        <li key={i*20} className="w-full lg:w-64 text-gray-700 hover:text-[#d8330a] transition duration-300 ease-in py-1 px-4">
+                                        <li key={i*20} className="w-full lg:w-64  hover:text-[#d8330a] transition duration-300 ease-in  px-4">
                                             <Link href={route('home.getBlogs', {subcategory: sub.id})}>
-                                                -- {category.title}
+                                                - {category.title}
                                             </Link>
 
                                         </li>

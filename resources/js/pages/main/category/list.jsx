@@ -1,7 +1,7 @@
 import '../../../../css/bembla.css'
 import FrontLayout from "@/layouts/front/front-layout.jsx";
 import {Deferred, Link, router} from "@inertiajs/react";
-import {useState} from "react";
+import React, {useState} from "react";
 import ProductCard from "@/components/common/product-card.jsx";
 import {useCart} from "react-use-cart";
 import {showToast} from "@/utils.js";
@@ -11,7 +11,7 @@ import {NextButton, PrevButton, usePrevNextButtons} from "@/components/common/ca
 import {SelectedSnapDisplay, useSelectedSnapDisplay} from "@/components/common/carousalSelectedSnapDisplay.jsx";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from 'embla-carousel-autoplay'
-import {Card} from "@/components/index/index.js";
+import {Card, Pagination} from "@/components/index/index.js";
 
 export default function ProductList(props) {
     const {data: {links, data}, brands=null, carBrands=null, carModels=null,categories=null,filters=null, productCategory} = props
@@ -134,6 +134,9 @@ export default function ProductList(props) {
 
                         </div>
                         <div className="border-[1px] border-gray-200 mt-8"></div>
+                        <div className="w-full overflow-x-auto flex lg:justify-center">
+                            <Pagination links={links}  />
+                        </div>
                     </div>
                 </div>
             </section>

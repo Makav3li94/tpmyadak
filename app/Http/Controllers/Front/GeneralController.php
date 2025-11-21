@@ -25,7 +25,7 @@ class GeneralController extends Controller
                 ->whereDate('date_end', '>=', Carbon::now())->limit(7)->get()),
             'latestProducts' => inertia()->defer(fn () => Product::where('status_promotion', 0)->latest()
                 ->limit(4)->get()),
-            'productCategories' => inertia()->defer(fn () => ProductCategory::with('children')->where([['parent_id', 0], ['status', 1]])
+            'productCategories' => inertia()->defer(fn () => ProductCategory::where([['parent_id', 0], ['status', 1]])
                 ->get()),
             'brands' => inertia()->defer(fn () => Brand::where('status', 1)
                 ->limit(6)->get()),
@@ -37,7 +37,7 @@ class GeneralController extends Controller
     public function search($search_term_string): \Illuminate\Http\JsonResponse
     {
         $data = DB::table('products')
-            ->select('id', 'title', 'slug')
+            ->select('id', 'title', 'slug','sku')
             ->where([['status', 1], ['approve', 1], ['title', 'like', '%'.$search_term_string.'%']])
 //            ->orWhere([['is_active', '1'],['is_fetched','0'], ['excerpt', 'like', '%' . $val . '%']])
             ->orderBy('id', 'desc')->limit(5)->get()->toArray();

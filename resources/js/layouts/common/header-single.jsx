@@ -9,7 +9,7 @@ export default function HeaderSingle() {
 
     return (
         <section className="w-full container justify-center">
-            <div className=" hidden lg:grid grid-cols-12 justify-between pt-10 z-0 gap-x-10">
+            <div className=" hidden lg:grid grid-cols-12 justify-between  z-0 gap-x-10">
                 {/* --------- all categories right side------- */}
                 <div className="lg:col-span-3">
                     <div

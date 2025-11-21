@@ -1,12 +1,13 @@
 import FrontLayout from "@/layouts/front/front-layout.jsx";
 import imageCate from '../../../../images/img-cate.jpg'
 import {Deferred, router} from "@inertiajs/react";
-import {useState} from "react";
+import React, {useState} from "react";
 import ProductCard from "@/components/common/product-card.jsx";
 import {useCart} from "react-use-cart";
 import {showToast} from "@/utils.js";
 import Breadcrumb from "@/layouts/common/breadcrumb.jsx";
 import ListSidebar from "@/pages/main/product/list-sidebar.jsx";
+import {Pagination} from "@/components/index/index.js";
 
 export default function ProductList(props) {
     const {data: {links, data}, brands=null, carBrands=null, carModels=null, categories=null,brand} = props
@@ -90,6 +91,9 @@ export default function ProductList(props) {
 
                         </div>
                         <div className="border-[1px] border-gray-200 mt-8"></div>
+                        <div className="w-full overflow-x-auto flex lg:justify-center">
+                            <Pagination links={links}  />
+                        </div>
                     </div>
                 </div>
             </section>

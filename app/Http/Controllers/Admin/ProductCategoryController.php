@@ -33,15 +33,17 @@ class ProductCategoryController extends Controller
     }
 
     #[Permission('create-product-category')]
-    public function create(){
+    public function create()
+    {
         $filters = Filter::select('id', 'title')->get()->map(function ($item) {
             return [
-                "value" => strval($item["id"]),
-                "label" => $item["title"],
+                'value' => strval($item['id']),
+                'label' => $item['title'],
             ];
         })->values()->toArray();
+
         return inertia('admin/product-category/form', [
-            'filters'=>$filters
+            'filters' => $filters,
         ]);
     }
 
@@ -49,27 +51,32 @@ class ProductCategoryController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
-        $validatedData ['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
+        $validatedData['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
         $filterArray = $request['filter_array'];
         unset($validatedData['filter_array']);
-        $productCategory=ProductCategory::create($validatedData);
-        if (count($filterArray))$productCategory->filters()->attach(array_mapper($filterArray));
+        $productCategory = ProductCategory::create($validatedData);
+        if (count($filterArray)) {
+            $productCategory->filters()->attach(array_mapper($filterArray));
+        }
+
         return redirect()->route('admin.product.categories.index')
             ->with('message', ['type' => 'success', 'message' => 'دسته ساخته شد.']);
     }
 
     #[Permission('update-product-category')]
-    public function edit(ProductCategory $productCategory){
+    public function edit(ProductCategory $productCategory)
+    {
         $filters = Filter::select('id', 'title')->get()->map(function ($item) {
             return [
-                "value" => strval($item["id"]),
-                "label" => $item["title"],
+                'value' => strval($item['id']),
+                'label' => $item['title'],
             ];
         })->values()->toArray();
         $productCategory['def_filters'] = array_labeler($productCategory->filters);
+
         return inertia('admin/product-category/form', [
-            'productCategory'=>$productCategory->load('parent'),
-            'filters'=>$filters
+            'productCategory' => $productCategory->load('parent'),
+            'filters' => $filters,
         ]);
     }
 
@@ -78,7 +85,7 @@ class ProductCategoryController extends Controller
     {
 
         $validatedData = $this->validateRequest($request);
-        $validatedData ['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
+        $validatedData['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
         $filterArray = $request['filter_array'];
         unset($validatedData['filter_array']);
         $productCategory->update($validatedData);
@@ -97,10 +104,6 @@ class ProductCategoryController extends Controller
             ->with('message', ['type' => 'success', 'message' => 'Iدسته حذف شد.']);
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
     private function validateRequest(Request $request): array
     {
         $validatedData = $request->validate([
@@ -110,6 +113,7 @@ class ProductCategoryController extends Controller
             'parent_id' => 'nullable',
             'status' => 'nullable|boolean',
         ]);
+
         return $validatedData;
     }
 }

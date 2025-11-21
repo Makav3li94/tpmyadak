@@ -9,6 +9,7 @@ use App\Models\Shop\CarModel;
 use App\Models\Shop\Product;
 use App\Models\Shop\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FrontProductController extends Controller
 {
@@ -82,7 +83,7 @@ class FrontProductController extends Controller
 
         return inertia('main/brand/list', [
             'brand' => $brand,
-            'data' => $query->paginate(10),
+            'data' => $query->paginate(12),
             //            'brands' => inertia()->defer(fn () => queryMapper(Brand::where('status', 1)->get())),
             'carBrands' => queryMapper(CarBrand::get()),
             //            'carBrands' => inertia()->defer(fn () => queryMapper(CarBrand::get())),
@@ -94,45 +95,103 @@ class FrontProductController extends Controller
 
     public function getCategory($slug, Request $request)
     {
-        // 1. دسته‌بندی اصلی و زیر دسته‌ها
-        $productCategory = ProductCategory::with('children')->where('slug', $slug)->firstOrFail();
+        // *********************
+        // 1. Cache اطلاعات دسته
+        // *********************
+        $categoryCacheKey = "category_page_static_{$slug}";
 
-        $categoryIds = array_merge([$productCategory->id], $productCategory->getAllChildrenIds());
+        $staticData = Cache::remember($categoryCacheKey, 1800, function () use ($slug) {
 
-        // 2. فیلترهای مرتبط با دسته و زیر دسته‌ها
-        $filters = $productCategory->getAllChildrenFiltersWithValues();
+            $productCategory = ProductCategory::with('children')
+                ->where('slug', $slug)
+                ->firstOrFail();
 
-        // 3. Query اصلی محصولات
-        $query = Product::query();
-        $query->whereIn('product_category_id', $categoryIds);
-        $this->commonFilters($request, $query);
+            $categoryIds = array_merge([$productCategory->id], $productCategory->getAllChildrenIds());
+            $filters = $productCategory->getAllChildrenFiltersWithValues();
 
-        // 7. فیلترهای داینامیک
-        if ($request->dynamicFilters && is_array($request->dynamicFilters)) {
-            foreach ($request->dynamicFilters as $filterId => $values) {
-                $query->whereHas('filters', function ($q) use ($filterId, $values) {
-                    $q->where('filters.id', $filterId)
-                        ->whereIn('filter_products.value', $values);
-                });
+            return [
+                'productCategory' => $productCategory,
+                'filters' => $filters,
+                'categoryIds' => $categoryIds,
+            ];
+        });
+
+        $categoryIds = $staticData['categoryIds'];
+        $productCategory = $staticData['productCategory'];
+        $filters = $staticData['filters'];
+
+        // **********************************
+        // 2. Cache نتایج محصولات براساس فیلترها
+        // **********************************
+
+        // تبدیل request به hash تا key تکراری نشود
+        $filterHash = md5(json_encode($request->all()));
+
+        $productCacheKey = "category_products_{$slug}_{$filterHash}_page_".($request->page ?? 1);
+
+        $products = Cache::remember($productCacheKey, 60, function () use ($request, $categoryIds) {
+
+            $query = Product::query()
+                ->whereIn('product_category_id', $categoryIds)
+                ->with([
+                    'brand:id,title,slug',
+                    'carModels:id,title,car_brand_id',
+                    'carModels.carBrand:id,title',
+                ]);
+
+            $this->commonFilters($request, $query);
+
+            if ($request->dynamicFilters && is_array($request->dynamicFilters)) {
+                foreach ($request->dynamicFilters as $filterId => $values) {
+                    $query->whereHas('filters', function ($q) use ($filterId, $values) {
+                        $q->where('filters.id', $filterId)
+                            ->whereIn('filter_products.value', $values);
+                    });
+                }
             }
-        }
 
-        // 8. مرتب‌سازی
-        if ($request->column) {
-            $cl = explode(',', $request->column);
-            $query->orderBy($cl[0], $cl[1]);
-        } else {
-            $query->orderBy('created_at', 'desc');
-        }
+            if ($request->column) {
+                [$col, $dir] = explode(',', $request->column);
+                $query->orderBy($col, $dir);
+            } else {
+                $query->orderBy('created_at', 'desc');
+            }
 
-        // 9. بازگشت داده‌ها به Inertia
+            return $query->paginate(12);
+        });
+
+        // ***********************
+        // 3. استخراج برند و مدل‌ها
+        // ***********************
+        $brandIds = $products->pluck('brand_id')->unique()->filter()->values();
+        $carModelIds = $products->pluck('carModels')->flatten()->pluck('id')->unique()->values();
+        $carBrandIds = $products->pluck('carModels')->flatten()->pluck('car_brand_id')->unique()->values();
+
+        // ***********************
+        // 4. Cache برندها و مدل‌ها
+        // ***********************
+        $brands = Cache::remember("brands_{$slug}_".md5($brandIds), 900, function () use ($brandIds) {
+            return Brand::whereIn('id', $brandIds)->get();
+        });
+
+        $carBrands = Cache::remember("carBrands_{$slug}_".md5($carBrandIds), 900, function () use ($carBrandIds) {
+            return CarBrand::whereIn('id', $carBrandIds)->get();
+        });
+
+        $carModels = Cache::remember("carModels_{$slug}_".md5($carModelIds), 900, function () use ($carModelIds) {
+            return CarModel::whereIn('id', $carModelIds)->get();
+        });
+
+        // ******************************************
+        // 5. return نهایی
+        // ******************************************
         return inertia('main/category/list', [
             'productCategory' => $productCategory,
             'filters' => $filters,
-            'data' => $query->paginate(10),
-            'brands' => queryMapper(Brand::where('status', 1)->get()),
-            'carBrands' => queryMapper(CarBrand::get()),
-            'carModels' => queryMapper(CarModel::get()),
+            'data' => $products,
+            'brands' => queryMapper($brands),
+            'carBrands' => queryMapper($carBrands),
+            'carModels' => queryMapper($carModels),
         ]);
     }
 

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Search,XIcon} from "lucide-react";
 import { motion } from "motion/react"
+import {Link} from "@inertiajs/react";
 const SearchBar = ({isMobile=false}) => {
     const [searchTerm, setSearchTerm] = useState("")
     const [searchItems, setSearchItems] = useState([])
@@ -115,11 +116,11 @@ const SearchBar = ({isMobile=false}) => {
                                             (
                                                 searchItems.map((addSearch, index) => (
                                                     <li className="list-row" key={index}>
-                                                        {/*<Link className="link-dark link-underline-opacity-0 ml-5 w-100 h-100 d-inline-block  fs-6-5"*/}
-                                                        {/*   target="_blank"*/}
-                                                        {/*   href={route('home.getProduct', addSearch.slug)}>*/}
+                                                        <Link className=""
+                                                           target="_blank"
+                                                           href={route('home.getProduct', addSearch.sku)}>
                                                         {addSearch.title.length > 35 ? `${addSearch.title.substring(0, 35)}...` : addSearch.title}
-                                                        {/*</Link>*/}
+                                                        </Link>
                                                     </li>
                                                 ))
                                             ) : (

@@ -14,9 +14,9 @@ export default function ProductCategories({productCategories}) {
                     <h3 className="text-2xl font-extrabold  my-4">
                         خرید بر اساس دسته بندی
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-2 xl:gap-x-5 mt-12">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-12">
                         {productCategories.map((productCategory,i)=>
-                            <div className="flex lg:col-span-4 px-3 border-[1px] border-gray-300 p-5 mb-4 bg-base-100" key={i}>
+                            <div key={i} className="flex flex-col border-[1px] border-gray-300 p-5 bg-base-100 justify-center items-center">
                                 <Link href={route('home.getCategory',productCategory.slug)} title="oilfluid" className="inline-block">
                                     {productCategory.image!==null ?(
                                         <img src={route('file.show',{file:productCategory.image,dir:'category/'})} alt="oilfluid" className="lg:w-[130px] lg:h-[160px] xl:w-[170px] xl:h-[200px] hover:scale-105"/>
@@ -25,7 +25,7 @@ export default function ProductCategories({productCategories}) {
                                     )}
 
                                 </Link>
-                                <div className="pr-5 text-right">
+                                <div className="  mt-5">
                                     <h6 className="text-base font-blod">{productCategory.title}</h6>
 
                                     <ul className="pr-4">
@@ -38,11 +38,7 @@ export default function ProductCategories({productCategories}) {
                                         )}
 
                                     </ul>
-                                    <Link href={route('home.getCategory',productCategory.slug)} title="more"
-                                        className="bg-[#333333] text-[white] py-2 px-3 rounded-md hover:bg-[#d8330a] transition duration-300 ease-in inline-block my-5"
-                                    >
-                                        مشاهده همه
-                                    </Link>
+
                                 </div>
                             </div>
                         )}

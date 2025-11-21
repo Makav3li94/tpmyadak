@@ -54,11 +54,11 @@ class ProductCategory extends Model
      * Fetches all categories in one query (if $allCategories is null) and builds the nested tree
      * using an in-memory parent->children map (O(n)).
      *
-     * @param Collection|null $allCategories optional pre-fetched categories collection
-     * @param int|string $rootParentId the parent id considered root (default 0)
+     * @param  Collection|null  $allCategories  optional pre-fetched categories collection
+     * @param  int|string  $rootParentId  the parent id considered root (default 0)
      * @return Collection nested tree (each node is a Category model with ->children set)
      */
-    public static function buildTree(Collection $allCategories = null, $rootParentId = 0): Collection
+    public static function buildTree(?Collection $allCategories = null, $rootParentId = 0): Collection
     {
         $all = $allCategories ?? static::select(['id', 'parent_id', 'title', 'slug', 'status', 'sort'])->orderBy('sort')->get();
 
@@ -77,6 +77,7 @@ class ProductCategory extends Model
                 $child->setRelation('children', $build($child->id));
                 $nodes->push($child);
             }
+
             return $nodes;
         };
 
@@ -88,12 +89,12 @@ class ProductCategory extends Model
      * This is optimized: it fetches categories only once and then iteratively
      * produces an ordered flattened list with level prefixes.
      *
-     * @param Collection|null $categories optional pre-fetched nested categories (from buildTree)
-     * @param int|string $rootParentId
-     * @param string $prefixChar character used to indicate levels ('-' by default)
+     * @param  Collection|null  $categories  optional pre-fetched nested categories (from buildTree)
+     * @param  int|string  $rootParentId
+     * @param  string  $prefixChar  character used to indicate levels ('-' by default)
      * @return Collection of arrays: ['value' => id, 'label' => prefixed title]
      */
-    public static function flatTree(Collection $categories = null, $rootParentId = 0, $prefixChar = '-'): Collection
+    public static function flatTree(?Collection $categories = null, $rootParentId = 0, $prefixChar = '-'): Collection
     {
         // If nested categories are not provided, build them fast from a single query.
         if ($categories === null) {
@@ -110,10 +111,10 @@ class ProductCategory extends Model
             $stack[] = [$node, 0];
         }
 
-        while (!empty($stack)) {
+        while (! empty($stack)) {
             [$node, $level] = array_pop($stack);
 
-            $label = ($level > 0 ? str_repeat($prefixChar, $level) . ' ' : '') . $node->title;
+            $label = ($level > 0 ? str_repeat($prefixChar, $level).' ' : '').$node->title;
             $result->push([
                 'value' => $node->id,
                 'label' => $label,
@@ -135,10 +136,9 @@ class ProductCategory extends Model
      * Get all children ids (descendants) including the current category id.
      * This version fetches all categories once and walks the children map in memory.
      *
-     * @param Collection|null $allCategories optional pre-fetched categories collection
-     * @return array
+     * @param  Collection|null  $allCategories  optional pre-fetched categories collection
      */
-    public function getAllChildrenIds(Collection $allCategories = null): array
+    public function getAllChildrenIds(?Collection $allCategories = null): array
     {
         $all = $allCategories ?? static::select(['id', 'parent_id'])->get();
 
@@ -152,9 +152,9 @@ class ProductCategory extends Model
         $ids = [];
         $stack = [$this->id];
 
-        while (!empty($stack)) {
+        while (! empty($stack)) {
             $current = array_pop($stack);
-            if (!in_array($current, $ids, true)) {
+            if (! in_array($current, $ids, true)) {
                 $ids[] = $current;
                 foreach ($map[$current] ?? [] as $childId) {
                     $stack[] = $childId;
@@ -169,10 +169,10 @@ class ProductCategory extends Model
      * Get all parent ids (ancestors) up to the root.
      * Uses an in-memory lookup map for O(depth) complexity and single DB fetch when needed.
      *
-     * @param Collection|null $allCategories optional pre-fetched categories collection
+     * @param  Collection|null  $allCategories  optional pre-fetched categories collection
      * @return array ancestor ids (closest parent first)
      */
-    public function getAllParentIds(Collection $allCategories = null): array
+    public function getAllParentIds(?Collection $allCategories = null): array
     {
         $all = $allCategories ?? static::select(['id', 'parent_id'])->get();
 
@@ -185,7 +185,7 @@ class ProductCategory extends Model
         $ids = [];
         $currentParent = $parentMap[$this->id] ?? null;
 
-        while ($currentParent && !in_array($currentParent, $ids, true)) {
+        while ($currentParent && ! in_array($currentParent, $ids, true)) {
             $ids[] = $currentParent;
             $currentParent = $parentMap[$currentParent] ?? null;
         }
@@ -215,12 +215,11 @@ class ProductCategory extends Model
     /**
      * Returns filters belonging to all children (descendants) categories,
      * implemented via single-query category id collection + eager filter lookup.
-     *
-     * @return Collection
      */
     public function getAllChildrenFilters(): Collection
     {
         $categoryIds = $this->getAllChildrenIds();
+
         // Use a single query with whereHas to find related filters
         return Filter::whereHas('productCategories', function ($query) use ($categoryIds) {
             $query->whereIn('product_category_id', $categoryIds);
@@ -230,8 +229,6 @@ class ProductCategory extends Model
     /**
      * Return filters with values aggregated from products within this category subtree.
      * Efficiently preloads product ids in subtree, then eager loads filter->products constrained to those products.
-     *
-     * @return Collection
      */
     public function getAllChildrenFiltersWithValues(): Collection
     {
@@ -249,6 +246,7 @@ class ProductCategory extends Model
         $filters->map(function ($filter) {
             $filter->values = $filter->products->pluck('pivot.value')->unique()->values();
             $filter->unsetRelation('products');
+
             return $filter;
         });
 
@@ -259,22 +257,20 @@ class ProductCategory extends Model
     {
         return static::select(['id', 'title', 'slug'])
             ->with([
-                'children' => function($query) {
+                'children' => function ($query) {
                     $query->select(['id', 'title', 'slug', 'parent_id'])
                         ->with([
-                            'children' => function($query) {
+                            'children' => function ($query) {
                                 $query->select(['id', 'title', 'slug', 'parent_id']);
-                            }
+                            },
                         ]);
-                }
+                },
             ])
             ->where('parent_id', 0)
             ->where('status', 1)
             ->orderBy('sort')
             ->get();
     }
-
-
 
     public function getTreeCategories($parent = 0, &$tree = null, $categories = null, &$st = '')
     {

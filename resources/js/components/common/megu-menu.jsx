@@ -5,11 +5,12 @@ const MegaMenu = ({ isSingle=false }) => {
     return (
         <ul className="relative z-20 w-full">
             {MegaMenuBank?.map(category => (
-                <li key={category.id} className={`${isSingle && 'text-[#333333]'} group hover:bg-[#d8330a] transition duration-300 ease-in px-5 relative`}>
+                <li key={category.id} className={`${isSingle && 'text-gray-400'} group hover:bg-[#d8330a] transition duration-300 ease-in px-5 relative`}>
 
                     {/* سطح 1 */}
-                    <div className="flex justify-between text-center items-center py-3 border-b border-gray-300 hover:border-[#d8330a] cursor-pointer z-10">
-                        <div className={`${isSingle && 'text-[#333333]'}text-sm group-hover:text-gray-50`}>
+                    <div className="flex justify-between text-center items-center py-3 border-b border-gray-300 hover:border-[#d8330a] cursor-pointer last:border-b-0">
+
+                    <div className={`${isSingle && 'text-gray-400'}text-sm group-hover:text-gray-50`}>
                             {category.title}
                         </div>
                         <ChevronLeft className="w-3 h-3 group-hover:fill-white"/>
@@ -27,7 +28,7 @@ const MegaMenu = ({ isSingle=false }) => {
 
                                         {/* عنوان ستون (سطح 2) */}
                                         <li className="font-bold mb-2">
-                                            <h4 className="text-[#333333]">
+                                            <h4 className="text-gray-400">
                                                 <Link href={`/category/${sub.slug}`} className='text-gray-700 flex justfiy-between items-center  border-r-2 border-gray-200 pr-4'>
                                                     <div>{sub.title}</div>          <ChevronLeft className="w-3 h-3 mr-3 group-hover:fill-white"/>
                                                 </Link>

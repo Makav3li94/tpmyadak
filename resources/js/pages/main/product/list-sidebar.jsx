@@ -235,7 +235,7 @@ export default function ListSidebar({
                             {/* فیلترهای داینامیک */}
                             {filters && filters.map(filter => (
                                 <li key={filter.id}>
-                                    <Disclosure  as="div" className="px-4" >
+                                    <Disclosure  as="div" className="px-4" defaultOpen={true} >
                                         <dt>
                                             <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
                                                 <span className="text-gray-600 text-sm font-medium ">
