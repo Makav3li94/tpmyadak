@@ -137,7 +137,7 @@ export default function Form(props) {
                     url={data.image}
                     dir='category/'
                     compress={true}
-                    filemimes="image/jpg,image/jpeg,image/png"
+                    filemimes="image/jpg,image/jpeg,image/png,image/webp"
                 />
                 <Checkbox
                     label="فعال"

@@ -465,7 +465,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-DeD9u4Pt.css",
+    "file": "assets/app-C-VY9tbp.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -494,7 +494,7 @@
     "src": "resources/images/replacement.jpg"
   },
   "resources/js/admin.jsx": {
-    "file": "assets/admin-B1S60QdM.js",
+    "file": "assets/admin-Dtfxn8uI.js",
     "name": "admin",
     "src": "resources/js/admin.jsx",
     "isEntry": true,
@@ -581,14 +581,14 @@
       "resources/js/pages/admin/user/index.jsx"
     ],
     "css": [
-      "assets/app-DeD9u4Pt.css"
+      "assets/app-C-VY9tbp.css"
     ],
     "assets": [
       "assets/Vazir-Medium-FD-WOL-CfaUoGyi.woff2"
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-DiTNSEfb.js",
+    "file": "assets/app-CdxjfCIB.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
@@ -644,7 +644,7 @@
     ],
     "css": [
       "assets/app-7WpdOpTi.css",
-      "assets/app-DeD9u4Pt.css"
+      "assets/app-C-VY9tbp.css"
     ],
     "assets": [
       "assets/Vazir-Medium-FD-WOL-CfaUoGyi.woff2"
@@ -1750,7 +1750,7 @@
     ]
   },
   "resources/js/pages/admin/product-category/form.jsx": {
-    "file": "assets/form-BEwyB1C8.js",
+    "file": "assets/form-B8WdcAx7.js",
     "name": "form",
     "src": "resources/js/pages/admin/product-category/form.jsx",
     "isDynamicEntry": true,
