@@ -63,17 +63,14 @@ export default defineConfig({
         cssCodeSplit: true,
         chunkSizeWarningLimit: 571,
         minify: 'esbuild',
+        commonjsOptions: {
+            transformMixedEsModules: true,
+        },
     },
     ssr: {
-        noExternal: [
-            'react-dropzone',
-            'react-datepicker',
-            'lodash',
-            'cally',
-            '@ijavad805/react-datepicker',
-            'jalali-moment'
-        ],
+        noExternal: ['react-dropzone','react-datepicker','lodash','cally'],
     },
+
     server: {
         hmr: { host: 'localhost' },
     },
