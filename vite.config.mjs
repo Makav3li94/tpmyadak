@@ -65,9 +65,15 @@ export default defineConfig({
         minify: 'esbuild',
     },
     ssr: {
-        noExternal: ['react-dropzone','react-datepicker','lodash','cally'],
+        noExternal: [
+            'react-dropzone',
+            'react-datepicker',
+            'lodash',
+            'cally',
+            '@ijavad805/react-datepicker',
+            'jalali-moment'
+        ],
     },
-
     server: {
         hmr: { host: 'localhost' },
     },
