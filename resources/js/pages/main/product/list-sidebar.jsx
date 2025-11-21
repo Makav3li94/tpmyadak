@@ -2,7 +2,8 @@ import {router} from "@inertiajs/react";
 import {useState} from "react";
 import MultiRangeSlider from "@/pages/main/product/partials/MultiRangeSlider.jsx";
 import SearchFilter from "@/pages/main/product/partials/searchFilter.jsx";
-
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
+import { Plus, Minus } from 'lucide-react'
 export default function ListSidebar({
                                         brands = null,
                                         carBrands = null,
@@ -83,7 +84,7 @@ export default function ListSidebar({
     return (
 
         <div className="md:col-span-4 lg:col-span-3 lg:px-0  px-3">
-            <div className="drawer lg:drawer-open flex">
+            <div className="drawer lg:drawer-open flex w-full">
                 <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
                 <div className="drawer-content flex flex-col items-center justify-center">
                     {/* Page content here */}
@@ -92,7 +93,7 @@ export default function ListSidebar({
                         فیلترها
                     </label>
                 </div>
-                <div className="drawer-side h-full">
+                <div className="drawer-side h-full w-full">
                     <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
                     <div className="border-[1px] border-gray-300 border-t-[#d8330a] rounded-md overflow-hidden">
                         <div className="bg-[#d8330a] text-base-100 py-3 px-7 font-semibold">
@@ -134,103 +135,127 @@ export default function ListSidebar({
 
                             {/* فیلترهای ثابت */}
                             {brands && (
-                                <li>
-                                    <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="filter-brands" defaultChecked/>
-                                        <div
-                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
-                                            برند ها
-                                        </div>
-                                        <div className="collapse-content mt-4 p-0">
+                                <li className="border-b border-gray-300 mb-2 pb-2" key={1}>
+                                    <Disclosure  as="div" className="px-4" defaultOpen={true}>
+                                        <dt>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
+                                                <span className="text-gray-600 text-sm font-medium ">         برند ها</span>
+                                                <span className="ml-6 flex h-7 items-center">
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                </span>
+                                            </DisclosureButton>
+                                        </dt>
+                                        <DisclosurePanel as="dd" className="mt-4 p-0">
                                             <SearchFilter
                                                 groupName="brands"
                                                 data={brands}
                                                 selected={staticFilters.brands}
                                                 setSelected={(values) => handleStaticFilters('brands', values)}
                                             />
-                                        </div>
-                                    </div>
+                                        </DisclosurePanel>
+                                    </Disclosure>
                                 </li>
                             )}
 
                             {carBrands && (
-                                <li>
-                                    <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="filter-carBrands"/>
-                                        <div
-                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
-                                            برند خودرو
-                                        </div>
-                                        <div className="collapse-content mt-4 p-0">
+                                <li className="border-b border-gray-300 mb-2 pb-2" key={2} >
+                                    <Disclosure as="div" className="px-4" defaultOpen={true}>
+                                        <dt>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
+                                                <span className="text-gray-600 text-sm font-medium "> برند خودرو</span>
+                                                <span className="ml-6 flex h-7 items-center">
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                </span>
+                                            </DisclosureButton>
+                                        </dt>
+                                        <DisclosurePanel as="dd" className="mt-4 p-0">
                                             <SearchFilter
                                                 groupName="carBrands"
                                                 data={carBrands}
                                                 selected={staticFilters.carBrands}
                                                 setSelected={(values) => handleStaticFilters('carBrands', values)}
                                             />
-                                        </div>
-                                    </div>
+                                        </DisclosurePanel>
+                                    </Disclosure>
+
                                 </li>
                             )}
 
                             {carModels && (
-                                <li>
-                                    <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="filter-carModels"/>
-                                        <div
-                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
-                                            نوع خودرو
-                                        </div>
-                                        <div className="collapse-content mt-4 p-0">
+                                <li className="border-b border-gray-300 mb-2 pb-2" key={3}>
+                                    <Disclosure  as="div" className="px-4" defaultOpen={true}>
+                                        <dt>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
+                                                <span className="text-gray-600 text-sm font-medium "> نوع خودرو</span>
+                                                <span className="ml-6 flex h-7 items-center">
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                </span>
+                                            </DisclosureButton>
+                                        </dt>
+                                        <DisclosurePanel as="dd" className="mt-4 p-0">
                                             <SearchFilter
                                                 groupName="carModels"
                                                 data={carModels}
                                                 selected={staticFilters.carModels}
                                                 setSelected={(values) => handleStaticFilters('carModels', values)}
                                             />
-                                        </div>
-                                    </div>
+                                        </DisclosurePanel>
+                                    </Disclosure>
+
                                 </li>
                             )}
-
                             {categories && (
-                                <li>
-                                    <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="filter-categories"/>
-                                        <div
-                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
-                                            دسته بندی
-                                        </div>
-                                        <div className="collapse-content mt-4">
+                                <li className="border-b border-gray-300 mb-2 pb-2" key={4}>
+                                    <Disclosure  as="div" className="px-4" defaultOpen={true}>
+                                        <dt>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
+                                                <span className="text-gray-600 text-sm font-medium "> دسته بندی</span>
+                                                <span className="ml-6 flex h-7 items-center">
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                </span>
+                                            </DisclosureButton>
+                                        </dt>
+                                        <DisclosurePanel as="dd" className="mt-4 p-0">
                                             <SearchFilter
                                                 groupName="categories"
                                                 data={categories}
                                                 selected={staticFilters.categories}
                                                 setSelected={(values) => handleStaticFilters('categories', values)}
                                             />
-                                        </div>
-                                    </div>
+                                        </DisclosurePanel>
+                                    </Disclosure>
                                 </li>
                             )}
+
 
                             {/* فیلترهای داینامیک */}
                             {filters && filters.map(filter => (
                                 <li key={filter.id}>
-                                    <div className="collapse collapse-plus bg-base-100 px-4">
-                                        <input type="radio" name="accordion-dynamic-filters"/>
-                                        <div
-                                            className="collapse-title text-gray-600 text-sm font-medium border-b border-gray-300">
-                                            {filter.title}
-                                        </div>
-                                        <div className="collapse-content mt-4">
+                                    <Disclosure  as="div" className="px-4" >
+                                        <dt>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
+                                                <span className="text-gray-600 text-sm font-medium ">
+                                                    {filter.title}
+                                                </span>
+                                                <span className="ml-6 flex h-7 items-center">
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                </span>
+                                            </DisclosureButton>
+                                        </dt>
+                                        <DisclosurePanel as="dd" className="mt-4 p-0">
                                             <SearchFilter
                                                 groupName={filter.title}
                                                 data={filter.values.map(v => ({label: v, value: v}))}
                                                 selected={dynamicFilters[filter.id] || []}
                                                 setSelected={(values) => handleDynamicFilters(filter.id, values)}
                                             />
-                                        </div>
-                                    </div>
+                                        </DisclosurePanel>
+                                    </Disclosure>
                                 </li>
                             ))}
 

@@ -21,7 +21,7 @@ Route::prefix('customer')->group(static function () {
         Route::resource('/wishlist', WishlistController::class, ['names' => 'user.wishlists']);
         Route::resource('/notification', NotificationController::class, ['names' => 'user.notifications']);
         Route::resource('/profile', ProfileController::class, ['names' => 'user.profile'])->only(['edit', 'update']);
-        Route::resource('/address', AddressController::class, ['names' => 'user.addresses'])->except(['create','show']);
+        Route::resource('/address', AddressController::class, ['names' => 'user.addresses'])->except(['create', 'show']);
     });
 
 });

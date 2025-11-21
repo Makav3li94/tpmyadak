@@ -23,7 +23,7 @@ class GeneralController extends Controller
             'sliders' => $sliders,
             'promoProducts' => inertia()->defer(fn () => Product::where('status_promotion', 1)
                 ->whereDate('date_end', '>=', Carbon::now())->limit(7)->get()),
-            'latestProducts' => inertia()->defer(fn () => Product::where('status_promotion', 0)
+            'latestProducts' => inertia()->defer(fn () => Product::where('status_promotion', 0)->latest()
                 ->limit(4)->get()),
             'productCategories' => inertia()->defer(fn () => ProductCategory::with('children')->where([['parent_id', 0], ['status', 1]])
                 ->get()),
