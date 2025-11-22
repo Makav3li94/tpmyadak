@@ -3,7 +3,7 @@ import {usePage} from "@inertiajs/react";
 import {showToast} from "@/utils.js";
 import SidebarNavUser from "@/layouts/user/partials/sidebar-nav-user.jsx";
 import {Toaster} from "sonner";
-import {useSidebar} from "@/hooks.js";
+import {useIsMobile, useSidebar} from "@/hooks.js";
 import {Menu} from "lucide-react";
 import NotificationMenu from "@/layouts/default/partials/notification-menu.jsx";
 import UserProfileMenu from "@/layouts/default/partials/user-profile-menu.jsx";
@@ -22,7 +22,7 @@ export default function UserAuthenticatedLayout({
 ) {
     const {props: {auth, flash},} = usePage()
     const {isShowSidebar, toggleSidebar} = useSidebar(true)
-
+    const isMobile = useIsMobile()
     useEffect(() => {
         if (flash.message !== null) {
             showToast(flash.message.message, flash.message.type)
@@ -32,7 +32,7 @@ export default function UserAuthenticatedLayout({
 
     // بستن Sidebar هنگام تغییر صفحه
     useEffect(() => {
-        if (isShowSidebar) {
+        if (isMobile && isShowSidebar) {
             toggleSidebar(); // اگر باز بود، بسته شود
         }
     }, [component]); // وقتی route تغییر کرد اجرا می‌شود
