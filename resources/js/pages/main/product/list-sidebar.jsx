@@ -89,7 +89,7 @@ export default function ListSidebar({
                 <div className="drawer-content flex flex-col items-center justify-center">
                     {/* Page content here */}
                     <label htmlFor="my-drawer-3"
-                           className="btn btn-xs btn-error text-base-100 drawer-button lg:hidden fixed right-0 top-2/4 z-1">
+                           className="btn btn-xs btn-error text-base-100 drawer-button lg:hidden fixed right-0 top-1/4 z-1">
                         فیلترها
                     </label>
                 </div>

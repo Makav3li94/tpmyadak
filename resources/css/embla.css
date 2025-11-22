@@ -76,7 +76,7 @@
 .embla__button--prev,.embla__button--next{
     position: absolute;
     top: 40%;
-    color: #fff;
+    color: #000;
 }
 .embla__button--next{
     left: 20px;

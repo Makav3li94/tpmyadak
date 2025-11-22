@@ -28,16 +28,16 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
                         {product.title}
                     </Link>
                 </h3>
-                <div className="mt-4 flex flex-col items-center">
-                    <p className="sr-only">{product.rating} out of 5 stars</p>
-                    <div className="flex items-center">
-                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>
-                    </div>
-                </div>
+                {/*<div className="mt-4 flex flex-col items-center">*/}
+                {/*    <p className="sr-only">{product.rating} out of 5 stars</p>*/}
+                {/*    <div className="flex items-center">*/}
+                {/*        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                {/*        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                {/*        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                {/*        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                {/*        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <p className="mt-4 text-base font-medium h-16">
                     {parseInt(product.price) !== 0 ? (
                         <>

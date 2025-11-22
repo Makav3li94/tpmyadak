@@ -95,13 +95,11 @@ class FrontProductController extends Controller
 
     public function getCategory($slug, Request $request)
     {
-        // *********************
-        // 1. Cache اطلاعات دسته
-        // *********************
+        // -----------------------------
+        // بخش 1: کش استاتیک دسته‌بندی و فیلترها
+        // -----------------------------
         $categoryCacheKey = "category_page_static_{$slug}";
-
         $staticData = Cache::remember($categoryCacheKey, 1800, function () use ($slug) {
-
             $productCategory = ProductCategory::with('children')
                 ->where('slug', $slug)
                 ->firstOrFail();
@@ -120,80 +118,112 @@ class FrontProductController extends Controller
         $productCategory = $staticData['productCategory'];
         $filters = $staticData['filters'];
 
-        // **********************************
-        // 2. Cache نتایج محصولات براساس فیلترها
-        // **********************************
+        // -----------------------------
+        // بخش 2: query محصولات با فیلترهای دینامیک و سورت
+        // -----------------------------
+        $query = Product::query()
+            ->whereIn('product_category_id', $categoryIds)
+            ->with([
+                'brand:id,title,slug',
+                'carModels:id,title,car_brand_id',
+                'carModels.carBrand:id,title',
+            ]);
 
-        // تبدیل request به hash تا key تکراری نشود
-        $filterHash = md5(json_encode($request->all()));
+        $this->commonFilters($request, $query);
 
-        $productCacheKey = "category_products_{$slug}_{$filterHash}_page_".($request->page ?? 1);
-
-        $products = Cache::remember($productCacheKey, 60, function () use ($request, $categoryIds) {
-
-            $query = Product::query()
-                ->whereIn('product_category_id', $categoryIds)
-                ->with([
-                    'brand:id,title,slug',
-                    'carModels:id,title,car_brand_id',
-                    'carModels.carBrand:id,title',
-                ]);
-
-            $this->commonFilters($request, $query);
-
-            if ($request->dynamicFilters && is_array($request->dynamicFilters)) {
-                foreach ($request->dynamicFilters as $filterId => $values) {
-                    $query->whereHas('filters', function ($q) use ($filterId, $values) {
-                        $q->where('filters.id', $filterId)
-                            ->whereIn('filter_products.value', $values);
-                    });
-                }
+        if ($request->dynamicFilters && is_array($request->dynamicFilters)) {
+            foreach ($request->dynamicFilters as $filterId => $values) {
+                $query->whereHas('filters', function ($q) use ($filterId, $values) {
+                    $q->where('filters.id', $filterId)
+                        ->whereIn('filter_products.value', $values);
+                });
             }
+        }
 
-            if ($request->column) {
-                [$col, $dir] = explode(',', $request->column);
-                $query->orderBy($col, $dir);
-            } else {
-                $query->orderBy('created_at', 'desc');
-            }
+        // مرتب‌سازی
+        if ($request->column) {
+            [$col, $dir] = explode(',', $request->column);
+            $query->orderBy($col, $dir)->orderBy('id', 'desc'); // ستون unique برای cursorPaginate
+        } else {
+            $query->orderBy('id', 'desc');
+        }
 
-            return $query->paginate(12);
-        });
+        // -----------------------------
+        // بخش 3: cursorPaginate بدون کش
+        // -----------------------------
+        $products = $query->cursorPaginate(12)->withQueryString();
 
-        // ***********************
-        // 3. استخراج برند و مدل‌ها
-        // ***********************
-        $brandIds = $products->pluck('brand_id')->unique()->filter()->values();
-        $carModelIds = $products->pluck('carModels')->flatten()->pluck('id')->unique()->values();
-        $carBrandIds = $products->pluck('carModels')->flatten()->pluck('car_brand_id')->unique()->values();
+        // ساخت next/prev URL از cursor
+        $nextUrl = $products->nextCursor()
+            ? url()->current() . '?' . http_build_query([
+                ...$request->except('cursor'),
+                'cursor' => $products->nextCursor()->encode()
+            ])
+            : null;
 
-        // ***********************
-        // 4. Cache برندها و مدل‌ها
-        // ***********************
-        $brands = Cache::remember("brands_{$slug}_".md5($brandIds), 900, function () use ($brandIds) {
+        $prevUrl = $products->previousCursor()
+            ? url()->current() . '?' . http_build_query([
+                ...$request->except('cursor'),
+                'cursor' => $products->previousCursor()->encode()
+            ])
+            : null;
+
+        // -----------------------------
+        // بخش 4: جمع‌آوری brand/carBrand/carModel IDs
+        // -----------------------------
+        $items = collect($products->items());
+
+        $brandIds = $items->pluck('brand_id')->unique()->filter()->values();
+
+        $carModelIds = $items
+            ->pluck('carModels')
+            ->flatten()
+            ->pluck('id')
+            ->unique()
+            ->values();
+
+        $carBrandIds = $items
+            ->pluck('carModels')
+            ->flatten()
+            ->pluck('car_brand_id')
+            ->unique()
+            ->values();
+
+        // -----------------------------
+        // بخش 5: کش برندها، مدل‌ها و برندهای خودرو
+        // -----------------------------
+        $brands = Cache::remember("brands_{$slug}_" . md5($brandIds), 900, function () use ($brandIds) {
             return Brand::whereIn('id', $brandIds)->get();
         });
 
-        $carBrands = Cache::remember("carBrands_{$slug}_".md5($carBrandIds), 900, function () use ($carBrandIds) {
+        $carBrands = Cache::remember("carBrands_{$slug}_" . md5($carBrandIds), 900, function () use ($carBrandIds) {
             return CarBrand::whereIn('id', $carBrandIds)->get();
         });
 
-        $carModels = Cache::remember("carModels_{$slug}_".md5($carModelIds), 900, function () use ($carModelIds) {
+        $carModels = Cache::remember("carModels_{$slug}_" . md5($carModelIds), 900, function () use ($carModelIds) {
             return CarModel::whereIn('id', $carModelIds)->get();
         });
 
-        // ******************************************
-        // 5. return نهایی
-        // ******************************************
+        // -----------------------------
+        // بخش 6: بازگشت دیتا به Inertia
+        // -----------------------------
         return inertia('main/category/list', [
             'productCategory' => $productCategory,
             'filters' => $filters,
-            'data' => $products,
+            'data' => [
+                'data' => $products->items(),
+                'next_page_url' => $nextUrl,
+                'prev_page_url' => $prevUrl,
+                'path' => url()->current(),
+                'per_page' => 12,
+            ],
             'brands' => queryMapper($brands),
             'carBrands' => queryMapper($carBrands),
             'carModels' => queryMapper($carModels),
         ]);
     }
+
+
 
     public function commonFilters(Request $request, $query): void
     {

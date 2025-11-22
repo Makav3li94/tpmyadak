@@ -28,7 +28,14 @@ export default function UserAuthenticatedLayout({
             showToast(flash.message.message, flash.message.type)
         }
     }, [flash])
+    const { component } = usePage(); // نام صفحه فعلی
 
+    // بستن Sidebar هنگام تغییر صفحه
+    useEffect(() => {
+        if (isShowSidebar) {
+            toggleSidebar(); // اگر باز بود، بسته شود
+        }
+    }, [component]); // وقتی route تغییر کرد اجرا می‌شود
     useEffect(() => {
         themeChange(false)
         // toggleSidebar()

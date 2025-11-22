@@ -191,16 +191,15 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                         )}
                                     </h6>
                                     <div className="flex items-center gap-2">
-                                        <div className="flex items-center gap-1">
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                            <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>
+                                        {/*<div className="flex items-center gap-1">*/}
+                                        {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                                        {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                                        {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                                        {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                                        {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>*/}
 
-                                        </div>
-                                        <span className="pl-2 font-normal leading-7 text-gray-500 text-sm ">1624
-                                            نظر</span>
+                                        {/*</div>*/}
+                                        {/*<span className="pl-2 font-normal leading-7 text-gray-500 text-sm ">1624 نظر</span>*/}
 
                                     </div>
 
