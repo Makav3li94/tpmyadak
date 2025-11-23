@@ -3,42 +3,57 @@ import {useCart} from "react-use-cart";
 import {Link} from "@inertiajs/react";
 import {CheckIcon, CircleQuestionMark, ClockIcon, Minus, Plus, XIcon} from "lucide-react";
 import {Button} from "@/components/index/index.js";
-import {numLatinToAr} from "@/utils.js";
+import {numLatinToAr, showToast} from "@/utils.js";
 import OrderLayout from "@/layouts/front/order-layout.jsx";
 
 export default function Cart(props) {
     const [hasMounted, setHasMounted] = useState(false);
-    const [subtotal, setSubTotal] = useState(0);
+    const { items, updateItemQuantity, cartTotal } = useCart();
+    const [subtotal, setSubtotal] = useState(0);
     const [discountTotal, setDiscountTotal] = useState(0);
-    const {
-        items,
-        updateItemQuantity,
-        removeItem,
-        cartTotal,
-        isEmpty,
-    } = useCart();
+    const [priceChanged, setPriceChanged] = useState(false);
 
-    function handleSubs() {
-        let sub = items.reduce((a, v) => a = a + (v.discount === null ? v.itemTotal : (parseInt(v.price) * v.quantity)), 0)
-        let dis = items.reduce((a, v) => a = a + (v.discount === null ? 0 : ( parseInt(v.discount) * v.quantity)), 0)
-        setSubTotal(sub)
-        setDiscountTotal(dis)
+    async function refreshPrices() {
+        const { data } = await axios.post(route('home.cart.refresh'), { items });
+
+        let changed = false;
+
+        data.forEach(updatedItem => {
+            const localItem = items.find(i => i.id === updatedItem.id);
+            if (!localItem) return;
+
+            // اگر قیمت تغییر کرده بود
+            if (parseInt(localItem.price) !== parseInt(updatedItem.price) ||
+                parseInt(localItem.discount || 0) !== parseInt(updatedItem.discount || 0)) {
+                changed = true;
+                localItem.price = updatedItem.price;
+                localItem.discount = updatedItem.discount;
+            }
+
+            // بروزرسانی تعداد تو سبد برای همگام‌سازی
+            updateItemQuantity(updatedItem.id, updatedItem.quantity);
+        });
+
+        setPriceChanged(changed);
+        handleSubs(data); // محاسبه subtotal و discount با داده‌های سرور
+    }
+
+    function handleSubs(data = items) {
+        let sub = data.reduce((acc, v) => acc + (v.discount === null ? parseInt(v.price) * v.quantity : parseInt(v.price) * v.quantity), 0);
+        let dis = data.reduce((acc, v) => acc + (v.discount === null ? 0 : parseInt(v.discount) * v.quantity), 0);
+        setSubtotal(sub);
+        setDiscountTotal(dis);
     }
 
     useEffect(() => {
-        setHasMounted(false);
-        handleSubs()
-    }, [updateItemQuantity]);
-    useEffect(() => {
-        if (!hasMounted) {
-            handleSubs();
-        }
-        setHasMounted(true);
+        refreshPrices().then(() => {
+            if (priceChanged) {
+                showToast("قیمت برخی محصولات تغییر کرده و به‌روز شدند!");
+            }
+        });
+        setHasMounted(true)
+    }, []);
 
-
-    }, [hasMounted]);
-
-    console.log(discountTotal)
     return (
            <>
                <h1 className="sr-only">سبد خرید</h1>

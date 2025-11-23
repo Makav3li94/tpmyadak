@@ -8,6 +8,7 @@ use App\Models\Shop\Discount;
 use App\Models\Shop\Order;
 use App\Models\Shop\OrderDetail;
 use App\Models\Shop\PaymentMethod;
+use App\Models\Shop\Product;
 use App\Models\Shop\ShippingMethod;
 use App\Models\Shop\Transaction;
 use App\Models\Traits\SmsableMokhaberat;
@@ -31,6 +32,32 @@ class FrontOrderController extends Controller
     public function cart()
     {
         return inertia('main/order/cart');
+    }
+
+    // FrontOrderController.php
+    public function refreshCart(Request $request)
+    {
+        $cartItems = $request->input('items'); // [{id, quantity}]
+        $updated = [];
+
+        foreach ($cartItems as $item) {
+            $product = Product::find($item['id']);
+            if (! $product) {
+                continue;
+            }
+
+            $updated[] = [
+                'id' => $item['id'],
+                'price' => $product->price,
+                'discount' => $product->discount,
+                'quantity' => $item['quantity'],
+                'total' => $product->discount
+                    ? ($product->discount * $item['quantity'])
+                    : ($product->price * $item['quantity']),
+            ];
+        }
+
+        return response()->json($updated);
     }
 
     public function checkout()
@@ -57,31 +84,74 @@ class FrontOrderController extends Controller
     public function order(Request $request)
     {
         $user = auth()->user();
-        if (! empty($request->discount_id)) {
-            $dis = Discount::where([['status', 1], ['id', $request->discount_id]])
-                ->whereIn('id', [$user->id, 0])->whereDate('active_at', '<=', Carbon::today())->whereDate('expire_at', '>=', Carbon::today())->first();
-            $dis->increment('max_time');
-            $discount = (int) $dis->max_minus;
-        } else {
-            $discount = 0;
-        }
-        $cost = (int) $request->total_cost - (int) $request->discount - $discount;
 
+        // ----- 1. بررسی قیمت و موجودی محصولات -----
+        $updatedItems = [];
+        $subtotal = 0;
+        $discountTotal = 0;
+
+        foreach ($request->items as $item) {
+            $product = Product::find($item['id']);
+            if (! $product) {
+                return back()->withErrors(['error' => "محصول {$item['title']} موجود نیست."]);
+            }
+
+            if ($product->stock < $item['quantity']) {
+                return back()->withErrors(['error' => "موجودی محصول {$product->title} کافی نیست."]);
+            }
+
+            $price = (int) $product->price;
+            $discount = (int) ($product->discount ?? 0);
+
+            $itemTotal = $price * $item['quantity'] - $discount * $item['quantity'];
+            $subtotal += $price * $item['quantity'];
+            $discountTotal += $discount * $item['quantity'];
+
+            $updatedItems[] = [
+                'id' => $product->id,
+                'title' => $product->title,
+                'price' => $price,
+                'discount' => $discount,
+                'quantity' => $item['quantity'],
+                'itemTotal' => $itemTotal,
+            ];
+        }
+
+        // ----- 2. بررسی و اعمال تخفیف کد -----
+        $extraDiscount = 0;
+        if (! empty($request->discount_id)) {
+            $dis = Discount::where('status', 1)
+                ->whereIn('id', [$user->id, 0])
+                ->whereDate('active_at', '<=', now())
+                ->whereDate('expire_at', '>=', now())
+                ->find($request->discount_id);
+
+            if ($dis) {
+                $dis->increment('max_time');
+                $extraDiscount = (int) $dis->max_minus;
+            }
+        }
+
+        // ----- 3. محاسبه جمع نهایی -----
+        $cost = $subtotal - $discountTotal - $extraDiscount;
+
+        // ----- 4. دریافت اطلاعات آدرس، ارسال و پرداخت -----
         $shippingMethod = ShippingMethod::find($request->shipping_method_id);
         $paymentMethod = PaymentMethod::find($request->payment_method_id);
         $address = Address::find($request->address_id);
+
+        // ----- 5. ایجاد سفارش -----
         $order = Order::create([
             'user_id' => $user->id,
-            //                'dear_id'=>,
-            'address_id' => $request->address_id,
-            'shipping' => $shippingMethod->cost,
+            'address_id' => $address->id,
+            'shipping' => (int) $shippingMethod->cost,
             'shipping_method_id' => $shippingMethod->id,
             'payment_method_id' => $paymentMethod->id,
-            'subtotal' => $request->subtotal,
-            'discount' => (int) $request->discount - $discount,
+            'subtotal' => $subtotal,
+            'discount' => $discountTotal + $extraDiscount,
             'tax' => 0,
             'other_fee' => 0,
-            'total' => $cost,
+            'total' => $cost + (int) $shippingMethod->cost,
             'name' => $address->name,
             'postal_code' => $address->postal_code,
             'mobile' => $address->mobile,
@@ -89,60 +159,57 @@ class FrontOrderController extends Controller
             'address' => $address->address,
             'payment_method' => $paymentMethod->title,
             'shipping_method' => $shippingMethod->title,
-            //            'payment_status' => 'unpaid',
-            //            'shipping_status' => 'not_sent',
             'status' => 'new',
-
         ]);
-        foreach ($request->items as $key => $item) {
+
+        // ----- 6. ذخیره جزئیات سفارش -----
+        foreach ($updatedItems as $item) {
             OrderDetail::create([
                 'order_id' => $order->id,
                 'product_id' => $item['id'],
                 'title' => $item['title'],
-                'amount' => (int) $item['price'],
-                'discount' => (int) $item['discount'],
-                'unit' => (int) $item['quantity'],
-                'total_price' => (int) $item['itemTotal'],
+                'amount' => $item['price'],
+                'discount' => $item['discount'],
+                'unit' => $item['quantity'],
+                'total_price' => $item['itemTotal'],
                 'tax' => 0,
                 'attribute' => '-',
             ]);
+
+            // کاهش موجودی محصول
+            $product = Product::find($item['id']);
+
         }
+
+        // ----- 7. نوتیفیکیشن ادمین (غیر همزمان) -----
         defer(fn () => notifyAdmin($user->id, $user->name, $user->mobile, 'order', $order->id, 1, 'سفارش خرید ثبت شد.'));
-        //        notifyAdmin($user->id, $user->name, $user->mobile, 'order', $order->id, 0, 'سفارش خرید ثبت شد.');
+
+        // ----- 8. پرداخت Zarinpal -----
         $invoice = new Invoice;
         $invoice->detail('mobile', $user->mobile);
         $invoice->detail('email', $user->email);
-        $invoice->amount($cost);
+        $invoice->amount($cost + (int) $shippingMethod->cost);
         $invoice->via('zarinpal');
+
         try {
             $payment = Payment::callbackUrl(route('home.check_payment', $order->id))
-                ->purchase($invoice, function ($driver, $transactionId) use ($user, $order, $cost) {
+                ->purchase($invoice, function ($driver, $transactionId) use ($user, $order, $cost, $shippingMethod) {
                     $tx = Transaction::create([
                         'transaction_id' => $transactionId,
                         'user_id' => $user->id,
                         'order_id' => $order->id,
-                        'price' => $cost,
+                        'price' => $cost + (int) $shippingMethod->cost,
                         'status' => '0',
                         'type' => 'order',
                     ]);
                     $order->update(['transaction_id' => $tx->id]);
-                }
-                );
+                });
 
             $res = json_decode($payment->pay()->toJson(), true);
-            $method = 'GET';
-            $action = $res['action'];
-            $inputs = $res['inputs'];
 
             return Inertia::location($res['action']);
-            //            return Inertia::render('Front/Finance/Redirect', ['method' => $method, 'action' => $action, 'inputs' => $inputs]);
-
-            //            return response()->json(['status'=>'OK','method'=>'GET','action'=>$action,'inputs'=>$inputs]);
-
         } catch (PurchaseFailedException $exception) {
-            echo $exception;
-
-            return response(['status' => 'NOK']);
+            return response(['status' => 'NOK', 'message' => $exception->getMessage()]);
         }
     }
 
@@ -152,31 +219,74 @@ class FrontOrderController extends Controller
         if (! $transaction) {
             abort(419);
         }
-        $order = Order::find($request->order_id);
-        if (! $order) {
-            abort(419);
-        }
-        $user = auth()->user();
-        try {
-            $receipt = Payment::amount((int) $transaction->price)->transactionId($transaction->transaction_id)->verify();
 
-            // You can show payment referenceId to the user.
+        $order = Order::findOrFail($request->order_id);
+        $user = auth()->user();
+
+        try {
+            // پرداخت موفق
+            $receipt = Payment::amount((int) $transaction->price)
+                ->transactionId($transaction->transaction_id)
+                ->verify();
+
             $verify_code = $receipt->getReferenceId();
-            $transaction->update(['status' => '1', 'verify_code' => $verify_code]);
-            $order->update(['payment_status' => 'paid']);
-            $message = 'پرداخت موفت';
-            defer(fn () => $this->sendFastSmsMokhaberat($user->mobile, '9a4xncmdrci65g1', ['name' => $user->name, 'order' => "{$transaction->id}"]));
-            defer(fn () => notifyAdmin($user->id, $user->name, $user->mobile, 'tx', $order->id, 1, 'سفارش خرید پرداخت شد.'));
+
+            // بروزرسانی تراکنش
+            $transaction->update([
+                'status' => '1',
+                'verify_code' => $verify_code,
+            ]);
+
+            // بروزرسانی سفارش
+            $order->update([
+                'payment_status' => 'paid',
+                'status' => 'paid',
+            ]);
+
+            /* 🔥 کاهش موجودی محصولات بعد از پرداخت موفق */
+            foreach ($order->details as $detail) {
+                $product = Product::find($detail->product_id);
+
+                if ($product) {
+                    // اگر موجودی کافی نداشته باشد → محصول ناموجود شده
+                    if ($product->stock < $detail->unit) {
+                        // بک‌آپ: جلوگیری از ثبت اشتباه
+                        $product->update(['stock' => 0]);
+                    } else {
+                        $product->decrement('stock', $detail->unit);
+                    }
+                }
+            }
+
+            $message = 'پرداخت موفق';
+
+            // ارسال پیام و نوتیفای
+            defer(fn () => $this->sendFastSmsMokhaberat(
+                $user->mobile,
+                '9a4xncmdrci65g1',
+                ['name' => $user->name, 'order' => "{$transaction->id}"]
+            ));
+
+            defer(fn () => notifyAdmin(
+                $user->id,
+                $user->name,
+                $user->mobile,
+                'tx',
+                $order->id,
+                1,
+                'سفارش خرید پرداخت شد.'
+            ));
 
         } catch (InvalidPaymentException $exception) {
-            /**
-             * when payment is not verified, it will throw an exception.
-             * We can catch the exception to handle invalid payments.
-             * getMessage method, returns a suitable message that can be used in user interface.
-             **/
+
             $message = $exception->getMessage();
             $verify_code = 0;
-            $order->update(['status' => 'hold']);
+
+            // سفارش در حالت معلق
+            $order->update([
+                'payment_status' => 'failed',
+                'status' => 'hold',
+            ]);
         }
 
         return inertia('main/order/check-payment', [

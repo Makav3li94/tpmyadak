@@ -4,6 +4,7 @@ import {showToast} from "@/utils.js";
 import {themeChange} from "theme-change";
 import {CartProvider} from "react-use-cart";
 import OrderHeader from "@/layouts/common/order-header.jsx";
+import {Toaster} from "sonner";
 
 
 export default function OrderLayout({children}) {
@@ -36,6 +37,7 @@ export default function OrderLayout({children}) {
                     </div>
 
             </div>
+            <Toaster theme="system" richColors="true" toastOptions={{duration: 3000, dismissible: true,}}/>
         </CartProvider>
     )
 }

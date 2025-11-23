@@ -78,7 +78,7 @@ export const hasPermission = (auth, permission) => {
     return false
 }
 
-export const showToast = (message, type) => {
+export const showToast = (message, type='success') => {
     if (type === 'success') {
         toast.success(message)
         return

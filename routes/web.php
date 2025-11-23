@@ -24,6 +24,10 @@ Route::get('/articles', [FrontBlogController::class, 'getBlogs'])->name('home.ge
 Route::get('/article/{slug}', [FrontBlogController::class, 'getBlog'])->name('home.getBlog');
 
 Route::get('/cart', [FrontOrderController::class, 'cart'])->name('home.cart');
+
+Route::post('/cart/refresh-prices', [FrontOrderController::class, 'refreshCart'])->name('home.cart.refresh');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::post('/comment-store', [FrontReviewController::class, 'store'])->name('user.review.store');
 
