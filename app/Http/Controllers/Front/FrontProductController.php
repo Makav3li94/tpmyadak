@@ -155,34 +155,38 @@ class FrontProductController extends Controller
 
         // ساخت next/prev URL از cursor
         $nextUrl = $products->nextCursor()
-            ? url()->current() . '?' . http_build_query([
+            ? url()->current().'?'.http_build_query([
                 ...$request->except('cursor'),
-                'cursor' => $products->nextCursor()->encode()
+                'cursor' => $products->nextCursor()->encode(),
             ])
             : null;
 
         $prevUrl = $products->previousCursor()
-            ? url()->current() . '?' . http_build_query([
+            ? url()->current().'?'.http_build_query([
                 ...$request->except('cursor'),
-                'cursor' => $products->previousCursor()->encode()
+                'cursor' => $products->previousCursor()->encode(),
             ])
             : null;
 
         // -----------------------------
         // بخش 4: جمع‌آوری brand/carBrand/carModel IDs
         // -----------------------------
-        $items = collect($products->items());
+        $allProductsLite = Product::whereIn('product_category_id', $categoryIds)
+            ->select('id', 'brand_id')
+            ->with(['carModels:id,car_brand_id',])
+            ->get();
 
-        $brandIds = $items->pluck('brand_id')->unique()->filter()->values();
+// گرفتن همه آیدی‌های مرتبط
+        $allBrandIds = $allProductsLite->pluck('brand_id')->unique()->filter()->values();
 
-        $carModelIds = $items
+        $allCarModelIds = $allProductsLite
             ->pluck('carModels')
             ->flatten()
             ->pluck('id')
             ->unique()
             ->values();
 
-        $carBrandIds = $items
+        $allCarBrandIds = $allProductsLite
             ->pluck('carModels')
             ->flatten()
             ->pluck('car_brand_id')
@@ -192,16 +196,16 @@ class FrontProductController extends Controller
         // -----------------------------
         // بخش 5: کش برندها، مدل‌ها و برندهای خودرو
         // -----------------------------
-        $brands = Cache::remember("brands_{$slug}_" . md5($brandIds), 900, function () use ($brandIds) {
-            return Brand::whereIn('id', $brandIds)->get();
+        $brands = Cache::remember("brands_{$slug}_".md5($allBrandIds), 900, function () use ($allBrandIds) {
+            return Brand::whereIn('id', $allBrandIds)->get();
         });
 
-        $carBrands = Cache::remember("carBrands_{$slug}_" . md5($carBrandIds), 900, function () use ($carBrandIds) {
-            return CarBrand::whereIn('id', $carBrandIds)->get();
+        $carBrands = Cache::remember("carBrands_{$slug}_".md5($allCarBrandIds), 900, function () use ($allCarBrandIds) {
+            return CarBrand::whereIn('id', $allCarBrandIds)->get();
         });
 
-        $carModels = Cache::remember("carModels_{$slug}_" . md5($carModelIds), 900, function () use ($carModelIds) {
-            return CarModel::whereIn('id', $carModelIds)->get();
+        $carModels = Cache::remember("carModels_{$slug}_".md5($allCarModelIds), 900, function () use ($allCarModelIds) {
+            return CarModel::whereIn('id', $allCarModelIds)->get();
         });
 
         // -----------------------------
@@ -222,8 +226,6 @@ class FrontProductController extends Controller
             'carModels' => queryMapper($carModels),
         ]);
     }
-
-
 
     public function commonFilters(Request $request, $query): void
     {
