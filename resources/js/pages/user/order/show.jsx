@@ -42,11 +42,11 @@ export default function Show({order}) {
                 {name: 'سفارش', href: route('user.orders.index')},
             ]}>
             <Head title="سفارش"/>
-            <div className="bg-gray-50">
+            <div className="bg-base-200">
                 <div className="mx-auto max-w-2xl pt-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                     <div className="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
                         <div className="flex sm:items-baseline sm:space-x-4">
-                            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">سفارش
+                            <h1 className="text-2xl font-bold tracking-tight  sm:text-3xl">سفارش
                                 #54879</h1>
                             <a href="#"
                                className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block">
@@ -54,9 +54,9 @@ export default function Show({order}) {
                                 <span aria-hidden="true"> &larr;</span>
                             </a>
                         </div>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm ">
                             تاریخ ثبت{' '}
-                            <time dateTime="2021-03-22" className="font-medium text-gray-900" dir="ltr">
+                            <time dateTime="2021-03-22" className="font-medium " dir="ltr">
                                 {order.created_at}
                             </time>
                         </p>
@@ -73,7 +73,7 @@ export default function Show({order}) {
                         <div className="space-y-8">
                             {order.details.map((item, i) => (
                                 <div key={i}
-                                     className="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
+                                     className="border-b border-t border-gray-200 bg-base-100 shadow-sm sm:rounded-lg sm:border">
                                     <div className="px-4 py-6 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
                                         <div className="sm:flex lg:col-span-7">
                                             <div
@@ -86,26 +86,26 @@ export default function Show({order}) {
                                             </div>
 
                                             <div className="mt-6 sm:ml-6 sm:mt-0">
-                                                <h3 className="text-base font-medium text-gray-900">
+                                                <h3 className="text-base font-medium ">
                                                     <Link
                                                         href={route('home.getProduct', item.product.sku)}>{item.title}</Link>
                                                 </h3>
-                                                <p className="mt-2 text-sm font-medium text-gray-900">${item.amount.toLocaleString('en')}</p>
+                                                <p className="mt-2 text-sm font-medium ">${item.amount.toLocaleString('en')}</p>
                                             </div>
                                         </div>
 
                                         <div className="mt-6 lg:col-span-5 lg:mt-0">
                                             <dl className="grid grid-cols-2 gap-x-6 text-sm">
                                                 <div>
-                                                    <dt className="font-medium text-gray-900">آدرس تحویل</dt>
-                                                    <dd className="mt-3 text-gray-500">
+                                                    <dt className="font-medium ">آدرس تحویل</dt>
+                                                    <dd className="mt-3 ">
                                                         <span className="block">{order.address}</span>
                                                         <span className="block">{order.postal_code}</span>
                                                     </dd>
                                                 </div>
                                                 <div>
-                                                    <dt className="font-medium text-gray-900">اطلاعات گیرنده</dt>
-                                                    <dd className="mt-3 space-y-3 text-gray-500">
+                                                    <dt className="font-medium ">اطلاعات گیرنده</dt>
+                                                    <dd className="mt-3 space-y-3 ">
                                                         <p>{order.name}</p>
                                                         <p>{order.mobile}</p>
                                                         <p>{order.phone}</p>
@@ -125,7 +125,7 @@ export default function Show({order}) {
                                         وضعیت سفارش
 
                                     </h4>
-                                    <p className="text-sm font-medium text-gray-900">
+                                    <p className="text-sm font-medium ">
                                         {/*{product.status} on <time dateTime={product.datetime}>{product.date}</time>*/}
                                         {/*{order.status}*/}
                                         وضعیت سفارش
@@ -139,7 +139,7 @@ export default function Show({order}) {
                                                  className="h-2 rounded-full bg-indigo-600"/>
                                         </div>
                                         <div
-                                            className="mt-6 hidden grid-cols-6 text-sm font-medium text-gray-600 sm:grid">
+                                            className="mt-6 hidden grid-cols-6 text-sm font-medium  sm:grid">
                                             <div className="text-indigo-600">ثبت</div>
                                             <div
                                                 className={classNames(step > 0 ? 'text-indigo-600' : '', 'text-center')}>
@@ -171,25 +171,25 @@ export default function Show({order}) {
                     <div className="mt-16">
                         <h2 className="sr-only">وضعیت پرداخت</h2>
                         {order.payment_status==='paid' ? (
-                            <div className="bg-gray-100 px-4 py-6 sm:rounded-lg sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-8">
+                            <div className="bg-base-100 px-4 py-6 sm:rounded-lg sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-8">
                                 <dl className="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
                                     <div>
-                                        <dt className="font-medium text-gray-900">متد پرداخت</dt>
-                                        <dd className="mt-3 text-gray-500">
+                                        <dt className="font-medium ">متد پرداخت</dt>
+                                        <dd className="mt-3 ">
                                             <span className="block">درگاه</span>
                                             <span className="block">یکجا</span>
                                         </dd>
                                     </div>
                                     <div>
-                                        <dt className="font-medium text-gray-900">رهگیری پرداخت</dt>
+                                        <dt className="font-medium ">رهگیری پرداخت</dt>
                                         <dd className="-ml-4 -mt-1 flex flex-wrap">
                                             <div className="ml-4 mt-4 flex-shrink-0">
 
                                                 <p className="sr-only">کارت بانکی</p>
                                             </div>
                                             <div className="ml-4 mt-4">
-                                                <p className="text-gray-900">{order.transaction.verify_code}</p>
-                                                <p className="text-gray-600" dir='ltr'>{order.transaction.created_at}</p>
+                                                <p className="">{order.transaction.verify_code}</p>
+                                                <p className="" dir='ltr'>{order.transaction.created_at}</p>
                                             </div>
                                         </dd>
                                     </div>
@@ -197,19 +197,19 @@ export default function Show({order}) {
 
                                 <dl className="mt-8 divide-y divide-gray-200 text-sm lg:col-span-5 lg:mt-0">
                                     <div className="flex items-center justify-between pb-4">
-                                        <dt className="text-gray-600">مجموع</dt>
-                                        <dd className="font-medium text-gray-900">{order.subtotal.toLocaleString('en')}</dd>
+                                        <dt className="">مجموع</dt>
+                                        <dd className="font-medium ">{order.subtotal.toLocaleString('en')}</dd>
                                     </div>
                                     <div className="flex items-center justify-between py-4">
-                                        <dt className="text-gray-600">ارسال</dt>
-                                        <dd className="font-medium text-gray-900">{order.shipping.toLocaleString('en')}</dd>
+                                        <dt className="">ارسال</dt>
+                                        <dd className="font-medium ">{order.shipping.toLocaleString('en')}</dd>
                                     </div>
                                     <div className="flex items-center justify-between py-4">
-                                        <dt className="text-gray-600">مالیات</dt>
-                                        <dd className="font-medium text-gray-900">0</dd>
+                                        <dt className="">مالیات</dt>
+                                        <dd className="font-medium ">0</dd>
                                     </div>
                                     <div className="flex items-center justify-between pt-4">
-                                        <dt className="font-medium text-gray-900">کل پرداختی</dt>
+                                        <dt className="font-medium ">کل پرداختی</dt>
                                         <dd className="font-medium text-indigo-600">{order.total.toLocaleString('en')}</dd>
                                     </div>
                                 </dl>

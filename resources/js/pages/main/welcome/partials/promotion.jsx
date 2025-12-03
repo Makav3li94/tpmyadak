@@ -72,20 +72,20 @@ export default function Promotion({promoProducts}) {
                                         </h4>
                                     </Link>
                                     {/* rating product- deal of the day---------- */}
-                                    <div className="flex my-6">
-                                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>
-                                        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>
-                                    </div>
+                                    {/*<div className="flex my-6">*/}
+                                    {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                                    {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                                    {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                                    {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
+                                    {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>*/}
+                                    {/*</div>*/}
                                     {/* prices product- deal of the day---------- */}
                                     <div className="my-6 font-bold flex-grow text-gray-400">
                                         <span className="text-[#d8330a] text-sm sm:text-base pl-2">
-                                            {parseInt((mainPromo.price - mainPromo.discount)).toLocaleString('en')} میلیون
+                                            {parseInt((mainPromo.price - mainPromo.discount)).toLocaleString('en')} تومان
                                         </span>
                                         <span className="line-through text-sm sm:text-base">
-                                            {parseInt(mainPromo.price).toLocaleString('en')} میلیون
+                                            {parseInt(mainPromo.price).toLocaleString('en')} تومان
                                         </span>
                                         <p className="font-medium text-xs sm:text-sm mt-6">
                                             {mainPromo.excerpt}
@@ -154,11 +154,11 @@ export default function Promotion({promoProducts}) {
 
                                                                 <div className="text-gray-400 py-1">
                                                                     <div className="line-through text-sm sm:text-base">
-                                                                        {parseInt(product.price).toLocaleString('en')} میلیون
+                                                                        {parseInt(product.price).toLocaleString('en')} تومان
                                                                     </div>
                                                                     <div
                                                                         className="text-[#d8330a] text-sm sm:text-base pl-2">
-                                                                        {parseInt((product.price - product.discount)).toLocaleString('en')} میلیون
+                                                                        {parseInt((product.price - product.discount)).toLocaleString('en')} تومان
                                                                     </div>
                                                                 </div>
                                                             </div>

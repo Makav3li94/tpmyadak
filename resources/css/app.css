@@ -370,3 +370,6 @@
     border-top: 0 solid transparent;
     border-right: 11px solid #0055ac;
 }
+.pl-0{
+    padding-left: 0!important;
+}

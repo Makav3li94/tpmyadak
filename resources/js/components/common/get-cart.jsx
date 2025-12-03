@@ -63,7 +63,7 @@ const GetCart = ({isMobile = false}) => {
                     transition={{duration: 0.5}}
                     exit={{height: 0}}
                     key={"container"}
-                    className="border-1 border-gray-300 group-hover:max-h-64  lg:w-[180%] w-  absolute top-full right-2 translate-x-2 z-50 mt-1  bg-white"
+                    className="border-1 border-gray-300 group-hover:max-h-64  lg:w-[180%] w-72  absolute top-full right-2 translate-x-2 z-50 mt-1  bg-white"
                 >
                     {items.map((item, index) => (
                         <div className="flex flex-col items-center text-gray-600 justify-between
@@ -80,7 +80,7 @@ const GetCart = ({isMobile = false}) => {
                             </div>
                             <div className="flex w-full justify-between items-center">
 
-                                <span className="text-gray-500 ">{item.quantity + ' عدد'} </span>
+                                <span className="text-gray-500 ">{item.quantity } <small className="sm:inline-block hid" >عدد</small> </span>
                                 <span className="text-gray-500    ">
                                     {parseInt(item.price - item.discount).toLocaleString('en')} تومان
                                 </span>

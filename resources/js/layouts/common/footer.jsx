@@ -198,12 +198,12 @@ export default function Footer({isSingle = false}) {
                         {/* ----------- categories ---- */}
                         <ul className="text-white py-14 pr-4">
                             <li className="pb-5">
-                                <h6 className="font-bold lg:text-lg">دسته بندی ها</h6>
+                                <h6 className="font-bold lg:text-lg">نماد و مجوز</h6>
                             </li>
                             <li className="py-2">
                                 <a referrerPolicy='origin' target='_blank'
                                    href='https://trustseal.enamad.ir/?id=678789&Code=ziNu6wSbH1CVocmfel8zV1pBXnVUFJ0L'>
-                                    <img referrerPolicy='origin' className="h-32"
+                                    <img referrerPolicy='origin' className="h-28"
                                          src='https://tpmyadak.com/enamad.webp'
                                          alt='logo-enamad' code='ziNu6wSbH1CVocmfel8zV1pBXnVUFJ0L'/></a>
                             </li>
@@ -214,7 +214,7 @@ export default function Footer({isSingle = false}) {
                                        window.open("https://logo.samandehi.ir/Verify.aspx?id=395398&p=xlaopfvldshwxlaopfvlmcsi", "Popup", "toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")
                                    }
                                    }>
-                                    <img referrerPolicy='origin' id='rgvjsizpapfurgvjsizpoeuk' className="h-32"
+                                    <img referrerPolicy='origin' id='rgvjsizpapfurgvjsizpoeuk' className="h-28"
                                          alt='logo-samandehi'
                                          src='https://tpmyadak.com/samandehi.webp'/>
                                 </a>

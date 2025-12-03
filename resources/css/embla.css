@@ -78,6 +78,9 @@
     top: 40%;
     color: #000;
 }
+.jobjob .embla__button--prev,.jobjob .embla__button--next{
+    top: 20% !important;
+}
 .embla__button--next{
     left: 20px;
 }

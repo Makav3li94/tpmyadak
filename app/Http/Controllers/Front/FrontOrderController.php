@@ -240,7 +240,7 @@ class FrontOrderController extends Controller
             // بروزرسانی سفارش
             $order->update([
                 'payment_status' => 'paid',
-                'status' => 'paid',
+//                'status' => 'pending',
             ]);
 
             /* 🔥 کاهش موجودی محصولات بعد از پرداخت موفق */

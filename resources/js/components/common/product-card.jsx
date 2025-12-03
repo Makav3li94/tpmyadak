@@ -42,14 +42,14 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
                     {parseInt(product.price) !== 0 ? (
                         <>
                             {product.status_promotion !==1 ? (
-                                <>{parseInt(product.price).toLocaleString('en')} میلیون</>
+                                <>{parseInt(product.price).toLocaleString('en')} تومان</>
                             ) : (
                                 <div className="text-gray-400 py-1">
                                     <div className="line-through text-sm sm:text-base">
-                                        {parseInt(product.price).toLocaleString('en')} میلیون
+                                        {parseInt(product.price).toLocaleString('en')}
                                     </div>
                                     <div className="text-[#d8330a] text-sm sm:text-base pl-2">
-                                        {parseInt((product.price - product.discount)).toLocaleString('en')} میلیون
+                                        {parseInt((product.price - product.discount)).toLocaleString('en')} تومان
                                     </div>
                                 </div>
                             )}

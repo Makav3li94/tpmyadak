@@ -3,12 +3,13 @@ import { PackageOpen, CalendarArrowUp,CalendarArrowDown } from 'lucide-react'
 import DashboardStats from "@/components/common/dashboard-stats.jsx";
 
 
-export default function Dashboard(props) {
+export default function Dashboard({stats}) {
     const statsData = [
-        {title : "سفارش ها", value : "34.7k", icon : <PackageOpen className='w-8 h-8'/>},
-        {title : "تحویل گرفته", value : "$34,545", icon : <CalendarArrowUp className='w-8 h-8'/>},
-        {title : "مرجوع شده", value : "450", icon : <CalendarArrowDown className='w-8 h-8'/>},
+        {title : "سفارش ها", value : stats.total, icon : <PackageOpen className='w-8 h-8'/>},
+        {title : "تحویل گرفته", value : stats.done_count, icon : <CalendarArrowUp className='w-8 h-8'/>},
+        {title : "مرجوع شده", value : stats.canceled_count, icon : <CalendarArrowDown className='w-8 h-8'/>},
     ]
+    console.log(stats)
     return (
         <UserAuthenticatedLayout
             title={'پنل کاربری'}

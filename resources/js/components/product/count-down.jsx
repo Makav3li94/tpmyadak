@@ -49,28 +49,28 @@ const Countdown = ({targetDate}) => {
     return (
         <div className="flex gap-x-1 sm:gap-x-4">
             <div className="w-10 sm:w-14 border-2 border-gray-300 rounded-sm flex flex-col items-center px-4 py-2">
-                <span className="font-bold">{state.days || "0"}</span>
-                <span className="text-xs sm:text-sm text-gray-400 font-ligh">
+                <span className="font-bold text-gray-400">{state.days || "0"}</span>
+                <span className="text-xs sm:text-sm text-gray-500 font-ligh">
                       روز
                     </span>
             </div>
             <div
                 className="w-10 sm:w-14 border-2 border-gray-300 rounded-sm flex flex-col items-center px-4 py-2">
-                <span className="font-bold">{state.hours || "00"}</span>
+                <span className="font-bold text-gray-400">{state.hours || "00"}</span>
                 <span className="text-xs sm:text-sm text-gray-400 font-light">
                       ساعت
                     </span>
             </div>
             <div
                 className="w-10 sm:w-14 border-2 border-gray-300 rounded-md flex flex-col items-center px-4 py-2">
-                <span className="font-bold">{state.minutes || "00"}</span>
+                <span className="font-bold text-gray-400">{state.minutes || "00"}</span>
                 <span className="text-xs sm:text-sm text-gray-400 font-light">
                       دقیقه
                     </span>
             </div>
             <div
                 className="w-10 sm:w-14 border-2 border-gray-300 rounded-md flex flex-col items-center px-4 py-2">
-                <span className="font-bold">{state.seconds || "00"}</span>
+                <span className="font-bold text-gray-400">{state.seconds || "00"}</span>
                 <span className="text-xs sm:text-sm text-gray-400 font-light">
                       ثانیه
                     </span>

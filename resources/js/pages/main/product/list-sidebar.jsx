@@ -89,7 +89,7 @@ export default function ListSidebar({
                 <div className="drawer-content flex flex-col items-center justify-center">
                     {/* Page content here */}
                     <label htmlFor="my-drawer-3"
-                           className="btn btn-xs btn-error text-base-100 drawer-button lg:hidden fixed right-0 top-1/4 z-1">
+                           className="btn btn-xs btn-error text-base-100 drawer-button lg:hidden fixed right-0 top-3/8 z-1">
                         فیلترها
                     </label>
                 </div>
@@ -138,8 +138,8 @@ export default function ListSidebar({
                                 <li className="border-b border-gray-300 mb-2 pb-2" key={1}>
                                     <Disclosure  as="div" className="px-4" defaultOpen={true}>
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
-                                                <span className="text-gray-600 text-sm font-medium ">         برند ها</span>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
+                                                <span className=" text-sm font-medium ">         برند ها</span>
                                                 <span className="ml-6 flex h-7 items-center">
                                                     <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
                                                     <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
@@ -162,8 +162,8 @@ export default function ListSidebar({
                                 <li className="border-b border-gray-300 mb-2 pb-2" key={2} >
                                     <Disclosure as="div" className="px-4" defaultOpen={true}>
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
-                                                <span className="text-gray-600 text-sm font-medium "> برند خودرو</span>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
+                                                <span className=" text-sm font-medium "> برند خودرو</span>
                                                 <span className="ml-6 flex h-7 items-center">
                                                     <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
                                                     <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
@@ -187,8 +187,8 @@ export default function ListSidebar({
                                 <li className="border-b border-gray-300 mb-2 pb-2" key={3}>
                                     <Disclosure  as="div" className="px-4" defaultOpen={true}>
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
-                                                <span className="text-gray-600 text-sm font-medium "> نوع خودرو</span>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
+                                                <span className=" text-sm font-medium "> نوع خودرو</span>
                                                 <span className="ml-6 flex h-7 items-center">
                                                     <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
                                                     <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
@@ -211,8 +211,8 @@ export default function ListSidebar({
                                 <li className="border-b border-gray-300 mb-2 pb-2" key={4}>
                                     <Disclosure  as="div" className="px-4" defaultOpen={true}>
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
-                                                <span className="text-gray-600 text-sm font-medium "> دسته بندی</span>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
+                                                <span className=" text-sm font-medium "> دسته بندی</span>
                                                 <span className="ml-6 flex h-7 items-center">
                                                     <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
                                                     <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
@@ -237,8 +237,8 @@ export default function ListSidebar({
                                 <li key={filter.id}>
                                     <Disclosure  as="div" className="px-4" defaultOpen={true} >
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
-                                                <span className="text-gray-600 text-sm font-medium ">
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
+                                                <span className=" text-sm font-medium ">
                                                     {filter.title}
                                                 </span>
                                                 <span className="ml-6 flex h-7 items-center">

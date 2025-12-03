@@ -58,7 +58,7 @@ export default function Cart(props) {
            <>
                <h1 className="sr-only">سبد خرید</h1>
                <section aria-labelledby="summary-heading"
-                        className="bg-gray-50 px-4 pb-10 pt-16 sm:px-6 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:px-0 lg:pb-16">
+                        className=" px-4 pb-10 pt-16 sm:px-6 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:px-0 lg:pb-16">
                    <h2 id="cart-heading" className="sr-only">
                        محصولات موجود در سبد
                    </h2>
@@ -76,25 +76,25 @@ export default function Cart(props) {
                                        />
                                    </div>
 
-                                   <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
+                                   <div className="mr-4 flex flex-1 flex-col justify-between sm:ml-6">
                                        <div
                                            className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
                                            <div>
                                                <div className="flex justify-between">
                                                    <h3 className="text-sm">
                                                        <Link href={item.sku}
-                                                             className="font-medium text-gray-700 hover:text-gray-800">
+                                                             className="font-medium  hover:text-gray-800">
                                                            {item.title}
                                                        </Link>
                                                    </h3>
                                                </div>
                                                <div className="mt-1 flex text-sm">
-                                                   <p className="text-gray-500">test1</p>
+                                                   {/*<p className="text-gray-500">test1</p>*/}
                                                    {item.size ? (
                                                        <p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">{item.size}</p>
                                                    ) : null}
                                                </div>
-                                               <p className="mt-1 text-sm font-medium text-gray-900">
+                                               <p className="mt-1 text-sm font-medium ">
                                                    {parseInt(item.price).toLocaleString('en')} تومان
                                                </p>
                                            </div>
@@ -133,7 +133,7 @@ export default function Cart(props) {
                                            </div>
                                        </div>
 
-                                       <p className="mt-4 flex space-x-2 text-sm text-gray-700">
+                                       <p className="mt-4 flex space-x-2 text-sm ">
                                            {item.stock ? (
                                                <CheckIcon aria-hidden="true"
                                                           className="h-5 w-5 flex-shrink-0 text-green-500"/>
@@ -157,19 +157,19 @@ export default function Cart(props) {
                    aria-labelledby="summary-heading"
                    className="px-4 pb-36 pt-16 sm:px-6 lg:col-start-2 lg:row-start-1 lg:px-0 lg:pb-16"
                >
-                   <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
+                   <h2 id="summary-heading" className="text-lg font-medium ">
                        خلاصه سبد
                    </h2>
                    {hasMounted && (
                        <dl className="mt-6 space-y-4">
                            <div className="flex items-center justify-between">
-                               <dt className="text-sm text-gray-600">مجموع</dt>
-                               <dd className="text-sm font-medium text-gray-900">
+                               <dt className="text-sm ">مجموع</dt>
+                               <dd className="text-sm font-medium ">
                                    {subtotal.toLocaleString('en')}
                                </dd>
                            </div>
                            <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                               <dt className="flex items-center text-sm text-gray-600">
+                               <dt className="flex items-center text-sm ">
                                    <span>تخفیف</span>
                                    {/*<a href="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">*/}
                                    {/*    <span className="sr-only">Learn more about how shipping is*/}
@@ -177,12 +177,12 @@ export default function Cart(props) {
                                    {/*    <CircleQuestionMark aria-hidden="true" className="h-5 w-5"/>*/}
                                    {/*</a>*/}
                                </dt>
-                               <dd className="text-sm font-medium text-gray-900">
+                               <dd className="text-sm font-medium ">
                                    {discountTotal.toLocaleString('en')}
                                </dd>
                            </div>
                            {/*<div className="flex items-center justify-between border-t border-gray-200 pt-4">*/}
-                           {/*    <dt className="flex text-sm text-gray-600">*/}
+                           {/*    <dt className="flex text-sm ">*/}
                            {/*        <span>Tax estimate</span>*/}
                            {/*        <a href="#"*/}
                            {/*           className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">*/}
@@ -190,11 +190,11 @@ export default function Cart(props) {
                            {/*            <CircleQuestionMark aria-hidden="true" className="h-5 w-5"/>*/}
                            {/*        </a>*/}
                            {/*    </dt>*/}
-                           {/*    <dd className="text-sm font-medium text-gray-900">$8.32</dd>*/}
+                           {/*    <dd className="text-sm font-medium ">$8.32</dd>*/}
                            {/*</div>*/}
                            <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                               <dt className="text-base font-medium text-gray-900">قابل پرداخت</dt>
-                               <dd className="text-base font-medium text-gray-900">
+                               <dt className="text-base font-medium ">قابل پرداخت</dt>
+                               <dd className="text-base font-medium ">
                                    {numLatinToAr((parseInt(cartTotal) - discountTotal).toLocaleString('en'))}
                                </dd>
                            </div>

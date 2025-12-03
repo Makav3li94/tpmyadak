@@ -346,7 +346,7 @@ export default function Login({status}) {
                 </form>
             )}
 
-            <p className="text-accent-content/70 text-center  text-xs mt-5">با ورود به سایت قوانین و مقررات را
+            <p className=" text-center  text-xs mt-5">با ورود به سایت قوانین و مقررات را
                 میپذیرم.</p>
 
         </GuestLayout>

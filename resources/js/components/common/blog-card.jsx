@@ -29,13 +29,13 @@ export default function BlogCard({blog,i}) {
                     </Link>
                 </div>
                 <div className="group relative">
-                    <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                    <h3 className="mt-3 text-lg font-semibold leading-6  group-hover:text-gray-600">
                         <Link href={route('home.getBlog', blog.slug)}>
                             <span className="absolute inset-0"/>
                             {blog.title}
                         </Link>
                     </h3>
-                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{blog.excerpt}</p>
+                    <p className="mt-5 line-clamp-3 text-sm leading-6 ">{blog.excerpt}</p>
                 </div>
                 {/*<div className="relative mt-8 flex items-center gap-x-4">*/}
                 {/*    <img alt="" src={blog.author.imageUrl} className="h-10 w-10 rounded-full bg-gray-100" />*/}

@@ -177,8 +177,8 @@ export default function ProductList(props) {
                                 <div className="bembla__viewport" ref={emblaRef}>
                                     <div className="bembla__container">
                                         {productCategory.children.map((item, index) => (
-                                            <div className="bembla__slide" key={index}>
-                                                <Card>
+                                            <div className="bembla__slide pl-0" key={index}>
+                                                <div className="flex flex-col items-center justify-center border-r border-gray-600 p-1">
                                                     <figure>
                                                         <img
                                                             src={item.image ? route('file.show', {file:item.image, dir:'category/'}) : '/thumbnail.webp'}
@@ -186,20 +186,20 @@ export default function ProductList(props) {
                                                             alt="slide"
                                                         />
                                                     </figure>
-                                                    <div className="card-body text-center p-2">
+                                                    <div className="card-body text-center p-1 mt-2">
                                                         <Link href={route('home.getCategory', item.slug)}>
                                                             <h2 className="card-title justify-center text-sm">{item.title}</h2>
                                                         </Link>
                                                         {item.description && <p>{item.description}</p>}
                                                     </div>
-                                                </Card>
+                                                </div>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
 
                                 <div className="bembla__controls">
-                                    <div className="bembla__buttons">
+                                    <div className="bembla__buttons jobjob">
                                         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled}/>
                                         <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled}/>
                                     </div>

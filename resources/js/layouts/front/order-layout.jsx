@@ -23,10 +23,10 @@ export default function OrderLayout({children}) {
     return (
         <CartProvider>
             <div className="min-h-screen flex flex-col sm:justify-center items-center w-full">
-                    <div className="bg-white">
+                    <div className="bg-base-100">
                         {/* Background color split screen for large screens */}
-                        <div aria-hidden="true" className="fixed left-0 top-0 hidden h-full w-1/2 bg-white lg:block"/>
-                        <div aria-hidden="true" className="fixed right-0 top-0 hidden h-full w-1/2 bg-gray-50 lg:block"/>
+                        <div aria-hidden="true" className="fixed left-0 top-0 hidden h-full w-1/2 bg-base-100 lg:block"/>
+                        <div aria-hidden="true" className="fixed right-0 top-0 hidden h-full w-1/2 bg-base-200 lg:block"/>
                         <OrderHeader/>
 
 

@@ -110,13 +110,13 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
             <h1 className="sr-only">Order information</h1>
 
             <section aria-labelledby="summary-heading"
-                     className="bg-gray-50 px-4 pb-10 pt-16 sm:px-6 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:px-0 lg:pb-16">
+                     className=" px-4 pb-10 pt-16 sm:px-6 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:px-0 lg:pb-16">
                 <div className="mx-auto max-w-lg lg:max-w-none">
-                    <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
+                    <h2 id="summary-heading" className="text-lg font-medium ">
                         صورتحساب
                     </h2>
                     <ul role="list"
-                        className="divide-y divide-gray-200 text-sm font-medium border-gray-100 text-gray-900">
+                        className="divide-y divide-gray-200 text-sm font-medium border-gray-100 ">
                         {hasMounted && (
                             items.map((item, index) => (
                                 <li key={index} className="flex items-start space-x-4 py-6">
@@ -128,7 +128,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                                     />
                                     <div className="flex-auto space-y-1">
                                         <h3>{item.title}</h3>
-                                        <p className="text-gray-500">test1</p>
+                                        {/*<p className="text-gray-500">test1</p>*/}
                                         {item.size ? (
                                             <p className="text-gray-500">{item.size}</p>
                                         ) : null}
@@ -141,7 +141,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                         )}
                     </ul>
                     <form className="my-10">
-                        <label htmlFor="discount-code-mobile" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="discount-code-mobile" className="block text-sm font-medium ">
                             کد تخفیف
                         </label>
                         <div className="mt-1 flex space-x-4">
@@ -164,19 +164,19 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                             </div>
                         </div>
                     </form>
-                    <dl className="hidden space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-900 lg:block">
+                    <dl className="hidden space-y-6 border-t border-gray-200 pt-6 text-sm font-medium  lg:block">
                         <div className="flex items-center justify-between">
-                            <dt className="text-gray-600">مجموع</dt>
+                            <dt className="">مجموع</dt>
                             <dd>       {subtotal.toLocaleString('en')}</dd>
                         </div>
 
                         <div className="flex items-center justify-between">
-                            <dt className="text-gray-600">تخفیف</dt>
+                            <dt className="">تخفیف</dt>
                             <dd>   {discountTotal.toLocaleString('en')}</dd>
                         </div>
 
                         {/*<div className="flex items-center justify-between">*/}
-                        {/*    <dt className="text-gray-600">Taxes</dt>*/}
+                        {/*    <dt className="">Taxes</dt>*/}
                         {/*    <dd>$26.80</dd>*/}
                         {/*</div>*/}
 
@@ -189,8 +189,8 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                     </dl>
 
                     <Popover
-                        className="fixed inset-x-0 bottom-0 flex flex-col-reverse text-sm font-medium text-gray-900 lg:hidden">
-                        <div className="relative z-10 border-t border-gray-200 bg-white px-4 sm:px-6">
+                        className="fixed inset-x-0 bottom-0 flex flex-col-reverse text-sm font-medium  bg-base-100 lg:hidden">
+                        <div className="relative z-9999 border-t border-gray-200  px-4 sm:px-6">
                             <div className="mx-auto max-w-lg">
                                 <PopoverButton className="flex w-full items-center py-6 font-medium">
                                     <span className="mr-auto text-base">قابل پرداخت</span>
@@ -207,21 +207,21 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
 
                         <PopoverPanel
                             transition
-                            className="relative transform bg-white px-4 py-6 transition duration-300 ease-in-out data-[closed]:translate-y-full sm:px-6"
+                            className="relative transform bg-base-100 px-4 py-6 transition duration-300 ease-in-out data-[closed]:translate-y-full sm:px-6"
                         >
                             <dl className="mx-auto max-w-lg space-y-6">
                                 <div className="flex items-center justify-between">
-                                    <dt className="text-gray-600">مجموع</dt>
+                                    <dt className="">مجموع</dt>
                                     <dd> {subtotal.toLocaleString('en')}</dd>
                                 </div>
 
                                 <div className="flex items-center justify-between">
-                                    <dt className="text-gray-600">تخفیف</dt>
+                                    <dt className="">تخفیف</dt>
                                     <dd> {discountTotal.toLocaleString('en')}</dd>
                                 </div>
 
                                 {/*<div className="flex items-center justify-between">*/}
-                                {/*    <dt className="text-gray-600">Taxes</dt>*/}
+                                {/*    <dt className="">Taxes</dt>*/}
                                 {/*    <dd>$26.80</dd>*/}
                                 {/*</div>*/}
                             </dl>
@@ -233,7 +233,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
             <form className="px-4 pb-36 pt-16 sm:px-6 lg:col-start-2 lg:row-start-1 lg:px-0 lg:pb-16" onSubmit={handleOrder}>
                 <div className="mx-auto max-w-lg lg:max-w-none">
                     <section aria-labelledby="contact-info-heading">
-                        <h2 id="contact-info-heading" className="text-lg font-medium text-gray-900">
+                        <h2 id="contact-info-heading" className="text-lg font-medium ">
                             اطلاعات تحویل
                         </h2>
 
@@ -241,7 +241,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
 
                     {(user && user.addresses && user.addresses.length > 0) ? user.addresses.map((address, i) =>
 
-                        <div className="card  bg-base-100 card-sm shadow-sm mb-2">
+                        <div className="mt-2  bg-base-100 card-sm shadow-sm mb-2">
                             <div className="card-body">
                                 <h2 className="card-title">آدرس {++i}</h2>
                                 <p>{address.name}</p>
@@ -284,11 +284,11 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                     </Button>
                     <div className="mt-10 border-t border-gray-200 pt-10">
                         <fieldset>
-                            <legend className="text-lg font-medium text-gray-900">نحوه ارسال</legend>
+                            <legend className="text-lg font-medium ">نحوه ارسال</legend>
                             <RadioGroup
                                 value={data.shipping_method_id}
                                 onChange={() => setData('shipping_method_id')}
-                                className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
+                                className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 z-0"
                             >
                                 {shippingMethods.map((shippingMethod, shippingMethodIdx) => (
                                     <Radio
@@ -297,17 +297,17 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                                         aria-label={shippingMethod.title}
                                         defaultChecked={shippingMethodIdx === 0}
                                         // aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.price}`}
-                                        className="group relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
+                                        className="group  relative flex cursor-pointer rounded-lg border border-gray-300 bg-base-100 p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
                                     >
                                         <span className="flex flex-1">
                                             <span className="flex flex-col">
                                                 <span
-                                                    className="block text-sm font-medium text-gray-900">{shippingMethod.title}</span>
-                                                <span className="mt-1 flex items-center text-sm text-gray-500">
+                                                    className="block text-sm font-medium ">{shippingMethod.title}</span>
+                                                <span className="mt-2 flex items-center text-sm text-gray-500">
                                                     1 تا 3 روز
                                                 </span>
                                                 <span
-                                                    className="mt-6 text-sm font-medium text-gray-900">{shippingMethod.cost}</span>
+                                                    className="mt-6 text-sm font-medium ">{shippingMethod.cost}</span>
                                             </span>
                                         </span>
                                         <CheckCircleIcon
@@ -324,7 +324,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                         </fieldset>
                     </div>
                     <div className="mt-10 border-t border-gray-200 pt-10">
-                        <h2 className="text-lg font-medium text-gray-900">نحوه پرداخت</h2>
+                        <h2 className="text-lg font-medium ">نحوه پرداخت</h2>
 
                         <fieldset className="mt-4">
                             <legend className="sr-only">متد پرداخت</legend>
@@ -350,7 +350,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                                         )}
 
                                         <label htmlFor={paymentMethod.id}
-                                               className="mr-3 block text-sm font-medium text-gray-700">
+                                               className="mr-3 block text-sm font-medium ">
                                             {paymentMethod.title}
                                         </label>
                                     </div>

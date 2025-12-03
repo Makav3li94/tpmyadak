@@ -178,13 +178,13 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                         <div
                             className="data w-full lg:pr-8 pr-0 xl:justify-start justify-center flex items-center max-lg:pb-10 xl:my-2 lg:my-5 my-0">
                             <div className="data w-full max-w-xl">
-                                <h2 className="font-manrope font-bold text-3xl leading-10 text-gray-900 mb-2 capitalize">
+                                <h2 className="font-manrope font-bold text-3xl leading-10  mb-2 capitalize">
                                     {product.title}
                                 </h2>
                                 <div className="flex flex-col sm:flex-row sm:items-center mb-6">
-                                    <h6 className="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 ml-5">
+                                    <h6 className="font-manrope font-semibold text-2xl leading-9  pr-5 sm:border-r border-gray-200 ml-5">
                                         {parseInt(product.price) !== 0 ? (
-                                            <>{parseInt(product.price).toLocaleString('en')} میلیون</>
+                                            <>{parseInt(product.price).toLocaleString('en')} تومان</>
 
                                         ):(
                                             <Badge type="primary" outline={true}>ناموجود</Badge>
@@ -196,20 +196,20 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                         {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
                                         {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
                                         {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-yellow-500"/>*/}
-                                        {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>*/}
+                                        {/*    <Star className="w-6 h-6 lg:w-4 lg:h-4 "/>*/}
 
                                         {/*</div>*/}
-                                        {/*<span className="pl-2 font-normal leading-7 text-gray-500 text-sm ">1624 نظر</span>*/}
+                                        {/*<span className="pl-2 font-normal leading-7  text-sm ">1624 نظر</span>*/}
 
                                     </div>
 
                                 </div>
 
-                                <p className="text-gray-500 text-base font-normal mb-5">
+                                <p className=" text-base font-normal mb-5">
                                     {product.excerpt}
                                     {/*<a href="#" className="text-indigo-600">More....</a>*/}
                                 </p>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-5">
+                                <div className="grid grid-cols-1  gap-3 py-5">
                                     <div className="">
                                         <ul className="list  gap-y-1 ">
                                             <li className="list-row flex justify-between items-center">
@@ -234,7 +234,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                                     <div>
                                                         {attr.attributes.map((attribute, i) =>
                                                             <button className="bg-white text-center py-1 px-4 w-full font-semibold
-                                            text-xs leading-8 text-gray-900 border border-gray-200 flex items-center
+                                            text-xs leading-8  border border-gray-200 flex items-center
                                              rounded-full justify-center transition-all duration-300 hover:bg-gray-50
                                               hover:shadow-sm hover:shadow-gray-100 hover:border-gray-300
                                               visited:border-gray-300 visited:bg-gray-50 mb-2"
@@ -272,7 +272,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                     <div className="w-32"><strong>مناسب برای:</strong></div>
                                     <div className="flex flex-wrap gap-2 max-w-md">
                                         {product.car_models.map((carModel, i) =>
-                                            <div key={i} className="badge badge-neutral badge-dash ruby">
+                                            <div key={i} className="badge  badge-dash ruby">
                                                 {carModel.title}
                                             </div>
                                         )}
@@ -283,7 +283,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
 
                                     <button onClick={() => handleWish(product)}
                                             className="group transition-all duration-500 p-4 w-auto  flex items-center
-                                         justify-center gap-2  rounded-full bg-indigo-50
+                                         justify-center gap-2  rounded-full bg-base-300
                                          hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
                                         <Heart width="26" height="26"/>
                                         اضافه به علامندی
@@ -295,9 +295,9 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                     {/*        <Minus className="stroke-gray-900 group-hover:stroke-black"/>*/}
 
                                     {/*    </button>*/}
-                                    {/*    <input type="text" className="font-semibold text-gray-900 cursor-pointer*/}
+                                    {/*    <input type="text" className="font-semibold  cursor-pointer*/}
                                     {/*     text-lg py-[10px] px-6 w-full sm:max-w-[118px] outline-0 border-y*/}
-                                    {/*     border-gray-400 bg-transparent placeholder:text-gray-900 text-center*/}
+                                    {/*     border-gray-400 bg-transparent placeholder: text-center*/}
                                     {/*      hover:bg-gray-50" placeholder="1"/>*/}
                                     {/*    <button className="group py-3 px-6 border border-gray-400 rounded-l-full*/}
                                     {/*     bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm*/}
@@ -325,7 +325,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                         <input type="radio" name="my_tabs_3" className="tab" aria-label="معرفی"/>
                         <div className="tab-content bg-base-100 border-base-300 p-6">
                             <div dangerouslySetInnerHTML={{__html: product.about}}/>
-                            <div className="prose prose-sm mt-4 text-gray-500">
+                            <div className="prose prose-sm mt-4 ">
                                 <ul className="list  gap-y-4 mb-8">
                                     {product.specs.map((specs, i) =>
                                         <li className="list-row flex justify-start" key={i}>
