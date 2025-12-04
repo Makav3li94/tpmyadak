@@ -101,8 +101,6 @@ class FrontProductController extends Controller
         $categoryCacheKey = "category_page_static_{$slug}";
         $staticData = Cache::remember($categoryCacheKey, 1800, function () use ($slug) {
             $productCategory = ProductCategory::with('children')->where('slug', $slug)->firstOrFail();
-
-            // شامل دسته والد و تمام فرزندان
             $categoryIds = array_merge([$productCategory->id], $productCategory->getAllChildrenIds());
             $filters = $productCategory->getAllChildrenFiltersWithValues();
 
@@ -120,14 +118,15 @@ class FrontProductController extends Controller
         // -----------------------------
         // بخش 2: Query پایه محصولات با فیلترها
         // -----------------------------
-        $baseQuery = Product::whereIn('product_category_id', $categoryIds)
+        $baseQuery = Product::query()
+            ->whereIn('product_category_id', $categoryIds)
             ->with([
                 'brand:id,title,slug',
                 'carModels:id,title,car_brand_id',
                 'carModels.carBrand:id,title',
             ]);
 
-        // فیلترهای مشترک (مثل قیمت، موجودی و ...)
+        // اعمال فیلترهای مشترک
         $this->commonFilters($request, $baseQuery);
 
         // فیلترهای دینامیک
@@ -143,7 +142,7 @@ class FrontProductController extends Controller
         // مرتب‌سازی
         if ($request->column) {
             [$col, $dir] = explode(',', $request->column);
-            $baseQuery->orderBy($col, $dir)->orderBy('id', 'desc'); // ستون unique برای cursorPaginate
+            $baseQuery->orderBy($col, $dir)->orderBy('id', 'desc');
         } else {
             $baseQuery->orderBy('id', 'desc');
         }
@@ -168,14 +167,14 @@ class FrontProductController extends Controller
             : null;
 
         // -----------------------------
-        // بخش 4: جمع‌آوری brand/carBrand/carModel IDs برای کل محصولات با فیلترها
+        // بخش 4: استخراج brand/carBrand/carModel IDs با فیلترها
         // -----------------------------
+        // clone بدون paginate برای تمام محصولات فیلتر شده
         $allProductsForFilters = (clone $baseQuery)->get();
 
         $allBrandIds = $allProductsForFilters->pluck('brand_id')->unique()->filter()->values();
         $allCarModelIds = $allProductsForFilters->pluck('carModels')->flatten()->pluck('id')->unique()->values();
         $allCarBrandIds = $allProductsForFilters->pluck('carModels')->flatten()->pluck('car_brand_id')->unique()->values();
-
 
         // -----------------------------
         // بخش 5: کش برندها، مدل‌ها و برندهای خودرو
@@ -210,6 +209,7 @@ class FrontProductController extends Controller
             'carModels' => queryMapper($carModels),
         ]);
     }
+
 
 
     public function commonFilters(Request $request, $query): void
