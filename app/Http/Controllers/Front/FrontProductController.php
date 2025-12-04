@@ -166,13 +166,24 @@ class FrontProductController extends Controller
         // بخش 4: گرفتن برند/مدل‌ها از همان query بدون paginate
         // -----------------------------
         $allProductsLite = (clone $query)
-            ->select('id', 'brand_id')
-            ->with(['carModels:id,car_brand_id'])
+            ->with(['carModels:id,title,car_brand_id'])
             ->get();
 
+// گرفتن همه آیدی‌های برند/مدل
         $allBrandIds = $allProductsLite->pluck('brand_id')->unique()->filter()->values();
-        $allCarModelIds = $allProductsLite->pluck('carModels')->flatten()->pluck('id')->unique()->values();
-        $allCarBrandIds = $allProductsLite->pluck('carModels')->flatten()->pluck('car_brand_id')->unique()->values();
+        $allCarModelIds = $allProductsLite
+            ->pluck('carModels')
+            ->flatten()
+            ->pluck('id')
+            ->unique()
+            ->values();
+
+        $allCarBrandIds = $allProductsLite
+            ->pluck('carModels')
+            ->flatten()
+            ->pluck('car_brand_id')
+            ->unique()
+            ->values();
 
         // -----------------------------
         // بخش 5: کش برندها، مدل‌ها و برندهای خودرو
