@@ -100,7 +100,10 @@ class FrontProductController extends Controller
         // -----------------------------
         $categoryCacheKey = "category_page_static_{$slug}";
         $staticData = Cache::remember($categoryCacheKey, 1800, function () use ($slug) {
-            $productCategory = ProductCategory::with('children')->where('slug', $slug)->firstOrFail();
+            $productCategory = ProductCategory::with('children')
+                ->where('slug', $slug)
+                ->firstOrFail();
+
             $categoryIds = array_merge([$productCategory->id], $productCategory->getAllChildrenIds());
             $filters = $productCategory->getAllChildrenFiltersWithValues();
 
@@ -116,9 +119,9 @@ class FrontProductController extends Controller
         $filters = $staticData['filters'];
 
         // -----------------------------
-        // بخش 2: Query پایه محصولات با فیلترها
+        // بخش 2: query محصولات با فیلترهای دینامیک و سورت
         // -----------------------------
-        $baseQuery = Product::query()
+        $query = Product::query()
             ->whereIn('product_category_id', $categoryIds)
             ->with([
                 'brand:id,title,slug',
@@ -126,13 +129,12 @@ class FrontProductController extends Controller
                 'carModels.carBrand:id,title',
             ]);
 
-        // اعمال فیلترهای مشترک
-        $this->commonFilters($request, $baseQuery);
+        // اعمال فیلترهای ثابت و داینامیک
+        $this->commonFilters($request, $query);
 
-        // فیلترهای دینامیک
         if ($request->dynamicFilters && is_array($request->dynamicFilters)) {
             foreach ($request->dynamicFilters as $filterId => $values) {
-                $baseQuery->whereHas('filters', function ($q) use ($filterId, $values) {
+                $query->whereHas('filters', function ($q) use ($filterId, $values) {
                     $q->where('filters.id', $filterId)
                         ->whereIn('filter_products.value', $values);
                 });
@@ -142,54 +144,42 @@ class FrontProductController extends Controller
         // مرتب‌سازی
         if ($request->column) {
             [$col, $dir] = explode(',', $request->column);
-            $baseQuery->orderBy($col, $dir)->orderBy('id', 'desc');
+            $query->orderBy($col, $dir)->orderBy('id', 'desc');
         } else {
-            $baseQuery->orderBy('id', 'desc');
+            $query->orderBy('id', 'desc');
         }
 
         // -----------------------------
-        // بخش 3: cursorPaginate محصولات صفحه جاری
+        // بخش 3: cursorPaginate
         // -----------------------------
-        $products = $baseQuery->cursorPaginate(12)->withQueryString();
+        $products = $query->cursorPaginate(12)->withQueryString();
 
         $nextUrl = $products->nextCursor()
-            ? url()->current().'?'.http_build_query([
-                ...$request->except('cursor'),
-                'cursor' => $products->nextCursor()->encode(),
-            ])
+            ? url()->current() . '?' . http_build_query([...$request->except('cursor'), 'cursor' => $products->nextCursor()->encode()])
             : null;
 
         $prevUrl = $products->previousCursor()
-            ? url()->current().'?'.http_build_query([
-                ...$request->except('cursor'),
-                'cursor' => $products->previousCursor()->encode(),
-            ])
+            ? url()->current() . '?' . http_build_query([...$request->except('cursor'), 'cursor' => $products->previousCursor()->encode()])
             : null;
 
         // -----------------------------
-        // بخش 4: استخراج brand/carBrand/carModel IDs با فیلترها
+        // بخش 4: گرفتن برند/مدل‌ها از همان query بدون paginate
         // -----------------------------
-        // clone بدون paginate برای تمام محصولات فیلتر شده
-        $allProductsForFilters = (clone $baseQuery)->get();
+        $allProductsLite = (clone $query)
+            ->select('id', 'brand_id')
+            ->with(['carModels:id,car_brand_id'])
+            ->get();
 
-        $allBrandIds = $allProductsForFilters->pluck('brand_id')->unique()->filter()->values();
-        $allCarModelIds = $allProductsForFilters->pluck('carModels')->flatten()->pluck('id')->unique()->values();
-        $allCarBrandIds = $allProductsForFilters->pluck('carModels')->flatten()->pluck('car_brand_id')->unique()->values();
+        $allBrandIds = $allProductsLite->pluck('brand_id')->unique()->filter()->values();
+        $allCarModelIds = $allProductsLite->pluck('carModels')->flatten()->pluck('id')->unique()->values();
+        $allCarBrandIds = $allProductsLite->pluck('carModels')->flatten()->pluck('car_brand_id')->unique()->values();
 
         // -----------------------------
         // بخش 5: کش برندها، مدل‌ها و برندهای خودرو
         // -----------------------------
-        $brands = Cache::remember("brands_{$slug}_".md5($allBrandIds), 900, function () use ($allBrandIds) {
-            return Brand::whereIn('id', $allBrandIds)->get();
-        });
-
-        $carBrands = Cache::remember("carBrands_{$slug}_".md5($allCarBrandIds), 900, function () use ($allCarBrandIds) {
-            return CarBrand::whereIn('id', $allCarBrandIds)->get();
-        });
-
-        $carModels = Cache::remember("carModels_{$slug}_".md5($allCarModelIds), 900, function () use ($allCarModelIds) {
-            return CarModel::whereIn('id', $allCarModelIds)->get();
-        });
+        $brands = Cache::remember("brands_{$slug}_" . md5($allBrandIds), 900, fn() => Brand::whereIn('id', $allBrandIds)->get());
+        $carBrands = Cache::remember("carBrands_{$slug}_" . md5($allCarBrandIds), 900, fn() => CarBrand::whereIn('id', $allCarBrandIds)->get());
+        $carModels = Cache::remember("carModels_{$slug}_" . md5($allCarModelIds), 900, fn() => CarModel::whereIn('id', $allCarModelIds)->get());
 
         // -----------------------------
         // بخش 6: بازگشت دیتا به Inertia
@@ -209,7 +199,6 @@ class FrontProductController extends Controller
             'carModels' => queryMapper($carModels),
         ]);
     }
-
 
 
     public function commonFilters(Request $request, $query): void
