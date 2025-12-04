@@ -170,11 +170,12 @@ class FrontProductController extends Controller
         // -----------------------------
         // بخش 4: جمع‌آوری brand/carBrand/carModel IDs برای کل محصولات با فیلترها
         // -----------------------------
-        $allProductsForFilters = (clone $baseQuery)->select('id', 'brand_id')->get();
+        $allProductsForFilters = (clone $baseQuery)->get();
 
         $allBrandIds = $allProductsForFilters->pluck('brand_id')->unique()->filter()->values();
         $allCarModelIds = $allProductsForFilters->pluck('carModels')->flatten()->pluck('id')->unique()->values();
         $allCarBrandIds = $allProductsForFilters->pluck('carModels')->flatten()->pluck('car_brand_id')->unique()->values();
+
 
         // -----------------------------
         // بخش 5: کش برندها، مدل‌ها و برندهای خودرو
