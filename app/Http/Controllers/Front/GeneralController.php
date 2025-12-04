@@ -34,10 +34,36 @@ class GeneralController extends Controller
         ]);
     }
 
+    public function about()
+    {
+        $brands = Brand::where('status', 1)->limit(6)->get();
+
+        return inertia('main/other/about', [
+            'brands' => $brands,
+        ]);
+    }
+
+    public function contact()
+    {
+        return inertia('main/other/contact');
+    }
+
+    public function faq() {
+        return inertia('main/other/faq');
+    }
+
+    public function rules() {}
+
+    public function privacy() {}
+
+    public function guaranty() {}
+
+    public function support() {}
+
     public function search($search_term_string): \Illuminate\Http\JsonResponse
     {
         $data = DB::table('products')
-            ->select('id', 'title', 'slug','sku')
+            ->select('id', 'title', 'slug', 'sku')
             ->where([['status', 1], ['approve', 1], ['title', 'like', '%'.$search_term_string.'%']])
 //            ->orWhere([['is_active', '1'],['is_fetched','0'], ['excerpt', 'like', '%' . $val . '%']])
             ->orderBy('id', 'desc')->limit(5)->get()->toArray();

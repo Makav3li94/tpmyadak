@@ -1,6 +1,6 @@
 import '../../../../css/bembla.css'
 import FrontLayout from "@/layouts/front/front-layout.jsx";
-import {Link, router} from "@inertiajs/react";
+import {Head, Link, router} from "@inertiajs/react";
 import React, {useEffect, useRef, useState} from "react";
 import ProductCard from "@/components/common/product-card.jsx";
 import {useCart} from "react-use-cart";
@@ -156,6 +156,7 @@ export default function ProductList(props) {
 
     return (
         <>
+            <Head title={'محصولات ' + productCategory.title}/>
             <Breadcrumb l1={['دسته بندی', '']} l2={[productCategory.title,'']}/>
             <section className="w-full container justify-center mb-12">
                 <div className="grid grid-cols-1 md:grid-cols-12 md:gap-x-2 lg:gap-x-8 xl:gap-x-10">

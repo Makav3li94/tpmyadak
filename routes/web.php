@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Route;
 // define module as main route
 // Route::get('/', [App\Module\Shortlink\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [GeneralController::class, 'index'])->name('home');
+Route::get('/about', [GeneralController::class, 'about'])->name('home.about');
+Route::get('/contact', [GeneralController::class, 'contact'])->name('home.contact');
+Route::get('/faq', [GeneralController::class, 'faq'])->name('home.faq');
+Route::get('/rules', [GeneralController::class, 'rules'])->name('home.rules');
+Route::get('/privacy', [GeneralController::class, 'privacy'])->name('home.privacy');
+Route::get('/guaranty', [GeneralController::class, 'guaranty'])->name('home.guaranty');
+Route::get('/support', [GeneralController::class, 'support'])->name('home.support');
+
 Route::post('/prsearch/{search_term_string}', [GeneralController::class, 'search'])->name('home.product.search');
 
 Route::get('/products', [FrontProductController::class, 'getProducts'])->name('home.getProducts');

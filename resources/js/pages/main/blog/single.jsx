@@ -15,8 +15,8 @@ export default function BlogSingle({blog, reviews, canReview}) {
             <Breadcrumb l1={['وبلاگ', 'home.getBlogs']} l2={[blog.title, 'home.getBlog', blog.slug]}/>
 
             <section className="relative container">
-                <div className="w-full h-full bg-white dark:bg-gray-800">
-                    <div className="w-full mx-auto py-10 bg-white dark:bg-gray-800">
+                <div className="w-full h-full bg-base-100 dark:bg-gray-800">
+                    <div className="w-full mx-auto py-10 bg-base-100 dark:bg-gray-800">
 
 
                         <h1 className="w-[92%] mx-auto lg:text-4xl md:text-3xl xs:text-2xl text-center font-serif font-semibold pb-4 pt-8 dark:text-white">
@@ -43,7 +43,7 @@ export default function BlogSingle({blog, reviews, canReview}) {
                             <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400">۱ بازدید</h4>
                         </div>
 
-                        <div className="py-6 bg-white dark:bg-gray-800">
+                        <div className="py-6 bg-base-100 dark:bg-gray-800">
                             <div className="md:w-[80%] xs:w-[90%] mx-auto pt-4">
                                 <p className="mx-auto text-md dark:text-gray-300 border border-1 border-gray-300 p-3 mb-6">
                                     {blog.excerpt}

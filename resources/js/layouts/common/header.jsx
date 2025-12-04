@@ -19,6 +19,15 @@ function MegaMenuDrawer() {
         <div className="rtl flex h-full">
             {/* ستون تب‌ها ثابت */}
             <div className="flex flex-col w-1/3 border-l border-gray-300  p-2 h-full sticky top-0">
+                <button
+                    key={99999}
+                    onClick={() => setActiveTab(99999)}
+                    className={`px-1 py-2 text-right mb-1 rounded hover:bg-gray-100 break-words ${
+                        activeTab === 99999 ? "bg-base-300 font-semibold" : ""
+                    }`}
+                >
+                    منو
+                </button>
                 {MegaMenuBank?.map((category) => (
                     <button
                         key={category.id}
@@ -34,6 +43,42 @@ function MegaMenuDrawer() {
 
             {/* ستون محتوا scrollable */}
             <div className="flex-1 p-4 overflow-y-scroll h-screen">
+                {activeTab === 99999 &&
+                <div key={99999} className="space-y-4">
+                    <ul key={999999} className="text-sm space-y-1">
+                        <li className="font-bold truncate">
+                            <Link href={route('home')} className="flex justify-between items-center  hover:text-[#d8330a] pr-2 truncate" title="home">
+                                <div className="truncate">خانه</div>
+                                <ChevronLeft className="w-3 h-3"/>
+                            </Link>
+                        </li>
+                        <li className="font-bold truncate">
+                            <Link href={route('home.getBlogs')} className="flex justify-between items-center  hover:text-[#d8330a] pr-2 truncate" title="getBlogs">
+                                <div className="truncate">بلاگ</div>
+                                <ChevronLeft className="w-3 h-3"/>
+                            </Link>
+                        </li>
+                        <li className="font-bold truncate">
+                            <Link href={route('home.about')} className="flex justify-between items-center  hover:text-[#d8330a] pr-2 truncate" title="home">
+                                <div className="truncate"> درباره ما</div>
+                                <ChevronLeft className="w-3 h-3"/>
+                            </Link>
+                        </li>
+                        <li className="font-bold truncate">
+                            <Link href={route('home.contact')} className="flex justify-between items-center  hover:text-[#d8330a] pr-2 truncate" title="home">
+                                <div className="truncate">تماس با ما</div>
+                                <ChevronLeft className="w-3 h-3"/>
+                            </Link>
+                        </li>
+                        <li className="font-bold truncate">
+                            <Link href={route('home.faq')} className="flex justify-between items-center  hover:text-[#d8330a] pr-2 truncate" title="home">
+                                <div className="truncate">سوالات متداول</div>
+                                <ChevronLeft className="w-3 h-3"/>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+                }
                 {MegaMenuBank?.map(
                     (category) =>
                         activeTab === category.id && (
