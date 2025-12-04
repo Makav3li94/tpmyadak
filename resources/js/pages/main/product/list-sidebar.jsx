@@ -1,9 +1,10 @@
-import {router} from "@inertiajs/react";
-import {useState} from "react";
+import { router } from "@inertiajs/react";
+import { useState } from "react";
 import MultiRangeSlider from "@/pages/main/product/partials/MultiRangeSlider.jsx";
 import SearchFilter from "@/pages/main/product/partials/searchFilter.jsx";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Plus, Minus } from 'lucide-react'
+
 export default function ListSidebar({
                                         brands = null,
                                         carBrands = null,
@@ -13,6 +14,7 @@ export default function ListSidebar({
                                         routeParam = null,
                                         children
                                     }) {
+    // --- فیلترهای پایه ---
     const [inStock, setInStock] = useState(false);
     const [hasPromotion, setHasPromotion] = useState(false);
     const [priceMin, setPriceMin] = useState(0);
@@ -29,25 +31,36 @@ export default function ListSidebar({
     // فیلترهای داینامیک
     const [dynamicFilters, setDynamicFilters] = useState({});
 
+    // --- تابع کمکی برای ساخت پارامترهای کامل فیلتر ---
+    const getFilterData = (overrides = {}) => ({
+        priceMin,
+        priceMax,
+        staticFilters,
+        dynamicFilters,
+        in_stock: inStock,
+        has_promotion: hasPromotion,
+        ...overrides,
+    });
+
     // --- فیلتر قیمت ---
     const filterPrice = (min, max) => {
         setPriceMin(min);
         setPriceMax(max);
         router.get(
             route(route().current(), routeParam),
-            {priceMin: min, priceMax: max, staticFilters, dynamicFilters},
-            {replace: true, preserveState: true, preserveScroll: true}
+            getFilterData({ priceMin: min, priceMax: max }),
+            { replace: true, preserveState: true, preserveScroll: true }
         );
     };
 
     // --- فیلترهای ثابت ---
     const handleStaticFilters = (group, values) => {
         setStaticFilters(prev => {
-            const updated = {...prev, [group]: values};
+            const updated = { ...prev, [group]: values };
             router.get(
                 route(route().current(), routeParam),
-                {priceMin, priceMax, staticFilters: updated, dynamicFilters},
-                {replace: true, preserveState: true, preserveScroll: true}
+                getFilterData({ staticFilters: updated }),
+                { replace: true, preserveState: true, preserveScroll: true }
             );
             return updated;
         });
@@ -56,38 +69,43 @@ export default function ListSidebar({
     // --- فیلترهای داینامیک ---
     const handleDynamicFilters = (filterId, values) => {
         setDynamicFilters(prev => {
-            const updated = {...prev, [filterId]: values};
+            const updated = { ...prev, [filterId]: values };
             router.get(
                 route(route().current(), routeParam),
-                {priceMin, priceMax, staticFilters, dynamicFilters: updated},
-                {replace: true, preserveState: true, preserveScroll: true}
+                getFilterData({ dynamicFilters: updated }),
+                { replace: true, preserveState: true, preserveScroll: true }
             );
             return updated;
         });
     };
-    const handleInStock = () => {
-        setInStock(!inStock)
-        router.get(
-            route(route().current(), routeParam),
-            {in_stock: !inStock},
-            {replace: true, preserveState: true, preserveScroll: true}
-        );
-    }
-    const handleHasPromotion = () => {
-        setHasPromotion(!hasPromotion)
-        router.get(
-            route(route().current(), routeParam),
-            {has_promotion: !hasPromotion},
-            {replace: true, preserveState: true, preserveScroll: true}
-        );
-    }
-    return (
 
-        <div className="md:col-span-4 lg:col-span-3 lg:px-0  px-3">
+    // --- فیلتر موجودی ---
+    const handleInStock = () => {
+        const newInStock = !inStock;
+        setInStock(newInStock);
+        router.get(
+            route(route().current(), routeParam),
+            getFilterData({ in_stock: newInStock }),
+            { replace: true, preserveState: true, preserveScroll: true }
+        );
+    };
+
+    // --- فیلتر تخفیف ---
+    const handleHasPromotion = () => {
+        const newHasPromotion = !hasPromotion;
+        setHasPromotion(newHasPromotion);
+        router.get(
+            route(route().current(), routeParam),
+            getFilterData({ has_promotion: newHasPromotion }),
+            { replace: true, preserveState: true, preserveScroll: true }
+        );
+    };
+
+    return (
+        <div className="md:col-span-4 lg:col-span-3 lg:px-0 px-3">
             <div className="drawer lg:drawer-open flex w-full">
                 <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
                 <div className="drawer-content flex flex-col items-center justify-center">
-                    {/* Page content here */}
                     <label htmlFor="my-drawer-3"
                            className="btn btn-xs btn-error text-base-100 drawer-button lg:hidden fixed right-0 top-3/8 z-1">
                         فیلترها
@@ -101,23 +119,20 @@ export default function ListSidebar({
                         </div>
 
                         <ul className="bg-base-100 py-4">
+
                             {/* موجودی و تخفیف */}
                             <li>
-                                <fieldset
-                                    className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
+                                <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
                                     <label className="label flex justify-between items-center">
-                                        <input type="checkbox" defaultChecked className="toggle" checked={inStock}
-                                               onChange={() => handleInStock()}/>
+                                        <input type="checkbox" className="toggle" checked={inStock} onChange={handleInStock}/>
                                         <div>فقط موجود ها</div>
                                     </label>
                                 </fieldset>
                             </li>
                             <li>
-                                <fieldset
-                                    className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
+                                <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
                                     <label className="label flex justify-between items-center">
-                                        <input type="checkbox" defaultChecked className="toggle" checked={hasPromotion}
-                                               onChange={() => handleHasPromotion()}/>
+                                        <input type="checkbox" className="toggle" checked={hasPromotion} onChange={handleHasPromotion}/>
                                         <div>تخفیف دار ها</div>
                                     </label>
                                 </fieldset>
@@ -125,24 +140,22 @@ export default function ListSidebar({
 
                             {/* محدوده قیمت */}
                             <li>
-                                <fieldset
-                                    className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
-                                    <div className="">محدوده قیمت</div>
-                                    <MultiRangeSlider min={0} max={99000000}
-                                                      onChange={({min, max}) => filterPrice(min, max)}/>
+                                <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
+                                    <div>محدوده قیمت</div>
+                                    <MultiRangeSlider min={0} max={99000000} onChange={({ min, max }) => filterPrice(min, max)}/>
                                 </fieldset>
                             </li>
 
                             {/* فیلترهای ثابت */}
                             {brands && (
-                                <li className="border-b border-gray-300 mb-2 pb-2" key={1}>
-                                    <Disclosure  as="div" className="px-4" defaultOpen={true}>
+                                <li className="border-b border-gray-300 mb-2 pb-2">
+                                    <Disclosure as="div" className="px-4" defaultOpen={true}>
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
-                                                <span className=" text-sm font-medium ">         برند ها</span>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left">
+                                                <span className="text-sm font-medium">برند ها</span>
                                                 <span className="ml-6 flex h-7 items-center">
-                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
-                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden"/>
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden"/>
                                                 </span>
                                             </DisclosureButton>
                                         </dt>
@@ -159,14 +172,14 @@ export default function ListSidebar({
                             )}
 
                             {carBrands && (
-                                <li className="border-b border-gray-300 mb-2 pb-2" key={2} >
+                                <li className="border-b border-gray-300 mb-2 pb-2">
                                     <Disclosure as="div" className="px-4" defaultOpen={true}>
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
-                                                <span className=" text-sm font-medium "> برند خودرو</span>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left">
+                                                <span className="text-sm font-medium">برند خودرو</span>
                                                 <span className="ml-6 flex h-7 items-center">
-                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
-                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden"/>
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden"/>
                                                 </span>
                                             </DisclosureButton>
                                         </dt>
@@ -179,19 +192,18 @@ export default function ListSidebar({
                                             />
                                         </DisclosurePanel>
                                     </Disclosure>
-
                                 </li>
                             )}
 
                             {carModels && (
-                                <li className="border-b border-gray-300 mb-2 pb-2" key={3}>
-                                    <Disclosure  as="div" className="px-4" defaultOpen={true}>
+                                <li className="border-b border-gray-300 mb-2 pb-2">
+                                    <Disclosure as="div" className="px-4" defaultOpen={true}>
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
-                                                <span className=" text-sm font-medium "> نوع خودرو</span>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left">
+                                                <span className="text-sm font-medium">نوع خودرو</span>
                                                 <span className="ml-6 flex h-7 items-center">
-                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
-                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden"/>
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden"/>
                                                 </span>
                                             </DisclosureButton>
                                         </dt>
@@ -204,18 +216,18 @@ export default function ListSidebar({
                                             />
                                         </DisclosurePanel>
                                     </Disclosure>
-
                                 </li>
                             )}
+
                             {categories && (
-                                <li className="border-b border-gray-300 mb-2 pb-2" key={4}>
-                                    <Disclosure  as="div" className="px-4" defaultOpen={true}>
+                                <li className="border-b border-gray-300 mb-2 pb-2">
+                                    <Disclosure as="div" className="px-4" defaultOpen={true}>
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
-                                                <span className=" text-sm font-medium "> دسته بندی</span>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left">
+                                                <span className="text-sm font-medium">دسته بندی</span>
                                                 <span className="ml-6 flex h-7 items-center">
-                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
-                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden"/>
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden"/>
                                                 </span>
                                             </DisclosureButton>
                                         </dt>
@@ -231,26 +243,23 @@ export default function ListSidebar({
                                 </li>
                             )}
 
-
                             {/* فیلترهای داینامیک */}
                             {filters && filters.map(filter => (
                                 <li key={filter.id}>
-                                    <Disclosure  as="div" className="px-4" defaultOpen={true} >
+                                    <Disclosure as="div" className="px-4" defaultOpen={true}>
                                         <dt>
-                                            <DisclosureButton className="group flex w-full items-start justify-between text-left ">
-                                                <span className=" text-sm font-medium ">
-                                                    {filter.title}
-                                                </span>
+                                            <DisclosureButton className="group flex w-full items-start justify-between text-left">
+                                                <span className="text-sm font-medium">{filter.title}</span>
                                                 <span className="ml-6 flex h-7 items-center">
-                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden" />
-                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden" />
+                                                    <Plus aria-hidden="true" className="h-4 w-4 group-data-[open]:hidden"/>
+                                                    <Minus aria-hidden="true" className="h-4 w-4 [.group:not([data-open])_&]:hidden"/>
                                                 </span>
                                             </DisclosureButton>
                                         </dt>
                                         <DisclosurePanel as="dd" className="mt-4 p-0">
                                             <SearchFilter
                                                 groupName={filter.title}
-                                                data={filter.values.map(v => ({label: v, value: v}))}
+                                                data={filter.values.map(v => ({ label: v, value: v }))}
                                                 selected={dynamicFilters[filter.id] || []}
                                                 setSelected={(values) => handleDynamicFilters(filter.id, values)}
                                             />
@@ -264,7 +273,6 @@ export default function ListSidebar({
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }

@@ -11,7 +11,6 @@ import {NextButton, PrevButton, usePrevNextButtons} from "@/components/common/ca
 import {SelectedSnapDisplay, useSelectedSnapDisplay} from "@/components/common/carousalSelectedSnapDisplay.jsx";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from 'embla-carousel-autoplay'
-import {Card} from "@/components/index/index.js";
 
 export default function ProductList(props) {
     const {
@@ -24,57 +23,41 @@ export default function ProductList(props) {
         productCategory
     } = props;
 
-    const initialProducts = Array.isArray(data.data) ? data.data : [];
-    const initialNextPageUrl = data.next_page_url ?? null;
-    const initialNextCursor = data.next_cursor ?? null;
 
-    const [products, setProducts] = useState(initialProducts);
-    const [nextUrl, setNextUrl] = useState(null);
+    const [products, setProducts] = useState(Array.isArray(data.data) ? data.data : []);
+    const [nextUrl, setNextUrl] = useState(data.next_page_url || null);
+    const [hasMore, setHasMore] = useState(Boolean(data.next_page_url));
     const [loading, setLoading] = useState(false);
-    const [hasMore, setHasMore] = useState(Boolean(initialNextPageUrl || initialNextCursor));
-
     const loaderRef = useRef(null);
     const observerRef = useRef(null);
 
-    // build URL از cursor
-    function buildUrlFromCursor(cursorValue) {
-        if (!cursorValue) return null;
-        const url = new URL(window.location.href);
-        const params = new URLSearchParams(url.search);
-        params.delete('cursor');
-        params.set('cursor', cursorValue);
-        return `${url.pathname}?${params.toString()}`;
-    }
-
-    // مقدار اولیه nextUrl
+    // ⚡ ریست محصولات فقط وقتی category یا filter تغییر کند
     useEffect(() => {
-        if (initialNextPageUrl) {
-            setNextUrl(initialNextPageUrl);
-            setHasMore(true);
-            return;
-        }
-        if (initialNextCursor) {
-            setNextUrl(buildUrlFromCursor(initialNextCursor));
-            setHasMore(true);
-            return;
-        }
-        setNextUrl(null);
-        setHasMore(false);
-    }, []);
+        const newProducts = Array.isArray(data.data) ? data.data : [];
+        setProducts(newProducts);
+        setNextUrl(data.next_page_url || null);
+        setHasMore(Boolean(data.next_page_url));
+    }, [
+        productCategory.slug,
+        route().params.column,
+        route().params.in_stock,
+        route().params.has_promotion,
+        route().params.priceMin,
+        route().params.priceMax,
+        JSON.stringify(route().params.staticFilters),
+        JSON.stringify(route().params.dynamicFilters)
+    ]);
 
-    // IntersectionObserver برای infinite scroll
+    // ⚡ توجه: به props.data وابسته نیست، فقط تغییر category/sort/params
+
+    // Infinite scroll
     useEffect(() => {
         if (!loaderRef.current || !hasMore) return;
         if (observerRef.current) observerRef.current.disconnect();
 
         observerRef.current = new IntersectionObserver(entries => {
-            const e = entries[0];
-            if (e.isIntersecting && !loading && nextUrl) loadMore();
-        }, {
-            root: null,
-            rootMargin: '200px',
-            threshold: 0.1
-        });
+            if (entries[0].isIntersecting && !loading && nextUrl) loadMore();
+        }, { root: null, rootMargin: '200px', threshold: 0.1 });
 
         observerRef.current.observe(loaderRef.current);
         return () => observerRef.current?.disconnect();
@@ -82,16 +65,17 @@ export default function ProductList(props) {
 
     const loadMore = () => {
         if (!nextUrl || loading || !hasMore) return;
+
         setLoading(true);
 
+        // ⚡ استفاده از router.visit با preserveState و only data
         router.get(nextUrl, {}, {
             preserveScroll: true,
             preserveState: true,
             only: ['data'],
             onSuccess: (res) => {
-                const payload = res.props?.data ?? {};
-                const newItems = Array.isArray(payload.data) ? payload.data : [];
-
+                const newItems = res.props?.data?.data || [];
+                // ⚡ ادغام محصولات، جلوگیری از duplicate
                 setProducts(prev => {
                     const merged = [...prev, ...newItems];
                     const seen = new Set();
@@ -102,37 +86,31 @@ export default function ProductList(props) {
                         return true;
                     });
                 });
-
-                if (payload.next_page_url) {
-                    setNextUrl(payload.next_page_url);
-                    setHasMore(true);
-                } else if (payload.next_cursor) {
-                    setNextUrl(buildUrlFromCursor(payload.next_cursor));
-                    setHasMore(true);
-                } else {
-                    setNextUrl(null);
-                    setHasMore(false);
-                }
+                setNextUrl(res.props?.data?.next_page_url || null);
+                setHasMore(Boolean(res.props?.data?.next_page_url));
             },
-            onFinish: () => setLoading(false)
+            onFinish: () => {
+                setLoading(false);
+            }
         });
     };
 
     const {addItem} = useCart();
-    const [sortColumn, setSortColumn] = useState('');
+    const sortColumn = route().params.column || 'created_at,desc';
 
     const [emblaRef, emblaApi] = useEmblaCarousel({align: 'start', direction: 'rtl', loop: true}, [Autoplay()]);
     const {prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick} = usePrevNextButtons(emblaApi);
     const {selectedSnap, snapCount} = useSelectedSnapDisplay(emblaApi);
 
     const sortList = (e) => {
-        setSortColumn(e.target.value);
+        const columnValue = e.target.value;
         router.get(
             route(route().current(), productCategory.slug),
-            {column: e.target.value},
-            {replace: true, preserveState: true, preserveScroll: true}
+            {...route().params, column: columnValue},
+            {replace: true, preserveScroll: true, preserveState: true}
         );
     };
+
 
     const handleAdd = (item) => {
         addItem({
@@ -230,7 +208,6 @@ export default function ProductList(props) {
                             ))}
                         </div>
 
-                        {/* loader */}
                         <div ref={loaderRef} className="h-12"></div>
                         {loading && <div className="text-center py-4">در حال بارگذاری...</div>}
 

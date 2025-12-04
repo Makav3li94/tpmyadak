@@ -10,9 +10,11 @@ const MegaMenu = ({ isSingle=false }) => {
                     {/* سطح 1 */}
                     <div className="flex justify-between text-center items-center py-3 border-b border-gray-300 hover:border-[#d8330a] cursor-pointer last:border-b-0">
 
-                    <div className={`${isSingle && 'text-gray-400'}text-sm group-hover:text-gray-50`}>
+                    {/*<div className={`${isSingle && 'text-gray-400'}text-sm group-hover:text-gray-50`}>*/}
+                        <Link href={route('home.getCategory',category.slug)} className={`${isSingle && 'text-gray-400'}text-sm group-hover:text-gray-50`}>
                             {category.title}
-                        </div>
+                        </Link>
+                        {/*</div>*/}
                         <ChevronLeft className="w-3 h-3 group-hover:fill-white"/>
                     </div>
 

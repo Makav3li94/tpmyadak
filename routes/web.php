@@ -27,7 +27,6 @@ Route::get('/product/{sku}/{slug?}', [FrontProductController::class, 'getProduct
 
 Route::get('/brand/{slug?}', [FrontProductController::class, 'getBrand'])->name('home.getBrand');
 Route::get('/category/{slug?}', [FrontProductController::class, 'getCategory'])->name('home.getCategory');
-
 Route::get('/articles', [FrontBlogController::class, 'getBlogs'])->name('home.getBlogs');
 Route::get('/article/{slug}', [FrontBlogController::class, 'getBlog'])->name('home.getBlog');
 
