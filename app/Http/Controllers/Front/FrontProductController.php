@@ -129,7 +129,6 @@ class FrontProductController extends Controller
                 'carModels.carBrand:id,title',
             ]);
 
-        // اعمال فیلترهای ثابت و داینامیک
         $this->commonFilters($request, $query);
 
         if ($request->dynamicFilters && is_array($request->dynamicFilters)) {
@@ -141,13 +140,21 @@ class FrontProductController extends Controller
             }
         }
 
-        // مرتب‌سازی
+// مرتب‌سازی
         if ($request->column) {
             [$col, $dir] = explode(',', $request->column);
             $query->orderBy($col, $dir)->orderBy('id', 'desc');
         } else {
             $query->orderBy('id', 'desc');
         }
+
+
+
+        $allProducts = (clone $query)->get();
+
+        $allBrandIds = $allProducts->pluck('brand_id')->unique()->filter()->values();
+        $allCarModelIds = $allProducts->pluck('carModels')->flatten()->pluck('id')->unique()->values();
+        $allCarBrandIds = $allProducts->pluck('carModels')->flatten()->pluck('car_brand_id')->unique()->values();
 
         // -----------------------------
         // بخش 3: cursorPaginate
@@ -165,26 +172,6 @@ class FrontProductController extends Controller
         // -----------------------------
         // بخش 4: گرفتن برند/مدل‌ها از همان query بدون paginate
         // -----------------------------
-        $allProductsLite = (clone $query)
-            ->with(['carModels:id,title,car_brand_id'])
-            ->get();
-
-// گرفتن همه آیدی‌های برند/مدل
-        $allBrandIds = $allProductsLite->pluck('brand_id')->unique()->filter()->values();
-        $allCarModelIds = $allProductsLite
-            ->pluck('carModels')
-            ->flatten()
-            ->pluck('id')
-            ->unique()
-            ->values();
-
-        $allCarBrandIds = $allProductsLite
-            ->pluck('carModels')
-            ->flatten()
-            ->pluck('car_brand_id')
-            ->unique()
-            ->values();
-
         // -----------------------------
         // بخش 5: کش برندها، مدل‌ها و برندهای خودرو
         // -----------------------------
