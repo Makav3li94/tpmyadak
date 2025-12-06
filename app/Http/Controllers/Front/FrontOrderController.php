@@ -144,14 +144,14 @@ class FrontOrderController extends Controller
         $order = Order::create([
             'user_id' => $user->id,
             'address_id' => $address->id,
-            'shipping' => (int) $shippingMethod->cost,
+            'shipping' => (int) ! is_null($shippingMethod->cost) ? $shippingMethod->cost : 0,
             'shipping_method_id' => $shippingMethod->id,
             'payment_method_id' => $paymentMethod->id,
             'subtotal' => $subtotal,
             'discount' => $discountTotal + $extraDiscount,
             'tax' => 0,
             'other_fee' => 0,
-            'total' => $cost + (int) $shippingMethod->cost,
+            'total' => $cost + (int) ! is_null($shippingMethod->cost) ? $shippingMethod->cost : 0,
             'name' => $address->name,
             'postal_code' => $address->postal_code,
             'mobile' => $address->mobile,
@@ -240,7 +240,7 @@ class FrontOrderController extends Controller
             // بروزرسانی سفارش
             $order->update([
                 'payment_status' => 'paid',
-//                'status' => 'pending',
+                //                'status' => 'pending',
             ]);
 
             /* 🔥 کاهش موجودی محصولات بعد از پرداخت موفق */
