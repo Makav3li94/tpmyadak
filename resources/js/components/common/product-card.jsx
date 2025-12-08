@@ -38,7 +38,7 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
                 {/*        <Star className="w-6 h-6 lg:w-4 lg:h-4 text-gray-500"/>*/}
                 {/*    </div>*/}
                 {/*</div>*/}
-                <p className="mt-4 text-base font-medium h-16">
+                <p className="mt-12 text-base font-medium ">
                     {parseInt(product.price) !== 0 ? (
                         <>
                             {product.status_promotion !==1 ? (

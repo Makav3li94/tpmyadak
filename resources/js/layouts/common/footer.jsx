@@ -1,5 +1,6 @@
 import React from "react";
 import Feature from "@/pages/main/welcome/partials/feature.jsx";
+import {Link} from "@inertiajs/react";
 
 export default function Footer({isSingle = false}) {
     return (
@@ -78,121 +79,106 @@ export default function Footer({isSingle = false}) {
                         {/* ------ information----- */}
                         <ul className="text-white py-14 px-4">
                             <li className="pb-5">
-                                <h6 className="font-bold lg:text-lg">اطلاعات</h6>
+                                <h6 className="font-bold lg:text-lg">نقشه سایت</h6>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('home')}
                                     title="aboutus"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
-                                    <span className="font-light">درباره ما</span>
-                                </a>
+                                    <span className="font-light">صفحه اصلی</span>
+                                </Link>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('home.faq')}
                                     title="aboutus"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
                                     <span className="font-light">سوالات متداول</span>
-                                </a>
+                                </Link>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('home.about')}
                                     title="aboutus"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
-                                    <span className="font-light">وارانتی و سرویس</span>
-                                </a>
+                                    <span className="font-light">درباره ما</span>
+                                </Link>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('home.contact')}
                                     title="aboutus"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
-                                    <span className="font-light">پشتیبانی۲۴ ساعته</span>
-                                </a>
+                                    <span className="font-light">تماس با ما</span>
+                                </Link>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('home.getBlogs')}
                                     title="aboutus"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
-                                    <span className="font-light">ثبت محصول</span>
-                                </a>
+                                    <span className="font-light">وبلاگ</span>
+                                </Link>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
-                                    title="aboutus"
-                                    className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
-                                >
-                                    <span className="font-light">پشتیبانی محصول</span>
-                                </a>
+
                             </li>
                         </ul>
                         {/* -----------my account---- */}
                         <ul className="text-white py-14 px-4">
                             <li className="pb-5">
-                                <h6 className="font-bold lg:text-lg">حساب شخصی</h6>
+                                <h6 className="font-bold lg:text-lg">لینک ها</h6>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('login')}
                                     title="brands"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
-                                    <span className="font-light">برندها</span>
-                                </a>
+                                    <span className="font-light">ورود/ثبت نام</span>
+                                </Link>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('home.rules')}
                                     title="giftcard"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
-                                    <span className="font-light">کارت هدیه</span>
-                                </a>
+                                    <span className="font-light">قوانین و مقررات</span>
+                                </Link>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('home.privacy')}
                                     title="affilitis"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
-                                    <span className="font-light">همکاران تجاری</span>
-                                </a>
+                                    <span className="font-light">حریم خصوصی</span>
+                                </Link>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
-                                    title="customlink"
-                                    className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
-                                >
-                                    <span className="font-light">لینک اختصاصی</span>
-                                </a>
-                            </li>
-                            <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('home.guaranty')}
                                     title="faqs"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
-                                    <span className="font-light">سوالات متداول</span>
-                                </a>
+                                    <span className="font-light">گارانتی/وارانتی</span>
+                                </Link>
                             </li>
                             <li className="py-2">
-                                <a
-                                    href="#"
+                                <Link
+                                    href={route('home.support')}
                                     title="special"
                                     className="text-gray-400 hover:text-[#d8330a] transition duration-300 ease-in group flex items-center"
                                 >
-                                    <span className="font-light">پیشنهادات ویژه</span>
-                                </a>
+                                    <span className="font-light">پشتیبانی</span>
+                                </Link>
                             </li>
                         </ul>
                         {/* ----------- categories ---- */}

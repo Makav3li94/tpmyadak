@@ -13,7 +13,7 @@
     "/build/assets/textarea-input-CS_jPfHL.js"
   ],
   "resources/css/bembla.css": [
-    "/build/assets/list-B5krJUmS.js",
+    "/build/assets/list-dTKC-x_X.js",
     "/build/assets/list-Cpv2FoNd.css"
   ],
   "resources/css/dembla.css": [
@@ -25,11 +25,11 @@
     "/build/assets/slider-CZYa5W-G.css"
   ],
   "resources/css/pembla.css": [
-    "/build/assets/single-CligppGI.js",
+    "/build/assets/single-D6Qb-CQD.js",
     "/build/assets/single-D6qVBrYg.css"
   ],
   "resources/images/img-cate.jpg": [
-    "/build/assets/list-CEkftshy.js",
+    "/build/assets/list-Bx2H92If.js",
     "/build/assets/img-cate-C8pXglhx.jpg"
   ],
   "resources/images/logo.png": [
@@ -37,7 +37,7 @@
     "/build/assets/logo-BcRUeqk6.png"
   ],
   "resources/js/components/common/ball-spinner.jsx": [
-    "/build/assets/index-n3DU0LlT.js"
+    "/build/assets/index-ZSXpWzwg.js"
   ],
   "resources/js/components/common/blog-card.jsx": [
     "/build/assets/blog-card-CEf1qO2A.js"
@@ -50,7 +50,7 @@
     "/build/assets/promotion-BJ3zIruw.css"
   ],
   "resources/js/components/common/carousalSelectedSnapDisplay.jsx": [
-    "/build/assets/list-B5krJUmS.js",
+    "/build/assets/list-dTKC-x_X.js",
     "/build/assets/list-Cpv2FoNd.css"
   ],
   "resources/js/components/common/dashboard-stats.jsx": [
@@ -63,7 +63,7 @@
     "/build/assets/top-nav-BOQ99mTu.js"
   ],
   "resources/js/components/common/product-card.jsx": [
-    "/build/assets/product-card-5AG3KAUT.js"
+    "/build/assets/product-card-MIyxS9FO.js"
   ],
   "resources/js/components/common/search-bar.jsx": [
     "/build/assets/header-single-DBb2n_1D.js"
@@ -139,7 +139,7 @@
     "/build/assets/breadcrumb-BjIIdQz3.js"
   ],
   "resources/js/layouts/common/footer.jsx": [
-    "/build/assets/front-layout-HCOsmJC9.js"
+    "/build/assets/front-layout-BVKUQZ_k.js"
   ],
   "resources/js/layouts/common/header-single.jsx": [
     "/build/assets/header-single-DBb2n_1D.js"
@@ -169,7 +169,7 @@
     "/build/assets/user-authenticated-layout-Cn3MQiYT.js"
   ],
   "resources/js/layouts/front/front-layout.jsx": [
-    "/build/assets/front-layout-HCOsmJC9.js"
+    "/build/assets/front-layout-BVKUQZ_k.js"
   ],
   "resources/js/layouts/front/order-layout.jsx": [
     "/build/assets/order-layout-Csg-4_QI.js"
@@ -190,73 +190,73 @@
     "/build/assets/list-sidebar-HnPoXHbb.js"
   ],
   "resources/js/pages/main/blog/list.jsx": [
-    "/build/assets/list-CEkftshy.js",
+    "/build/assets/list-Bx2H92If.js",
     "/build/assets/img-cate-C8pXglhx.jpg"
   ],
   "resources/js/pages/main/blog/single.jsx": [
-    "/build/assets/single-Co_J7qih.js"
+    "/build/assets/single-Doavcsde.js"
   ],
   "resources/js/pages/main/brand/list.jsx": [
-    "/build/assets/list-PO9euPnf.js"
+    "/build/assets/list-QpZ-JYTK.js"
   ],
   "resources/js/pages/main/category/list.jsx": [
-    "/build/assets/list-B5krJUmS.js",
+    "/build/assets/list-dTKC-x_X.js",
     "/build/assets/list-Cpv2FoNd.css"
   ],
   "resources/js/pages/main/order/cart.jsx": [
     "/build/assets/cart-CS7LeGiQ.js"
   ],
   "resources/js/pages/main/order/check-payment.jsx": [
-    "/build/assets/check-payment-D86X-ZDZ.js"
+    "/build/assets/check-payment-8D_qndTk.js"
   ],
   "resources/js/pages/main/order/checkout.jsx": [
     "/build/assets/checkout-CxN-VOB_.js"
   ],
   "resources/js/pages/main/other/about.jsx": [
-    "/build/assets/about-BKcVgGnq.js"
+    "/build/assets/about-CFTVAj0f.js"
   ],
   "resources/js/pages/main/other/contact.jsx": [
-    "/build/assets/contact-Vspd1BvV.js"
+    "/build/assets/contact-ZDYduc8P.js"
   ],
   "resources/js/pages/main/other/faq.jsx": [
-    "/build/assets/faq-CLA_lK6S.js"
+    "/build/assets/faq-D0Bx_hk4.js"
   ],
   "resources/js/pages/main/product/list-sidebar.jsx": [
-    "/build/assets/list-sidebar-CoWFHJYG.js"
+    "/build/assets/list-sidebar-BJWfzEtt.js"
   ],
   "resources/js/pages/main/product/list.jsx": [
-    "/build/assets/list-CSHSnYuB.js"
+    "/build/assets/list-B6DrDhw0.js"
   ],
   "resources/js/pages/main/product/partials/MultiRangeSlider.jsx": [
     "/build/assets/MultiRangeSlider-BON0lKoX.js"
   ],
   "resources/js/pages/main/product/partials/related-products.jsx": [
-    "/build/assets/related-products-CxSjNjTW.js"
+    "/build/assets/related-products-B1PqLvpT.js"
   ],
   "resources/js/pages/main/product/partials/searchFilter.jsx": [
-    "/build/assets/searchFilter-B8iKzvDk.js"
+    "/build/assets/searchFilter-Cse8n5B7.js"
   ],
   "resources/js/pages/main/product/partials/searchFilterBK.jsx": [
     "/build/assets/searchFilterBK-CYjzhk7S.js"
   ],
   "resources/js/pages/main/product/single.jsx": [
-    "/build/assets/single-CligppGI.js",
+    "/build/assets/single-D6Qb-CQD.js",
     "/build/assets/single-D6qVBrYg.css"
   ],
   "resources/js/pages/main/welcome/index.jsx": [
-    "/build/assets/index-n3DU0LlT.js"
+    "/build/assets/index-ZSXpWzwg.js"
   ],
   "resources/js/pages/main/welcome/partials/category.jsx": [
     "/build/assets/category-BXKhR7aT.js"
   ],
   "resources/js/pages/main/welcome/partials/feature.jsx": [
-    "/build/assets/feature-QeK4Uxmd.js"
+    "/build/assets/feature-SAmpyC-7.js"
   ],
   "resources/js/pages/main/welcome/partials/latest-blogs.jsx": [
     "/build/assets/latest-blogs-DyyUoJJ8.js"
   ],
   "resources/js/pages/main/welcome/partials/latest-products.jsx": [
-    "/build/assets/latest-products-Bjpv0GG1.js"
+    "/build/assets/latest-products-NMxP_nfd.js"
   ],
   "resources/js/pages/main/welcome/partials/product-brands.jsx": [
     "/build/assets/product-brands-kecZujG9.js"

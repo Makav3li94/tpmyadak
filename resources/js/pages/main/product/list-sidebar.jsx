@@ -125,7 +125,7 @@ export default function ListSidebar({
                                 <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
                                     <label className="label flex justify-between items-center">
                                         <input type="checkbox" className="toggle" checked={inStock} onChange={handleInStock}/>
-                                        <div>فقط موجود ها</div>
+                                        <div className="text-base-content">فقط موجود ها</div>
                                     </label>
                                 </fieldset>
                             </li>
@@ -133,7 +133,7 @@ export default function ListSidebar({
                                 <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
                                     <label className="label flex justify-between items-center">
                                         <input type="checkbox" className="toggle" checked={hasPromotion} onChange={handleHasPromotion}/>
-                                        <div>تخفیف دار ها</div>
+                                        <div className="text-base-content">تخفیف دار ها</div>
                                     </label>
                                 </fieldset>
                             </li>
@@ -141,7 +141,7 @@ export default function ListSidebar({
                             {/* محدوده قیمت */}
                             <li>
                                 <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full lg:w-64 border p-4 mb-5">
-                                    <div>محدوده قیمت</div>
+                                    <div >محدوده قیمت</div>
                                     <MultiRangeSlider min={0} max={99000000} onChange={({ min, max }) => filterPrice(min, max)}/>
                                 </fieldset>
                             </li>

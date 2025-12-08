@@ -156,8 +156,8 @@
       "_spinner-D5QHHuo0.js"
     ]
   },
-  "_front-layout-Cczxiv1M.js": {
-    "file": "assets/front-layout-Cczxiv1M.js",
+  "_front-layout-W3mdR8XK.js": {
+    "file": "assets/front-layout-W3mdR8XK.js",
     "name": "front-layout",
     "imports": [
       "_index-DDca1aiV.js",
@@ -309,8 +309,8 @@
       "_createLucideIcon-RXBZCcM_.js"
     ]
   },
-  "_product-card-C_Qyd9fr.js": {
-    "file": "assets/product-card-C_Qyd9fr.js",
+  "_product-card-Cqb3-xLJ.js": {
+    "file": "assets/product-card-Cqb3-xLJ.js",
     "name": "product-card",
     "imports": [
       "_index-DDca1aiV.js",
@@ -466,7 +466,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-CCqGsgpU.css",
+    "file": "assets/app-CnJdXHg6.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -495,7 +495,7 @@
     "src": "resources/images/replacement.jpg"
   },
   "resources/js/admin.jsx": {
-    "file": "assets/admin-CKKybQJ6.js",
+    "file": "assets/admin-1EXs83AK.js",
     "name": "admin",
     "src": "resources/js/admin.jsx",
     "isEntry": true,
@@ -582,14 +582,14 @@
       "resources/js/pages/admin/user/index.jsx"
     ],
     "css": [
-      "assets/app-CCqGsgpU.css"
+      "assets/app-CnJdXHg6.css"
     ],
     "assets": [
       "assets/Vazir-Medium-FD-WOL-CfaUoGyi.woff2"
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-2izl5W87.js",
+    "file": "assets/app-B5CNRvGO.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
@@ -648,7 +648,7 @@
     ],
     "css": [
       "assets/app-MDHBh7MV.css",
-      "assets/app-CCqGsgpU.css"
+      "assets/app-CnJdXHg6.css"
     ],
     "assets": [
       "assets/Vazir-Medium-FD-WOL-CfaUoGyi.woff2"
@@ -2564,13 +2564,13 @@
     ]
   },
   "resources/js/pages/main/blog/list.jsx": {
-    "file": "assets/list-BXE7B22t.js",
+    "file": "assets/list-DfpX6443.js",
     "name": "list",
     "src": "resources/js/pages/main/blog/list.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
+      "_front-layout-W3mdR8XK.js",
       "_breadcrumb-B672qKnU.js",
       "resources/js/pages/main/blog/list-sidebar.jsx",
       "_blog-card-C176hXcD.js",
@@ -2600,13 +2600,13 @@
     ]
   },
   "resources/js/pages/main/blog/single.jsx": {
-    "file": "assets/single-BwAYPWFv.js",
+    "file": "assets/single-Dmy1gEe2.js",
     "name": "single",
     "src": "resources/js/pages/main/blog/single.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
+      "_front-layout-W3mdR8XK.js",
       "_breadcrumb-B672qKnU.js",
       "_review-form-DTJd4oux.js",
       "_textarea-input-Bmdp0oLw.js",
@@ -2632,14 +2632,14 @@
     ]
   },
   "resources/js/pages/main/brand/list.jsx": {
-    "file": "assets/list-DK-PK8iF.js",
+    "file": "assets/list-wK2aSKVK.js",
     "name": "list",
     "src": "resources/js/pages/main/brand/list.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
-      "_product-card-C_Qyd9fr.js",
+      "_front-layout-W3mdR8XK.js",
+      "_product-card-Cqb3-xLJ.js",
       "_react-use-cart.esm-B9s7uaXZ.js",
       "_textarea-input-Bmdp0oLw.js",
       "_breadcrumb-B672qKnU.js",
@@ -2670,14 +2670,14 @@
     ]
   },
   "resources/js/pages/main/category/list.jsx": {
-    "file": "assets/list-IiHHqsOq.js",
+    "file": "assets/list-DLraHgz_.js",
     "name": "list",
     "src": "resources/js/pages/main/category/list.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
-      "_product-card-C_Qyd9fr.js",
+      "_front-layout-W3mdR8XK.js",
+      "_product-card-Cqb3-xLJ.js",
       "_react-use-cart.esm-B9s7uaXZ.js",
       "_textarea-input-Bmdp0oLw.js",
       "_breadcrumb-B672qKnU.js",
@@ -2733,14 +2733,14 @@
     ]
   },
   "resources/js/pages/main/order/check-payment.jsx": {
-    "file": "assets/check-payment-DxHnCumz.js",
+    "file": "assets/check-payment-CCBQZ56W.js",
     "name": "check-payment",
     "src": "resources/js/pages/main/order/check-payment.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
       "_react-use-cart.esm-B9s7uaXZ.js",
-      "_front-layout-Cczxiv1M.js",
+      "_front-layout-W3mdR8XK.js",
       "_textarea-input-Bmdp0oLw.js",
       "_createLucideIcon-RXBZCcM_.js",
       "_search-myPFLCWv.js",
@@ -2786,13 +2786,13 @@
     ]
   },
   "resources/js/pages/main/other/about.jsx": {
-    "file": "assets/about-DpzXHfS-.js",
+    "file": "assets/about-iBtMAeUD.js",
     "name": "about",
     "src": "resources/js/pages/main/other/about.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
+      "_front-layout-W3mdR8XK.js",
       "_breadcrumb-B672qKnU.js",
       "resources/js/pages/main/welcome/partials/product-brands.jsx",
       "_textarea-input-Bmdp0oLw.js",
@@ -2816,13 +2816,13 @@
     ]
   },
   "resources/js/pages/main/other/contact.jsx": {
-    "file": "assets/contact-CAQdbkCO.js",
+    "file": "assets/contact-XMO-uuQg.js",
     "name": "contact",
     "src": "resources/js/pages/main/other/contact.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
+      "_front-layout-W3mdR8XK.js",
       "_breadcrumb-B672qKnU.js",
       "_textarea-input-Bmdp0oLw.js",
       "_createLucideIcon-RXBZCcM_.js",
@@ -2845,13 +2845,13 @@
     ]
   },
   "resources/js/pages/main/other/faq.jsx": {
-    "file": "assets/faq-RseSRWSj.js",
+    "file": "assets/faq-CSgZ9O_d.js",
     "name": "faq",
     "src": "resources/js/pages/main/other/faq.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
+      "_front-layout-W3mdR8XK.js",
       "_breadcrumb-B672qKnU.js",
       "_disclosure-CyuM4fQs.js",
       "_textarea-input-Bmdp0oLw.js",
@@ -2876,7 +2876,7 @@
     ]
   },
   "resources/js/pages/main/product/list-sidebar.jsx": {
-    "file": "assets/list-sidebar-B8a5jp2h.js",
+    "file": "assets/list-sidebar-Dg7Aaxc3.js",
     "name": "list-sidebar",
     "src": "resources/js/pages/main/product/list-sidebar.jsx",
     "isDynamicEntry": true,
@@ -2893,14 +2893,14 @@
     ]
   },
   "resources/js/pages/main/product/list.jsx": {
-    "file": "assets/list-CmUX6ik3.js",
+    "file": "assets/list-XV2EKyUb.js",
     "name": "list",
     "src": "resources/js/pages/main/product/list.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
-      "_product-card-C_Qyd9fr.js",
+      "_front-layout-W3mdR8XK.js",
+      "_product-card-Cqb3-xLJ.js",
       "_react-use-cart.esm-B9s7uaXZ.js",
       "_textarea-input-Bmdp0oLw.js",
       "_breadcrumb-B672qKnU.js",
@@ -2940,13 +2940,13 @@
     ]
   },
   "resources/js/pages/main/product/partials/related-products.jsx": {
-    "file": "assets/related-products-DiO5WyxF.js",
+    "file": "assets/related-products-B8tn0iCW.js",
     "name": "related-products",
     "src": "resources/js/pages/main/product/partials/related-products.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_product-card-C_Qyd9fr.js",
+      "_product-card-Cqb3-xLJ.js",
       "_textarea-input-Bmdp0oLw.js",
       "_createLucideIcon-RXBZCcM_.js",
       "_search-myPFLCWv.js",
@@ -2956,7 +2956,7 @@
     ]
   },
   "resources/js/pages/main/product/partials/searchFilter.jsx": {
-    "file": "assets/searchFilter-CKj4n8oj.js",
+    "file": "assets/searchFilter-ZwN2ByKv.js",
     "name": "searchFilter",
     "src": "resources/js/pages/main/product/partials/searchFilter.jsx",
     "isDynamicEntry": true,
@@ -2978,13 +2978,13 @@
     ]
   },
   "resources/js/pages/main/product/single.jsx": {
-    "file": "assets/single-Yl6MPKTr.js",
+    "file": "assets/single-C2MLqVHZ.js",
     "name": "single",
     "src": "resources/js/pages/main/product/single.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
+      "_front-layout-W3mdR8XK.js",
       "_react-use-cart.esm-B9s7uaXZ.js",
       "_textarea-input-Bmdp0oLw.js",
       "_breadcrumb-B672qKnU.js",
@@ -2993,7 +2993,7 @@
       "_embla-carousel-react.esm-BQsc_tkz.js",
       "_badge-lgw6TIeh.js",
       "_createLucideIcon-RXBZCcM_.js",
-      "_product-card-C_Qyd9fr.js",
+      "_product-card-Cqb3-xLJ.js",
       "_theme-switch-CeGAbILo.js",
       "_hooks-C1aZXtTk.js",
       "_index-DDQ21QUK.js",
@@ -3017,13 +3017,13 @@
     ]
   },
   "resources/js/pages/main/welcome/index.jsx": {
-    "file": "assets/index-DECWdge6.js",
+    "file": "assets/index-C8FnrqyF.js",
     "name": "index",
     "src": "resources/js/pages/main/welcome/index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
-      "_front-layout-Cczxiv1M.js",
+      "_front-layout-W3mdR8XK.js",
       "resources/js/pages/main/welcome/partials/category.jsx",
       "resources/js/pages/main/welcome/partials/feature.jsx",
       "resources/js/pages/main/welcome/partials/promotion.jsx",
@@ -3051,7 +3051,7 @@
       "_embla-carousel-autoplay.esm-CKD3EjSa.js",
       "_embla-carousel-react.esm-BQsc_tkz.js",
       "_car-DkodfHbk.js",
-      "_product-card-C_Qyd9fr.js",
+      "_product-card-Cqb3-xLJ.js",
       "_badge-lgw6TIeh.js",
       "_blog-card-C176hXcD.js"
     ]
@@ -3072,7 +3072,7 @@
     ]
   },
   "resources/js/pages/main/welcome/partials/feature.jsx": {
-    "file": "assets/feature-Cn3oYtY8.js",
+    "file": "assets/feature-BpqMX5rT.js",
     "name": "feature",
     "src": "resources/js/pages/main/welcome/partials/feature.jsx",
     "isDynamicEntry": true,
@@ -3096,14 +3096,14 @@
     ]
   },
   "resources/js/pages/main/welcome/partials/latest-products.jsx": {
-    "file": "assets/latest-products-gqcKMdxT.js",
+    "file": "assets/latest-products-CaNxJauL.js",
     "name": "latest-products",
     "src": "resources/js/pages/main/welcome/partials/latest-products.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_index-DDca1aiV.js",
       "_react-use-cart.esm-B9s7uaXZ.js",
-      "_product-card-C_Qyd9fr.js",
+      "_product-card-Cqb3-xLJ.js",
       "_textarea-input-Bmdp0oLw.js",
       "_button-XQ7iUB_I.js",
       "_spinner-D5QHHuo0.js",

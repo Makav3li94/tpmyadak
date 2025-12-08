@@ -27,13 +27,13 @@ export default function Feature(props) {
         <section className={`w-full flex justify-center  ${props.isSingle ?'bg-base-300 py-6 mt-12':'mb-12'}`}>
             <div className="container px-5 md:px-0">
                 <div className="grid grid-cols-12  justify-stretch ">
-                    <FeatureBox title="ارسال رایگان" subTitle="خرید های بالاتر از ۵ میلیون" i={0}
+                    <FeatureBox title="ارسال رایگان" subTitle="خرید های بالاتر از 10 میلیون" i={0}
                                 icon={<Car className="w-6 h-6 sm:w-8 sm:h-8 text-error/90"/>}/>
-                    <FeatureBox title="مرجوعی ۳۰ روزه" subTitle="۳۰ روز برای بازگشت محصول" i={1}
+                    <FeatureBox title="مرجوعی 7 روزه" subTitle="7 روز برای بازگشت محصول" i={1}
                                 icon={<Undo2 className="w-6 h-6 sm:w-8 sm:h-8 text-error/90"/>}/>
                     <FeatureBox title="خرید امن" subTitle="پرداخت ۱۰۰٪ امن" i={1}
                                 icon={<ShieldCheck className="w-6 h-6 sm:w-8 sm:h-8 text-error/90"/>}/>
-                    <FeatureBox title="پشتیبانی آنلاین" subTitle="پشتیبانی ۲۴ ساعته آنلاین" i={4}
+                    <FeatureBox title="پشتیبانی آنلاین" subTitle="در کنار شما هستیم." i={4}
                                 icon={<LifeBuoy className="w-6 h-6 sm:w-8 sm:h-8 text-error/90"/>}/>
                 </div>
             </div>

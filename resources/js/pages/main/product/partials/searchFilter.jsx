@@ -41,7 +41,7 @@ export default function SearchFilter({ data = [], groupName = "", selected = [],
                     filteredData.map((item) => (
                         <li key={item.value}>
                             <fieldset className="fieldset bg-base-100 border-base-300 rounded-box border px-4">
-                                <label className="label">
+                                <label className="label text-base-content">
                                     <input
                                         type="checkbox"
                                         className="checkbox"

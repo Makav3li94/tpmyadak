@@ -15,8 +15,8 @@ export default function Contact() {
                         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3 pb-12">
                             <div>
                                 <h2 className="text-3xl font-bold tracking-tight ">در تماس باشید</h2>
-                                <p className="mt-4 leading-7 ">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+                                <p className="mt-4 leading-7 text-justify">
+                                    با تماس تلفنی (از ساعت 8 الی 20 در روزهای شنبه تا چهارشنبه و 8 الی 14 روزهای پنجشنبه  به جز روزهای تعطیل) شما میتوانید از خدمات پشتیبانی , شامل مشاوره جهت خرید , نحوه ارسال و ثبت سفارش تلفنی بهره مند شوید
                                 </p>
                             </div>
                             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
@@ -33,7 +33,7 @@ export default function Contact() {
                                         </div>
                                         <div className="mt-1">
                                             <dt className="sr-only">Phone number</dt>
-                                            <dd>021-99887765</dd>
+                                            <dd>021-88582172</dd>
                                         </div>
                                     </dl>
                                 </div>
@@ -44,13 +44,13 @@ export default function Contact() {
                                             <dt className="sr-only">Email</dt>
                                             <dd>
                                                 <a href="mailto:collaborate@example.com" className="font-semibold text-indigo-600">
-                                                    sales.tpmyadak.com
+                                                    support.tpmyadak.com
                                                 </a>
                                             </dd>
                                         </div>
                                         <div className="mt-1">
                                             <dt className="sr-only">Phone number</dt>
-                                            <dd>021-99887765</dd>
+                                            <dd>021-88582172</dd>
                                         </div>
                                     </dl>
                                 </div>
@@ -61,13 +61,13 @@ export default function Contact() {
                                             <dt className="sr-only">Email</dt>
                                             <dd>
                                                 <a href="mailto:collaborate@example.com" className="font-semibold text-indigo-600">
-                                                    sales.tpmyadak.com
+                                                    Criticism .tpmyadak.com
                                                 </a>
                                             </dd>
                                         </div>
                                         <div className="mt-1">
                                             <dt className="sr-only">Phone number</dt>
-                                            <dd>021-99887765</dd>
+                                            <dd>021-88582172</dd>
                                         </div>
                                     </dl>
                                 </div>
@@ -78,13 +78,13 @@ export default function Contact() {
                                             <dt className="sr-only">Email</dt>
                                             <dd>
                                                 <a href="mailto:collaborate@example.com" className="font-semibold text-indigo-600">
-                                                    sales.tpmyadak.com
+                                                    management.tpmyadak.com
                                                 </a>
                                             </dd>
                                         </div>
                                         <div className="mt-1">
                                             <dt className="sr-only">Phone number</dt>
-                                            <dd>021-99887765</dd>
+                                            <dd>021-88582172</dd>
                                         </div>
                                     </dl>
                                 </div>
