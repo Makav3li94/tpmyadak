@@ -203,8 +203,8 @@ export default function SelectModalInput(props) {
                     </div>
                 ) : (
                     <>
-                        <div className="w-full overflow-x-auto">
-                            <table className="table mt-3">
+                        <div className="w-full overflow-x-auto max-h-44">
+                            <table className="table mt-3 ">
                                 <thead>
                                     <tr>
                                         {table_header_alias.map((h) => (

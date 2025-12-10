@@ -64,7 +64,8 @@ class GeneralController extends Controller
     {
         $data = DB::table('products')
             ->select('id', 'title', 'slug', 'sku')
-            ->where([['status', 1], ['approve', 1], ['title', 'like', '%'.$search_term_string.'%']])
+            ->where([['status', 1], ['title', 'like', '%'.$search_term_string.'%']])
+//            ->where([['status', 1], ['approve', 1], ['title', 'like', '%'.$search_term_string.'%']])
 //            ->orWhere([['is_active', '1'],['is_fetched','0'], ['excerpt', 'like', '%' . $val . '%']])
             ->orderBy('id', 'desc')->limit(5)->get()->toArray();
 

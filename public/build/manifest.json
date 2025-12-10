@@ -362,8 +362,8 @@
       "_textarea-input-Bmdp0oLw.js"
     ]
   },
-  "_select-modal-input-nQRqRJW1.js": {
-    "file": "assets/select-modal-input-nQRqRJW1.js",
+  "_select-modal-input-BugIFlqg.js": {
+    "file": "assets/select-modal-input-BugIFlqg.js",
     "name": "select-modal-input",
     "imports": [
       "_index-DDca1aiV.js",
@@ -466,7 +466,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-CnJdXHg6.css",
+    "file": "assets/app-DaKiJPKJ.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -495,7 +495,7 @@
     "src": "resources/images/replacement.jpg"
   },
   "resources/js/admin.jsx": {
-    "file": "assets/admin-1EXs83AK.js",
+    "file": "assets/admin-CBGN5N7k.js",
     "name": "admin",
     "src": "resources/js/admin.jsx",
     "isEntry": true,
@@ -582,14 +582,14 @@
       "resources/js/pages/admin/user/index.jsx"
     ],
     "css": [
-      "assets/app-CnJdXHg6.css"
+      "assets/app-DaKiJPKJ.css"
     ],
     "assets": [
       "assets/Vazir-Medium-FD-WOL-CfaUoGyi.woff2"
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-B5CNRvGO.js",
+    "file": "assets/app-BbpdoIf7.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
@@ -648,14 +648,14 @@
     ],
     "css": [
       "assets/app-MDHBh7MV.css",
-      "assets/app-CnJdXHg6.css"
+      "assets/app-DaKiJPKJ.css"
     ],
     "assets": [
       "assets/Vazir-Medium-FD-WOL-CfaUoGyi.woff2"
     ]
   },
   "resources/js/pages/admin/admin/form-modal.jsx": {
-    "file": "assets/form-modal-BHQySMmL.js",
+    "file": "assets/form-modal-CW1fvYOF.js",
     "name": "form-modal",
     "src": "resources/js/pages/admin/admin/form-modal.jsx",
     "isDynamicEntry": true,
@@ -664,7 +664,7 @@
       "_textarea-input-Bmdp0oLw.js",
       "_button-XQ7iUB_I.js",
       "_modal-_zPzG4Kk.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_createLucideIcon-RXBZCcM_.js",
       "_search-myPFLCWv.js",
       "_spinner-D5QHHuo0.js",
@@ -675,7 +675,7 @@
     ]
   },
   "resources/js/pages/admin/admin/index.jsx": {
-    "file": "assets/index-CA7HF45z.js",
+    "file": "assets/index-BiZ4_IW7.js",
     "name": "index",
     "src": "resources/js/pages/admin/admin/index.jsx",
     "isDynamicEntry": true,
@@ -704,7 +704,7 @@
       "_modal-_zPzG4Kk.js",
       "_chevron-left-DQg-zfff.js",
       "_chevron-right-BbGDDnQ9.js",
-      "_select-modal-input-nQRqRJW1.js"
+      "_select-modal-input-BugIFlqg.js"
     ]
   },
   "resources/js/pages/admin/attribute-group/form-modal.jsx": {
@@ -917,7 +917,7 @@
     ]
   },
   "resources/js/pages/admin/blog-category/form-modal.jsx": {
-    "file": "assets/form-modal-ClI0kbHK.js",
+    "file": "assets/form-modal-CdBdv-T2.js",
     "name": "form-modal",
     "src": "resources/js/pages/admin/blog-category/form-modal.jsx",
     "isDynamicEntry": true,
@@ -928,7 +928,7 @@
       "_checkbox-CHFsVXmp.js",
       "_form-file-ZfSHQtYK.js",
       "_modal-_zPzG4Kk.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_createLucideIcon-RXBZCcM_.js",
       "_search-myPFLCWv.js",
       "_spinner-D5QHHuo0.js",
@@ -939,7 +939,7 @@
     ]
   },
   "resources/js/pages/admin/blog-category/index.jsx": {
-    "file": "assets/index-fxYd0k51.js",
+    "file": "assets/index-LAWw4KLh.js",
     "name": "index",
     "src": "resources/js/pages/admin/blog-category/index.jsx",
     "isDynamicEntry": true,
@@ -971,11 +971,11 @@
       "_chevron-right-BbGDDnQ9.js",
       "_checkbox-CHFsVXmp.js",
       "_form-file-ZfSHQtYK.js",
-      "_select-modal-input-nQRqRJW1.js"
+      "_select-modal-input-BugIFlqg.js"
     ]
   },
   "resources/js/pages/admin/blog/form.jsx": {
-    "file": "assets/form-Czhoau7K.js",
+    "file": "assets/form-DBq7_oo0.js",
     "name": "form",
     "src": "resources/js/pages/admin/blog/form.jsx",
     "isDynamicEntry": true,
@@ -986,7 +986,7 @@
       "_button-XQ7iUB_I.js",
       "_card-BhTpkvGO.js",
       "_checkbox-CHFsVXmp.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_index-B7VSbjXq.js",
       "_Tinymce-CfeLQx5L.js",
       "_modal-_zPzG4Kk.js",
@@ -1141,7 +1141,7 @@
     ]
   },
   "resources/js/pages/admin/car-model/form-modal.jsx": {
-    "file": "assets/form-modal-CdcFEad_.js",
+    "file": "assets/form-modal-D0nKw8C1.js",
     "name": "form-modal",
     "src": "resources/js/pages/admin/car-model/form-modal.jsx",
     "isDynamicEntry": true,
@@ -1150,7 +1150,7 @@
       "_textarea-input-Bmdp0oLw.js",
       "_button-XQ7iUB_I.js",
       "_modal-_zPzG4Kk.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_createLucideIcon-RXBZCcM_.js",
       "_search-myPFLCWv.js",
       "_spinner-D5QHHuo0.js",
@@ -1161,7 +1161,7 @@
     ]
   },
   "resources/js/pages/admin/car-model/index.jsx": {
-    "file": "assets/index-9QopjlKO.js",
+    "file": "assets/index-DV6FrQzS.js",
     "name": "index",
     "src": "resources/js/pages/admin/car-model/index.jsx",
     "isDynamicEntry": true,
@@ -1190,7 +1190,7 @@
       "_modal-_zPzG4Kk.js",
       "_chevron-left-DQg-zfff.js",
       "_chevron-right-BbGDDnQ9.js",
-      "_select-modal-input-nQRqRJW1.js"
+      "_select-modal-input-BugIFlqg.js"
     ]
   },
   "resources/js/pages/admin/custom-form/form/form.jsx": {
@@ -1365,7 +1365,7 @@
     ]
   },
   "resources/js/pages/admin/discount/form-modal.jsx": {
-    "file": "assets/form-modal-B1Sg_nZK.js",
+    "file": "assets/form-modal-YgPzgTv6.js",
     "name": "form-modal",
     "src": "resources/js/pages/admin/discount/form-modal.jsx",
     "isDynamicEntry": true,
@@ -1375,7 +1375,7 @@
       "_button-XQ7iUB_I.js",
       "_checkbox-CHFsVXmp.js",
       "_modal-_zPzG4Kk.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_select2-input-wkGN2gkH.js",
       "_index-B7VSbjXq.js",
       "_createLucideIcon-RXBZCcM_.js",
@@ -1390,7 +1390,7 @@
     ]
   },
   "resources/js/pages/admin/discount/index.jsx": {
-    "file": "assets/index-Bfs87LvN.js",
+    "file": "assets/index-DEU0J5Ld.js",
     "name": "index",
     "src": "resources/js/pages/admin/discount/index.jsx",
     "isDynamicEntry": true,
@@ -1421,7 +1421,7 @@
       "_chevron-left-DQg-zfff.js",
       "_chevron-right-BbGDDnQ9.js",
       "_checkbox-CHFsVXmp.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_select2-input-wkGN2gkH.js",
       "_floating-ui.dom-D_CZBSCQ.js",
       "_index-B7VSbjXq.js",
@@ -1507,7 +1507,7 @@
     ]
   },
   "resources/js/pages/admin/invoice/show.jsx": {
-    "file": "assets/show-C3LPsZ_B.js",
+    "file": "assets/show-CdZrJ3g0.js",
     "name": "show",
     "src": "resources/js/pages/admin/invoice/show.jsx",
     "isDynamicEntry": true,
@@ -1516,7 +1516,7 @@
       "_textarea-input-Bmdp0oLw.js",
       "_card-BhTpkvGO.js",
       "_select-input-CYLdNonF.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_tslib.es6-RU1n5ZxP.js",
       "__commonjs-dynamic-modules-TDtrdbi3.js",
       "_createLucideIcon-RXBZCcM_.js",
@@ -1549,7 +1549,7 @@
     ]
   },
   "resources/js/pages/admin/order/form-modal.jsx": {
-    "file": "assets/form-modal-CQx2rYkI.js",
+    "file": "assets/form-modal-DUjRX8MM.js",
     "name": "form-modal",
     "src": "resources/js/pages/admin/order/form-modal.jsx",
     "isDynamicEntry": true,
@@ -1558,7 +1558,7 @@
       "_textarea-input-Bmdp0oLw.js",
       "_button-XQ7iUB_I.js",
       "_modal-_zPzG4Kk.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_createLucideIcon-RXBZCcM_.js",
       "_search-myPFLCWv.js",
       "_spinner-D5QHHuo0.js",
@@ -1569,7 +1569,7 @@
     ]
   },
   "resources/js/pages/admin/order/form.jsx": {
-    "file": "assets/form-CBx-1Vf-.js",
+    "file": "assets/form-Cmo1Ndmf.js",
     "name": "form",
     "src": "resources/js/pages/admin/order/form.jsx",
     "isDynamicEntry": true,
@@ -1580,7 +1580,7 @@
       "_button-XQ7iUB_I.js",
       "_card-BhTpkvGO.js",
       "_select-input-CYLdNonF.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_index-DDQ21QUK.js",
       "_x-C5pP27M6.js",
       "_createLucideIcon-RXBZCcM_.js",
@@ -1628,7 +1628,7 @@
     ]
   },
   "resources/js/pages/admin/order/show.jsx": {
-    "file": "assets/show-6h8s7uRL.js",
+    "file": "assets/show-CtNMxyz8.js",
     "name": "show",
     "src": "resources/js/pages/admin/order/show.jsx",
     "isDynamicEntry": true,
@@ -1640,7 +1640,7 @@
       "_card-BhTpkvGO.js",
       "_modal-confirm-CDCTryKL.js",
       "_select-input-CYLdNonF.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_has-permission-CYmtTqKO.js",
       "_hooks-C1aZXtTk.js",
       "resources/js/pages/admin/order/form-modal.jsx",
@@ -1754,7 +1754,7 @@
     ]
   },
   "resources/js/pages/admin/product-category/form.jsx": {
-    "file": "assets/form-CZV9ru51.js",
+    "file": "assets/form-DTK2pT2C.js",
     "name": "form",
     "src": "resources/js/pages/admin/product-category/form.jsx",
     "isDynamicEntry": true,
@@ -1765,7 +1765,7 @@
       "_card-BhTpkvGO.js",
       "_checkbox-CHFsVXmp.js",
       "_form-file-ZfSHQtYK.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_select2-input-wkGN2gkH.js",
       "_authenticated-layout-CUcCLVXv.js",
       "_createLucideIcon-RXBZCcM_.js",
@@ -1818,7 +1818,7 @@
     ]
   },
   "resources/js/pages/admin/product/form.jsx": {
-    "file": "assets/form-Bzx_ki0Y.js",
+    "file": "assets/form-BrY-h_ow.js",
     "name": "form",
     "src": "resources/js/pages/admin/product/form.jsx",
     "isDynamicEntry": true,
@@ -1828,7 +1828,7 @@
       "_button-XQ7iUB_I.js",
       "_card-BhTpkvGO.js",
       "_checkbox-CHFsVXmp.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_authenticated-layout-CUcCLVXv.js",
       "_Tinymce-CfeLQx5L.js",
       "_index-B7VSbjXq.js",
@@ -2495,7 +2495,7 @@
     ]
   },
   "resources/js/pages/admin/user/form.jsx": {
-    "file": "assets/form-CUKi1uNI.js",
+    "file": "assets/form-B3vuaVDa.js",
     "name": "form",
     "src": "resources/js/pages/admin/user/form.jsx",
     "isDynamicEntry": true,
@@ -2506,7 +2506,7 @@
       "_card-BhTpkvGO.js",
       "_modal-confirm-CDCTryKL.js",
       "_select-input-CYLdNonF.js",
-      "_select-modal-input-nQRqRJW1.js",
+      "_select-modal-input-BugIFlqg.js",
       "_authenticated-layout-CUcCLVXv.js",
       "resources/js/pages/admin/user/form-modal.jsx",
       "_hooks-C1aZXtTk.js",
