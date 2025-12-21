@@ -5,12 +5,12 @@ import React, {useEffect, useRef, useState} from "react";
 import ProductCard from "@/components/common/product-card.jsx";
 import {useCart} from "react-use-cart";
 import {showToast} from "@/utils.js";
-import Breadcrumb from "@/layouts/common/breadcrumb.jsx";
 import ListSidebar from "@/pages/main/product/list-sidebar.jsx";
 import {NextButton, PrevButton, usePrevNextButtons} from "@/components/common/carousalArrowButtons.jsx";
 import {SelectedSnapDisplay, useSelectedSnapDisplay} from "@/components/common/carousalSelectedSnapDisplay.jsx";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from 'embla-carousel-autoplay'
+import ShopBreadcrumb from "@/layouts/common/shop-breadcrumb.jsx";
 
 export default function ProductList(props) {
     const {
@@ -20,7 +20,8 @@ export default function ProductList(props) {
         carModels = null,
         categories = null,
         filters = null,
-        productCategory
+        productCategory,
+        breadcrumbs
     } = props;
 
 
@@ -135,7 +136,7 @@ export default function ProductList(props) {
     return (
         <>
             <Head title={'محصولات ' + productCategory.title}/>
-            <Breadcrumb l1={['دسته بندی', '']} l2={[productCategory.title,'']}/>
+            <ShopBreadcrumb items={breadcrumbs}/>
             <section className="w-full container justify-center mb-12">
                 <div className="grid grid-cols-1 md:grid-cols-12 md:gap-x-2 lg:gap-x-8 xl:gap-x-10">
                     <ListSidebar

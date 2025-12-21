@@ -289,10 +289,34 @@ class ProductCategory extends Model
         return $tree;
     }
 
-    public function getCategoriesFull()
+    public function getCategoriesFull(): Collection
     {
         $listFullCategory = $this->get()->groupBy('parent');
 
         return $listFullCategory;
+    }
+
+    public function getAncestors(?Collection $allCategories = null): Collection
+    {
+        $all = $allCategories ?? static::select(['id', 'parent_id', 'title', 'slug'])->get();
+        $parentMap = $all->keyBy('id');
+
+        $ancestors = collect();
+        $currentParentId = $this->parent_id;
+
+        while ($currentParentId && isset($parentMap[$currentParentId])) {
+            $parent = $parentMap[$currentParentId];
+            $ancestors->prepend($parent); // از ریشه به پایین
+            $currentParentId = $parent->parent_id;
+        }
+
+        return $ancestors;
+    }
+
+    public function totalProductsCount(): int
+    {
+        // تعداد محصولات خودش و تمام زیر دسته‌ها
+        $allCategoryIds = $this->getAllChildrenIds(); // شامل خودش
+        return \App\Models\Shop\Product::whereIn('product_category_id', $allCategoryIds)->count();
     }
 }

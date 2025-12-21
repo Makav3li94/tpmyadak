@@ -62,13 +62,58 @@ class GeneralController extends Controller
 
     public function search($search_term_string): \Illuminate\Http\JsonResponse
     {
-        $data = DB::table('products')
-            ->select('id', 'title', 'slug', 'sku')
-            ->where([['status', 1], ['title', 'like', '%'.$search_term_string.'%']])
-//            ->where([['status', 1], ['approve', 1], ['title', 'like', '%'.$search_term_string.'%']])
-//            ->orWhere([['is_active', '1'],['is_fetched','0'], ['excerpt', 'like', '%' . $val . '%']])
-            ->orderBy('id', 'desc')->limit(5)->get()->toArray();
+        $term = trim($search_term_string);
 
-        return response()->json(['status' => count($data) > 0 ? 'success' : 'empty', 'data' => $data], 201);
+        if (strlen($term) < 2) {
+            return response()->json(['status' => 'empty', 'data' => []], 201);
+        }
+
+        // جستجوی محصولات
+        $products = DB::table('products')
+            ->select('id', 'title', 'slug', 'sku')
+            ->where('status', 1)
+            ->where('title', 'like', "%{$term}%")
+            ->orderBy('id', 'desc')
+            ->limit(5)
+            ->get()
+            ->toArray();
+
+        // جستجوی دسته‌ها
+        $categories = DB::table('product_categories')
+            ->select('id', 'title', 'slug')
+            ->where('status', 1)
+            ->where('title', 'like', "%{$term}%")
+            ->orderBy('sort', 'asc')
+            ->limit(5)
+            ->get()
+            ->toArray();
+
+        // ترکیب نتیجه‌ها با نوع برای frontend
+        $results = [];
+
+        foreach ($categories as $cat) {
+            $results[] = [
+                'type' => 'category',
+                'id' => $cat->id,
+                'title' => $cat->title,
+                'slug' => $cat->slug,
+            ];
+        }
+
+        foreach ($products as $prod) {
+            $results[] = [
+                'type' => 'product',
+                'id' => $prod->id,
+                'title' => $prod->title,
+                'slug' => $prod->slug,
+                'sku' => $prod->sku,
+            ];
+        }
+
+        return response()->json([
+            'status' => count($results) > 0 ? 'success' : 'empty',
+            'data' => $results
+        ], 201);
     }
+
 }

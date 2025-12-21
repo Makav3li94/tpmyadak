@@ -104,33 +104,56 @@ const SearchBar = ({isMobile=false}) => {
                                     style={{ overflow: "hidden" }}
                                     initial={{ height: 0 }}
                                     animate={{ height: "auto" }}
-                                    transition={{ duration: 0.5 }}
+                                    transition={{ duration: 0.3 }}
                                     exit={{ height: 0 }}
                                     key={"container"}
                                     className="list bg-base-100 rounded-box shadow-md absolute z-99 w-full"
                                 >
-                                        {(!loading && searchTerm !== '' && searchTerm.length > 3 && searchItems.length === undefined) ?
-                                            <li className="p-4 pb-2 text-xs opacity-60 tracking-wide" hidden="">نتیجه ای یافت نشد.</li> : null}
+                                    {/* محصولات */}
+                                    {searchItems.filter(i => i.type === 'product').length > 0 &&
+                                        searchItems.filter(i => i.type === 'product').map((prod, idx) => (
+                                            <li className="list-row" key={`prod-${idx}`}>
+                                                <Link
+                                                    target="_blank"
+                                                    href={route('home.getProduct', prod.sku)}
+                                                >
+                                                    {prod.title.length > 35 ? `${prod.title.substring(0, 35)}...` : prod.title}
+                                                </Link>
+                                            </li>
+                                        ))
+                                    }
 
-                                        {searchItems.length > 0 ?
-                                            (
-                                                searchItems.map((addSearch, index) => (
-                                                    <li className="list-row" key={index}>
-                                                        <Link className=""
-                                                           target="_blank"
-                                                           href={route('home.getProduct', addSearch.sku)}>
-                                                        {addSearch.title.length > 35 ? `${addSearch.title.substring(0, 35)}...` : addSearch.title}
-                                                        </Link>
-                                                    </li>
-                                                ))
-                                            ) : (
-                                                (searchTerm !== '' && !loading) &&
-                                                <li className="p-4 pb-2 text-xs opacity-60 tracking-wide" hidden="">نتیجه ای یافت نشد.</li>
-                                            )
-                                        }
+                                    {/* دسته‌ها */}
+                                    {searchItems.filter(i => i.type === 'category').length > 0 && (
+                                        <>
+                                            <li className="p-2 text-xs text-gray-500 font-medium">جستجو در دسته‌ها</li>
+                                            {searchItems.filter(i => i.type === 'category').map((cat, idx) => (
+                                                <li
+                                                    key={`cat-${idx}`}
+                                                    className="list-row p-2 hover:bg-gray-100 bg-gray-50 border-t border-gray-200"
+                                                >
+                                                    <Link
+                                                        className="font-medium text-blue-600"
+                                                        href={route('home.getCategory', cat.slug)}
+                                                    >
+                                                        {cat.title}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </>
+                                    )}
 
-                                        {loading ? <li className="p-4 pb-2 text-xs opacity-60 tracking-wide" hidden="">لطفا عبارت کامل وارد کنید ...</li> : null}
+                                    {/* حالت loading */}
+                                    {loading && (
+                                        <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">در حال جستجو ...</li>
+                                    )}
+
+                                    {/* وقتی نتیجه‌ای نیست */}
+                                    {!loading && searchTerm.length > 1 && searchItems.length === 0 && (
+                                        <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">نتیجه ای یافت نشد.</li>
+                                    )}
                                 </motion.ul>
+
                             }
 
                         </div>

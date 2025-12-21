@@ -5,32 +5,81 @@ namespace App\Http\Controllers\Admin;
 use App\Attributes\Permission;
 use App\Http\Controllers\Controller;
 use App\Models\Shop\Filter;
+use App\Models\Shop\Product;
 use App\Models\Shop\ProductCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Inertia\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 
 class ProductCategoryController extends Controller
 {
     #[Permission('view-product-category')]
-    public function index(Request $request): Response
+    public function index(Request $request)
     {
-        $query = ProductCategory::query();
-        $query->with('parent');
+        // ---------------------------------------------
+        // 1️⃣ خواندن تمام دسته‌ها با parent
+        // ---------------------------------------------
+        $query = ProductCategory::query()->with('parent');
+
         if ($request->q) {
-            // multi columns search
-            $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', "%{$request->q}%");
-            });
+            $query->where('title', 'like', "%{$request->q}%");
         }
 
-        $query->orderBy('created_at', 'desc');
+        $allCategories = $query->orderBy('sort')->get();
 
+        // ---------------------------------------------
+        // 2️⃣ ساختن درخت دسته‌ها
+        // ---------------------------------------------
+        $tree = ProductCategory::buildTree($allCategories);
+
+        // ---------------------------------------------
+        // 3️⃣ flatten کردن درخت با level
+        // ---------------------------------------------
+        $flatCategories = [];
+        $addToFlat = function ($nodes, $level = 0) use (&$flatCategories, &$addToFlat) {
+            foreach ($nodes as $node) {
+                $node->level = $level; // ذخیره level برای فرانت
+                $flatCategories[] = $node;
+                if ($node->children->isNotEmpty()) {
+                    $addToFlat($node->children, $level + 1);
+                }
+            }
+        };
+        $addToFlat($tree);
+
+        // ---------------------------------------------
+        // 4️⃣ اضافه کردن تعداد محصولات شامل زیر دسته‌ها
+        // ---------------------------------------------
+        foreach ($flatCategories as $category) {
+            $allCategoryIds = $category->getAllChildrenIds();
+            $category->totalProductsCount = Product::whereIn('product_category_id', $allCategoryIds)->count();
+        }
+
+        // ---------------------------------------------
+        // 5️⃣ pagination Collection
+        // ---------------------------------------------
+        $perPage = 10;
+        $page = $request->get('page', 1);
+        $items = collect($flatCategories);
+
+        $paginated = new LengthAwarePaginator(
+            $items->forPage($page, $perPage),
+            $items->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        // ---------------------------------------------
+        // 6️⃣ ارسال داده به Inertia
+        // ---------------------------------------------
         return inertia('admin/product-category/index', [
-            'data' => $query->paginate(10),
+            'data' => $paginated,
         ]);
     }
+
 
     #[Permission('create-product-category')]
     public function create()

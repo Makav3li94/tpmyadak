@@ -15,8 +15,8 @@ export default defineConfig({
         }),
         react(),
         tailwindcss(),
-        ViteImageOptimizer(),
-        compression(),
+        ...(process.env.NODE_ENV === 'production' ? [ViteImageOptimizer(), compression()] : []),
+
 
         // 🔥 اینجا PWA اضافه می‌شود
         VitePWA({
@@ -72,6 +72,10 @@ export default defineConfig({
     },
 
     server: {
-        hmr: { host: 'localhost' },
+        hmr: {
+            host: 'localhost',
+            protocol: 'ws', // WebSocket فقط
+            overlay: true,  // error overlay
+        },
     },
 })

@@ -94,7 +94,14 @@ export default function Home(props) {
                                 {data.map((ProductCategory, index) => (
                                     <tr key={ProductCategory.id}>
                                         <td>{++index}</td>
-                                        <td>{ProductCategory.title}</td>
+                                        <td>
+                                            <span style={{ paddingLeft: `${ProductCategory.level * 20}px` }}>
+                                                {ProductCategory.title}
+                                            </span>
+                                            <span className="text-gray-400 ml-2">
+                                                ({ProductCategory.totalProductsCount} محصول)
+                                            </span>
+                                        </td>
                                         <td>
                                             {ProductCategory.image?(
                                                 <img src={route('file.show',{file:ProductCategory.image,dir:'category/'})} className="w-12" alt="-"/>

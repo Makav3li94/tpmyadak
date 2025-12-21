@@ -98,11 +98,28 @@ class FrontProductController extends Controller
         // -----------------------------
         // بخش 1: کش استاتیک دسته‌بندی و فیلترها
         // -----------------------------
-        $productCategory = ProductCategory::with('children')
-            ->where('slug', $slug)
-            ->firstOrFail();
+        $allCategories = ProductCategory::with('children')->get();
 
-        $categoryIds = array_merge([$productCategory->id], $productCategory->getAllChildrenIds());
+        // پیدا کردن دسته فعلی
+        $productCategory = $allCategories->firstWhere('slug', $slug);
+        abort_if(!$productCategory, 404);
+
+        // گرفتن همه والدها برای breadcrumb
+        $ancestors = $productCategory->getAncestors($allCategories);
+
+        $breadcrumbs = $ancestors->map(fn($cat) => [
+            'title' => $cat->title,
+            'slug'  => $cat->slug,
+        ])->values();
+
+        $breadcrumbs->push([
+            'title' => $productCategory->title,
+            'slug'  => $productCategory->slug,
+        ]);
+        // گرفتن تمام فرزندان دسته فعلی
+        $categoryIds = array_merge([$productCategory->id], $productCategory->getAllChildrenIds($allCategories));
+
+        // گرفتن فیلترها و مقادیر محصولات در زیرشاخه‌ها
         $filters = $productCategory->getAllChildrenFiltersWithValues();
 
         // -----------------------------
@@ -174,6 +191,7 @@ class FrontProductController extends Controller
         // -----------------------------
         return inertia('main/category/list', [
             'productCategory' => $productCategory,
+            'breadcrumbs' => $breadcrumbs,
             'filters' => $filters,
             'data' => [
                 'data' => $products->items(),
