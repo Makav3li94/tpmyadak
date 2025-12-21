@@ -510,7 +510,7 @@
     "src": "resources/images/replacement.jpg"
   },
   "resources/js/admin.jsx": {
-    "file": "assets/admin-D8NQJGd4.js",
+    "file": "assets/admin-CFUM2mKW.js",
     "name": "admin",
     "src": "resources/js/admin.jsx",
     "isEntry": true,
@@ -1801,7 +1801,7 @@
     ]
   },
   "resources/js/pages/admin/product-category/index.jsx": {
-    "file": "assets/index-Dj50TwJ8.js",
+    "file": "assets/index-j2OQK-Dy.js",
     "name": "index",
     "src": "resources/js/pages/admin/product-category/index.jsx",
     "isDynamicEntry": true,

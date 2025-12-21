@@ -76,7 +76,7 @@ class ProductCategoryController extends Controller
         // 6️⃣ ارسال داده به Inertia
         // ---------------------------------------------
         return inertia('admin/product-category/index', [
-            'data' => $paginated,
+            'paginated' => $paginated->toArray(),
         ]);
     }
 

@@ -18,9 +18,9 @@ import Form from './form.jsx'
 import Badge from "@/components/daisy-ui/badge.jsx";
 
 export default function Home(props) {
-    const {
-        data: { links, data }
-    } = props
+    const { paginated } = props
+    const data = paginated.data || []
+    const links = paginated.links || []
 
     const [search, setSearch] = useState('')
     const preValue = usePrevious(search)
