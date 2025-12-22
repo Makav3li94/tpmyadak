@@ -51,7 +51,7 @@ class ProductCategoryController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validatedData = $this->validateRequest($request);
-        $validatedData['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
+        $validatedData['slug'] = empty($request->slug) ? Str::slug($request->title) : $request->slug;
         $filterArray = $request['filter_array'];
         unset($validatedData['filter_array']);
         $productCategory = ProductCategory::create($validatedData);
@@ -85,7 +85,7 @@ class ProductCategoryController extends Controller
     {
 
         $validatedData = $this->validateRequest($request);
-        $validatedData['slug'] = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
+        $validatedData['slug'] = empty($request->slug) ? Str::slug($request->title) : $request->slug;
         $filterArray = $request['filter_array'];
         unset($validatedData['filter_array']);
         $productCategory->update($validatedData);
