@@ -19,44 +19,44 @@ export default defineConfig({
 
 
         // 🔥 اینجا PWA اضافه می‌شود
-        VitePWA({
-            registerType: 'autoUpdate',
-            includeAssets: [
-                'favicon.ico',
-                'apple-touch-icon.png',
-                'masked-icon.png'
-            ],
-            manifest: {
-                name: 'TPMYADAK',
-                short_name: 'TPMYADAK',
-                description: 'Sell Auto Parts Website',
-                theme_color: '#ffffff',
-                background_color: '#ffffff',
-                display: 'standalone',
-                start_url: '/',
-                icons: [
-                    {
-                        src: '/web-app-manifest-192x192.png',
-                        sizes: '192x192',
-                        type: 'image/png'
-                    },
-                    {
-                        src: '/web-app-manifest-512x512.png',
-                        sizes: '512x512',
-                        type: 'image/png'
-                    },
-                    {
-                        src: '/web-app-manifest-512x512.png',
-                        sizes: '512x512',
-                        type: 'image/png',
-                        purpose: 'any maskable'
-                    }
-                ]
-            },
-            workbox: {
-                globPatterns: ['**/*.{js,css,html,png,svg,jpg,jpeg}'],
-            },
-        }),
+        // VitePWA({
+        //     registerType: 'autoUpdate',
+        //     includeAssets: [
+        //         'favicon.ico',
+        //         'apple-touch-icon.png',
+        //         'masked-icon.png'
+        //     ],
+        //     manifest: {
+        //         name: 'TPMYADAK',
+        //         short_name: 'TPMYADAK',
+        //         description: 'Sell Auto Parts Website',
+        //         theme_color: '#ffffff',
+        //         background_color: '#ffffff',
+        //         display: 'standalone',
+        //         start_url: '/',
+        //         icons: [
+        //             {
+        //                 src: '/web-app-manifest-192x192.png',
+        //                 sizes: '192x192',
+        //                 type: 'image/png'
+        //             },
+        //             {
+        //                 src: '/web-app-manifest-512x512.png',
+        //                 sizes: '512x512',
+        //                 type: 'image/png'
+        //             },
+        //             {
+        //                 src: '/web-app-manifest-512x512.png',
+        //                 sizes: '512x512',
+        //                 type: 'image/png',
+        //                 purpose: 'any maskable'
+        //             }
+        //         ]
+        //     },
+        //     workbox: {
+        //         globPatterns: ['**/*.{js,css,html,png,svg,jpg,jpeg}'],
+        //     },
+        // }),
     ],
 
     build: {

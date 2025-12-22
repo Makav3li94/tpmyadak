@@ -214,7 +214,7 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                         <ul className="list  gap-y-1 ">
                                             <li className="list-row flex justify-between items-center">
                                                 <div className="w-32"><strong>برند:</strong></div>
-                                                <div>{product.brand.title}</div>
+                                                <div>{product.brand ? product.brand.title : '-'}</div>
                                             </li>
                                             {product.filters.map((filter, i) =>
                                                 <li className="list-row flex justify-between items-center" key={i}>

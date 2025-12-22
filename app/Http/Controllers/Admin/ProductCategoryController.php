@@ -106,14 +106,12 @@ class ProductCategoryController extends Controller
 
     private function validateRequest(Request $request): array
     {
-        $validatedData = $request->validate([
+        return $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255',
             'image' => 'nullable|string|max:255',
             'parent_id' => 'nullable',
             'status' => 'nullable|boolean',
         ]);
-
-        return $validatedData;
     }
 }
