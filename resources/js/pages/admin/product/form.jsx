@@ -213,22 +213,23 @@ export default function Form(props) {
     };
     const handleAddChangeCatAttrs = (e, type, index) => {
         e.preventDefault();
-        if (type === 'title') {
-            setCategoryFilters(s => {
-                const newArr = s.slice();
-                newArr[index].title = e.target.value;
-                return newArr;
-            });
-        } else {
-            setCategoryFilters(s => {
-                const newArr = s.slice();
-                newArr[index].value = e.target.value;
-                return newArr;
-            });
-        }
 
-        setData('product_group_cat_attrs', categoryFilters);
+        setCategoryFilters(prev => {
+            const newArr = [...prev];
+
+            if (type === 'title') {
+                newArr[index].title = e.target.value;
+            } else if (type === 'value') {
+                newArr[index].value = e.target.value;
+            }
+
+            // اینجا با مقدار جدید setData کن
+            setData('product_group_cat_attrs', newArr);
+
+            return newArr;
+        });
     };
+
 
     useEffect(() => {
         if (hasNewFile) {
