@@ -510,7 +510,7 @@
     "src": "resources/images/replacement.jpg"
   },
   "resources/js/admin.jsx": {
-    "file": "assets/admin-DNnzX-DC.js",
+    "file": "assets/admin-DTcuS2Zu.js",
     "name": "admin",
     "src": "resources/js/admin.jsx",
     "isEntry": true,
@@ -1835,7 +1835,7 @@
     ]
   },
   "resources/js/pages/admin/product/form.jsx": {
-    "file": "assets/form-z2x1GwQ5.js",
+    "file": "assets/form-BXacJ5nT.js",
     "name": "form",
     "src": "resources/js/pages/admin/product/form.jsx",
     "isDynamicEntry": true,

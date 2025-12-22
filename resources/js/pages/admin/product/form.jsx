@@ -241,7 +241,7 @@ export default function Form(props) {
     }
 
     const handCatAndFilter = async (selectedOption,isDef=false) => {
-        setCategoryFilters([])
+        // setCategoryFilters([])
         if (!isDef)setData('product_category_id', selectedOption)
 
 
@@ -260,7 +260,6 @@ export default function Form(props) {
     useEffect(() => {
 
     }, [categoryFilters]);
-    console.log(categoryFilters)
     return (
         <AuthenticatedLayout title={' محصول'} breadcumbs={[
             {name: 'داشبورد', href: route('admin.dashboard')},
@@ -457,7 +456,7 @@ export default function Form(props) {
                         </div>
                         <div className="basis-1/2">
                             <TextInput name="stock" value={data.stock} onChange={handleOnChange} type="number"
-                                       label="موجودی" error={errors.stock} min={1}/>
+                                       label="موجودی" error={errors.stock} min={0}/>
                         </div>
                     </div>
                     <div className="flex  gap-12 w-full">
@@ -599,7 +598,7 @@ export default function Form(props) {
                         <h4>دسته ویژگی ها</h4>
                         {mounted &&  categoryFilters.map((item, i) => {
                             return (
-                                <div className="flex gap-3 justify-between items-center">
+                                <div key={i} className="flex gap-3 justify-between items-center">
                                     <div className="basis-1/2" hidden>
                                         <TextInput name="cat_attrs_filter_ids[]" value={item.id}
                                                    label="title" required min={1}
