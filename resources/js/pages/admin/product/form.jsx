@@ -213,23 +213,22 @@ export default function Form(props) {
     };
     const handleAddChangeCatAttrs = (e, type, index) => {
         e.preventDefault();
-
-        setCategoryFilters(prev => {
-            const newArr = [...prev];
-
-            if (type === 'title') {
+        if (type === 'title') {
+            setCategoryFilters(s => {
+                const newArr = s.slice();
                 newArr[index].title = e.target.value;
-            } else if (type === 'value') {
+                return newArr;
+            });
+        } else {
+            setCategoryFilters(s => {
+                const newArr = s.slice();
                 newArr[index].value = e.target.value;
-            }
+                return newArr;
+            });
+        }
 
-            // اینجا با مقدار جدید setData کن
-            setData('product_group_cat_attrs', newArr);
-
-            return newArr;
-        });
+        setData('product_group_cat_attrs', categoryFilters);
     };
-
 
     useEffect(() => {
         if (hasNewFile) {
@@ -242,7 +241,7 @@ export default function Form(props) {
     }
 
     const handCatAndFilter = async (selectedOption,isDef=false) => {
-        // setCategoryFilters([])
+        setCategoryFilters([])
         if (!isDef)setData('product_category_id', selectedOption)
 
 
