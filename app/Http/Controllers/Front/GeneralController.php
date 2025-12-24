@@ -92,7 +92,7 @@ class GeneralController extends Controller
             ->select('id', 'title', 'slug')
             ->where('status', 1)
             ->where('title', 'like', "%{$term}%")
-            ->orderBy('sort', 'asc')
+//            ->orderBy('sort', 'asc')
             ->limit(5)
             ->get()
             ->toArray();
