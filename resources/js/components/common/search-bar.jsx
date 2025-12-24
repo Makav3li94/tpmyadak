@@ -142,7 +142,24 @@ const SearchBar = ({isMobile=false}) => {
                                             ))}
                                         </>
                                     )}
-
+                                    {searchItems.filter(i => i.type === 'brand').length > 0 && (
+                                        <>
+                                            <li className="p-2 text-xs text-gray-500 font-medium">جستجو در برندها</li>
+                                            {searchItems.filter(i => i.type === 'brand').map((brand, idx) => (
+                                                <li
+                                                    key={`brand-${idx}`}
+                                                    className="list-row p-2 hover:bg-gray-100 bg-gray-50 border-t border-gray-200"
+                                                >
+                                                    <Link
+                                                        className="font-medium text-blue-600"
+                                                        href={route('home.getBrand', brand.slug)}
+                                                    >
+                                                        {brand.title}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </>
+                                    )}
                                     {/* حالت loading */}
                                     {loading && (
                                         <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">در حال جستجو ...</li>

@@ -88,6 +88,14 @@ class GeneralController extends Controller
             ->limit(5)
             ->get()
             ->toArray();
+        $brands = DB::table('brands')
+            ->select('id', 'title', 'slug')
+            ->where('status', 1)
+            ->where('title', 'like', "%{$term}%")
+            ->orderBy('sort', 'asc')
+            ->limit(5)
+            ->get()
+            ->toArray();
 
         // ترکیب نتیجه‌ها با نوع برای frontend
         $results = [];
@@ -100,7 +108,14 @@ class GeneralController extends Controller
                 'slug' => $cat->slug,
             ];
         }
-
+        foreach ($brands as $brand) {
+            $results[] = [
+                'type' => 'brand',
+                'id' => $brand->id,
+                'title' => $brand->title,
+                'slug' => $brand->slug,
+            ];
+        }
         foreach ($products as $prod) {
             $results[] = [
                 'type' => 'product',
