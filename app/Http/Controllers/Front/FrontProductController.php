@@ -40,7 +40,7 @@ class FrontProductController extends Controller
     public function getProduct($sku, $slug = null)
     {
 
-        $product = Product::where('sku', $sku)->first();
+        $product = Product::where('slug', $slug)->firstOrFail();
         $reviews = $product->reviews()->with('author')->get();
         $relatedProducts = $product->getRelatedProducts(4);
         $attributeGroupsWithDetails = $product->attributeGroupsWithDetails();

@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Route;
 
 // define module as main route
 // Route::get('/', [App\Module\Shortlink\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/dodoltala', [GeneralController::class, 'dodoltala'])->name('dodoltala');
 Route::get('/', [GeneralController::class, 'index'])->name('home');
 Route::get('/about', [GeneralController::class, 'about'])->name('home.about');
 Route::get('/contact', [GeneralController::class, 'contact'])->name('home.contact');
