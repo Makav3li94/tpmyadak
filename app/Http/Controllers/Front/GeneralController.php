@@ -11,7 +11,6 @@ use App\Models\Slider;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class GeneralController extends Controller
 {

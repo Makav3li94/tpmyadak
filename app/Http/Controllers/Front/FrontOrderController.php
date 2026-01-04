@@ -189,7 +189,7 @@ class FrontOrderController extends Controller
         $invoice->detail('mobile', $user->mobile);
         $invoice->detail('email', $user->email);
         $invoice->amount($cost + (int) $shippingMethod->cost);
-        $invoice->via('zarinpal');
+        $invoice->via('zibal');
 
         try {
             $payment = Payment::callbackUrl(route('home.check_payment', $order->id))
