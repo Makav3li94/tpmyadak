@@ -74,7 +74,7 @@ const GetCart = ({isMobile = false}) => {
                                     {item.title}
                                 </span>
                                 <Link href={route('home.getProduct',item.sku)} title="product01">
-                                    <img       src={`https://cdn.tpmyadak.com/prothumb/${item.image}`} alt="محصول انتخابی"
+                                    <img       src={`http://cdn.tpmyadak.com/prothumb/${item.image}`} alt="محصول انتخابی"
                                          className="w-24 "/>
                                 </Link>
                             </div>

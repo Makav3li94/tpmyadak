@@ -53,7 +53,7 @@ export default function Promotion({promoProducts}) {
                                         {/*LATER MUST CHANGE TO THUMBS!*/}
                                         <img
                                             // src={route('file.show', mainPromo.image)}
-                                            src={`https://cdn.tpmyadak.com/prothumb/${mainPromo.image}`}
+                                            src={`http://cdn.tpmyadak.com/prothumb/${mainPromo.image}`}
                                             alt="deal"
                                             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-75 my-auto "
                                         />
@@ -131,7 +131,7 @@ export default function Promotion({promoProducts}) {
                                                                       className="relative block w-full h-full group overflow-hidden md:mr-5 lg:mr-0">
                                                                     <img
                                                                         // src={route('file.show', product.image)}
-                                                                        src={`https://cdn.tpmyadak.com/prothumb/${product.image}`}
+                                                                        src={`http://cdn.tpmyadak.com/prothumb/${product.image}`}
                                                                         alt="deal"
                                                                         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-75"
                                                                     />

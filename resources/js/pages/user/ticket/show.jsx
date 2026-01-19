@@ -62,7 +62,7 @@ export default function Form(props) {
                                         <div className="w-10 rounded-full">
                                             <img
                                                 alt="Tailwind CSS chat bubble component"
-                                                src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                                                src="http://img.daisyui.com/images/profile/demo/kenobee@192.webp"
                                             />
                                         </div>
                                     </div>
@@ -81,7 +81,7 @@ export default function Form(props) {
                                         <div className="w-10 rounded-full">
                                             <img
                                                 alt="Tailwind CSS chat bubble component"
-                                                src="https://img.daisyui.com/images/profile/demo/anakeen@192.webp"
+                                                src="http://img.daisyui.com/images/profile/demo/anakeen@192.webp"
                                             />
                                         </div>
                                     </div>

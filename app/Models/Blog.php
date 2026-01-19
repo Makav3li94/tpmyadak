@@ -17,7 +17,7 @@ class Blog extends Model implements Feedable
         return FeedItem::create()
             ->id($this->id)
             ->title($this->title)
-            ->image("https://cdn.tpmyadak.com/postthumb/$this->img_cover")
+            ->image("http://cdn.tpmyadak.com/postthumb/$this->img_cover")
             ->category($this->category->title)
             ->summary($this->excerpt)
             ->updated($this->updated_at)
