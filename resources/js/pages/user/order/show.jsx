@@ -80,7 +80,7 @@ export default function Show({order}) {
                                                 className="aspect-h-1 aspect-w-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-40 sm:w-40">
                                                 <img
                                                     alt={item.title}
-                                                    src={`http://cdn.tpmyadak.com/prothumb/${ item.product.image}`}
+                                                    src={`https://cdn.tpmyadak.com/prothumb/${ item.product.image}`}
                                                     className="h-full w-full object-cover object-center sm:h-full sm:w-full"
                                                 />
                                             </div>

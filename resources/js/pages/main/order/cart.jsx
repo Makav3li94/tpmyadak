@@ -70,7 +70,7 @@ export default function Cart(props) {
                                    <div className="flex-shrink-0">
                                        <img
                                            alt={item.title}
-                                           src={`http://cdn.tpmyadak.com/prothumb/${item.image}`}
+                                           src={`https://cdn.tpmyadak.com/prothumb/${item.image}`}
                                            // src={`https://cdn.kadooyab.com/product75/${item.image}`}
                                            className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
                                        />

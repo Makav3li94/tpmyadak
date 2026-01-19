@@ -15,7 +15,7 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
             <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
                 <img
                     alt='product'
-                    src={`http://cdn.tpmyadak.com/prothumb/${product.image}`}
+                    src={`https://cdn.tpmyadak.com/prothumb/${product.image}`}
                     // src={`https://cdn.tpmyadak.com/prothumb/${product.image}`}
                     // src={route('file.show', product.image)}
                     className="h-full w-full object-cover object-center"

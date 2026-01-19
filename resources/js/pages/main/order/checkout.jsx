@@ -122,7 +122,7 @@ export default function Checkout({user, paymentMethods, shippingMethods}) {
                                 <li key={index} className="flex items-start space-x-4 py-6">
                                     <img
                                         alt={item.title}
-                                        src={`http://cdn.tpmyadak.com/prothumb/${item.image}`}
+                                        src={`https://cdn.tpmyadak.com/prothumb/${item.image}`}
                                         // src={`https://cdn.kadooyab.com/product75/${item.image}`}
                                         className="h-20 w-20 flex-none rounded-md object-cover object-center"
                                     />
