@@ -344,7 +344,8 @@ return [
 
             'mode' => 'normal', // can be normal, direct
 
-            'merchantId' => '694673a1092581002a05c349',
+//            'merchantId' => '694673a1092581002a05c349',
+            'merchantId' => 'zibal',
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using zibal',
             'currency' => 'T', // Can be R, T (Rial, Toman)

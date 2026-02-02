@@ -7,20 +7,22 @@ import FrontLayout from "@/layouts/front/front-layout.jsx";
 
 export default function CheckPayment({verify_code, order, message}) {
 
-    const [counter, setCounter] = useState(20);
+    const [counter, setCounter] = useState(10);
     useEffect(() => {
-        let id
-        if (counter > 0) {
-            id = setInterval(() => setCounter((oldCount) => oldCount - 1), 1);
-        }
-        if (counter === 0) {
-            // document.querySelector('form').submit();
-            router.visit(route('user.orders.show',order.id))
-        }
-        return () => {
-            clearInterval(id);
-        };
-    }, [counter]);
+        const id = setInterval(() => {
+            setCounter(prev => {
+                if (prev <= 1) {
+                    clearInterval(id);
+                    router.visit(route('user.orders.show', order.id));
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000); // هر 1 ثانیه
+
+        return () => clearInterval(id); // cleanup
+    }, []);
+
     const {emptyCart} = useCart();
     useEffect(() => {
         emptyCart()

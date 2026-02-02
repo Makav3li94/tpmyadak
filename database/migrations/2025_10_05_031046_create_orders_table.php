@@ -45,7 +45,7 @@ return new class extends Migration
 
             //            $table->enum('payment_method', ['online', 'bank', 'credit', 'crypto'])->default('online')->nullable();
             $table->string('payment_method', 100)->nullable();
-            $table->enum('payment_status', ['unpaid', 'partial ', 'paid', 'refund'])->default('unpaid')->nullable();
+            $table->enum('payment_status', ['unpaid', 'partial ', 'paid', 'refund','failed'])->default('unpaid')->nullable();
 
             $table->enum('shipping_status', ['refunded', 'done', 'sending', 'not_sent'])->default('not_sent')->nullable();
             $table->string('shipping_method', 100)->nullable();
