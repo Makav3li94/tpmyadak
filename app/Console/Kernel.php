@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('scrape:update-prices-hybrid --limit=1')
+        $schedule->command('scrape:update-prices-hybrid --limit=30')
 //            ->weekly()->mondays()->at('8:00')
                 ->everyMinute()
             ->withoutOverlapping()
