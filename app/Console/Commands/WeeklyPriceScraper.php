@@ -4,15 +4,16 @@ namespace App\Console\Commands;
 
 use App\Models\ScrapedProduct;
 use App\Models\Shop\Product;
+use App\Models\WeeklyScraperLog;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
 
 class WeeklyPriceScraper extends Command
 {
-    protected $signature = 'scrape:update-prices-hybrid {limit=500}';
+    protected $signature = 'scrape:update-prices-hybrid {limit=100}';
 
-    protected $description = 'Hybrid weekly price update scraper using foreign API with fallback';
+    protected $description = 'Hybrid weekly price update scraper with logging';
 
     public function handle()
     {
@@ -28,8 +29,10 @@ class WeeklyPriceScraper extends Command
             ->limit((int) $this->argument('limit'))
             ->get();
 
+        $updatedCount = $unavailableCount = $errorCount = 0;
+
         foreach ($rows as $row) {
-            // dedupe model_code
+            // مدل کد تکراری را اسکیپ کن
             if ($row->model_code && isset($handledModelCodes[$row->model_code])) {
                 continue;
             }
@@ -37,38 +40,64 @@ class WeeklyPriceScraper extends Command
                 $handledModelCodes[$row->model_code] = true;
             }
 
-            $html = $this->fetchHtmlHybrid($row->url, $uaPool);
-            if (! $html) {
-                $this->warn("Failed to fetch: {$row->url}");
+            $priceBefore = Product::where('id', $row->product_id)->value('price') ?? 0;
+            $priceAfter = null;
+            $status = 'error';
+            $message = null;
 
-                continue;
+            try {
+                $html = $this->fetchHtmlHybrid($row->url, $uaPool);
+
+                if (! $html) {
+                    $message = 'Failed to fetch HTML';
+                    $errorCount++;
+                } else {
+                    $dom = new Crawler($html);
+
+                    // ناموجود
+                    if ($dom->filter('span:contains("ناموجود")')->count()) {
+                        $priceAfter = 0;
+                        $status = 'unavailable';
+                        $this->applyPrice($row, $priceAfter);
+                        $unavailableCount++;
+                        $message = 'Product unavailable';
+                    } else {
+                        // قیمت
+                        $priceNode = $dom->filter('span.font-bold')->first();
+                        if ($priceNode->count()) {
+                            $price = (int) preg_replace('/[^0-9]/', '', $priceNode->text());
+                            $priceAfter = max(0, $price - $this->discount($price));
+                            $this->applyPrice($row, $priceAfter);
+                            $status = 'updated';
+                            $updatedCount++;
+                        } else {
+                            $message = 'Price node not found';
+                            $errorCount++;
+                        }
+                    }
+                }
+            } catch (\Throwable $e) {
+                $message = $e->getMessage();
+                $errorCount++;
             }
 
-            $dom = new Crawler($html);
+            // ثبت لاگ
+            WeeklyScraperLog::create([
+                'scraped_product_id' => $row->id,
+                'model_code' => $row->model_code,
+                'url' => $row->url,
+                'status' => $status,
+                'price_before' => $priceBefore,
+                'price_after' => $priceAfter,
+                'message' => $message,
+            ]);
 
-            // ناموجود
-            if ($dom->filter('span:contains("ناموجود")')->count()) {
-                $this->applyPrice($row, 0);
-                sleep(rand(3, 6));
-
-                continue;
-            }
-
-            $priceNode = $dom->filter('span.font-bold')->first();
-            if (! $priceNode->count()) {
-                sleep(rand(3, 6));
-
-                continue;
-            }
-
-            $price = (int) preg_replace('/[^0-9]/', '', $priceNode->text());
-            $finalPrice = max(0, $price - $this->discount($price));
-
-            $this->applyPrice($row, $finalPrice);
-            sleep(rand(3, 7));
+            $this->info("Processed: {$row->url} | Status: {$status}");
+//            sleep(rand(3, 7));
+            sleep(1);
         }
 
-        $this->info('Done.');
+        $this->info("✅ Updated: $updatedCount, ⚠️ Unavailable: $unavailableCount, ❌ Errors: $errorCount");
     }
 
     private function fetchHtmlHybrid(string $url, array $uaPool): ?string
@@ -91,14 +120,16 @@ class WeeklyPriceScraper extends Command
                     return $response->body();
                 }
 
+                // ban detector
                 if (in_array($response->status(), [429, 403])) {
-                    sleep($type === 'foreign' ? 120 : 10);
+//                    sleep($type === 'foreign' ? 120 : 10);
+                    sleep(3);
 
                     continue;
                 }
-
             } catch (\Throwable $e) {
-                sleep(5);
+                sleep(1);
+//                sleep(5);
 
                 continue;
             }
@@ -126,12 +157,12 @@ class WeeklyPriceScraper extends Command
     {
         return match (true) {
             $price < 100_000 => 1000,
-            $price < 500_000 => rand(3000, 5000),
-            $price < 1_000_000 => rand(7000, 10000),
-            $price < 2_000_000 => rand(15000, 20000),
-            $price < 3_000_000 => rand(25000, 30000),
-            $price < 5_000_000 => rand(35000, 40000),
-            default => 50000,
+            $price < 500_000 => rand(3, 5) * 1000,
+            $price < 1_000_000 => rand(7, 10) * 1000,
+            $price < 2_000_000 => rand(15, 20) * 1000,
+            $price < 3_000_000 => rand(25, 30) * 1000,
+            $price < 5_000_000 => rand(35, 40) * 1000,
+            default => 50_000,
         };
     }
 }
