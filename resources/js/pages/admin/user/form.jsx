@@ -183,6 +183,7 @@ export default function Form(props) {
                         </div>
                     </form>
                 </Card>
+                {isEmpty(user) === false &&
                 <Card>
                     <div className="flex  gap-12 w-full">
                         <div className="basis-1/2">
@@ -237,6 +238,7 @@ export default function Form(props) {
 
 
                 </Card>
+                }
             </div>
             {formModal.isOpen && <FormModal modalState={formModal} user={user}/>}
             {confirmModal.isOpen &&  <ModalConfirm onConfirm={onDelete} modalState={confirmModal} />}
