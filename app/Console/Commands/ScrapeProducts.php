@@ -394,7 +394,11 @@ class ScrapeProducts extends Command
             }
 
             $this->info('✅ ذخیره شد: '.$product->title);
-            ScrapedProduct::create(['url' => $url]);
+            ScrapedProduct::create([
+                'url' => $url,
+                'product_id' => $product->id,
+                'model_code' => $modelCode,
+            ]);
 
         }
 
