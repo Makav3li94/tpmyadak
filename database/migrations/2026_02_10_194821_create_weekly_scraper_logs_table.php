@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('weekly_scraper_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('scraped_product_id')->nullable()->constrained('scraped_products')->nullOnDelete();
+            $table->foreignUlid('scraped_product_id')->nullable()->constrained('scraped_products')->nullOnDelete();
             $table->string('model_code')->nullable();
             $table->text('url');
             $table->enum('status', ['updated', 'unavailable', 'error']);

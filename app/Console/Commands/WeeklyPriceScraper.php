@@ -11,7 +11,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class WeeklyPriceScraper extends Command
 {
-    protected $signature = 'scrape:update-prices-hybrid {limit=100}';
+    protected $signature = 'scrape:update-prices-hybrid {limit=10000} {--cleanup}';
 
     protected $description = 'Hybrid weekly price update scraper with logging';
 
@@ -25,7 +25,16 @@ class WeeklyPriceScraper extends Command
 
         $handledModelCodes = [];
 
-        $rows = ScrapedProduct::whereNotNull('product_id')
+        $query = ScrapedProduct::whereNotNull('product_id');
+
+        if ($this->option('cleanup')) {
+            $doneUrls = WeeklyScraperLog::whereIn('status', ['updated', 'unavailable'])
+                ->pluck('url');
+
+            $query->whereNotIn('url', $doneUrls);
+        }
+
+        $rows = $query
             ->limit((int) $this->argument('limit'))
             ->get();
 
@@ -83,6 +92,7 @@ class WeeklyPriceScraper extends Command
 
             // ثبت لاگ
             WeeklyScraperLog::create([
+//                'scraped_product_id' => $row->product_id,
                 'scraped_product_id' => $row->id,
                 'model_code' => $row->model_code,
                 'url' => $row->url,
