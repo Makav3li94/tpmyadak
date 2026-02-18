@@ -102,7 +102,13 @@ class MenuConstant
                         'active' => 'admin.car.models.*',
                         'permission' => 'view-car-model',
                     ],
-
+                    [
+                        'name' => 'تایپ خودرو',
+                        'show' => true,
+                        'route' => route('admin.car.types.index'),
+                        'active' => 'admin.car.types.*',
+                        'permission' => 'view-car-type',
+                    ],
                 ],
             ],
             [

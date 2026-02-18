@@ -88,6 +88,11 @@ class PermissionConstant
         ['label' => 'Create Car Model ', 'name' => 'create-car-model', 'group' => 'car-model'],
         ['label' => 'View Car Model ', 'name' => 'view-car-model', 'group' => 'car-model'],
 
+        ['label' => 'Delete Car Type ', 'name' => 'delete-car-type', 'group' => 'car-type'],
+        ['label' => 'Update Car Type ', 'name' => 'update-car-type', 'group' => 'car-type'],
+        ['label' => 'Create Car Type ', 'name' => 'create-car-type', 'group' => 'car-type'],
+        ['label' => 'View Car Type ', 'name' => 'view-car-type', 'group' => 'car-type'],
+
         ['label' => 'Delete Supplier ', 'name' => 'delete-supplier', 'group' => 'supplier'],
         ['label' => 'Update Supplier ', 'name' => 'update-supplier', 'group' => 'supplier'],
         ['label' => 'Create Supplier ', 'name' => 'create-supplier', 'group' => 'supplier'],

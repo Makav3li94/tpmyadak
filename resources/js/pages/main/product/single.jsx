@@ -209,6 +209,19 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                     {product.excerpt}
                                     {/*<a href="#" className="text-indigo-600">More....</a>*/}
                                 </p>
+                                <div className="Availability inline-block font-bold mb-5 mr-auto">
+                                    <span className="text-gray-400 text-xs">موجودی: </span>
+                                    <span className="text-gray-400 text-xs px-2">
+                                        {product.stock === 0 ? (
+                                            <>ناموجود</>
+                                        ):(
+                                            <>موجود در انبار</>
+                                        )}
+
+                                    </span>
+                                    <SquareCheckBig className="w-4 h-4 text-primary inline-block "/>
+                                    <span> ({product.stock} عدد)</span>
+                                </div>
                                 <div className="grid grid-cols-1  gap-3 py-5">
                                     <div className="">
                                         <ul className="list  gap-y-1 ">
@@ -222,8 +235,22 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                                     <div>{filter.pivot.value}</div>
                                                 </li>
                                             )}
-
-
+                                            {product.car_brand &&
+                                                <>
+                                                    <li className="list-row flex justify-between items-center">
+                                                        <div className="w-32"><strong>برند خودرو:</strong></div>
+                                                        <div> { product.car_brand.title}</div>
+                                                    </li>
+                                                </>
+                                            }
+                                            {product.car_model &&
+                                                <>
+                                                    <li className="list-row flex justify-between items-center">
+                                                        <div className="w-32"><strong>نوع خودرو:</strong></div>
+                                                        <div> { product.car_model.title}</div>
+                                                    </li>
+                                                </>
+                                            }
                                         </ul>
                                     </div>
                                     <div className=" ">
@@ -255,30 +282,18 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
 
                                     </div>
                                 </div>
-                                <div className="Availability inline-block font-bold mb-5 mr-auto">
-                                    <span className="text-gray-400 text-xs">موجودی: </span>
-                                    <span className="text-gray-400 text-xs px-1">
-                                        {product.stock === 0 ? (
-                                            <>ناموجود</>
-                                        ):(
-                                            <>موجود در انبار</>
-                                        )}
-
-                                    </span>
-                                    <SquareCheckBig className="w-4 h-4 text-primary inline-block"/>
-                                    ({product.stock} عدد)
-                                </div>
+                                {(product.car_types && product.car_types.length >0) &&
                                 <div className="flex justify-start items-center  w-full">
                                     <div className="w-32"><strong>مناسب برای:</strong></div>
                                     <div className="flex flex-wrap gap-2 max-w-md">
-                                        {product.car_models.map((carModel, i) =>
+                                        {product.car_types.map((carType, i) =>
                                             <div key={i} className="badge  badge-dash ruby">
-                                                {carModel.title}
+                                                {carType.title}
                                             </div>
                                         )}
                                     </div>
                                 </div>
-
+                                }
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-8">
 
                                     <button onClick={() => handleWish(product)}
@@ -305,13 +320,15 @@ export default function ProductSingle({product, attributeGroups = [],relatedProd
                                     {/*        <Plus className="stroke-gray-900 group-hover:stroke-black"/>*/}
                                     {/*    </button>*/}
                                     {/*</div>*/}
-                                    <button onClick={() => handleAdd(product)}
+                                    {parseInt(product.price) !== 0 &&
+                                    <button onClick={() => handleAdd(product)} disabled={parseInt(product.price) === 0 }
                                             className="group py-3 px-5 rounded-full bg-red-600 text-base-100
                                         font-semibold text-lg w-full flex items-center justify-center gap-2
                                         transition-all duration-500 hover:bg-indigo-100">
                                         <ShoppingCart className=" " width={22} height={22}/>
                                         افزودن به سبد خرید
                                     </button>
+                                    }
                                 </div>
 
                             </div>

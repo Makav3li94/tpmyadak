@@ -18,6 +18,11 @@ class CarModel extends Model
         return $this->belongsTo(CarBrand::class);
     }
 
+    public function carTypes(): CarModel|\Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CarType::class);
+    }
+
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'car_model_products');

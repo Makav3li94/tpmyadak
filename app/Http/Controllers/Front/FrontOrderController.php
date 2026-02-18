@@ -84,7 +84,6 @@ class FrontOrderController extends Controller
     public function order(Request $request)
     {
         $user = auth()->user();
-
         // ----- 1. بررسی قیمت و موجودی محصولات -----
         $updatedItems = [];
         $subtotal = 0;
@@ -137,6 +136,9 @@ class FrontOrderController extends Controller
 
         // ----- 4. دریافت اطلاعات آدرس، ارسال و پرداخت -----
         $shippingMethod = ShippingMethod::find($request->shipping_method_id);
+        if ($shippingMethod){
+
+        }
         $paymentMethod = PaymentMethod::find($request->payment_method_id);
         $address = Address::find($request->address_id);
 
@@ -151,7 +153,7 @@ class FrontOrderController extends Controller
             'discount' => $discountTotal + $extraDiscount,
             'tax' => 0,
             'other_fee' => 0,
-            'total' => $cost + (int) ! is_null($shippingMethod->cost) ? $shippingMethod->cost : 0,
+            'total' => $cost + ((int) ! is_null($shippingMethod->cost) ? $shippingMethod->cost : 0),
             'name' => $address->name,
             'postal_code' => $address->postal_code,
             'mobile' => $address->mobile,

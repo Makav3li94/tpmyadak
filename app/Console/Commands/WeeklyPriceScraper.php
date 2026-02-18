@@ -23,15 +23,15 @@ class WeeklyPriceScraper extends Command
             'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36',
         ];
 
-        $handledModelCodes = [];
+        //        $handledModelCodes = [];
 
         $query = ScrapedProduct::whereNotNull('product_id');
 
         if ($this->option('cleanup')) {
-            $doneUrls = WeeklyScraperLog::whereIn('status', ['updated', 'unavailable'])
-                ->pluck('url');
+            $doneIds = WeeklyScraperLog::whereIn('status', ['updated', 'unavailable'])
+                ->pluck('scraped_product_id');
 
-            $query->whereNotIn('url', $doneUrls);
+            $query->whereNotIn('product_id', $doneIds);
         }
 
         $rows = $query
@@ -42,12 +42,12 @@ class WeeklyPriceScraper extends Command
 
         foreach ($rows as $row) {
             // مدل کد تکراری را اسکیپ کن
-            if ($row->model_code && isset($handledModelCodes[$row->model_code])) {
-                continue;
-            }
-            if ($row->model_code) {
-                $handledModelCodes[$row->model_code] = true;
-            }
+            //            if ($row->model_code && isset($handledModelCodes[$row->model_code])) {
+            //                continue;
+            //            }
+            //            if ($row->model_code) {
+            //                $handledModelCodes[$row->model_code] = true;
+            //            }
 
             $priceBefore = Product::where('id', $row->product_id)->value('price') ?? 0;
             $priceAfter = null;
@@ -92,9 +92,9 @@ class WeeklyPriceScraper extends Command
 
             // ثبت لاگ
             WeeklyScraperLog::create([
-//                'scraped_product_id' => $row->product_id,
-                'scraped_product_id' => $row->id,
-                'model_code' => $row->model_code,
+                'scraped_product_id' => $row->product_id,
+                //                'scraped_product_id' => $row->id,
+                //                'model_code' => $row->model_code,
                 'url' => $row->url,
                 'status' => $status,
                 'price_before' => $priceBefore,
@@ -103,7 +103,7 @@ class WeeklyPriceScraper extends Command
             ]);
 
             $this->info("Processed: {$row->url} | Status: {$status}");
-//            sleep(rand(3, 7));
+            //            sleep(rand(3, 7));
             sleep(1);
         }
 
@@ -132,14 +132,14 @@ class WeeklyPriceScraper extends Command
 
                 // ban detector
                 if (in_array($response->status(), [429, 403])) {
-//                    sleep($type === 'foreign' ? 120 : 10);
+                    //                    sleep($type === 'foreign' ? 120 : 10);
                     sleep(3);
 
                     continue;
                 }
             } catch (\Throwable $e) {
                 sleep(1);
-//                sleep(5);
+                //                sleep(5);
 
                 continue;
             }
@@ -150,28 +150,28 @@ class WeeklyPriceScraper extends Command
 
     private function applyPrice(ScrapedProduct $row, int $price): void
     {
-        if ($row->model_code) {
-            Product::where('model_code', $row->model_code)->update([
-                'price' => $price,
-                'stock' => $price > 0 ? 1 : 0,
-            ]);
-        } else {
-            Product::where('id', $row->product_id)->update([
-                'price' => $price,
-                'stock' => $price > 0 ? 1 : 0,
-            ]);
-        }
+        //        if ($row->model_code) {
+        //            Product::where('model_code', $row->model_code)->update([
+        //                'price' => $price,
+        //                'stock' => $price > 0 ? 1 : 0,
+        //            ]);
+        //        } else {
+        Product::where('id', $row->product_id)->update([
+            'price' => $price,
+            'stock' => $price > 0 ? 1 : 0,
+        ]);
+        //        }
     }
 
     private function discount(int $price): int
     {
         return match (true) {
             $price < 100_000 => 1000,
-            $price < 500_000 => rand(3, 5) * 1000,
-            $price < 1_000_000 => rand(7, 10) * 1000,
-            $price < 2_000_000 => rand(15, 20) * 1000,
-            $price < 3_000_000 => rand(25, 30) * 1000,
-            $price < 5_000_000 => rand(35, 40) * 1000,
+            $price < 500_000 => 4000,
+            $price < 1_000_000 => 8000,
+            $price < 2_000_000 => 17000,
+            $price < 3_000_000 => 27000,
+            $price < 5_000_000 => 37000,
             default => 50_000,
         };
     }

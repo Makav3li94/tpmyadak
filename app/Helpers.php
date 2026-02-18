@@ -7,7 +7,7 @@ use App\Notifications\UserNotifications;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Number;
 
-if (! function_exists('splitPascalCase')) {
+if (!function_exists('splitPascalCase')) {
     function splitPascalCase($string): string
     {
         $word = '';
@@ -19,17 +19,17 @@ if (! function_exists('splitPascalCase')) {
 
                 continue;
             }
-            $word .= '-'.$s;
+            $word .= '-' . $s;
         }
 
         return $word;
     }
 }
 
-if (! function_exists('formatIDR')) {
+if (!function_exists('formatIDR')) {
     function formatIDR($number): int|string
     {
-        if (! $number) {
+        if (!$number) {
             return 0;
         }
 
@@ -37,14 +37,14 @@ if (! function_exists('formatIDR')) {
     }
 }
 
-if (! function_exists('formatDate')) {
+if (!function_exists('formatDate')) {
     function formatDate($date): string
     {
         return \Illuminate\Support\Carbon::parse($date)->format('d-m-Y');
     }
 }
 
-if (! function_exists('formatNumZero')) {
+if (!function_exists('formatNumZero')) {
     function formatNumZero($n): string
     {
         $max = 3; // 0001
@@ -54,7 +54,7 @@ if (! function_exists('formatNumZero')) {
             $number .= '0';
         }
 
-        return $number.$n;
+        return $number . $n;
     }
 }
 
@@ -85,6 +85,7 @@ function notifyUser($user_id, $type, $type_id, $status, $message = null): void
     $user = User::find($user_id);
     Notification::send($user, new UserNotifications($user, $details));
 }
+
 function array_mapper($array): array
 {
     $mapped_array = [];
@@ -94,6 +95,12 @@ function array_mapper($array): array
 
     return $mapped_array;
 }
+
+function simple_labeler($data)
+{
+    return ['value' => strval($data['id']), 'label' => $data['title']];
+}
+
 function array_labeler($array): array
 {
     $labeled_array = [];
@@ -103,6 +110,7 @@ function array_labeler($array): array
 
     return $labeled_array;
 }
+
 function slug_gen($title, $separator = '-'): string
 {
     $title = trim($title);
@@ -121,6 +129,7 @@ function slug_gen($title, $separator = '-'): string
 
     return trim($title, $separator);
 }
+
 function convertPersianNumbers(mixed $input, bool $reverseConvert = false): string
 {
     $fa_num = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
@@ -128,9 +137,10 @@ function convertPersianNumbers(mixed $input, bool $reverseConvert = false): stri
     $en_num = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
     return $reverseConvert
-        ? str_replace($en_num, $fa_num, (string) $input)
-        : str_replace([...$fa_num, ...$ar_num], $en_num, (string) $input);
+        ? str_replace($en_num, $fa_num, (string)$input)
+        : str_replace([...$fa_num, ...$ar_num], $en_num, (string)$input);
 }
+
 function getIranianPhoneAreaCodes(): array
 {
     return [
@@ -167,6 +177,7 @@ function getIranianPhoneAreaCodes(): array
         '028', // Qazvin
     ];
 }
+
 function separator(string $input, string $default = '-', ?array $allows = null, bool $reverseConvert = false): string
 {
     $allowsMap = ['/', '|', '-', '_', '*', '.', ',', 'space'];
@@ -178,12 +189,12 @@ function separator(string $input, string $default = '-', ?array $allows = null, 
         'space' => '\s',
     ];
 
-    if (! is_null($allows)) {
+    if (!is_null($allows)) {
         $invalidValues = array_diff($allows, $allowsMap);
 
-        if (! empty($invalidValues)) {
+        if (!empty($invalidValues)) {
             throw new \InvalidArgumentException(
-                'Invalid delimiter allows parameter. allowed values: '.implode(', ', $allowsMap)
+                'Invalid delimiter allows parameter. allowed values: ' . implode(', ', $allowsMap)
             );
         }
     }
@@ -206,7 +217,8 @@ function queryMapper($query)
         ];
     })->values()->toArray();
 }
-if (! function_exists('findSimilarRecord')) {
+
+if (!function_exists('findSimilarRecord')) {
     function findSimilarRecord($model, $title, &$records, $extraFields = [], $threshold = 75)
     {
         $best = null;
@@ -238,7 +250,7 @@ if (! function_exists('findSimilarRecord')) {
 }
 
 
-if (! function_exists('normalizeText')) {
+if (!function_exists('normalizeText')) {
     function normalizeText($text): array|false|string|null
     {
         return str_replace([' ', '-', '‌'], '', mb_strtolower(trim($text)));

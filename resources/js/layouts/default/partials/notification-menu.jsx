@@ -16,12 +16,12 @@ export default function NotificationMenu() {
 
             <ul className="list  mt-2 menu dropdown-content z-1 bg-base-100  shadow rounded-box w-94   ">
                 {notification_count===0 ? (
-                    <li className="list-row items-center">
+                    <li className="list-row items-center" key={100}>
                         اعلانی ندارید :(
                     </li>
                 ) :(
                     notifications.map((notification,i)=>
-                        <li className="list-row items-center">
+                        <li className="list-row items-center" key={i}>
                             <div className="text-4xl font-thin opacity-30 tabular-nums">{++i}</div>
                             <div className="list-col-grow">
                                 {notification.data.message}

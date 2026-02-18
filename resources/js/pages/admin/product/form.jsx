@@ -12,14 +12,27 @@ import Select2Input from "@/components/daisy-ui/select2-input.jsx";
 
 
 export default function Form(props) {
-    const {product, startDate, endDate, productCategories, attrGroups, prFiles = [],carModels,def_models} = props
-    const {props: { auth },} = usePage()
+    const {
+        product,
+        startDate,
+        endDate,
+        productCategories,
+        attrGroups,
+        prFiles = [],
+        carBrands,
+        // carModels,
+        // carTypes,
+        def_models
+    } = props
+    const {props: {auth},} = usePage()
     const [mounted, setMounted] = useState(false)
     const [hasNewFile, setHasNewFile] = useState(false)
     const [showDelete, setShowDelete] = useState(false)
     const [attrGroupArr, setAttrGroupArr] = useState([]);
     const [specGroupArr, setSpecGroupArr] = useState([]);
     const [categoryFilters, setCategoryFilters] = useState([]);
+    const [carModels, setCarModels] = useState([]);
+    const [carTypes, setCarTypes] = useState([]);
     const [files, setFiles] = useState(prFiles)
     const formState = {
         title: '',
@@ -27,7 +40,9 @@ export default function Form(props) {
         alias: '',
         sku: '',
         product_category_id: '',
-        car_model_id: [],
+        car_brand_id: '',
+        car_model_id: '',
+        car_type_id: [],
         brand_id: '',
         supplier_id: '',
         tax_id: '',
@@ -53,7 +68,7 @@ export default function Form(props) {
         filter_array: '',
     }
 
-    const {data, setData, post,  processing, errors} = useForm(formState)
+    const {data, setData, post, processing, errors} = useForm(formState)
     const handleOnChange = (event) => {
         setData(
             event.target.name,
@@ -84,7 +99,9 @@ export default function Form(props) {
                     alias: product.alias,
                     sku: product.sku,
                     product_category_id: product.product_category_id,
-                    car_model_id: product.def_models,
+                    car_brand_id: product.def_brand,
+                    car_model_id: product.def_model,
+                    car_type_id: product.def_types,
                     brand_id: product.brand_id,
                     supplier_id: product.supplier_id,
                     tax_id: product.tax_id,
@@ -113,16 +130,24 @@ export default function Form(props) {
                     _method: "PUT"
                 }
             )
-            if (product.specs && product.specs.length > 0){
+            if (product.specs && product.specs.length > 0) {
                 setSpecGroupArr(product.specs.map(it => ({title: it.title, value: it.value})))
             }
-            if (product.attributes && product.attributes.length > 0){
-                setAttrGroupArr(product.attributes.map(it => ({attribute_group_id: it.attribute_group_id, title: it.title,add_price:it.add_price})))
+            if (product.attributes && product.attributes.length > 0) {
+                setAttrGroupArr(product.attributes.map(it => ({
+                    attribute_group_id: it.attribute_group_id,
+                    title: it.title,
+                    add_price: it.add_price
+                })))
             }
-            if (product.filters && product.filters.length > 0){
-                setCategoryFilters(product.filters.map(it => ({id: it.pivot.filter_id, title: it.title,value:it.pivot.value})))
-            }else {
-                handCatAndFilter(product.product_category_id,true).then(r => console.log(r))
+            if (product.filters && product.filters.length > 0) {
+                setCategoryFilters(product.filters.map(it => ({
+                    id: it.pivot.filter_id,
+                    title: it.title,
+                    value: it.pivot.value
+                })))
+            } else {
+                handCatAndFilter(product.product_category_id, true).then(r => console.log(r))
             }
         }
         setMounted(true)
@@ -148,11 +173,11 @@ export default function Form(props) {
     };
 
     const removeInput = (groupId) => {
-        let tempArr= attrGroupArr;
-        let removeFromTempArr=      tempArr.filter(a => a.attribute_group_id === groupId)
-        let KeepSameTempArr=   tempArr.filter(a => a.attribute_group_id !== groupId)
+        let tempArr = attrGroupArr;
+        let removeFromTempArr = tempArr.filter(a => a.attribute_group_id === groupId)
+        let KeepSameTempArr = tempArr.filter(a => a.attribute_group_id !== groupId)
         removeFromTempArr = removeFromTempArr.slice(0, -1)
-        tempArr=[...KeepSameTempArr,...removeFromTempArr]
+        tempArr = [...KeepSameTempArr, ...removeFromTempArr]
         setAttrGroupArr(tempArr)
         setData('product_group_attrs', tempArr);
     }
@@ -234,28 +259,59 @@ export default function Form(props) {
         if (hasNewFile) {
             setData('images', files)
         }
-    }, [files, setFiles,hasNewFile]);
+    }, [files, setFiles, hasNewFile]);
     const handleNew = () => {
         setHasNewFile(true)
         setShowDelete(true)
     }
 
-    const handCatAndFilter = async (selectedOption,isDef=false) => {
+    const handCatAndFilter = async (selectedOption, isDef = false) => {
         setCategoryFilters([])
-        if (!isDef)setData('product_category_id', selectedOption)
+        if (!isDef) setData('product_category_id', selectedOption)
 
 
-        await axios.get(route('admin.getCategoryFiltersAjax',!isDef ?selectedOption.value : selectedOption), {
+        await axios.get(route('admin.getCategoryFiltersAjax', !isDef ? selectedOption.value : selectedOption), {
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
                 Authorization: auth.jwt_prefix + auth.jwt_token,
             },
         }).then((res) => {
-            setCategoryFilters(res.data)
+                setCategoryFilters(res.data)
             }
         )
 
+    }
+    const handleCarBrand = async (selectedOption, isDef = false) => {
+        setCarModels([])
+        setData('car_model_id','');
+        if (!isDef) setData('car_brand_id', selectedOption)
+        await axios.get(route('admin.getCarModelAjax', !isDef ? selectedOption.value : selectedOption), {
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                Authorization: auth.jwt_prefix + auth.jwt_token,
+            },
+        }).then((res) => {
+                setCarModels(res.data)
+            }
+        )
+
+    }
+    const handleCarModel = async (selectedOption, isDef = false) => {
+        setCarTypes([])
+        setData('car_type_id',[]);
+        if (!isDef) setData('car_model_id', selectedOption)
+        await axios.get(route('admin.getCarTypeAjax', !isDef ? selectedOption.value : selectedOption), {
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                Authorization: auth.jwt_prefix + auth.jwt_token,
+            },
+        }).then((res) => {
+            setCarTypes(res.data)
+            }
+        )
     }
     useEffect(() => {
 
@@ -289,12 +345,13 @@ export default function Form(props) {
                                        error={errors.alias} required/>
                         </div>
                         <div className="basis-1/2">
-                            <TextInput type='text' maxLenght={10} name="sku" value={data.sku} onChange={handleOnChange} label="کد اسکو"
+                            <TextInput type='text' maxLenght={10} name="sku" value={data.sku} onChange={handleOnChange}
+                                       label="کد اسکو"
                                        error={errors.sku}/>
                         </div>
                     </div>
                     <div className="flex  gap-12 w-full">
-                        <div className="basis-1/3">
+                        <div className="basis-1/2">
                             {mounted &&
                                 <Select2Input label="دسته" name="product_category_id" options={productCategories}
                                               error={errors.product_category_id}
@@ -307,19 +364,8 @@ export default function Form(props) {
                                 />
                             }
                         </div>
-                        <div className="basis-1/3">
-                            {mounted &&
-                                <Select2Input label="مدل ماشین" name="car_model_id" isMulti options={carModels}
-                                              error={errors.car_model_id}
-                                              defaultValue={data.car_model_id}
-                                              placeHolder="ماشین ها"
-                                    // onChange={(e) => setData('sub_category_id', e.value)}  error={errors.sub_category_id}
-                                    //           onChange={setSelectedFilter}
-                                              onChange={(selectedOption)=>setData('car_model_id',selectedOption)}
-                                />
-                            }
-                        </div>
-                        <div className="basis-1/3">
+
+                        <div className="basis-1/2">
                             {mounted && (
                                 <SelectModalInput label="برند محصول" value={data.brand} onChange={(item) =>
                                     setData({
@@ -336,6 +382,46 @@ export default function Form(props) {
                                                   }}
                                 />
                             )}
+                        </div>
+                    </div>
+                    <div className="flex  gap-12 w-full">
+                        <div className="basis-1/3">
+                            {mounted &&
+                                <Select2Input label="برند ماشین" name="car_brand_id" options={carBrands}
+                                              error={errors.car_brand_id}
+                                              defaultValue={data.car_brand_id}
+                                              placeHolder=" برند ماشین ها"
+                                    // onChange={(e) => setData('sub_category_id', e.value)}  error={errors.sub_category_id}
+                                    //           onChange={setSelectedFilter}
+                                              onChange={(selectedOption) => handleCarBrand(selectedOption)}
+                                />
+                            }
+                        </div>
+                        <div className="basis-1/3">
+                            {mounted &&
+                                <Select2Input label="مدل ماشین" name="car_model_id" options={carModels}
+                                              isDisabled={data.car_brand_id === ''}
+                                              error={errors.car_model_id}
+                                              defaultValue={data.car_model_id}
+                                              placeHolder={data.car_brand_id === '' ? 'ابتدا برند را انتخاب کنید' : 'مدل ماشین ها'}
+                                    // onChange={(e) => setData('sub_category_id', e.value)}  error={errors.sub_category_id}
+                                    //           onChange={setSelectedFilter}
+                                              onChange={(selectedOption) => handleCarModel(selectedOption)}
+                                />
+                            }
+                        </div>
+                        <div className="basis-1/3">
+                            {mounted &&
+                                <Select2Input label="تایپ ماشین" name="car_type_id" isMulti options={carTypes}
+                                              isDisabled={data.car_model_id === ''}
+                                              error={errors.car_type_id}
+                                              defaultValue={data.car_type_id}
+                                              placeHolder={data.car_model_id === '' ? 'ابتدا مدل را انتخاب کنید' : 'تایپ ماشین ها'}
+                                    // onChange={(e) => setData('sub_category_id', e.value)}  error={errors.sub_category_id}
+                                    //           onChange={setSelectedFilter}
+                                              onChange={(selectedOption) => setData('car_type_id', selectedOption)}
+                                />
+                            }
                         </div>
                     </div>
                     <div className="flex  gap-12 w-full">
@@ -491,7 +577,7 @@ export default function Form(props) {
                     }
                     <div className="divider"/>
                     {/*attrGroups*/}
-                    {mounted &&  attrGroups.map((attrGroup, i) => {
+                    {mounted && attrGroups.map((attrGroup, i) => {
 
                         return (
                             <div className="" key={i}>
@@ -512,7 +598,7 @@ export default function Form(props) {
 
 
                                 </div>
-                                {mounted &&  attrGroupArr.map((item, i) => {
+                                {mounted && attrGroupArr.map((item, i) => {
 
                                     return (
                                         <>
@@ -520,7 +606,7 @@ export default function Form(props) {
                                                 <div className="flex gap-3 justify-between items-center" key={i}>
                                                     <div hidden>
                                                         <TextInput name="attribute_group_id[]" value={item.id}
-                                                                   label="group_id"  min={1}
+                                                                   label="group_id" min={1}
                                                                    onChange={(e) => handleAddChange(e, 'attribute_group_id', i)}/>
                                                     </div>
                                                     <div className="basis-1/2">
@@ -551,7 +637,7 @@ export default function Form(props) {
                     })}
 
                     <div className="divider"/>
-                    <div className="" >
+                    <div className="">
                         <h4>خصوصیت ها</h4>
                         <div className="flex justify-between items-center mb-4">
                             <label className="pb-2 fw-medium flex justify-between items-center gap-5">
@@ -569,7 +655,7 @@ export default function Form(props) {
 
 
                         </div>
-                        {mounted &&  specGroupArr.map((item, i) => {
+                        {mounted && specGroupArr.map((item, i) => {
                             return (
                                 <div className="flex gap-3 justify-between items-center">
                                     <div className="basis-1/2">
@@ -594,9 +680,9 @@ export default function Form(props) {
                             </p>
                         }
                     </div>
-                    <div className="" >
+                    <div className="">
                         <h4>دسته ویژگی ها</h4>
-                        {mounted &&  categoryFilters.map((item, i) => {
+                        {mounted && categoryFilters.map((item, i) => {
                             return (
                                 <div key={i} className="flex gap-3 justify-between items-center">
                                     <div className="basis-1/2" hidden>

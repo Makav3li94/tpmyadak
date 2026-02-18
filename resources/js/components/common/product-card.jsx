@@ -63,7 +63,7 @@ export default function ProductCard({product,i,handleWish,handleAdd}) {
                 </p>
             </div>
             <div className="mt-6">
-                <Button onClick={() => handleAdd(product)} type="danger"
+                <Button onClick={() => handleAdd(product)} type="danger" disabled={parseInt(product.price) === 0 }
                         className="relative flex w-full items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-xs font-medium text-gray-900 hover:bg-gray-200">
                     افزودن به سبد خرید <span className="sr-only">, {product.title}</span>
                 </Button>

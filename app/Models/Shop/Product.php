@@ -62,12 +62,18 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
-
-    public function carModels(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function carBrand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsToMany(CarModel::class, 'car_model_products');
+        return $this->belongsTo(CarBrand::class, 'car_brand_id');
     }
-
+    public function carModel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CarModel::class, 'car_model_id');
+    }
+    public function carTypes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(CarType::class, 'car_type_products');
+    }
     public function supplier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Supplier::class, 'supplier_id', 'id');

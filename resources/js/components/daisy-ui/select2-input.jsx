@@ -69,7 +69,7 @@ const Selec2Input = forwardRef((props, ref) => {
     return (
         <fieldset className="fieldset">
             <Label label={label} />
-            <Select  options={props.options} styles={customStyles} placeholder={`انتخاب ${props.placeHolder?props.placeHolder:label}`}
+            <Select  options={props.options} styles={customStyles} placeholder={` ${props.placeHolder?props.placeHolder:label}`}
 
                 // ref={ref}   {...inputProps} className={`mf-select-con mt-2 w-full text-12 md:text-16  ${className} ${props.className ? props.className : ''}`}/>
                      ref={ref}   {...inputProps} className={`mf-select-con  w-full   ${props.className ? props.className : ''}`}/>

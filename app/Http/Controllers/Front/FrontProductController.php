@@ -41,7 +41,9 @@ class FrontProductController extends Controller
     {
 
         $product = Product::where('sku', $sku)->first();
-        if (!$product)$product = Product::where('slug', $slug)->firstOrFail();
+        if (! $product) {
+            $product = Product::where('slug', $slug)->firstOrFail();
+        }
 
         $reviews = $product->reviews()->with('author')->get();
         $relatedProducts = $product->getRelatedProducts(4);
@@ -60,7 +62,7 @@ class FrontProductController extends Controller
         defer(fn () => $product->increment('total_view'));
 
         return inertia('main/product/single', [
-            'product' => $product->load('brand', 'carModels', 'specs', 'filters', 'images'),
+            'product' => $product->load('brand', 'carBrand', 'carModel', 'carTypes', 'specs', 'filters', 'images'),
             'attributeGroups' => $attributeGroupsWithDetails,
             'relatedProducts' => $relatedProducts,
             'reviews' => $reviews,
@@ -104,19 +106,19 @@ class FrontProductController extends Controller
 
         // پیدا کردن دسته فعلی
         $productCategory = $allCategories->firstWhere('slug', $slug);
-        abort_if(!$productCategory, 404);
+        abort_if(! $productCategory, 404);
 
         // گرفتن همه والدها برای breadcrumb
         $ancestors = $productCategory->getAncestors($allCategories);
 
-        $breadcrumbs = $ancestors->map(fn($cat) => [
+        $breadcrumbs = $ancestors->map(fn ($cat) => [
             'title' => $cat->title,
-            'slug'  => $cat->slug,
+            'slug' => $cat->slug,
         ])->values();
 
         $breadcrumbs->push([
             'title' => $productCategory->title,
-            'slug'  => $productCategory->slug,
+            'slug' => $productCategory->slug,
         ]);
         // گرفتن تمام فرزندان دسته فعلی
         $categoryIds = array_merge([$productCategory->id], $productCategory->getAllChildrenIds($allCategories));
@@ -130,8 +132,9 @@ class FrontProductController extends Controller
         $query = Product::whereIn('product_category_id', $categoryIds)
             ->with([
                 'brand:id,title,slug',
-                'carModels:id,title,car_brand_id',
-                'carModels.carBrand:id,title',
+                'carBrand:id,title',
+                'carModel:id,title',
+                //                'carTypes.id,title',
             ]);
 
         $this->commonFilters($request, $query);
@@ -168,13 +171,13 @@ class FrontProductController extends Controller
         // بخش 3: بازگشت برندها، مدل‌ها، خودروها
         // -----------------------------
         $allProductsLite = Product::whereIn('product_category_id', $categoryIds)
-            ->select('id', 'brand_id')
-            ->with(['carModels:id,car_brand_id'])
+            ->select('id', 'brand_id','car_brand_id','car_model_id')
+            ->with(['carBrand:id,title', 'carModel:id,title'])
             ->get();
 
         $allBrandIds = $allProductsLite->pluck('brand_id')->unique()->filter()->values();
-        $allCarModelIds = $allProductsLite->pluck('carModels')->flatten()->pluck('id')->unique()->values();
-        $allCarBrandIds = $allProductsLite->pluck('carModels')->flatten()->pluck('car_brand_id')->unique()->values();
+        $allCarModelIds = $allProductsLite->pluck('carModel')->flatten()->pluck('id')->unique()->values();
+        $allCarBrandIds = $allProductsLite->pluck('carBrand')->flatten()->pluck('id')->unique()->values();
 
         $brands = Cache::remember("brands_{$slug}_".md5($allBrandIds), 900, function () use ($allBrandIds) {
             return Brand::whereIn('id', $allBrandIds)->get();
@@ -205,6 +208,7 @@ class FrontProductController extends Controller
             'carModels' => queryMapper($carModels),
         ]);
     }
+
     public function commonFilters(Request $request, $query): void
     {
         // 4. جستجوی متنی
@@ -233,13 +237,13 @@ class FrontProductController extends Controller
         }
 
         if (isset($staticFilters['carBrands']) && count($staticFilters['carBrands'])) {
-            $query->whereHas('carModels.carBrand', function ($q) use ($staticFilters) {
+            $query->whereHas('carBrand', function ($q) use ($staticFilters) {
                 $q->whereIn('id', $staticFilters['carBrands']);
             });
         }
 
         if (isset($staticFilters['carModels']) && count($staticFilters['carModels'])) {
-            $query->whereHas('carModels', function ($q) use ($staticFilters) {
+            $query->whereHas('carModel', function ($q) use ($staticFilters) {
                 $q->whereIn('car_model_id', $staticFilters['carModels']);
             });
         }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CarBrandController;
 use App\Http\Controllers\Admin\CarModelController;
+use App\Http\Controllers\Admin\CarTypeController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FilterController;
@@ -110,6 +111,7 @@ Route::prefix('tpmauto')->group(static function () {
         Route::resource('brand', BrandController::class, ['names' => 'admin.brands'])->only(['index', 'store', 'update', 'destroy']);
         Route::resource('car-brand', CarBrandController::class, ['names' => 'admin.car.brands'])->only(['index', 'store', 'update', 'destroy']);
         Route::resource('car-model', CarModelController::class, ['names' => 'admin.car.models'])->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('car-type', CarTypeController::class, ['names' => 'admin.car.types'])->only(['index', 'store', 'update', 'destroy']);
         Route::resource('supplier', SupplierController::class, ['names' => 'admin.suppliers'])->only(['index', 'store', 'update', 'destroy']);
         Route::resource('discount', DiscountController::class, ['names' => 'admin.discounts'])->only(['index', 'store', 'update', 'destroy']);
         Route::resource('review', ReviewController::class, ['names' => 'admin.reviews'])->only(['index',  'update', 'destroy']);
@@ -119,6 +121,9 @@ Route::prefix('tpmauto')->group(static function () {
         Route::resource('product-categories', ProductCategoryController::class, ['names' => 'admin.product.categories'])->except(['show']);
         Route::resource('product', ProductController::class, ['names' => 'admin.products'])->except(['show']);
         Route::get('getCategoryFiltersAjax/{productCategory}', [ProductController::class, 'getCategoryFiltersAjax'])->name('admin.getCategoryFiltersAjax');
+
+        Route::get('getCarModelAjax/{carBrand}', [ProductController::class, 'getCarModelAjax'])->name('admin.getCarModelAjax');
+        Route::get('getCarTypeAjax/{carModel}', [ProductController::class, 'getCarTypeAjax'])->name('admin.getCarTypeAjax');
 
         Route::resource('order', OrderController::class, ['names' => 'admin.orders'])->except(['edit']);
         Route::resource('order-detail', OrderDetailController::class, ['names' => 'admin.order.details'])->only(['store', 'update', 'destroy']);
